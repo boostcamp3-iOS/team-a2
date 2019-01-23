@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIColor {
-    
+
     static var doBlue: UIColor {
         return UIColor(named: "doBlue")!
     }
@@ -19,9 +19,9 @@ extension UIColor {
     static var doGray: UIColor {
         return UIColor(named: "doGray")!
     }
-    
+
     static var doLight: UIColor {
         return UIColor(named: "doLight")!
     }
-    
+
 }

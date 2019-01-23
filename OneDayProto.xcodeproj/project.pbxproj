@@ -20,6 +20,7 @@
 		D5FE688921F6DAA60042F504 /* OneDayProto.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D5FE688721F6DAA60042F504 /* OneDayProto.xcdatamodeld */; };
 		D5FE688B21F6DAA80042F504 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5FE688A21F6DAA80042F504 /* Assets.xcassets */; };
 		D5FE688E21F6DAA80042F504 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5FE688C21F6DAA80042F504 /* LaunchScreen.storyboard */; };
+		EC5F149C21F81E07009CE6B5 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = EC5F149B21F81E07009CE6B5 /* .swiftlint.yml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		D5FE688A21F6DAA80042F504 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D5FE688D21F6DAA80042F504 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D5FE688F21F6DAA80042F504 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EC5F149B21F81E07009CE6B5 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +146,7 @@
 		D5FE687421F6DAA60042F504 = {
 			isa = PBXGroup;
 			children = (
+				EC5F149B21F81E07009CE6B5 /* .swiftlint.yml */,
 				D5FE687F21F6DAA60042F504 /* OneDayProto */,
 				D5FE687E21F6DAA60042F504 /* Products */,
 				2D3632A4F681514EC0A73286 /* Pods */,
@@ -237,6 +240,7 @@
 				D55FF3AB21F7FC630075FA96 /* SideMenu.storyboard in Resources */,
 				D5FE688E21F6DAA80042F504 /* LaunchScreen.storyboard in Resources */,
 				D55FF3AD21F7FC6D0075FA96 /* Setting.storyboard in Resources */,
+				EC5F149C21F81E07009CE6B5 /* .swiftlint.yml in Resources */,
 				D55FF3B221F8013B0075FA96 /* Colors.xcassets in Resources */,
 				D5FE688B21F6DAA80042F504 /* Assets.xcassets in Resources */,
 				D5FE688621F6DAA60042F504 /* Main.storyboard in Resources */,
