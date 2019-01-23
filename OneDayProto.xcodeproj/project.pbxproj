@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D55FF3A921F7FB3D0075FA96 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55FF3A821F7FB3D0075FA96 /* Entity.swift */; };
 		D5FE688121F6DAA60042F504 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FE688021F6DAA60042F504 /* AppDelegate.swift */; };
 		D5FE688321F6DAA60042F504 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FE688221F6DAA60042F504 /* ViewController.swift */; };
 		D5FE688621F6DAA60042F504 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5FE688421F6DAA60042F504 /* Main.storyboard */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D55FF3A821F7FB3D0075FA96 /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
 		D5FE687D21F6DAA60042F504 /* OneDayProto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneDayProto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5FE688021F6DAA60042F504 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D5FE688221F6DAA60042F504 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -37,6 +39,64 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D55FF3A121F7F8A70075FA96 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				D5FE688221F6DAA60042F504 /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		D55FF3A221F7F8B20075FA96 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D5FE688F21F6DAA80042F504 /* Info.plist */,
+				D5FE688A21F6DAA80042F504 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		D55FF3A321F7F8B70075FA96 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				D5FE688C21F6DAA80042F504 /* LaunchScreen.storyboard */,
+				D5FE688421F6DAA60042F504 /* Main.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		D55FF3A421F7F9EA0075FA96 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D55FF3A321F7F8B70075FA96 /* Storyboards */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D55FF3A521F7FA8F0075FA96 /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				D5FE688021F6DAA60042F504 /* AppDelegate.swift */,
+			);
+			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		D55FF3A621F7FAD30075FA96 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				D5FE688721F6DAA60042F504 /* OneDayProto.xcdatamodeld */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		D55FF3A721F7FB2B0075FA96 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D55FF3A821F7FB3D0075FA96 /* Entity.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		D5FE687421F6DAA60042F504 = {
 			isa = PBXGroup;
 			children = (
@@ -56,13 +116,12 @@
 		D5FE687F21F6DAA60042F504 /* OneDayProto */ = {
 			isa = PBXGroup;
 			children = (
-				D5FE688021F6DAA60042F504 /* AppDelegate.swift */,
-				D5FE688221F6DAA60042F504 /* ViewController.swift */,
-				D5FE688421F6DAA60042F504 /* Main.storyboard */,
-				D5FE688A21F6DAA80042F504 /* Assets.xcassets */,
-				D5FE688C21F6DAA80042F504 /* LaunchScreen.storyboard */,
-				D5FE688F21F6DAA80042F504 /* Info.plist */,
-				D5FE688721F6DAA60042F504 /* OneDayProto.xcdatamodeld */,
+				D55FF3A521F7FA8F0075FA96 /* AppDelegate */,
+				D55FF3A421F7F9EA0075FA96 /* Views */,
+				D55FF3A221F7F8B20075FA96 /* Resources */,
+				D55FF3A121F7F8A70075FA96 /* Controller */,
+				D55FF3A621F7FAD30075FA96 /* CoreData */,
+				D55FF3A721F7FB2B0075FA96 /* Model */,
 			);
 			path = OneDayProto;
 			sourceTree = "<group>";
@@ -138,6 +197,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D55FF3A921F7FB3D0075FA96 /* Entity.swift in Sources */,
 				D5FE688321F6DAA60042F504 /* ViewController.swift in Sources */,
 				D5FE688921F6DAA60042F504 /* OneDayProto.xcdatamodeld in Sources */,
 				D5FE688121F6DAA60042F504 /* AppDelegate.swift in Sources */,
@@ -288,7 +348,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 5BKN5926VM;
-				INFOPLIST_FILE = OneDayProto/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/OneDayProto/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -306,15 +366,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = OneDayProto/Info.plist;
+				DEVELOPMENT_TEAM = 5BKN5926VM;
+				INFOPLIST_FILE = "$(SRCROOT)/OneDayProto/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.boostcamp.OneDayProto;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "OneDay Prototype";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
