@@ -14,6 +14,8 @@
 		D55FF3B021F7FD690075FA96 /* UIView+Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55FF3AF21F7FD690075FA96 /* UIView+Border.swift */; };
 		D55FF3B221F8013B0075FA96 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D55FF3B121F8013B0075FA96 /* Colors.xcassets */; };
 		D55FF3B421F801BA0075FA96 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55FF3B321F801BA0075FA96 /* UIColor.swift */; };
+		D55FF3BC21F832EF0075FA96 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55FF3BB21F832EF0075FA96 /* FeedViewController.swift */; };
+		D55FF3BE21F8334E0075FA96 /* FeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55FF3BD21F8334E0075FA96 /* FeedTableViewCell.swift */; };
 		D5FE688121F6DAA60042F504 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FE688021F6DAA60042F504 /* AppDelegate.swift */; };
 		D5FE688321F6DAA60042F504 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FE688221F6DAA60042F504 /* ViewController.swift */; };
 		D5FE688621F6DAA60042F504 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5FE688421F6DAA60042F504 /* Main.storyboard */; };
@@ -33,6 +35,8 @@
 		D55FF3AF21F7FD690075FA96 /* UIView+Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Border.swift"; sourceTree = "<group>"; };
 		D55FF3B121F8013B0075FA96 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		D55FF3B321F801BA0075FA96 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		D55FF3BB21F832EF0075FA96 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		D55FF3BD21F8334E0075FA96 /* FeedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
 		D5FE687D21F6DAA60042F504 /* OneDayProto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneDayProto.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5FE688021F6DAA60042F504 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D5FE688221F6DAA60042F504 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -77,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				D5FE688221F6DAA60042F504 /* ViewController.swift */,
+				D55FF3BB21F832EF0075FA96 /* FeedViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -106,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				D55FF3A321F7F8B70075FA96 /* Storyboards */,
+				D55FF3BD21F8334E0075FA96 /* FeedTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -314,11 +320,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				D55FF3A921F7FB3D0075FA96 /* Entity.swift in Sources */,
+				D55FF3BE21F8334E0075FA96 /* FeedTableViewCell.swift in Sources */,
 				D55FF3B421F801BA0075FA96 /* UIColor.swift in Sources */,
 				D5FE688321F6DAA60042F504 /* ViewController.swift in Sources */,
 				D5FE688921F6DAA60042F504 /* OneDayProto.xcdatamodeld in Sources */,
 				D55FF3B021F7FD690075FA96 /* UIView+Border.swift in Sources */,
 				D5FE688121F6DAA60042F504 /* AppDelegate.swift in Sources */,
+				D55FF3BC21F832EF0075FA96 /* FeedViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

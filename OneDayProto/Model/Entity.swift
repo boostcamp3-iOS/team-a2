@@ -15,9 +15,14 @@ struct Entry {
     var date: Date
     var isFavorite: Bool
     var journal: Journal
-    var location: Location
+    var location: Location?
     var tags: [String]
     var deviceId: String
+
+    var title: String {
+
+        return ""
+    }
 }
 
 struct Location {
