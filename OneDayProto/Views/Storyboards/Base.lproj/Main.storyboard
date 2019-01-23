@@ -40,6 +40,9 @@
                                                     <state key="normal" title="작성">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
+                                                    <connections>
+                                                        <segue destination="FEv-1N-6Ww" kind="presentation" id="sMU-UI-Az5"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </stackView>
@@ -114,10 +117,10 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="contentLabel" destination="zMs-jN-JPb" id="e2r-HW-qcW"/>
-                                            <outlet property="dateLabel" destination="9rR-g5-gm2" id="Us3-Xk-sKH"/>
-                                            <outlet property="dayLabel" destination="kkh-X0-6eF" id="aDY-fa-HK1"/>
+                                            <outlet property="dayLabel" destination="9rR-g5-gm2" id="Us3-Xk-sKH"/>
                                             <outlet property="jornalLabel" destination="aPO-Ts-DxY" id="5Hr-vK-kky"/>
                                             <outlet property="timeLabel" destination="Jpv-Vi-N8z" id="qVa-Mg-1Ra"/>
+                                            <outlet property="weekDayLabel" destination="kkh-X0-6eF" id="aDY-fa-HK1"/>
                                             <segue destination="FEv-1N-6Ww" kind="presentation" id="IGQ-6K-WoR"/>
                                         </connections>
                                     </tableViewCell>
@@ -153,10 +156,10 @@
             </objects>
             <point key="canvasLocation" x="1029.5999999999999" y="-564.46776611694156"/>
         </scene>
-        <!--View Controller-->
+        <!--Entry View Controller-->
         <scene sceneID="yN5-xY-JRO">
             <objects>
-                <viewController id="FEv-1N-6Ww" sceneMemberID="viewController">
+                <viewController id="FEv-1N-6Ww" customClass="EntryViewController" customModule="OneDayProto" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nrl-EY-nRn">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -175,11 +178,15 @@
                                         <state key="normal" title="Done">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="saveAndDismiss:" destination="FEv-1N-6Ww" eventType="touchUpInside" id="PGq-pD-4kf"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" name="doBlue"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="BfH-Mm-PWi" secondAttribute="bottom" constant="8" id="2gb-sS-EZz"/>
+                                    <constraint firstItem="VWU-md-u8N" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="BfH-Mm-PWi" secondAttribute="trailing" constant="8" symbolic="YES" id="E9t-u1-Gsg"/>
                                     <constraint firstItem="VWU-md-u8N" firstAttribute="centerY" secondItem="ip8-aN-aih" secondAttribute="centerY" id="TX2-iR-ZSS"/>
                                     <constraint firstItem="BfH-Mm-PWi" firstAttribute="top" secondItem="ip8-aN-aih" secondAttribute="top" constant="8" id="Wut-ae-Nsa"/>
                                     <constraint firstAttribute="trailing" secondItem="VWU-md-u8N" secondAttribute="trailing" constant="16" id="WzK-hc-Tcb"/>
@@ -189,7 +196,6 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" keyboardDismissMode="interactive" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="c6i-a9-Djx">
                                 <rect key="frame" x="0.0" y="80.5" width="414" height="699.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -213,6 +219,7 @@
                                     <constraint firstItem="D7m-Kb-JvN" firstAttribute="centerY" secondItem="3OI-oL-bgm" secondAttribute="centerY" id="3HC-Qc-r2c"/>
                                     <constraint firstAttribute="height" constant="100" id="6mx-3H-XCb"/>
                                     <constraint firstItem="3OI-oL-bgm" firstAttribute="centerX" secondItem="Q14-Cq-Dc4" secondAttribute="centerX" id="IWs-KV-aJg"/>
+                                    <constraint firstItem="3OI-oL-bgm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="D7m-Kb-JvN" secondAttribute="trailing" constant="8" symbolic="YES" id="M3B-GP-TZB"/>
                                     <constraint firstItem="3OI-oL-bgm" firstAttribute="top" secondItem="Q14-Cq-Dc4" secondAttribute="top" id="XbU-2I-4b0"/>
                                     <constraint firstItem="D7m-Kb-JvN" firstAttribute="leading" secondItem="Q14-Cq-Dc4" secondAttribute="leading" constant="16" id="efv-jh-BIH"/>
                                 </constraints>
@@ -234,6 +241,11 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="jko-FA-jP0"/>
                     </view>
+                    <connections>
+                        <outlet property="contentField" destination="c6i-a9-Djx" id="CEn-nv-Hpi"/>
+                        <outlet property="dateLabel" destination="BfH-Mm-PWi" id="Jly-RP-HvS"/>
+                        <outlet property="timeLabel" destination="D7m-Kb-JvN" id="alg-c3-8wy"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u62-nH-3PR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -276,4 +288,7 @@
             <color red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="IGQ-6K-WoR"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -13,23 +13,17 @@ class FeedTableViewCell: UITableViewCell {
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var jornalLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var dayLabel: UILabel!
+    @IBOutlet weak var weekDayLabel: UILabel!
 
     func bind(entry: Entry) {
         contentLabel.text = entry.title
-        jornalLabel.text = entry.journal.title
+//        jornalLabel.text = entry.journal.title
+        jornalLabel.text = "저널이름"
 
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale.current
-        dateFormatter.timeStyle = .short
-        dateFormatter.dateStyle = .none
-        timeLabel.text = dateFormatter.string(from: entry.date)
-
-        dateFormatter.dateFormat = "d"
-        dateLabel.text = dateFormatter.string(from: entry.date)
-
-        dateFormatter.dateFormat = "EEE"
-        dayLabel.text = dateFormatter.string(from: entry.date)
+        let dateSet = DateStringSet(date: entry.date)
+        timeLabel.text = dateSet.time
+        dayLabel.text = dateSet.day
+        weekDayLabel.text = dateSet.weekDay
     }
 }

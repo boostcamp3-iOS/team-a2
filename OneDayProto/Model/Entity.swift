@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Entry {
+struct EntryVO {
     let id: Int
     var contents: [Content] = []
     var updatedDate: Date
@@ -18,12 +18,20 @@ struct Entry {
     var location: Location?
     var tags: [String]
     var deviceId: String
-
-    var title: String {
-
-        return ""
-    }
+    var title: String
 }
+//struct Entry {
+//    let id: Int
+//    var contents: [Content] = []
+//    var updatedDate: Date
+//    var date: Date
+//    var isFavorite: Bool
+//    var journal: Journal
+//    var location: Location?
+//    var tags: [String]
+//    var deviceId: String
+//    var title: String
+//}
 
 struct Location {
     let latitude: Double
