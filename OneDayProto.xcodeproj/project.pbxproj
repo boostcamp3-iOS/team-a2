@@ -21,6 +21,8 @@
 		D5FE688B21F6DAA80042F504 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5FE688A21F6DAA80042F504 /* Assets.xcassets */; };
 		D5FE688E21F6DAA80042F504 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5FE688C21F6DAA80042F504 /* LaunchScreen.storyboard */; };
 		EC5F149C21F81E07009CE6B5 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = EC5F149B21F81E07009CE6B5 /* .swiftlint.yml */; };
+		EC5F14A221F82F8E009CE6B5 /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5F14A121F82F8E009CE6B5 /* SettingTableViewController.swift */; };
+		EC5F14A421F835FC009CE6B5 /* SyncTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5F14A321F835FC009CE6B5 /* SyncTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +44,9 @@
 		D5FE688D21F6DAA80042F504 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D5FE688F21F6DAA80042F504 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EC5F149B21F81E07009CE6B5 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
+		EC5F14A121F82F8E009CE6B5 /* SettingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
+		EC5F14A321F835FC009CE6B5 /* SyncTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncTableViewController.swift; sourceTree = "<group>"; };
+		EC5F14A521F83BF5009CE6B5 /* OneDayProto.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneDayProto.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +82,8 @@
 			isa = PBXGroup;
 			children = (
 				D5FE688221F6DAA60042F504 /* ViewController.swift */,
+				EC5F14A121F82F8E009CE6B5 /* SettingTableViewController.swift */,
+				EC5F14A321F835FC009CE6B5 /* SyncTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -165,6 +172,7 @@
 		D5FE687F21F6DAA60042F504 /* OneDayProto */ = {
 			isa = PBXGroup;
 			children = (
+				EC5F14A521F83BF5009CE6B5 /* OneDayProto.entitlements */,
 				D55FF3AE21F7FC950075FA96 /* Extensions */,
 				D55FF3A521F7FA8F0075FA96 /* AppDelegate */,
 				D55FF3A421F7F9EA0075FA96 /* Views */,
@@ -211,6 +219,11 @@
 				TargetAttributes = {
 					D5FE687C21F6DAA60042F504 = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -313,9 +326,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC5F14A221F82F8E009CE6B5 /* SettingTableViewController.swift in Sources */,
 				D55FF3A921F7FB3D0075FA96 /* Entity.swift in Sources */,
 				D55FF3B421F801BA0075FA96 /* UIColor.swift in Sources */,
 				D5FE688321F6DAA60042F504 /* ViewController.swift in Sources */,
+				EC5F14A421F835FC009CE6B5 /* SyncTableViewController.swift in Sources */,
 				D5FE688921F6DAA60042F504 /* OneDayProto.xcdatamodeld in Sources */,
 				D55FF3B021F7FD690075FA96 /* UIView+Border.swift in Sources */,
 				D5FE688121F6DAA60042F504 /* AppDelegate.swift in Sources */,
@@ -465,6 +480,7 @@
 			baseConfigurationReference = AA948231F13C22D1DF2ACAB6 /* Pods-OneDayProto.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = OneDayProto/OneDayProto.entitlements;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 5BKN5926VM;
 				INFOPLIST_FILE = "$(SRCROOT)/OneDayProto/Resources/Info.plist";
@@ -485,6 +501,7 @@
 			baseConfigurationReference = BF45DED2CC3C3443E2665498 /* Pods-OneDayProto.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = OneDayProto/OneDayProto.entitlements;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 5BKN5926VM;
 				INFOPLIST_FILE = "$(SRCROOT)/OneDayProto/Resources/Info.plist";
