@@ -28,8 +28,8 @@ struct Location {
 struct Weather {
     let tempture: Double
     let type: WeatherType
-    
-    enum WeatherType : String {
+
+    enum WeatherType: String {
         case clearDay = "clear-day"
         case clearNight = "clear-night"
         case rain
@@ -47,12 +47,12 @@ struct Content {
     let index: Int
     let contentType: ContentType
     let content: String
-    
+
     enum ContentType {
         case text
         case photo
     }
-    
+
 }
 
 struct Journal {

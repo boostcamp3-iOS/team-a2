@@ -17,7 +17,7 @@ extension UIView {
             layer.borderWidth = newValue
         }
     }
-    
+
     @IBInspectable var borderColor: UIColor? {
         get {
             guard let color = layer.borderColor else { return nil }
