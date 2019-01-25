@@ -25,5 +25,6 @@ class FeedTableViewCell: UITableViewCell {
         timeLabel.text = dateSet.time
         dayLabel.text = dateSet.day
         weekDayLabel.text = dateSet.weekDay
+
     }
 }
