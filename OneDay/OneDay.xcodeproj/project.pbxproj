@@ -28,6 +28,10 @@
 		E992EC7221FAEE6700917116 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7121FAEE6700917116 /* SideMenuViewController.swift */; };
 		E992EC7421FAEE7100917116 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7321FAEE7100917116 /* TestViewController.swift */; };
 		E992EC7621FAEF3F00917116 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7521FAEF3F00917116 /* Colors.swift */; };
+		E992EC7821FAF4C200917116 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7721FAF4C200917116 /* CalendarViewController.swift */; };
+		E992EC7A21FAFBC500917116 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7921FAFBC500917116 /* CalendarCell.swift */; };
+		E992EC7C21FB1E5500917116 /* CalendarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7B21FB1E5500917116 /* CalendarHeaderView.swift */; };
+		E992EC7F21FB2CCE00917116 /* CalendarDaysOfWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7E21FB2CCE00917116 /* CalendarDaysOfWeek.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +60,10 @@
 		E992EC7121FAEE6700917116 /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		E992EC7321FAEE7100917116 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		E992EC7521FAEF3F00917116 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		E992EC7721FAF4C200917116 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
+		E992EC7921FAFBC500917116 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
+		E992EC7B21FB1E5500917116 /* CalendarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHeaderView.swift; sourceTree = "<group>"; };
+		E992EC7E21FB2CCE00917116 /* CalendarDaysOfWeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDaysOfWeek.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +138,7 @@
 		E96BE83321FAD8DB00266F6D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E992EC7D21FB2CAD00917116 /* Calendar */,
 				E992EC5E21FAEDD100917116 /* FilterCell */,
 				E992EC5F21FAEDDA00917116 /* SideMenuCell */,
 				E96BE83B21FAD98500266F6D /* Storyboards */,
@@ -166,6 +175,7 @@
 				E992EC6F21FAEE5B00917116 /* FilterViewController.swift */,
 				E992EC7121FAEE6700917116 /* SideMenuViewController.swift */,
 				E992EC7321FAEE7100917116 /* TestViewController.swift */,
+				E992EC7721FAF4C200917116 /* CalendarViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -210,6 +220,16 @@
 				E992EC6D21FAEE4D00917116 /* SideMenuEditCell.swift */,
 			);
 			path = SideMenuCell;
+			sourceTree = "<group>";
+		};
+		E992EC7D21FB2CAD00917116 /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				E992EC7921FAFBC500917116 /* CalendarCell.swift */,
+				E992EC7B21FB1E5500917116 /* CalendarHeaderView.swift */,
+				E992EC7E21FB2CCE00917116 /* CalendarDaysOfWeek.swift */,
+			);
+			path = Calendar;
 			sourceTree = "<group>";
 		};
 		EB1B7AD6529795DA447F6EEB /* Pods */ = {
@@ -345,15 +365,19 @@
 				E992EC6A21FAEE3C00917116 /* SideMenuJournalListCell.swift in Sources */,
 				E992EC7621FAEF3F00917116 /* Colors.swift in Sources */,
 				E992EC6121FAEDF500917116 /* SearchedKeywordCell.swift in Sources */,
+				E992EC7A21FAFBC500917116 /* CalendarCell.swift in Sources */,
 				E992EC7221FAEE6700917116 /* SideMenuViewController.swift in Sources */,
+				E992EC7821FAF4C200917116 /* CalendarViewController.swift in Sources */,
 				E992EC7421FAEE7100917116 /* TestViewController.swift in Sources */,
 				D561692521FAD07000E00FED /* ViewController.swift in Sources */,
 				E992EC7021FAEE5B00917116 /* FilterViewController.swift in Sources */,
 				D561692B21FAD07000E00FED /* OneDay.xcdatamodeld in Sources */,
 				E992EC6321FAEDFD00917116 /* MatchingEntriesCell.swift in Sources */,
+				E992EC7C21FB1E5500917116 /* CalendarHeaderView.swift in Sources */,
 				D561692321FAD07000E00FED /* AppDelegate.swift in Sources */,
 				E992EC6821FAEE3300917116 /* SideMenuMainCell.swift in Sources */,
 				E992EC6C21FAEE4500917116 /* SideMenuJournalAddCell.swift in Sources */,
+				E992EC7F21FB2CCE00917116 /* CalendarDaysOfWeek.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

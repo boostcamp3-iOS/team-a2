@@ -9,65 +9,55 @@
 import UIKit
 
 class SideMenuViewController: UIViewController {
-    override func viewDidLoad() {
-        view.backgroundColor = .clear
-        self.view.addGestureRecognizer(UISwipeGestureRecognizer(target: self, action: #selector(dismissFromSideMenu)))
-        
-        setupSideMenuView()
-        setupSearchBar()
-        setupTableView()
-        
-    }
     
     override var prefersStatusBarHidden: Bool { return true }
-    @objc func dismissFromSideMenu(_ sender: UISwipeGestureRecognizer) {
-        print("스와이프")
-        if sender.direction == .right {
-            dismiss(animated: false, completion: nil)
-        }
-    }
     
     var sideMenuWidth: CGFloat = UIScreen.main.bounds.width * 0.8
+    
+    // 테이블 섹션 헤더
+    let headerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .doLight
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let sideMenuView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     // 테이블 뷰
     let sideMenuTableView = UITableView()
     
-    let sideMenuView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        return view
-    }()
-    
     // 검색 바
     let searchBarView: UIView = {
         let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     let searchBar: UISearchBar = {
         let bar = UISearchBar()
-        bar.translatesAutoresizingMaskIntoConstraints = false
         bar.searchBarStyle = .prominent
         bar.placeholder = " Search"
         bar.sizeToFit()
         bar.backgroundImage = UIImage()
+        bar.translatesAutoresizingMaskIntoConstraints = false
         return bar
     }()
     
-    // 테이블 섹션 헤더
-    let headerView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .doLight
-        return view
-    }()
-    
-    @objc func tappedSearchBarView() {
-        print("goForSearching")
-        self.present(FilterViewController(), animated: false, completion: nil)
+    override func viewDidLoad() {
+        print("SideMenuViewController viewDidLoad")
+        view.backgroundColor = .clear
+        self.view.addGestureRecognizer(UISwipeGestureRecognizer(target: self, action: #selector(dismissFromViewController)))
+        searchBarView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedSearchBarView)))
+        setupSideMenuView()
+        setupSearchBar()
+        setupTableView()
     }
 }
 
@@ -161,9 +151,6 @@ extension SideMenuViewController {
         searchBar.rightAnchor.constraint(equalTo: searchBarView.rightAnchor, constant: 0).isActive = true
         searchBar.bottomAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: 0).isActive = true
         searchBar.isUserInteractionEnabled = false
-        
-        let tapSearchBarView = UITapGestureRecognizer(target: self, action: #selector(tappedSearchBarView))
-        searchBarView.addGestureRecognizer(tapSearchBarView)
     }
     
     func setupTableView() {
@@ -184,10 +171,10 @@ extension SideMenuViewController {
     
 }
 
-// MARK: 사이드 메뉴 뷰컨으로 이동하기, Present To SideMenuViewController
+// MARK: GestureRecognizer
 extension UIViewController {
-    
-    @objc func swipeToSideMenu(_ sender: UIPanGestureRecognizer) {
+    @objc func swipeToSideMenu(_ sender: UISwipeGestureRecognizer) {
+        print("swipeToSideMenu")
         let sideMenuVC = SideMenuViewController()
         
         let transition = CATransition()
@@ -201,7 +188,6 @@ extension UIViewController {
         
         //FIXME: 블러 해제 방법을 모르겠다 일단 보류
         //        overlayBlurredBackgroundView()
-        
     }
     
     func overlayBlurredBackgroundView() {
@@ -209,5 +195,17 @@ extension UIViewController {
         blurredBackgroundView.frame = view.frame
         blurredBackgroundView.effect = UIBlurEffect(style: .dark)
         view.addSubview(blurredBackgroundView)
+    }
+    
+    @objc func dismissFromViewController(_ sender: UISwipeGestureRecognizer) {
+        print("dismissFromViewController")
+        if sender.direction == .right {
+            dismiss(animated: false, completion: nil)
+        }
+    }
+    
+    @objc func tappedSearchBarView() {
+        print("goForSearching")
+        self.present(FilterViewController(), animated: false, completion: nil)
     }
 }
