@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		788DDD3D0837F8506B1F924C /* Pods_OneDay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F23636A5909B46DE93DFD2 /* Pods_OneDay.framework */; };
-		D502763E21FB0B1E00A0DB5E /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502763D21FB0B1E00A0DB5E /* CoreDataStack.swift */; };
 		D502765021FB0B8400A0DB5E /* TextContent+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764021FB0B8400A0DB5E /* TextContent+CoreDataClass.swift */; };
 		D502765121FB0B8400A0DB5E /* TextContent+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764121FB0B8400A0DB5E /* TextContent+CoreDataProperties.swift */; };
 		D502765221FB0B8400A0DB5E /* Journal+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764221FB0B8400A0DB5E /* Journal+CoreDataClass.swift */; };
@@ -28,7 +27,13 @@
 		D502766221FB0D6000A0DB5E /* WeatherType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502766121FB0D6000A0DB5E /* WeatherType.swift */; };
 		D502766521FB138500A0DB5E /* EntryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502766421FB138500A0DB5E /* EntryService.swift */; };
 		D502766721FB139300A0DB5E /* JournalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502766621FB139300A0DB5E /* JournalService.swift */; };
-		D502766921FB14BF00A0DB5E /* UIColor+NamedColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502766821FB14BF00A0DB5E /* UIColor+NamedColor.swift */; };
+		D502769321FEA18000A0DB5E /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502769221FEA18000A0DB5E /* CoreDataStack.swift */; };
+		D502769621FEA1CE00A0DB5E /* UIColor+NamedColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502769521FEA1CD00A0DB5E /* UIColor+NamedColor.swift */; };
+		D502769821FEA37700A0DB5E /* ContentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502769721FEA37700A0DB5E /* ContentService.swift */; };
+		D50276B921FED1D200A0DB5E /* OneDay.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D561692921FAD07000E00FED /* OneDay.xcdatamodeld */; };
+		D50276BB21FEEE4900A0DB5E /* SampleCoreDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276BA21FEEE4900A0DB5E /* SampleCoreDataViewController.swift */; };
+		D50276BD21FEF0DC00A0DB5E /* Coredata.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D50276BC21FEF0DC00A0DB5E /* Coredata.storyboard */; };
+		D50276C021FEF4F400A0DB5E /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276BF21FEF4F400A0DB5E /* CoreDataService.swift */; };
 		D561692321FAD07000E00FED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D561692221FAD07000E00FED /* AppDelegate.swift */; };
 		D561692521FAD07000E00FED /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D561692421FAD07000E00FED /* ViewController.swift */; };
 		D561692821FAD07000E00FED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D561692621FAD07000E00FED /* Main.storyboard */; };
@@ -43,7 +48,6 @@
 		0334D603A8EB8137C93DB4D1 /* Pods-OneDay.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneDay.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OneDay/Pods-OneDay.debug.xcconfig"; sourceTree = "<group>"; };
 		3469E7E8A80EBF3C6908DBCC /* Pods-OneDay.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneDay.release.xcconfig"; path = "Pods/Target Support Files/Pods-OneDay/Pods-OneDay.release.xcconfig"; sourceTree = "<group>"; };
 		B2F23636A5909B46DE93DFD2 /* Pods_OneDay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OneDay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D502763D21FB0B1E00A0DB5E /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CoreDataStack.swift; path = ../../../../../../Documents/CoreDataStack.swift; sourceTree = "<group>"; };
 		D502764021FB0B8400A0DB5E /* TextContent+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextContent+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D502764121FB0B8400A0DB5E /* TextContent+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextContent+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D502764221FB0B8400A0DB5E /* Journal+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Journal+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -63,7 +67,12 @@
 		D502766121FB0D6000A0DB5E /* WeatherType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherType.swift; sourceTree = "<group>"; };
 		D502766421FB138500A0DB5E /* EntryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryService.swift; sourceTree = "<group>"; };
 		D502766621FB139300A0DB5E /* JournalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalService.swift; sourceTree = "<group>"; };
-		D502766821FB14BF00A0DB5E /* UIColor+NamedColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIColor+NamedColor.swift"; path = "OneDay/Service/UIColor+NamedColor.swift"; sourceTree = SOURCE_ROOT; };
+		D502769221FEA18000A0DB5E /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		D502769521FEA1CD00A0DB5E /* UIColor+NamedColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+NamedColor.swift"; sourceTree = "<group>"; };
+		D502769721FEA37700A0DB5E /* ContentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentService.swift; sourceTree = "<group>"; };
+		D50276BA21FEEE4900A0DB5E /* SampleCoreDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleCoreDataViewController.swift; sourceTree = "<group>"; };
+		D50276BC21FEF0DC00A0DB5E /* Coredata.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Coredata.storyboard; sourceTree = "<group>"; };
+		D50276BF21FEF4F400A0DB5E /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 		D561691F21FAD07000E00FED /* OneDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D561692221FAD07000E00FED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D561692421FAD07000E00FED /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -97,14 +106,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		D502763C21FB0B0A00A0DB5E /* CoreData */ = {
-			isa = PBXGroup;
-			children = (
-				D502763D21FB0B1E00A0DB5E /* CoreDataStack.swift */,
-			);
-			path = CoreData;
-			sourceTree = "<group>";
-		};
 		D502763F21FB0B5E00A0DB5E /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -132,10 +133,28 @@
 		D502766321FB137300A0DB5E /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				D502766421FB138500A0DB5E /* EntryService.swift */,
+				D50276BF21FEF4F400A0DB5E /* CoreDataService.swift */,
 				D502766621FB139300A0DB5E /* JournalService.swift */,
+				D502766421FB138500A0DB5E /* EntryService.swift */,
+				D502769721FEA37700A0DB5E /* ContentService.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		D502769121FEA16D00A0DB5E /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				D502769221FEA18000A0DB5E /* CoreDataStack.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		D502769421FEA1AA00A0DB5E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D502769521FEA1CD00A0DB5E /* UIColor+NamedColor.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		D561691621FAD07000E00FED = {
@@ -159,11 +178,11 @@
 		D561692121FAD07000E00FED /* OneDay */ = {
 			isa = PBXGroup;
 			children = (
+				D502769421FEA1AA00A0DB5E /* Extensions */,
+				D502769121FEA16D00A0DB5E /* CoreData */,
 				D502766321FB137300A0DB5E /* Service */,
 				D502763F21FB0B5E00A0DB5E /* Model */,
-				D502763C21FB0B0A00A0DB5E /* CoreData */,
 				E96BE83121FAD8B500266F6D /* Protocols */,
-				E96BE83221FAD8C500266F6D /* Extensions */,
 				E96BE83421FAD8E100266F6D /* AppDelegate */,
 				E96BE83321FAD8DB00266F6D /* Views */,
 				E96BE83821FAD91800266F6D /* Resources */,
@@ -178,14 +197,6 @@
 			children = (
 			);
 			path = Protocols;
-			sourceTree = "<group>";
-		};
-		E96BE83221FAD8C500266F6D /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				D502766821FB14BF00A0DB5E /* UIColor+NamedColor.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		E96BE83321FAD8DB00266F6D /* Views */ = {
@@ -208,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				D561692421FAD07000E00FED /* ViewController.swift */,
+				D50276BA21FEEE4900A0DB5E /* SampleCoreDataViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -229,6 +241,7 @@
 				D561692621FAD07000E00FED /* Main.storyboard */,
 				E96BE83E21FADA9600266F6D /* SideMenu.storyboard */,
 				E96BE84021FADAAA00266F6D /* Setting.storyboard */,
+				D50276BC21FEF0DC00A0DB5E /* Coredata.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -305,6 +318,7 @@
 				E96BE83F21FADA9600266F6D /* SideMenu.storyboard in Resources */,
 				D561693021FAD07200E00FED /* LaunchScreen.storyboard in Resources */,
 				E96BE84121FADAAA00266F6D /* Setting.storyboard in Resources */,
+				D50276BD21FEF0DC00A0DB5E /* Coredata.storyboard in Resources */,
 				D561692D21FAD07200E00FED /* Assets.xcassets in Resources */,
 				E96BE83A21FAD96700266F6D /* Colors.xcassets in Resources */,
 				D561692821FAD07000E00FED /* Main.storyboard in Resources */,
@@ -361,18 +375,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D502766921FB14BF00A0DB5E /* UIColor+NamedColor.swift in Sources */,
+				D50276B921FED1D200A0DB5E /* OneDay.xcdatamodeld in Sources */,
+				D502769321FEA18000A0DB5E /* CoreDataStack.swift in Sources */,
 				D502765421FB0B8400A0DB5E /* Weather+CoreDataClass.swift in Sources */,
 				D561692521FAD07000E00FED /* ViewController.swift in Sources */,
 				D502765721FB0B8400A0DB5E /* Content+CoreDataProperties.swift in Sources */,
 				D502765E21FB0B8400A0DB5E /* ImageContent+CoreDataClass.swift in Sources */,
 				D502765521FB0B8400A0DB5E /* Weather+CoreDataProperties.swift in Sources */,
+				D50276BB21FEEE4900A0DB5E /* SampleCoreDataViewController.swift in Sources */,
+				D502769621FEA1CE00A0DB5E /* UIColor+NamedColor.swift in Sources */,
 				D502765C21FB0B8400A0DB5E /* Location+CoreDataClass.swift in Sources */,
 				D502765B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift in Sources */,
 				D502765321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift in Sources */,
 				D502765621FB0B8400A0DB5E /* Content+CoreDataClass.swift in Sources */,
+				D502769821FEA37700A0DB5E /* ContentService.swift in Sources */,
 				D502766721FB139300A0DB5E /* JournalService.swift in Sources */,
 				D561692321FAD07000E00FED /* AppDelegate.swift in Sources */,
+				D50276C021FEF4F400A0DB5E /* CoreDataService.swift in Sources */,
 				D502766221FB0D6000A0DB5E /* WeatherType.swift in Sources */,
 				D502765921FB0B8400A0DB5E /* Entry+CoreDataProperties.swift in Sources */,
 				D502765A21FB0B8400A0DB5E /* Device+CoreDataClass.swift in Sources */,
@@ -381,7 +400,6 @@
 				D502765121FB0B8400A0DB5E /* TextContent+CoreDataProperties.swift in Sources */,
 				D502765D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift in Sources */,
 				D502765821FB0B8400A0DB5E /* Entry+CoreDataClass.swift in Sources */,
-				D502763E21FB0B1E00A0DB5E /* CoreDataStack.swift in Sources */,
 				D502765221FB0B8400A0DB5E /* Journal+CoreDataClass.swift in Sources */,
 				D502766521FB138500A0DB5E /* EntryService.swift in Sources */,
 			);

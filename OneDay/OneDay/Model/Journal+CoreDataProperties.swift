@@ -2,12 +2,11 @@
 //  Journal+CoreDataProperties.swift
 //  OneDay
 //
-//  Created by juhee on 25/01/2019.
+//  Created by juhee on 28/01/2019.
 //  Copyright © 2019 teamA2. All rights reserved.
 //
 //
 
-import Foundation
 import CoreData
 import UIKit
 
@@ -18,7 +17,8 @@ extension Journal {
     }
 
     @NSManaged public var color: UIColor?
-    @NSManaged public var index: Int16
+    @NSManaged public var index: NSNumber
+    @NSManaged public var journalId: UUID
     @NSManaged public var title: String?
     @NSManaged public var entries: NSSet?
 

@@ -2,14 +2,12 @@
 //  Entry+CoreDataProperties.swift
 //  OneDay
 //
-//  Created by juhee on 25/01/2019.
+//  Created by juhee on 28/01/2019.
 //  Copyright © 2019 teamA2. All rights reserved.
 //
 //
 
-import Foundation
 import CoreData
-
 
 extension Entry {
 
@@ -18,6 +16,7 @@ extension Entry {
     }
 
     @NSManaged public var date: NSDate?
+    @NSManaged public var entryId: UUID?
     @NSManaged public var favorite: Bool
     @NSManaged public var title: String?
     @NSManaged public var updatedDate: NSDate?
