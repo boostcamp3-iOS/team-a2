@@ -16,6 +16,7 @@ BoostCamp 2019 iOS A2
 
 ## 주차별 목표
 ** 모든 활동 기록 및 중간산출물은 [Wiki](https://github.com/boostcamp3-iOS/team-a2/wiki) 에 저장합니다. **
+
 ** Day 별 진행상황은 Project-All(https://github.com/boostcamp3-iOS/team-a2/projects/1) 에서 확인 가능합니다. **
 - Week 1
   - **기능 분석** : 전체적인 앱 기능 분석 및 우선 순위 결정
