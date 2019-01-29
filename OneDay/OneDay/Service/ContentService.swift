@@ -7,29 +7,51 @@
 //
 
 import CoreData
+import Foundation
 
 final class ContentService: CoreDataService {
-    public func addContents(entry: Entry, contents: [Content]) -> NSSet {
+    public func content(entry: Entry, cotent data: Content) -> Content {
+        var content: ImageContent!
+        if let data = data as? ImageContent {
+            let imageContent = ImageContent(context: managedObjectContext)
+            imageContent.height = data.height
+            imageContent.width = data.width
+            imageContent.image = data.image
+            content = imageContent
+        } else if let data = data as? TextContent {
+            let textContent = TextContent(context: managedObjectContext)
+            textContent.content = data.content
+        }
+        content.index = data.index
+        content.entry = entry
+        coreDataStack.saveContext(managedObjectContext)
+        return content
+    }
+    
+    public func contents(entry: Entry, contents: [Content]) -> NSSet {
         var index: Int16 = 0
         
         contents.forEach { data in
-            if let image = data as? ImageContent {
-                let content = ImageContent(context: managedObjectContext)
-                content.index = index as NSNumber
-                content.height = image.height
-                content.width = image.width
-                content.image = image.image
-            } else if data is TextContent {
-                let content = TextContent(context: managedObjectContext)
-                content.index = index as NSNumber
+            var content: ImageContent!
+            if let data = data as? ImageContent {
+                let imageContent = ImageContent(context: managedObjectContext)
+                imageContent.height = data.height
+                imageContent.width = data.width
+                imageContent.image = data.image
+                content = imageContent
+            } else if let data = data as? TextContent {
+                let textContent = TextContent(context: managedObjectContext)
+                textContent.content = data.content
             }
+            content.index = data.index
+            content.entry = entry
             index += 1
         }
         coreDataStack.saveContext(managedObjectContext)
         return NSSet(array: contents)
     }
     
-    public func getContents(_ entryId: UUID) -> [Content] {
+    public func contents(from entryId: UUID) -> [Content] {
         let fetchRequest: NSFetchRequest<Content> = Content.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "%K = %@", argumentArray: [#keyPath(Content.entry.entryId), entryId])
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Content.index), ascending: true)]

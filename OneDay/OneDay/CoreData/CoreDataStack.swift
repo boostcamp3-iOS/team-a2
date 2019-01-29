@@ -33,6 +33,25 @@ class CoreDataStack {
         return storeContainer.newBackgroundContext()
     }
     
+    lazy var storeDescription: NSPersistentStoreDescription = {
+        let description = NSPersistentStoreDescription(url: self.storeURL)
+        description.shouldMigrateStoreAutomatically = true
+        description.shouldInferMappingModelAutomatically = false
+        return description
+    }()
+    
+    lazy var storeContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: self.modelName)
+//        seedCoreDataContainerIfFirstLaunch()
+        container.persistentStoreDescriptions = [self.storeDescription]
+        container.loadPersistentStores { (storeDescription, error) in
+            if let error = error {
+                fatalError("storeDescription : \(storeDescription) Unresolved error \(error)")
+            }
+        }
+        return container
+    }()
+    
     var storeURL : URL {
         let storePaths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
         let storePath = storePaths[0] as NSString
@@ -50,25 +69,6 @@ class CoreDataStack {
         let sqliteFilePath = storePath.appendingPathComponent(storeName + ".sqlite")
         return URL(fileURLWithPath: sqliteFilePath)
     }
-    
-    lazy var storeDescription: NSPersistentStoreDescription = {
-        let description = NSPersistentStoreDescription(url: self.storeURL)
-        description.shouldMigrateStoreAutomatically = true
-        description.shouldInferMappingModelAutomatically = false
-        return description
-    }()
-    
-    private lazy var storeContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: self.modelName)
-        seedCoreDataContainerIfFirstLaunch()
-        container.persistentStoreDescriptions = [self.storeDescription]
-        container.loadPersistentStores { (storeDescription, error) in
-            if let error = error {
-                fatalError("storeDescription : \(storeDescription) Unresolved error \(error)")
-            }
-        }
-        return container
-    }()
     
     public lazy var mainContext: NSManagedObjectContext = {
         return self.storeContainer.viewContext

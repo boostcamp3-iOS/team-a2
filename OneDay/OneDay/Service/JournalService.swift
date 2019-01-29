@@ -10,11 +10,11 @@ import CoreData
 import UIKit
 
 final class JournalService : CoreDataService {
-    public func addJournal(_ title: String, index: Int) -> Journal {
-        return self.addJournal(title, index: index as NSNumber)
+    public func journal(_ title: String, index: Int) -> Journal {
+        return self.journal(title, index: index as NSNumber)
     }
     
-    public func addJournal(_ title: String, index: NSNumber) -> Journal {
+    public func journal(_ title: String, index: NSNumber) -> Journal {
         let journal = Journal(context: managedObjectContext)
         journal.title = title
         journal.color = UIColor.doBlue
@@ -24,7 +24,7 @@ final class JournalService : CoreDataService {
         return journal
     }
     
-    public func getJournal(_ journalId: NSNumber) -> Journal? {
+    public func journal(_ journalId: NSNumber) -> Journal? {
         let fetchRequest: NSFetchRequest<Journal> = Journal.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "%K = %@", argumentArray: [#keyPath(Journal.journalId), journalId])
         let results: [Journal]?
@@ -36,7 +36,7 @@ final class JournalService : CoreDataService {
         return results?.first
     }
     
-    public func getJournals() -> [Journal] {
+    public func journals() -> [Journal] {
         let fetchRequest: NSFetchRequest<Journal> = Journal.fetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Journal.index), ascending: true)]
         
@@ -47,8 +47,8 @@ final class JournalService : CoreDataService {
         }
     }
     
-    public func deleteJournal(_ journalId: NSNumber) {
-        guard let campSite = getJournal(journalId) else { return }
+    public func journal(remove journalId: NSNumber) {
+        guard let campSite = journal(journalId) else { return }
         managedObjectContext.delete(campSite)
         coreDataStack.saveContext(managedObjectContext)
     }

@@ -14,12 +14,11 @@ class SampleCoreDataViewController: UIViewController {
     @IBOutlet weak var temp: UITableView!
     
     var managedObjectContext: NSManagedObjectContext!
-    var tempFetchedResultsController: NSFetchedResultsController<Journal>?
+    var cachedFetchedResultController: NSFetchedResultsController<Journal>?
     var journalsCount: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     @IBAction func alertAddJournal(_ sender: Any) {
@@ -43,7 +42,7 @@ class SampleCoreDataViewController: UIViewController {
         let context = fetchedResultsController.managedObjectContext
         let service = JournalService(managedObjectContext: context)
         let index = journalsCount + 1
-        _ = service.addJournal(title ?? "New Journal", index: index)
+        _ = service.journal(title ?? "New Journal", index: index)
     }
 }
 
@@ -73,7 +72,7 @@ extension SampleCoreDataViewController: UITableViewDelegate, UITableViewDataSour
         guard case(.delete) = editingStyle else { return }
         
         let context = fetchedResultsController.managedObjectContext
-        context.delete(fetchedResultsController.object(at: indexPath))
+        managedObjectContext.delete(fetchedResultsController.object(at: indexPath))
         
         do {
             try context.save()
@@ -82,16 +81,16 @@ extension SampleCoreDataViewController: UITableViewDelegate, UITableViewDataSour
         }
     }
 }
-    
+
 extension SampleCoreDataViewController: NSFetchedResultsControllerDelegate {
     var fetchedResultsController: NSFetchedResultsController<Journal> {
-        if tempFetchedResultsController != nil {
-            return tempFetchedResultsController!
+        if cachedFetchedResultController != nil {
+            return cachedFetchedResultController!
         }
-        
+
         let fetchRequest: NSFetchRequest<Journal> = Journal.fetchRequest()
         fetchRequest.fetchBatchSize = 10
-        
+
         let sortDescriptor = NSSortDescriptor(key: #keyPath(Journal.index), ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
@@ -99,22 +98,22 @@ extension SampleCoreDataViewController: NSFetchedResultsControllerDelegate {
                                                                    sectionNameKeyPath: nil,
                                                                    cacheName: "Journal")
         aFetchedResultsController.delegate = self
-        tempFetchedResultsController = aFetchedResultsController
-        journalsCount = tempFetchedResultsController?.fetchedObjects?.count ?? 0
-        
+        cachedFetchedResultController = aFetchedResultsController
+        journalsCount = cachedFetchedResultController?.fetchedObjects?.count ?? 0
+
         do {
-            try tempFetchedResultsController!.performFetch()
+            try cachedFetchedResultController!.performFetch()
         } catch let error as NSError {
             fatalError("Unresolved error \(error), \(error.userInfo)")
         }
-        
-        return tempFetchedResultsController!
+
+        return cachedFetchedResultController!
     }
-    
+
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         temp.beginUpdates()
     }
-    
+
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         switch type {
         case .insert:
@@ -125,7 +124,7 @@ extension SampleCoreDataViewController: NSFetchedResultsControllerDelegate {
             return
         }
     }
-    
+
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
         case .insert:
@@ -139,7 +138,7 @@ extension SampleCoreDataViewController: NSFetchedResultsControllerDelegate {
             temp.insertRows(at: [newIndexPath!], with: .fade)
         }
     }
-    
+
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         temp.endUpdates()
     }
