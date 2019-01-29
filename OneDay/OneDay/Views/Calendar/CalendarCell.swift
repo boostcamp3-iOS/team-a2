@@ -19,13 +19,14 @@ class CalendarCell: UICollectionViewCell {
     }
     
     override var isSelected: Bool {
-        didSet {
-            if isSelected {
-                dayLabel.backgroundColor = .white
-            } else {
-                dayLabel.backgroundColor = .gray
+            didSet {
+                if isSelected && dayLabel.text != "" {
+                    dayLabel.backgroundColor = .gray
+                    print("isSelected")
+                } else {
+                    dayLabel.backgroundColor = .white
+                }
             }
-        }
     }
     
     let dayLabel: UILabel = {
