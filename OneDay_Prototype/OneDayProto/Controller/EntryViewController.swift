@@ -20,7 +20,39 @@ class EntryViewController: UIViewController {
     weak var delegate: EntryDelegate!
 
     //드레그시 사용되는 이미지뷰
-    var preview = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+    let previewImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+    let preview: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.widthAnchor.constraint(lessThanOrEqualToConstant: UIScreen.main.bounds.width/2).isActive = true
+        view.heightAnchor.constraint(lessThanOrEqualToConstant: 200).isActive = true
+        view.backgroundColor = UIColor(white: 1, alpha: 0.7)
+        view.layer.cornerRadius = 20
+        return view
+    }()
+
+    func getPreviewLabel(text: String) -> UILabel {
+        let label = UILabel()
+        label.text = text
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        return label
+    }
+
+    func setupPreview(_ previewLabel: UILabel) {
+        if preview.subviews.count != 0 {
+            preview.subviews[0].removeFromSuperview()
+        }
+        preview.addSubview(previewLabel)
+        previewLabel.topAnchor.constraint(equalTo: preview.topAnchor, constant: 8).isActive = true
+            previewLabel.bottomAnchor.constraint(equalTo: preview.bottomAnchor, constant: -8).isActive = true
+            previewLabel.leftAnchor.constraint(equalTo: preview.leftAnchor, constant: 8).isActive = true
+            previewLabel.rightAnchor.constraint(equalTo: preview.rightAnchor, constant: -8).isActive = true
+    }
+
+    lazy var isSelectedImage = false
+    lazy var selectedText: String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,28 +136,50 @@ extension EntryViewController: UIImagePickerControllerDelegate, UINavigationCont
 
 extension EntryViewController: UITextDragDelegate, UITextDropDelegate {
 
-    func textDraggableView(_ textDraggableView: UIView & UITextDraggable, itemsForDrag dragRequest: UITextDragRequest) -> [UIDragItem] {
+    func textDraggableView(_ textDraggableView: UIView & UITextDraggable, dragPreviewForLiftingItem item: UIDragItem, session: UIDragSession) -> UITargetedDragPreview? {
+        // 드래그 위치를 얻음
+        let dragPoint = session.location(in: textDraggableView)
+        print(dragPoint)
+        // 드래그 프리뷰가 시작될 위치를 지정
+        let target = UIDragPreviewTarget(container: textView, center: dragPoint)
 
-        //UITextRange를 NSRange로 변경
-        let startOffset: Int = textView.offset(from: textView.beginningOfDocument, to: dragRequest.dragRange.start)
-        let endOffset: Int = textView.offset(from: textDraggableView.beginningOfDocument, to: dragRequest.dragRange.end)
+        // 이미지가 선택되었는가? 선택되었으면 이미지뷰 반환, 아니면 텍스트 라벨 반환
+        if isSelectedImage {
+            isSelectedImage = false
+            return UITargetedDragPreview(view: previewImageView, parameters: UIDragPreviewParameters(), target: target)
+        } else {
+            let previewLabel = getPreviewLabel(text: selectedText)
+            setupPreview(previewLabel)
+            return UITargetedDragPreview(view: preview, parameters: UIDragPreviewParameters(), target: target)
+        }
+    }
+
+    func textDraggableView(_ textDraggableView: UIView & UITextDraggable, itemsForDrag dragRequest: UITextDragRequest) -> [UIDragItem] {
+        // UITextRange를 NSRange로 변경
+        let startOffset: Int = textView.offset(from: textView.beginningOfDocument,
+                                               to: dragRequest.dragRange.start)
+        let endOffset: Int = textView.offset(from: textDraggableView.beginningOfDocument,
+                                             to: dragRequest.dragRange.end)
         let offsetRange = NSRange(location: startOffset, length: endOffset - startOffset)
 
         let substring = textView.attributedText.attributedSubstring(from: offsetRange)
 
-        if let attachment = substring.attributes(at: 0, effectiveRange: nil)[NSAttributedString.Key.attachment] as? NSTextAttachment, let string = textView.text(in: dragRequest.dragRange) {
-            view.layoutIfNeeded()
-            preview.image = attachment.image
-            let itemProvider = NSItemProvider(object: string as NSString)
+        // attributedText에 이미지가 있으면 previewImageView에 이미지를 저장하고 isSelectedImage을 true로 바꾼다
+        if let attachment = substring.attributes(at: 0, effectiveRange: nil)[NSAttributedString.Key.attachment] as? NSTextAttachment {
+            previewImageView.image = attachment.image
+            isSelectedImage = true
+        }
+
+        if let selectedString = textView.text(in: dragRequest.dragRange) {
+            //            텍스트를 저장할 라벨을 초기화하고, 선택된 범위의 텍스트를 집어넣음, 이미지를 선택하면 selectedString == "" 이다
+            selectedText = ""
+            selectedText = selectedString
+
+            let itemProvider = NSItemProvider(object: selectedString as NSString)
             let item = UIDragItem(itemProvider: itemProvider)
             return [item]
         } else {
-            return [] //해당 범위 내에 이미지가 없을 시 드래그 불가
+            return []
         }
-    }
-    func textDraggableView(_ textDraggableView: UIView & UITextDraggable, dragPreviewForLiftingItem item: UIDragItem, session: UIDragSession) -> UITargetedDragPreview? {
-        let target = UIDragPreviewTarget(container: textDraggableView, center: session.location(in: textDraggableView))
-        return UITargetedDragPreview(view: preview, parameters: UIDragPreviewParameters(), target: target)
-
     }
 }
