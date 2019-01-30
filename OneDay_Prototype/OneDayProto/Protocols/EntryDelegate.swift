@@ -9,6 +9,6 @@
 import Foundation
 
 protocol EntryDelegate: class {
-    func register(new entry: EntryVO)
-    func update(entry: EntryVO)
+    func register(new entry: Entry)
+    func update(entry: Entry)
 }

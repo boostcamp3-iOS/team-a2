@@ -34,6 +34,9 @@
                                                     <state key="normal" title="카메라">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="insertEntry" destination="BYZ-38-t0r" eventType="touchUpInside" id="gW1-xb-z3B"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2VL-uj-FKB">
                                                     <rect key="frame" x="189" y="0.0" width="153" height="30"/>
