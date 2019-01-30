@@ -193,10 +193,24 @@
                                     <constraint firstItem="BfH-Mm-PWi" firstAttribute="leading" secondItem="ip8-aN-aih" secondAttribute="leading" constant="16" id="wQO-X3-fXS"/>
                                 </constraints>
                             </view>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" keyboardDismissMode="interactive" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="c6i-a9-Djx">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" keyboardDismissMode="interactive" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c6i-a9-Djx">
                                 <rect key="frame" x="0.0" y="80.5" width="414" height="699.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <attributedString key="attributedText">
+                                    <fragment>
+                                        <string key="content">helllo!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+123123123
+
+
+
+31413412312314123125</string>
+                                        <attributes>
+                                            <font key="NSFont" size="18" name=".AppleSDGothicNeoI-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q14-Cq-Dc4" userLabel="Grey View">
@@ -213,14 +227,23 @@
                                         <color key="pageIndicatorTintColor" name="doGray"/>
                                         <color key="currentPageIndicatorTintColor" name="doGray"/>
                                     </pageControl>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cnc-GM-Ibz">
+                                        <rect key="frame" x="368" y="3.5" width="30" height="30"/>
+                                        <state key="normal" title="사진"/>
+                                        <connections>
+                                            <action selector="showPhoto:" destination="FEv-1N-6Ww" eventType="touchUpInside" id="wBn-1E-raV"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" name="doLight"/>
                                 <constraints>
                                     <constraint firstItem="D7m-Kb-JvN" firstAttribute="centerY" secondItem="3OI-oL-bgm" secondAttribute="centerY" id="3HC-Qc-r2c"/>
+                                    <constraint firstAttribute="trailing" secondItem="cnc-GM-Ibz" secondAttribute="trailing" constant="16" id="5Xc-NX-fWQ"/>
                                     <constraint firstAttribute="height" constant="100" id="6mx-3H-XCb"/>
                                     <constraint firstItem="3OI-oL-bgm" firstAttribute="centerX" secondItem="Q14-Cq-Dc4" secondAttribute="centerX" id="IWs-KV-aJg"/>
                                     <constraint firstItem="3OI-oL-bgm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="D7m-Kb-JvN" secondAttribute="trailing" constant="8" symbolic="YES" id="M3B-GP-TZB"/>
                                     <constraint firstItem="3OI-oL-bgm" firstAttribute="top" secondItem="Q14-Cq-Dc4" secondAttribute="top" id="XbU-2I-4b0"/>
+                                    <constraint firstItem="cnc-GM-Ibz" firstAttribute="centerY" secondItem="3OI-oL-bgm" secondAttribute="centerY" id="bBd-zv-Upi"/>
                                     <constraint firstItem="D7m-Kb-JvN" firstAttribute="leading" secondItem="Q14-Cq-Dc4" secondAttribute="leading" constant="16" id="efv-jh-BIH"/>
                                 </constraints>
                             </view>
@@ -242,8 +265,8 @@
                         <viewLayoutGuide key="safeArea" id="jko-FA-jP0"/>
                     </view>
                     <connections>
-                        <outlet property="contentField" destination="c6i-a9-Djx" id="CEn-nv-Hpi"/>
                         <outlet property="dateLabel" destination="BfH-Mm-PWi" id="Jly-RP-HvS"/>
+                        <outlet property="textView" destination="c6i-a9-Djx" id="CEn-nv-Hpi"/>
                         <outlet property="timeLabel" destination="D7m-Kb-JvN" id="alg-c3-8wy"/>
                     </connections>
                 </viewController>
