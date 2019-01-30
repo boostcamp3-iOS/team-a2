@@ -19,6 +19,9 @@ class EntryViewController: UIViewController {
     var entry: EntryVO?
     weak var delegate: EntryDelegate!
 
+    //드레그시 사용되는 이미지뷰
+    var preview = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -102,20 +105,27 @@ extension EntryViewController: UIImagePickerControllerDelegate, UINavigationCont
 extension EntryViewController: UITextDragDelegate, UITextDropDelegate {
 
     func textDraggableView(_ textDraggableView: UIView & UITextDraggable, itemsForDrag dragRequest: UITextDragRequest) -> [UIDragItem] {
-        if let string = textView.text(in: dragRequest.dragRange) {
+
+        //UITextRange를 NSRange로 변경
+        let startOffset: Int = textView.offset(from: textView.beginningOfDocument, to: dragRequest.dragRange.start)
+        let endOffset: Int = textView.offset(from: textDraggableView.beginningOfDocument, to: dragRequest.dragRange.end)
+        let offsetRange = NSRange(location: startOffset, length: endOffset - startOffset)
+
+        let substring = textView.attributedText.attributedSubstring(from: offsetRange)
+
+        if let attachment = substring.attributes(at: 0, effectiveRange: nil)[NSAttributedString.Key.attachment] as? NSTextAttachment, let string = textView.text(in: dragRequest.dragRange) {
+            view.layoutIfNeeded()
+            preview.image = attachment.image
             let itemProvider = NSItemProvider(object: string as NSString)
             let item = UIDragItem(itemProvider: itemProvider)
-            item.localObject = true
             return [item]
         } else {
-            return []
+            return [] //해당 범위 내에 이미지가 없을 시 드래그 불가
         }
     }
     func textDraggableView(_ textDraggableView: UIView & UITextDraggable, dragPreviewForLiftingItem item: UIDragItem, session: UIDragSession) -> UITargetedDragPreview? {
-
-        let center = CGPoint(x: textView.bounds.midX, y: textView.bounds.midY)
-        let target = UIDragPreviewTarget(container: textView, center: center)
-        return UITargetedDragPreview(view: textDraggableView.subviews[1], parameters: UIDragPreviewParameters(), target: target)
+        let target = UIDragPreviewTarget(container: textDraggableView, center: session.location(in: textDraggableView))
+        return UITargetedDragPreview(view: preview, parameters: UIDragPreviewParameters(), target: target)
 
     }
 }
