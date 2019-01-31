@@ -18,12 +18,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var coreDataStack = CoreDataStack(modelName: "OneDay")
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        guard let navController = window?.rootViewController as? UINavigationController,
-            let viewController = navController.topViewController as? SampleCoreDataViewController else {
-                return true
-        }
-        
-        viewController.managedObjectContext = coreDataStack.managedContext
+//        guard let navController = window?.rootViewController as? UINavigationController,
+//            let viewController = navController.topViewController as? SampleCoreDataViewController else {
+//                return true
+//        }
+//        
+//        viewController.managedObjectContext = coreDataStack.managedContext
         return true
     }
 

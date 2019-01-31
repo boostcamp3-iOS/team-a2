@@ -30,7 +30,7 @@ class JournalServiceTest: XCTestCase {
         journalService = JournalService(managedObjectContext: derivedContext, coreDataStack: coreDataStack)
         
         expectation(
-            forNotification: .NSManagedObjectContextDidSave, object: coreDataStack.mainContext) { notification in
+            forNotification: .NSManagedObjectContextDidSave, object: coreDataStack.mainContext) { _ in
                 return true
         }
         

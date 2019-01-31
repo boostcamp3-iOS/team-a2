@@ -13,14 +13,12 @@ class EntryServiceTest: XCTestCase {
     // MARK: Properties
     var entryService: EntryService!
     var journalService: JournalService!
-    var contentService: ContentService!
     var coreDataStack: CoreDataStack!
     
     override func setUp() {
         coreDataStack = TestCoreDataStack()
         entryService = EntryService(managedObjectContext: coreDataStack.mainContext, coreDataStack: coreDataStack)
         journalService = JournalService(managedObjectContext: coreDataStack.mainContext, coreDataStack: coreDataStack)
-        contentService = ContentService(managedObjectContext: coreDataStack.mainContext, coreDataStack: coreDataStack)
     }
     
     override func tearDown() {
@@ -28,7 +26,6 @@ class EntryServiceTest: XCTestCase {
         coreDataStack = nil
         journalService = nil
         entryService = nil
-        contentService = nil
     }
     
     func testRootContextIsSavedAfterAddingCamper() {
@@ -36,17 +33,13 @@ class EntryServiceTest: XCTestCase {
         entryService = EntryService(managedObjectContext: derivedContext, coreDataStack: coreDataStack)
         
         expectation(
-        forNotification: .NSManagedObjectContextDidSave, object: coreDataStack.mainContext) { notification in
+        forNotification: .NSManagedObjectContextDidSave, object: coreDataStack.mainContext) { _ in
             return true
         }
         
         derivedContext.perform {
-            let journal = self.journalService.journal("모든 항목", index: 0)
-            XCTAssertNotNil(journal)
-            let contents: [Content] = []
-            contents.append(TextContent())
-            let entry = self.entryService.entry("안녕", contents: [])
-            let content = self.contentService.contents(entry: <#T##Entry#>, contents: <#T##[Content]#>)
+            let entry = self.entryService.entry("안녕", contents: NSAttributedString(string: "Hi"))
+            XCTAssertNotNil(entry)
         }
         
         waitForExpectations(timeout: 2.0) { error in
@@ -55,14 +48,14 @@ class EntryServiceTest: XCTestCase {
     }
     
     func testAddEntry() {
-        let journal = entryService.addJournal("일지", index: 1)
+        let contents = NSAttributedString(string: "안녕")
+        let entry = entryService.entry("일지", contents: contents)
         
-        XCTAssertNotNil(journal, "Camper should not be nil")
-        XCTAssertTrue(journal.title == "일지")
-        XCTAssertTrue(journal.index == 1)
+        XCTAssertNotNil(entry, "Camper should not be nil")
+        XCTAssertTrue(entry.title == "일지")
     }
     
-    func testGetJournals() {
+    func testGetEntrie() {
         _ = journalService.journal("모든 항목", index: 0)
         _ = journalService.journal("일지", index: 1)
         let journals = journalService.journals()

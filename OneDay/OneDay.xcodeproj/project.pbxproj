@@ -8,36 +8,33 @@
 
 /* Begin PBXBuildFile section */
 		788DDD3D0837F8506B1F924C /* Pods_OneDay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F23636A5909B46DE93DFD2 /* Pods_OneDay.framework */; };
-		D502765021FB0B8400A0DB5E /* TextContent+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764021FB0B8400A0DB5E /* TextContent+CoreDataClass.swift */; };
-		D502765121FB0B8400A0DB5E /* TextContent+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764121FB0B8400A0DB5E /* TextContent+CoreDataProperties.swift */; };
 		D502765221FB0B8400A0DB5E /* Journal+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764221FB0B8400A0DB5E /* Journal+CoreDataClass.swift */; };
 		D502765321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift */; };
 		D502765421FB0B8400A0DB5E /* Weather+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764421FB0B8400A0DB5E /* Weather+CoreDataClass.swift */; };
 		D502765521FB0B8400A0DB5E /* Weather+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764521FB0B8400A0DB5E /* Weather+CoreDataProperties.swift */; };
-		D502765621FB0B8400A0DB5E /* Content+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764621FB0B8400A0DB5E /* Content+CoreDataClass.swift */; };
-		D502765721FB0B8400A0DB5E /* Content+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764721FB0B8400A0DB5E /* Content+CoreDataProperties.swift */; };
 		D502765821FB0B8400A0DB5E /* Entry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764821FB0B8400A0DB5E /* Entry+CoreDataClass.swift */; };
 		D502765921FB0B8400A0DB5E /* Entry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764921FB0B8400A0DB5E /* Entry+CoreDataProperties.swift */; };
 		D502765A21FB0B8400A0DB5E /* Device+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764A21FB0B8400A0DB5E /* Device+CoreDataClass.swift */; };
 		D502765B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift */; };
 		D502765C21FB0B8400A0DB5E /* Location+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764C21FB0B8400A0DB5E /* Location+CoreDataClass.swift */; };
 		D502765D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift */; };
-		D502765E21FB0B8400A0DB5E /* ImageContent+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764E21FB0B8400A0DB5E /* ImageContent+CoreDataClass.swift */; };
-		D502765F21FB0B8400A0DB5E /* ImageContent+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764F21FB0B8400A0DB5E /* ImageContent+CoreDataProperties.swift */; };
 		D502766221FB0D6000A0DB5E /* WeatherType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502766121FB0D6000A0DB5E /* WeatherType.swift */; };
 		D502766521FB138500A0DB5E /* EntryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502766421FB138500A0DB5E /* EntryService.swift */; };
 		D502766721FB139300A0DB5E /* JournalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502766621FB139300A0DB5E /* JournalService.swift */; };
 		D502769321FEA18000A0DB5E /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502769221FEA18000A0DB5E /* CoreDataStack.swift */; };
 		D502769621FEA1CE00A0DB5E /* UIColor+NamedColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502769521FEA1CD00A0DB5E /* UIColor+NamedColor.swift */; };
-		D502769821FEA37700A0DB5E /* ContentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502769721FEA37700A0DB5E /* ContentService.swift */; };
 		D50276B921FED1D200A0DB5E /* OneDay.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D561692921FAD07000E00FED /* OneDay.xcdatamodeld */; };
-		D50276BB21FEEE4900A0DB5E /* SampleCoreDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276BA21FEEE4900A0DB5E /* SampleCoreDataViewController.swift */; };
+		D50276BB21FEEE4900A0DB5E /* SampleJournalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276BA21FEEE4900A0DB5E /* SampleJournalsViewController.swift */; };
 		D50276BD21FEF0DC00A0DB5E /* Coredata.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D50276BC21FEF0DC00A0DB5E /* Coredata.storyboard */; };
 		D50276C021FEF4F400A0DB5E /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276BF21FEF4F400A0DB5E /* CoreDataService.swift */; };
 		D50276CA21FEFC8400A0DB5E /* OneDayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276C921FEFC8400A0DB5E /* OneDayTests.swift */; };
 		D50276D221FEFCE900A0DB5E /* JournalServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276D121FEFCE900A0DB5E /* JournalServiceTest.swift */; };
 		D50276D521FEFD4500A0DB5E /* TestCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276D421FEFD4500A0DB5E /* TestCoreDataStack.swift */; };
 		D50276DA21FF09E100A0DB5E /* EntryServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276D921FF09E100A0DB5E /* EntryServiceTest.swift */; };
+		D50276E82202C79300A0DB5E /* SampleFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276E72202C79300A0DB5E /* SampleFeedViewController.swift */; };
+		D50276EA2202C7EE00A0DB5E /* SampleEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276E92202C7EE00A0DB5E /* SampleEntryViewController.swift */; };
+		D50276EC2202C82900A0DB5E /* DataStringSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276EB2202C82900A0DB5E /* DataStringSet.swift */; };
+		D50276EE2202D3C700A0DB5E /* SampleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276ED2202D3C700A0DB5E /* SampleTableViewCell.swift */; };
 		D561692321FAD07000E00FED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D561692221FAD07000E00FED /* AppDelegate.swift */; };
 		D561692521FAD07000E00FED /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D561692421FAD07000E00FED /* ViewController.swift */; };
 		D561692821FAD07000E00FED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D561692621FAD07000E00FED /* Main.storyboard */; };
@@ -62,29 +59,22 @@
 		0334D603A8EB8137C93DB4D1 /* Pods-OneDay.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneDay.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OneDay/Pods-OneDay.debug.xcconfig"; sourceTree = "<group>"; };
 		3469E7E8A80EBF3C6908DBCC /* Pods-OneDay.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneDay.release.xcconfig"; path = "Pods/Target Support Files/Pods-OneDay/Pods-OneDay.release.xcconfig"; sourceTree = "<group>"; };
 		B2F23636A5909B46DE93DFD2 /* Pods_OneDay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OneDay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D502764021FB0B8400A0DB5E /* TextContent+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextContent+CoreDataClass.swift"; sourceTree = "<group>"; };
-		D502764121FB0B8400A0DB5E /* TextContent+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextContent+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D502764221FB0B8400A0DB5E /* Journal+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Journal+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D502764321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Journal+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D502764421FB0B8400A0DB5E /* Weather+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weather+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D502764521FB0B8400A0DB5E /* Weather+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weather+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		D502764621FB0B8400A0DB5E /* Content+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Content+CoreDataClass.swift"; sourceTree = "<group>"; };
-		D502764721FB0B8400A0DB5E /* Content+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Content+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D502764821FB0B8400A0DB5E /* Entry+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entry+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D502764921FB0B8400A0DB5E /* Entry+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entry+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D502764A21FB0B8400A0DB5E /* Device+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D502764B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D502764C21FB0B8400A0DB5E /* Location+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D502764D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		D502764E21FB0B8400A0DB5E /* ImageContent+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageContent+CoreDataClass.swift"; sourceTree = "<group>"; };
-		D502764F21FB0B8400A0DB5E /* ImageContent+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageContent+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D502766121FB0D6000A0DB5E /* WeatherType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherType.swift; sourceTree = "<group>"; };
 		D502766421FB138500A0DB5E /* EntryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryService.swift; sourceTree = "<group>"; };
 		D502766621FB139300A0DB5E /* JournalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalService.swift; sourceTree = "<group>"; };
 		D502769221FEA18000A0DB5E /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		D502769521FEA1CD00A0DB5E /* UIColor+NamedColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+NamedColor.swift"; sourceTree = "<group>"; };
-		D502769721FEA37700A0DB5E /* ContentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentService.swift; sourceTree = "<group>"; };
-		D50276BA21FEEE4900A0DB5E /* SampleCoreDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleCoreDataViewController.swift; sourceTree = "<group>"; };
+		D50276BA21FEEE4900A0DB5E /* SampleJournalsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleJournalsViewController.swift; sourceTree = "<group>"; };
 		D50276BC21FEF0DC00A0DB5E /* Coredata.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Coredata.storyboard; sourceTree = "<group>"; };
 		D50276BF21FEF4F400A0DB5E /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 		D50276C721FEFC8400A0DB5E /* OneDayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OneDayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -93,6 +83,10 @@
 		D50276D121FEFCE900A0DB5E /* JournalServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalServiceTest.swift; sourceTree = "<group>"; };
 		D50276D421FEFD4500A0DB5E /* TestCoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCoreDataStack.swift; sourceTree = "<group>"; };
 		D50276D921FF09E100A0DB5E /* EntryServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryServiceTest.swift; sourceTree = "<group>"; };
+		D50276E72202C79300A0DB5E /* SampleFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleFeedViewController.swift; sourceTree = "<group>"; };
+		D50276E92202C7EE00A0DB5E /* SampleEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleEntryViewController.swift; sourceTree = "<group>"; };
+		D50276EB2202C82900A0DB5E /* DataStringSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStringSet.swift; sourceTree = "<group>"; };
+		D50276ED2202D3C700A0DB5E /* SampleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTableViewCell.swift; sourceTree = "<group>"; };
 		D561691F21FAD07000E00FED /* OneDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D561692221FAD07000E00FED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D561692421FAD07000E00FED /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -136,23 +130,18 @@
 		D502763F21FB0B5E00A0DB5E /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				D502764021FB0B8400A0DB5E /* TextContent+CoreDataClass.swift */,
-				D502764121FB0B8400A0DB5E /* TextContent+CoreDataProperties.swift */,
 				D502764221FB0B8400A0DB5E /* Journal+CoreDataClass.swift */,
 				D502764321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift */,
 				D502764421FB0B8400A0DB5E /* Weather+CoreDataClass.swift */,
 				D502764521FB0B8400A0DB5E /* Weather+CoreDataProperties.swift */,
-				D502764621FB0B8400A0DB5E /* Content+CoreDataClass.swift */,
-				D502764721FB0B8400A0DB5E /* Content+CoreDataProperties.swift */,
 				D502764821FB0B8400A0DB5E /* Entry+CoreDataClass.swift */,
 				D502764921FB0B8400A0DB5E /* Entry+CoreDataProperties.swift */,
 				D502764A21FB0B8400A0DB5E /* Device+CoreDataClass.swift */,
 				D502764B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift */,
 				D502764C21FB0B8400A0DB5E /* Location+CoreDataClass.swift */,
 				D502764D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift */,
-				D502764E21FB0B8400A0DB5E /* ImageContent+CoreDataClass.swift */,
-				D502764F21FB0B8400A0DB5E /* ImageContent+CoreDataProperties.swift */,
 				D502766121FB0D6000A0DB5E /* WeatherType.swift */,
+				D50276EB2202C82900A0DB5E /* DataStringSet.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -163,7 +152,6 @@
 				D50276BF21FEF4F400A0DB5E /* CoreDataService.swift */,
 				D502766621FB139300A0DB5E /* JournalService.swift */,
 				D502766421FB138500A0DB5E /* EntryService.swift */,
-				D502769721FEA37700A0DB5E /* ContentService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -202,6 +190,16 @@
 				D50276D921FF09E100A0DB5E /* EntryServiceTest.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		D50276E52202C77100A0DB5E /* Sample */ = {
+			isa = PBXGroup;
+			children = (
+				D50276BA21FEEE4900A0DB5E /* SampleJournalsViewController.swift */,
+				D50276E72202C79300A0DB5E /* SampleFeedViewController.swift */,
+				D50276E92202C7EE00A0DB5E /* SampleEntryViewController.swift */,
+			);
+			path = Sample;
 			sourceTree = "<group>";
 		};
 		D561691621FAD07000E00FED = {
@@ -244,6 +242,7 @@
 			isa = PBXGroup;
 			children = (
 				E96BE83B21FAD98500266F6D /* Storyboards */,
+				D50276ED2202D3C700A0DB5E /* SampleTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -259,8 +258,8 @@
 		E96BE83721FAD90A00266F6D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				D50276E52202C77100A0DB5E /* Sample */,
 				D561692421FAD07000E00FED /* ViewController.swift */,
-				D50276BA21FEEE4900A0DB5E /* SampleCoreDataViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -458,28 +457,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				D50276B921FED1D200A0DB5E /* OneDay.xcdatamodeld in Sources */,
+				D50276EE2202D3C700A0DB5E /* SampleTableViewCell.swift in Sources */,
 				D502769321FEA18000A0DB5E /* CoreDataStack.swift in Sources */,
 				D502765421FB0B8400A0DB5E /* Weather+CoreDataClass.swift in Sources */,
 				D561692521FAD07000E00FED /* ViewController.swift in Sources */,
-				D502765721FB0B8400A0DB5E /* Content+CoreDataProperties.swift in Sources */,
-				D502765E21FB0B8400A0DB5E /* ImageContent+CoreDataClass.swift in Sources */,
 				D502765521FB0B8400A0DB5E /* Weather+CoreDataProperties.swift in Sources */,
-				D50276BB21FEEE4900A0DB5E /* SampleCoreDataViewController.swift in Sources */,
+				D50276BB21FEEE4900A0DB5E /* SampleJournalsViewController.swift in Sources */,
 				D502769621FEA1CE00A0DB5E /* UIColor+NamedColor.swift in Sources */,
 				D502765C21FB0B8400A0DB5E /* Location+CoreDataClass.swift in Sources */,
 				D502765B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift in Sources */,
 				D502765321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift in Sources */,
-				D502765621FB0B8400A0DB5E /* Content+CoreDataClass.swift in Sources */,
-				D502769821FEA37700A0DB5E /* ContentService.swift in Sources */,
 				D502766721FB139300A0DB5E /* JournalService.swift in Sources */,
 				D561692321FAD07000E00FED /* AppDelegate.swift in Sources */,
+				D50276E82202C79300A0DB5E /* SampleFeedViewController.swift in Sources */,
 				D50276C021FEF4F400A0DB5E /* CoreDataService.swift in Sources */,
 				D502766221FB0D6000A0DB5E /* WeatherType.swift in Sources */,
 				D502765921FB0B8400A0DB5E /* Entry+CoreDataProperties.swift in Sources */,
 				D502765A21FB0B8400A0DB5E /* Device+CoreDataClass.swift in Sources */,
-				D502765F21FB0B8400A0DB5E /* ImageContent+CoreDataProperties.swift in Sources */,
-				D502765021FB0B8400A0DB5E /* TextContent+CoreDataClass.swift in Sources */,
-				D502765121FB0B8400A0DB5E /* TextContent+CoreDataProperties.swift in Sources */,
+				D50276EA2202C7EE00A0DB5E /* SampleEntryViewController.swift in Sources */,
+				D50276EC2202C82900A0DB5E /* DataStringSet.swift in Sources */,
 				D502765D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift in Sources */,
 				D502765821FB0B8400A0DB5E /* Entry+CoreDataClass.swift in Sources */,
 				D502765221FB0B8400A0DB5E /* Journal+CoreDataClass.swift in Sources */,

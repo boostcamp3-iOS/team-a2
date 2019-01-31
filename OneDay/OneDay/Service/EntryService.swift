@@ -10,16 +10,15 @@ import CoreData
 import UIKit
 
 final class EntryService : CoreDataService {
-    public func entry(_ title: String, contents: [Content]) -> Entry {
+    public func entry(_ title: String, contents: NSAttributedString) -> Entry {
         let entry = Entry(context: managedObjectContext)
-        let today: NSDate = Date() as NSDate
+        let today: Date = Date()
         entry.updatedDate = today
         entry.date = today
         entry.entryId = UUID()
-        let contentService = ContentService.init(managedObjectContext: managedObjectContext, coreDataStack: coreDataStack)
-        let contentSet = contentService.contents(entry: entry, contents: contents)
-        entry.contents = contentSet
-        coreDataStack.saveContext(managedObjectContext)
+        entry.contents = contents
+        entry.title = title
+        coreDataStack.saveContext()
         return entry
     }
     
@@ -62,6 +61,6 @@ final class EntryService : CoreDataService {
     public func entry(remove entryId: UUID) {
         guard let entry = entry(entryId) else { return }
         managedObjectContext.delete(entry)
-        coreDataStack.saveContext(managedObjectContext)
+        coreDataStack.saveContext()
     }
 }

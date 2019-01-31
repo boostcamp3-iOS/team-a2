@@ -20,7 +20,7 @@ final class JournalService : CoreDataService {
         journal.color = UIColor.doBlue
         journal.index = index
         journal.journalId = UUID()
-        coreDataStack.saveContext(managedObjectContext)
+        coreDataStack.saveContext()
         return journal
     }
     
@@ -50,6 +50,6 @@ final class JournalService : CoreDataService {
     public func journal(remove journalId: NSNumber) {
         guard let campSite = journal(journalId) else { return }
         managedObjectContext.delete(campSite)
-        coreDataStack.saveContext(managedObjectContext)
+        coreDataStack.saveContext()
     }
 }

@@ -26,6 +26,7 @@ class TestCoreDataStack: CoreDataStack {
         
         container.loadPersistentStores { (storeDescription, error) in
             if let error = error as NSError? {
+                print("storeDescription : \(storeDescription)")
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         }
