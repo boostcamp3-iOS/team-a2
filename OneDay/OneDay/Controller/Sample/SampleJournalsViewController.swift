@@ -26,7 +26,6 @@ class SampleJournalsViewController: UIViewController {
                                                                   sectionNameKeyPath: nil,
                                                                   cacheName: "Journal")
         fetchedResultsController.delegate = self
-        journalsCount = fetchedResultsController.fetchedObjects?.count ?? 0
         return fetchedResultsController
     }()
     
@@ -72,6 +71,7 @@ class SampleJournalsViewController: UIViewController {
     }
     
     func journal(title: String?) {
+        print("create new journal")
         let journal = Journal(context: coreDataStack.managedContext)
         let index = journalsCount + 1
         journal.title = title ?? "New Journal"
@@ -86,6 +86,7 @@ extension SampleJournalsViewController: UITableViewDelegate, UITableViewDataSour
         guard let sectionInfo = fetchedResultsController.sections?[section] else {
             return 0
         }
+        journalsCount = sectionInfo.numberOfObjects
         return sectionInfo.numberOfObjects
     }
     
@@ -135,7 +136,6 @@ extension SampleJournalsViewController: NSFetchedResultsControllerDelegate {
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
         case .insert:
-            print("newIndexPath : \(newIndexPath!.row)")
             journalTable.insertRows(at: [newIndexPath!], with: .fade)
         case .delete:
             journalTable.deleteRows(at: [indexPath!], with: .fade)
