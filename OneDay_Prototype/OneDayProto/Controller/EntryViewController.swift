@@ -17,8 +17,7 @@ class EntryViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var timeLabel: UILabel!
 
-    var entry: EntryVO?
-    weak var delegate: EntryDelegate!
+    var entry: Entry!
 
     //드레그시 사용되는 미리보기
     let imagePreview = UIImageView()
@@ -34,7 +33,7 @@ class EntryViewController: UIViewController {
         var dateSet: DateStringSet = DateStringSet(date: Date())
         if let data = entry {
             dateSet = DateStringSet(date: data.date)
-            textView.text = data.title
+            textView.attributedText = data.contents
         }
 
         dateLabel.text = dateSet.full
@@ -74,17 +73,22 @@ class EntryViewController: UIViewController {
     }
 
     @IBAction func saveAndDismiss(_ sender: UIButton) {
-        guard let content = textView.text else {
+        guard let content = textView.attributedText else {
             return
         }
-        if let entry = entry {
-            delegate.update(entry: entry)
-        } else {
-            let journal = Journal.init(id: 0, title: "일지이", index: 0, entryCount: 0, entries: [])
-            let newEntry = EntryVO.init(id: 1, contents: [], updatedDate: Date(), date: Date(), isFavorite: false, journal: journal, location: nil, tags: ["태그1", "태그2"], deviceId: "1", title: content)
+        entry.contents = content
 
-            delegate.register(new: newEntry)
+        let title: String
+        let stringContent = content.string
+        if stringContent.count > 1 {
+            let start = stringContent.startIndex
+            let end = stringContent.index(start, offsetBy: min(stringContent.count - 1, 40))
+            title = String(stringContent[start...end])
+        } else {
+            title = "새로운 엔트리"
         }
+
+        entry.title = title
         dismiss(animated: true, completion: nil)
     }
 }
