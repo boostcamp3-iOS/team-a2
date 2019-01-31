@@ -9,10 +9,23 @@
 import UIKit
 
 class CalendarCell: UICollectionViewCell {
+    
+    let dayLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .white
+        label.text = ""
+        label.textAlignment = .center
+        label.layer.cornerRadius = 3
+        label.layer.masksToBounds = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+   
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupCellView()
     }
+    
     override func prepareForReuse() {
         dayLabel.text = ""
         dayLabel.backgroundColor = .white
@@ -29,26 +42,15 @@ class CalendarCell: UICollectionViewCell {
             }
     }
     
-    let dayLabel: UILabel = {
-        let label = UILabel()
-        label.backgroundColor = .white
-        label.text = ""
-        label.textAlignment = .center
-        label.layer.cornerRadius = 3
-        label.layer.masksToBounds = true
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     func setupCellView() {
         addSubview(dayLabel)
         dayLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 1).isActive = true
         dayLabel.topAnchor.constraint(equalTo: topAnchor, constant: 1).isActive = true
         dayLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -1).isActive = true
         dayLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -1).isActive = true
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

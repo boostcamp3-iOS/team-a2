@@ -9,26 +9,23 @@
 import UIKit
 
 class CalendarHeaderView: UICollectionViewCell {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        backgroundColor = UIColor(white: 1, alpha: 0.8)
-        setupCellView()
-    }
     
-    let headerView: UIView = {
-        let view = UIView()
-        return view
-    }()
     let headerLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
-        label.text = "0000년 0월"
+        label.text = "년 월"
         label.textAlignment = .center
         label.font = label.font.withSize(12)
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = UIColor(white: 1, alpha: 0.8)
+        setupCellView()
+    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

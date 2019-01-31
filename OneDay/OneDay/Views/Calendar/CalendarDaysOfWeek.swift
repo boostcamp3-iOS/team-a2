@@ -6,11 +6,10 @@
 //  Copyright © 2019 teamA2. All rights reserved.
 //
 
-// 캘린더 탭 상단의 |일 월 화 수 목 금 토| 를 그리는 뷰
 import UIKit
 
 class CalendarDaysOfWeek: UIView {
-
+    // 캘린더 탭 상단의 |일 월 화 수 목 금 토| 를 그리는 뷰
     let daysOfWeekView: UIStackView = {
         let stackView=UIStackView()
         stackView.distribution = .fillEqually
