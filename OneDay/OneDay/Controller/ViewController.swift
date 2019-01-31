@@ -1,8 +1,8 @@
 //
 //  ViewController.swift
-//  OneDayProto
+//  OneDay
 //
-//  Created by juhee on 22/01/2019.
+//  Created by juhee on 25/01/2019.
 //  Copyright © 2019 teamA2. All rights reserved.
 //
 
