@@ -8,10 +8,36 @@
 
 /* Begin PBXBuildFile section */
 		788DDD3D0837F8506B1F924C /* Pods_OneDay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F23636A5909B46DE93DFD2 /* Pods_OneDay.framework */; };
+		D502765221FB0B8400A0DB5E /* Journal+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764221FB0B8400A0DB5E /* Journal+CoreDataClass.swift */; };
+		D502765321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift */; };
+		D502765421FB0B8400A0DB5E /* Weather+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764421FB0B8400A0DB5E /* Weather+CoreDataClass.swift */; };
+		D502765521FB0B8400A0DB5E /* Weather+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764521FB0B8400A0DB5E /* Weather+CoreDataProperties.swift */; };
+		D502765821FB0B8400A0DB5E /* Entry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764821FB0B8400A0DB5E /* Entry+CoreDataClass.swift */; };
+		D502765921FB0B8400A0DB5E /* Entry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764921FB0B8400A0DB5E /* Entry+CoreDataProperties.swift */; };
+		D502765A21FB0B8400A0DB5E /* Device+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764A21FB0B8400A0DB5E /* Device+CoreDataClass.swift */; };
+		D502765B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift */; };
+		D502765C21FB0B8400A0DB5E /* Location+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764C21FB0B8400A0DB5E /* Location+CoreDataClass.swift */; };
+		D502765D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift */; };
+		D502766221FB0D6000A0DB5E /* WeatherType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502766121FB0D6000A0DB5E /* WeatherType.swift */; };
+		D502766521FB138500A0DB5E /* EntryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502766421FB138500A0DB5E /* EntryService.swift */; };
+		D502766721FB139300A0DB5E /* JournalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502766621FB139300A0DB5E /* JournalService.swift */; };
+		D502769321FEA18000A0DB5E /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502769221FEA18000A0DB5E /* CoreDataStack.swift */; };
+		D502769621FEA1CE00A0DB5E /* UIColor+NamedColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502769521FEA1CD00A0DB5E /* UIColor+NamedColor.swift */; };
+		D50276B921FED1D200A0DB5E /* OneDay.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D561692921FAD07000E00FED /* OneDay.xcdatamodeld */; };
+		D50276BB21FEEE4900A0DB5E /* SampleJournalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276BA21FEEE4900A0DB5E /* SampleJournalsViewController.swift */; };
+		D50276BD21FEF0DC00A0DB5E /* Coredata.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D50276BC21FEF0DC00A0DB5E /* Coredata.storyboard */; };
+		D50276C021FEF4F400A0DB5E /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276BF21FEF4F400A0DB5E /* CoreDataService.swift */; };
+		D50276CA21FEFC8400A0DB5E /* OneDayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276C921FEFC8400A0DB5E /* OneDayTests.swift */; };
+		D50276D221FEFCE900A0DB5E /* JournalServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276D121FEFCE900A0DB5E /* JournalServiceTest.swift */; };
+		D50276D521FEFD4500A0DB5E /* TestCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276D421FEFD4500A0DB5E /* TestCoreDataStack.swift */; };
+		D50276DA21FF09E100A0DB5E /* EntryServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276D921FF09E100A0DB5E /* EntryServiceTest.swift */; };
+		D50276E82202C79300A0DB5E /* SampleFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276E72202C79300A0DB5E /* SampleFeedViewController.swift */; };
+		D50276EA2202C7EE00A0DB5E /* SampleEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276E92202C7EE00A0DB5E /* SampleEntryViewController.swift */; };
+		D50276EC2202C82900A0DB5E /* DataStringSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276EB2202C82900A0DB5E /* DataStringSet.swift */; };
+		D50276EE2202D3C700A0DB5E /* SampleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276ED2202D3C700A0DB5E /* SampleTableViewCell.swift */; };
 		D561692321FAD07000E00FED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D561692221FAD07000E00FED /* AppDelegate.swift */; };
 		D561692521FAD07000E00FED /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D561692421FAD07000E00FED /* ViewController.swift */; };
 		D561692821FAD07000E00FED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D561692621FAD07000E00FED /* Main.storyboard */; };
-		D561692B21FAD07000E00FED /* OneDay.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D561692921FAD07000E00FED /* OneDay.xcdatamodeld */; };
 		D561692D21FAD07200E00FED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D561692C21FAD07200E00FED /* Assets.xcassets */; };
 		D561693021FAD07200E00FED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D561692E21FAD07200E00FED /* LaunchScreen.storyboard */; };
 		E96BE83A21FAD96700266F6D /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E96BE83921FAD96700266F6D /* Colors.xcassets */; };
@@ -35,10 +61,48 @@
 		E9DA39AC2203FCD30026381E /* FilterSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DA39AB2203FCD20026381E /* FilterSection.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		D50276CC21FEFC8500A0DB5E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D561691721FAD07000E00FED /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D561691E21FAD07000E00FED;
+			remoteInfo = OneDay;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		0334D603A8EB8137C93DB4D1 /* Pods-OneDay.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneDay.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OneDay/Pods-OneDay.debug.xcconfig"; sourceTree = "<group>"; };
 		3469E7E8A80EBF3C6908DBCC /* Pods-OneDay.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneDay.release.xcconfig"; path = "Pods/Target Support Files/Pods-OneDay/Pods-OneDay.release.xcconfig"; sourceTree = "<group>"; };
 		B2F23636A5909B46DE93DFD2 /* Pods_OneDay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OneDay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D502764221FB0B8400A0DB5E /* Journal+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Journal+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D502764321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Journal+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D502764421FB0B8400A0DB5E /* Weather+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weather+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D502764521FB0B8400A0DB5E /* Weather+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weather+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D502764821FB0B8400A0DB5E /* Entry+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entry+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D502764921FB0B8400A0DB5E /* Entry+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entry+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D502764A21FB0B8400A0DB5E /* Device+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D502764B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D502764C21FB0B8400A0DB5E /* Location+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D502764D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D502766121FB0D6000A0DB5E /* WeatherType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherType.swift; sourceTree = "<group>"; };
+		D502766421FB138500A0DB5E /* EntryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryService.swift; sourceTree = "<group>"; };
+		D502766621FB139300A0DB5E /* JournalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalService.swift; sourceTree = "<group>"; };
+		D502769221FEA18000A0DB5E /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		D502769521FEA1CD00A0DB5E /* UIColor+NamedColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+NamedColor.swift"; sourceTree = "<group>"; };
+		D50276BA21FEEE4900A0DB5E /* SampleJournalsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleJournalsViewController.swift; sourceTree = "<group>"; };
+		D50276BC21FEF0DC00A0DB5E /* Coredata.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Coredata.storyboard; sourceTree = "<group>"; };
+		D50276BF21FEF4F400A0DB5E /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
+		D50276C721FEFC8400A0DB5E /* OneDayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OneDayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D50276C921FEFC8400A0DB5E /* OneDayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneDayTests.swift; sourceTree = "<group>"; };
+		D50276CB21FEFC8400A0DB5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D50276D121FEFCE900A0DB5E /* JournalServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalServiceTest.swift; sourceTree = "<group>"; };
+		D50276D421FEFD4500A0DB5E /* TestCoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCoreDataStack.swift; sourceTree = "<group>"; };
+		D50276D921FF09E100A0DB5E /* EntryServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryServiceTest.swift; sourceTree = "<group>"; };
+		D50276E72202C79300A0DB5E /* SampleFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleFeedViewController.swift; sourceTree = "<group>"; };
+		D50276E92202C7EE00A0DB5E /* SampleEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleEntryViewController.swift; sourceTree = "<group>"; };
+		D50276EB2202C82900A0DB5E /* DataStringSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStringSet.swift; sourceTree = "<group>"; };
+		D50276ED2202D3C700A0DB5E /* SampleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTableViewCell.swift; sourceTree = "<group>"; };
 		D561691F21FAD07000E00FED /* OneDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D561692221FAD07000E00FED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D561692421FAD07000E00FED /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -69,6 +133,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		D50276C421FEFC8400A0DB5E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D561691C21FAD07000E00FED /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -88,10 +159,87 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D502763F21FB0B5E00A0DB5E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D502764221FB0B8400A0DB5E /* Journal+CoreDataClass.swift */,
+				D502764321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift */,
+				D502764421FB0B8400A0DB5E /* Weather+CoreDataClass.swift */,
+				D502764521FB0B8400A0DB5E /* Weather+CoreDataProperties.swift */,
+				D502764821FB0B8400A0DB5E /* Entry+CoreDataClass.swift */,
+				D502764921FB0B8400A0DB5E /* Entry+CoreDataProperties.swift */,
+				D502764A21FB0B8400A0DB5E /* Device+CoreDataClass.swift */,
+				D502764B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift */,
+				D502764C21FB0B8400A0DB5E /* Location+CoreDataClass.swift */,
+				D502764D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift */,
+				D502766121FB0D6000A0DB5E /* WeatherType.swift */,
+				D50276EB2202C82900A0DB5E /* DataStringSet.swift */,
+				E9DA39AB2203FCD20026381E /* FilterSection.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D502766321FB137300A0DB5E /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				D50276BF21FEF4F400A0DB5E /* CoreDataService.swift */,
+				D502766621FB139300A0DB5E /* JournalService.swift */,
+				D502766421FB138500A0DB5E /* EntryService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		D502769121FEA16D00A0DB5E /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				D502769221FEA18000A0DB5E /* CoreDataStack.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		D502769421FEA1AA00A0DB5E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D502769521FEA1CD00A0DB5E /* UIColor+NamedColor.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		D50276C821FEFC8400A0DB5E /* OneDayTests */ = {
+			isa = PBXGroup;
+			children = (
+				D50276D321FEFCF900A0DB5E /* Service */,
+				D50276C921FEFC8400A0DB5E /* OneDayTests.swift */,
+				D50276CB21FEFC8400A0DB5E /* Info.plist */,
+			);
+			path = OneDayTests;
+			sourceTree = "<group>";
+		};
+		D50276D321FEFCF900A0DB5E /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				D50276D121FEFCE900A0DB5E /* JournalServiceTest.swift */,
+				D50276D421FEFD4500A0DB5E /* TestCoreDataStack.swift */,
+				D50276D921FF09E100A0DB5E /* EntryServiceTest.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		D50276E52202C77100A0DB5E /* Sample */ = {
+			isa = PBXGroup;
+			children = (
+				D50276BA21FEEE4900A0DB5E /* SampleJournalsViewController.swift */,
+				D50276E72202C79300A0DB5E /* SampleFeedViewController.swift */,
+				D50276E92202C7EE00A0DB5E /* SampleEntryViewController.swift */,
+			);
+			path = Sample;
+			sourceTree = "<group>";
+		};
 		D561691621FAD07000E00FED = {
 			isa = PBXGroup;
 			children = (
 				D561692121FAD07000E00FED /* OneDay */,
+				D50276C821FEFC8400A0DB5E /* OneDayTests */,
 				D561692021FAD07000E00FED /* Products */,
 				EB1B7AD6529795DA447F6EEB /* Pods */,
 				0E97F36932421EACCDFBF197 /* Frameworks */,
@@ -102,6 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				D561691F21FAD07000E00FED /* OneDay.app */,
+				D50276C721FEFC8400A0DB5E /* OneDayTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -109,32 +258,18 @@
 		D561692121FAD07000E00FED /* OneDay */ = {
 			isa = PBXGroup;
 			children = (
-				E96BE83121FAD8B500266F6D /* Protocols */,
-				E96BE83221FAD8C500266F6D /* Extensions */,
+				D502769421FEA1AA00A0DB5E /* Extensions */,
+				D502769121FEA16D00A0DB5E /* CoreData */,
+				D502766321FB137300A0DB5E /* Service */,
+				D502763F21FB0B5E00A0DB5E /* Model */,
 				E96BE83421FAD8E100266F6D /* AppDelegate */,
 				E96BE83321FAD8DB00266F6D /* Views */,
 				E96BE83821FAD91800266F6D /* Resources */,
 				E96BE83721FAD90A00266F6D /* Controller */,
-				E96BE83621FAD8FB00266F6D /* CoreData */,
-				E96BE83521FAD8F200266F6D /* Model */,
 				D561692921FAD07000E00FED /* OneDay.xcdatamodeld */,
 				E992EC7521FAEF3F00917116 /* Colors.swift */,
 			);
 			path = OneDay;
-			sourceTree = "<group>";
-		};
-		E96BE83121FAD8B500266F6D /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Protocols;
-			sourceTree = "<group>";
-		};
-		E96BE83221FAD8C500266F6D /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		E96BE83321FAD8DB00266F6D /* Views */ = {
@@ -144,6 +279,7 @@
 				E992EC5E21FAEDD100917116 /* FilterCell */,
 				E992EC5F21FAEDDA00917116 /* SideMenuCell */,
 				E96BE83B21FAD98500266F6D /* Storyboards */,
+				D50276ED2202D3C700A0DB5E /* SampleTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -156,24 +292,10 @@
 			path = AppDelegate;
 			sourceTree = "<group>";
 		};
-		E96BE83521FAD8F200266F6D /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				E9DA39AB2203FCD20026381E /* FilterSection.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		E96BE83621FAD8FB00266F6D /* CoreData */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = CoreData;
-			sourceTree = "<group>";
-		};
 		E96BE83721FAD90A00266F6D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				D50276E52202C77100A0DB5E /* Sample */,
 				D561692421FAD07000E00FED /* ViewController.swift */,
 				E992EC6F21FAEE5B00917116 /* FilterViewController.swift */,
 				E992EC7121FAEE6700917116 /* SideMenuViewController.swift */,
@@ -200,6 +322,7 @@
 				D561692621FAD07000E00FED /* Main.storyboard */,
 				E96BE83E21FADA9600266F6D /* SideMenu.storyboard */,
 				E96BE84021FADAAA00266F6D /* Setting.storyboard */,
+				D50276BC21FEF0DC00A0DB5E /* Coredata.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -247,6 +370,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		D50276C621FEFC8400A0DB5E /* OneDayTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D50276CE21FEFC8500A0DB5E /* Build configuration list for PBXNativeTarget "OneDayTests" */;
+			buildPhases = (
+				D50276C321FEFC8400A0DB5E /* Sources */,
+				D50276C421FEFC8400A0DB5E /* Frameworks */,
+				D50276C521FEFC8400A0DB5E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D50276CD21FEFC8500A0DB5E /* PBXTargetDependency */,
+			);
+			name = OneDayTests;
+			productName = OneDayTests;
+			productReference = D50276C721FEFC8400A0DB5E /* OneDayTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		D561691E21FAD07000E00FED /* OneDay */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D561693421FAD07200E00FED /* Build configuration list for PBXNativeTarget "OneDay" */;
@@ -276,6 +417,10 @@
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = teamA2;
 				TargetAttributes = {
+					D50276C621FEFC8400A0DB5E = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = D561691E21FAD07000E00FED;
+					};
 					D561691E21FAD07000E00FED = {
 						CreatedOnToolsVersion = 10.1;
 					};
@@ -295,11 +440,19 @@
 			projectRoot = "";
 			targets = (
 				D561691E21FAD07000E00FED /* OneDay */,
+				D50276C621FEFC8400A0DB5E /* OneDayTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		D50276C521FEFC8400A0DB5E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D561691D21FAD07000E00FED /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -307,6 +460,7 @@
 				E96BE83F21FADA9600266F6D /* SideMenu.storyboard in Resources */,
 				D561693021FAD07200E00FED /* LaunchScreen.storyboard in Resources */,
 				E96BE84121FADAAA00266F6D /* Setting.storyboard in Resources */,
+				D50276BD21FEF0DC00A0DB5E /* Coredata.storyboard in Resources */,
 				D561692D21FAD07200E00FED /* Assets.xcassets in Resources */,
 				E96BE83A21FAD96700266F6D /* Colors.xcassets in Resources */,
 				D561692821FAD07000E00FED /* Main.storyboard in Resources */,
@@ -359,6 +513,17 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		D50276C321FEFC8400A0DB5E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D50276DA21FF09E100A0DB5E /* EntryServiceTest.swift in Sources */,
+				D50276CA21FEFC8400A0DB5E /* OneDayTests.swift in Sources */,
+				D50276D221FEFCE900A0DB5E /* JournalServiceTest.swift in Sources */,
+				D50276D521FEFD4500A0DB5E /* TestCoreDataStack.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D561691B21FAD07000E00FED /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -382,10 +547,42 @@
 				E9DA39AC2203FCD30026381E /* FilterSection.swift in Sources */,
 				E992EC6C21FAEE4500917116 /* SideMenuJournalAddCell.swift in Sources */,
 				E992EC7F21FB2CCE00917116 /* CalendarDaysOfWeek.swift in Sources */,
+				D50276B921FED1D200A0DB5E /* OneDay.xcdatamodeld in Sources */,
+				D50276EE2202D3C700A0DB5E /* SampleTableViewCell.swift in Sources */,
+				D502769321FEA18000A0DB5E /* CoreDataStack.swift in Sources */,
+				D502765421FB0B8400A0DB5E /* Weather+CoreDataClass.swift in Sources */,
+				D561692521FAD07000E00FED /* ViewController.swift in Sources */,
+				D502765521FB0B8400A0DB5E /* Weather+CoreDataProperties.swift in Sources */,
+				D50276BB21FEEE4900A0DB5E /* SampleJournalsViewController.swift in Sources */,
+				D502769621FEA1CE00A0DB5E /* UIColor+NamedColor.swift in Sources */,
+				D502765C21FB0B8400A0DB5E /* Location+CoreDataClass.swift in Sources */,
+				D502765B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift in Sources */,
+				D502765321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift in Sources */,
+				D502766721FB139300A0DB5E /* JournalService.swift in Sources */,
+				D561692321FAD07000E00FED /* AppDelegate.swift in Sources */,
+				D50276E82202C79300A0DB5E /* SampleFeedViewController.swift in Sources */,
+				D50276C021FEF4F400A0DB5E /* CoreDataService.swift in Sources */,
+				D502766221FB0D6000A0DB5E /* WeatherType.swift in Sources */,
+				D502765921FB0B8400A0DB5E /* Entry+CoreDataProperties.swift in Sources */,
+				D502765A21FB0B8400A0DB5E /* Device+CoreDataClass.swift in Sources */,
+				D50276EA2202C7EE00A0DB5E /* SampleEntryViewController.swift in Sources */,
+				D50276EC2202C82900A0DB5E /* DataStringSet.swift in Sources */,
+				D502765D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift in Sources */,
+				D502765821FB0B8400A0DB5E /* Entry+CoreDataClass.swift in Sources */,
+				D502765221FB0B8400A0DB5E /* Journal+CoreDataClass.swift in Sources */,
+				D502766521FB138500A0DB5E /* EntryService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D50276CD21FEFC8500A0DB5E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D561691E21FAD07000E00FED /* OneDay */;
+			targetProxy = D50276CC21FEFC8500A0DB5E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		D561692621FAD07000E00FED /* Main.storyboard */ = {
@@ -407,6 +604,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		D50276CF21FEFC8500A0DB5E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = OneDayTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.boostcamp3.OneDayTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OneDay.app/OneDay";
+			};
+			name = Debug;
+		};
+		D50276D021FEFC8500A0DB5E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = OneDayTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.boostcamp3.OneDayTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OneDay.app/OneDay";
+			};
+			name = Release;
+		};
 		D561693221FAD07200E00FED /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -566,6 +801,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D50276CE21FEFC8500A0DB5E /* Build configuration list for PBXNativeTarget "OneDayTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D50276CF21FEFC8500A0DB5E /* Debug */,
+				D50276D021FEFC8500A0DB5E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D561691A21FAD07000E00FED /* Build configuration list for PBXProject "OneDay" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

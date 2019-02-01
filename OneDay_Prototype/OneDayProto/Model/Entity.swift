@@ -10,7 +10,6 @@ import Foundation
 
 struct EntryVO {
     let id: Int
-    var contents: [Content] = []
     var updatedDate: Date
     var date: Date
     var isFavorite: Bool
@@ -18,20 +17,15 @@ struct EntryVO {
     var location: Location?
     var tags: [String]
     var deviceId: String
-    var title: String
+    var contents: NSAttributedString?
+    var title: String {
+        guard let content = contents?.string else { return "" }
+        let start = content.startIndex
+        let end = content.index(start, offsetBy: 100)
+
+        return String(content[start...end])
+    }
 }
-//struct Entry {
-//    let id: Int
-//    var contents: [Content] = []
-//    var updatedDate: Date
-//    var date: Date
-//    var isFavorite: Bool
-//    var journal: Journal
-//    var location: Location?
-//    var tags: [String]
-//    var deviceId: String
-//    var title: String
-//}
 
 struct Location {
     let latitude: Double
