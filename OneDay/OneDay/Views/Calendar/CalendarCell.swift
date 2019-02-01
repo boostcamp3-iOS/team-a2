@@ -35,7 +35,6 @@ class CalendarCell: UICollectionViewCell {
             didSet {
                 if isSelected && dayLabel.text != "" {
                     dayLabel.backgroundColor = .gray
-                    print("isSelected")
                 } else {
                     dayLabel.backgroundColor = .white
                 }

@@ -54,8 +54,8 @@ extension FilterViewController: UISearchBarDelegate {
             filterTableView.reloadData()
         } else {
             isSearching = true
-            //FIXME: searchBar.text 강제 언래핑 없이 처리하는 법
-            matchedEntriesData = dummyData.filter {$0.contains(searchBar.text!)}
+            guard let text = searchBar.text else { return }
+            matchedEntriesData = dummyData.filter {$0.contains(text)}
             filterTableView.reloadData()
         }
     }
@@ -88,8 +88,10 @@ extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "searchedCellId", for: indexPath) as? SearchedKeywordCell else {
                 preconditionFailure("SearchedKeywordCell Error")
             }
-            if let keyword = searchBar.text { cell.titleLabel.text = "\"\(keyword)\"" }
-            cell.countLabel.text = "\(matchedEntriesData.count)"
+            if let keyword = searchBar.text {
+                cell.titleLabel.text = "\"\(keyword)\""
+                cell.countLabel.text = "\(matchedEntriesData.count)"
+            }
             return cell
             
         case 1:
@@ -102,9 +104,8 @@ extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
                 let range = (matchedEntriesData[indexPath.row] as NSString).range(of: searchBar.text!)
                 let attributedText = NSMutableAttributedString(string: matchedEntriesData[indexPath.row])
                 attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.doBlue, range: range)
-                
+
                 cell.matchingTextLabel.attributedText = attributedText
-                
             }
             return cell
         case 2:
@@ -114,7 +115,7 @@ extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
         case 3:
             let filters: [(name: String, image: String)] = [("즐겨찾기", "filterHeart"),
                                                             ("태그", "filterTag"), ("장소", "filterPlace"), ("연도", "filterYear"), ("날씨", "filterWeather"), ("작성 디바이스", "filterDevice")]
-            let contentsCountList = [0, 0, 0, 0, 0, 0]
+            let contentsCountList = [0, 0, 0, 0, 0, 0] // 데이터와 연결
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "filterCellId", for: indexPath) as? FilterTableCell else {
                 preconditionFailure("FilterTableCell Error")
             }

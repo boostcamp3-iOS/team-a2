@@ -53,7 +53,7 @@ class SideMenuViewController: UIViewController {
     override func viewDidLoad() {
         print("SideMenuViewController viewDidLoad")
         view.backgroundColor = .clear
-        self.view.addGestureRecognizer(UISwipeGestureRecognizer(target: self, action: #selector(dismissFromViewController)))
+        self.view.addGestureRecognizer(UISwipeGestureRecognizer(target: self, action: #selector(dismissFromVC)))
         searchBarView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedSearchBarView)))
         setupSideMenuView()
         setupSearchBar()
@@ -120,7 +120,7 @@ extension SideMenuViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {return 0} else {return 5}
+        return section == 0 ? 0 : 5
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -161,6 +161,7 @@ extension SideMenuViewController {
         sideMenuTableView.bottomAnchor.constraint(equalTo: sideMenuView.bottomAnchor, constant: 0).isActive = true
         sideMenuTableView.translatesAutoresizingMaskIntoConstraints = false
         sideMenuTableView.separatorStyle = .none
+        
         sideMenuTableView.delegate = self
         sideMenuTableView.dataSource = self
         sideMenuTableView.register(SideMenuMainCell.self, forCellReuseIdentifier: "mainCellId")
@@ -197,15 +198,13 @@ extension UIViewController {
         view.addSubview(blurredBackgroundView)
     }
     
-    @objc func dismissFromViewController(_ sender: UISwipeGestureRecognizer) {
-        print("dismissFromViewController")
+    @objc func dismissFromVC(_ sender: UISwipeGestureRecognizer) {
         if sender.direction == .right {
             dismiss(animated: false, completion: nil)
         }
     }
     
     @objc func tappedSearchBarView() {
-        print("goForSearching")
         self.present(FilterViewController(), animated: false, completion: nil)
     }
 }
