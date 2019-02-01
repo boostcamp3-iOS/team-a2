@@ -16,6 +16,9 @@ class EntryViewController: UIViewController {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var temperatureLabel: UILabel!
+    @IBOutlet weak var weatherImageView: UIImageView!
+    @IBOutlet weak var weatherLabel: UILabel!
     
     var entry: Entry!
     
@@ -41,6 +44,7 @@ class EntryViewController: UIViewController {
         textView.textDragDelegate = self
         
         setUpPreview()
+        loadWeatherInfomation()
     }
     
     // MARK: - Setup
@@ -61,6 +65,19 @@ class EntryViewController: UIViewController {
         previewLabel.bottomAnchor.constraint(equalTo: textPreview.bottomAnchor, constant: -8).isActive = true
         previewLabel.leftAnchor.constraint(equalTo: textPreview.leftAnchor, constant: 8).isActive = true
         previewLabel.rightAnchor.constraint(equalTo: textPreview.rightAnchor, constant: -8).isActive = true
+    }
+    
+    func loadWeatherInfomation() {
+        WeatherService.service.weather(latitude: "1", longitude: "1", success: {[weak self] data in
+            DispatchQueue.main.sync {
+                let degree: Int = Int((data.currently.temperature - 32) * (5/9))
+                self?.temperatureLabel.text = "\(degree)℃"
+                self?.weatherLabel.text = data.currently.summary
+                self?.weatherImageView.image = UIImage(named: data.currently.icon)
+            }
+            }, errorHandler: { [weak self] in
+                print("Can't load weather information.")
+        })
     }
     
     // MARK: - IBAction

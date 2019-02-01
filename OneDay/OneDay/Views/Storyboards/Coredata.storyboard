@@ -306,6 +306,24 @@
                                             <action selector="showPhoto:" destination="GAO-3U-mcR" eventType="touchUpInside" id="jWm-nU-fkS"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QJu-go-bQG">
+                                        <rect key="frame" x="93" y="36" width="120" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e4E-51-Ah9">
+                                        <rect key="frame" x="66" y="36" width="21" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oLC-Jl-fqb">
+                                        <rect key="frame" x="16" y="36" width="59" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" name="doLight"/>
                                 <constraints>
@@ -338,13 +356,16 @@
                     </view>
                     <connections>
                         <outlet property="dateLabel" destination="o3E-uk-gsi" id="Lo4-xf-Jdh"/>
+                        <outlet property="temperatureLabel" destination="oLC-Jl-fqb" id="tXx-hC-QrC"/>
                         <outlet property="textView" destination="JMn-5r-ZV0" id="EKQ-2r-FQO"/>
                         <outlet property="timeLabel" destination="h4N-zj-Et6" id="T3B-ne-ahr"/>
+                        <outlet property="weatherImageView" destination="e4E-51-Ah9" id="xFe-Qb-x9b"/>
+                        <outlet property="weatherLabel" destination="QJu-go-bQG" id="ZaC-gd-QW0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HO4-b1-kGk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3844" y="45"/>
+            <point key="canvasLocation" x="3844" y="44.527736131934034"/>
         </scene>
     </scenes>
     <resources>

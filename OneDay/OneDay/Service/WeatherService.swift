@@ -15,7 +15,7 @@ class WeatherService {
     private let APIKey = "9deaa3b4d2ba8a4a3772c6d6015dba6b"
     
     // MARK: - Methods
-    func getWeather(latitude: String, longitude: String, success: @escaping (APIWeather) -> Void, errorHandler: @escaping () -> Void) {
+    func weather(latitude: String, longitude: String, success: @escaping (APIWeather) -> Void, errorHandler: @escaping () -> Void) {
         let urlString  = "\(baseURL)/\(APIKey)/\(latitude),\(longitude)"
         guard let url: URL = URL(string: urlString) else { return }
         NetworkProvider.request(url: url, success: success, errorHandler: errorHandler)
