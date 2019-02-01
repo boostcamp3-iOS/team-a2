@@ -43,6 +43,22 @@
 		E96BE83A21FAD96700266F6D /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E96BE83921FAD96700266F6D /* Colors.xcassets */; };
 		E96BE83F21FADA9600266F6D /* SideMenu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E96BE83E21FADA9600266F6D /* SideMenu.storyboard */; };
 		E96BE84121FADAAA00266F6D /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E96BE84021FADAAA00266F6D /* Setting.storyboard */; };
+		E992EC6121FAEDF500917116 /* SearchedKeywordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6021FAEDF500917116 /* SearchedKeywordCell.swift */; };
+		E992EC6321FAEDFD00917116 /* MatchingEntriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6221FAEDFD00917116 /* MatchingEntriesCell.swift */; };
+		E992EC6521FAEE0600917116 /* FilterTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6421FAEE0600917116 /* FilterTableCell.swift */; };
+		E992EC6821FAEE3300917116 /* SideMenuMainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6721FAEE3300917116 /* SideMenuMainCell.swift */; };
+		E992EC6A21FAEE3C00917116 /* SideMenuJournalListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6921FAEE3C00917116 /* SideMenuJournalListCell.swift */; };
+		E992EC6C21FAEE4500917116 /* SideMenuJournalAddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6B21FAEE4500917116 /* SideMenuJournalAddCell.swift */; };
+		E992EC6E21FAEE4D00917116 /* SideMenuEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6D21FAEE4D00917116 /* SideMenuEditCell.swift */; };
+		E992EC7021FAEE5B00917116 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6F21FAEE5B00917116 /* FilterViewController.swift */; };
+		E992EC7221FAEE6700917116 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7121FAEE6700917116 /* SideMenuViewController.swift */; };
+		E992EC7421FAEE7100917116 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7321FAEE7100917116 /* TestViewController.swift */; };
+		E992EC7621FAEF3F00917116 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7521FAEF3F00917116 /* Colors.swift */; };
+		E992EC7821FAF4C200917116 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7721FAF4C200917116 /* CalendarViewController.swift */; };
+		E992EC7A21FAFBC500917116 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7921FAFBC500917116 /* CalendarCell.swift */; };
+		E992EC7C21FB1E5500917116 /* CalendarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7B21FB1E5500917116 /* CalendarHeaderView.swift */; };
+		E992EC7F21FB2CCE00917116 /* CalendarDaysOfWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7E21FB2CCE00917116 /* CalendarDaysOfWeek.swift */; };
+		E9DA39AC2203FCD30026381E /* FilterSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DA39AB2203FCD20026381E /* FilterSection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +114,22 @@
 		E96BE83921FAD96700266F6D /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		E96BE83E21FADA9600266F6D /* SideMenu.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SideMenu.storyboard; sourceTree = "<group>"; };
 		E96BE84021FADAAA00266F6D /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
+		E992EC6021FAEDF500917116 /* SearchedKeywordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedKeywordCell.swift; sourceTree = "<group>"; };
+		E992EC6221FAEDFD00917116 /* MatchingEntriesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchingEntriesCell.swift; sourceTree = "<group>"; };
+		E992EC6421FAEE0600917116 /* FilterTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTableCell.swift; sourceTree = "<group>"; };
+		E992EC6721FAEE3300917116 /* SideMenuMainCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuMainCell.swift; sourceTree = "<group>"; };
+		E992EC6921FAEE3C00917116 /* SideMenuJournalListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuJournalListCell.swift; sourceTree = "<group>"; };
+		E992EC6B21FAEE4500917116 /* SideMenuJournalAddCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuJournalAddCell.swift; sourceTree = "<group>"; };
+		E992EC6D21FAEE4D00917116 /* SideMenuEditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuEditCell.swift; sourceTree = "<group>"; };
+		E992EC6F21FAEE5B00917116 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
+		E992EC7121FAEE6700917116 /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
+		E992EC7321FAEE7100917116 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		E992EC7521FAEF3F00917116 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		E992EC7721FAF4C200917116 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
+		E992EC7921FAFBC500917116 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
+		E992EC7B21FB1E5500917116 /* CalendarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHeaderView.swift; sourceTree = "<group>"; };
+		E992EC7E21FB2CCE00917116 /* CalendarDaysOfWeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDaysOfWeek.swift; sourceTree = "<group>"; };
+		E9DA39AB2203FCD20026381E /* FilterSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +174,7 @@
 				D502764D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift */,
 				D502766121FB0D6000A0DB5E /* WeatherType.swift */,
 				D50276EB2202C82900A0DB5E /* DataStringSet.swift */,
+				E9DA39AB2203FCD20026381E /* FilterSection.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -234,6 +267,7 @@
 				E96BE83821FAD91800266F6D /* Resources */,
 				E96BE83721FAD90A00266F6D /* Controller */,
 				D561692921FAD07000E00FED /* OneDay.xcdatamodeld */,
+				E992EC7521FAEF3F00917116 /* Colors.swift */,
 			);
 			path = OneDay;
 			sourceTree = "<group>";
@@ -241,6 +275,9 @@
 		E96BE83321FAD8DB00266F6D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E992EC7D21FB2CAD00917116 /* Calendar */,
+				E992EC5E21FAEDD100917116 /* FilterCell */,
+				E992EC5F21FAEDDA00917116 /* SideMenuCell */,
 				E96BE83B21FAD98500266F6D /* Storyboards */,
 				D50276ED2202D3C700A0DB5E /* SampleTableViewCell.swift */,
 			);
@@ -260,6 +297,10 @@
 			children = (
 				D50276E52202C77100A0DB5E /* Sample */,
 				D561692421FAD07000E00FED /* ViewController.swift */,
+				E992EC6F21FAEE5B00917116 /* FilterViewController.swift */,
+				E992EC7121FAEE6700917116 /* SideMenuViewController.swift */,
+				E992EC7321FAEE7100917116 /* TestViewController.swift */,
+				E992EC7721FAF4C200917116 /* CalendarViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -284,6 +325,37 @@
 				D50276BC21FEF0DC00A0DB5E /* Coredata.storyboard */,
 			);
 			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		E992EC5E21FAEDD100917116 /* FilterCell */ = {
+			isa = PBXGroup;
+			children = (
+				E992EC6021FAEDF500917116 /* SearchedKeywordCell.swift */,
+				E992EC6221FAEDFD00917116 /* MatchingEntriesCell.swift */,
+				E992EC6421FAEE0600917116 /* FilterTableCell.swift */,
+			);
+			path = FilterCell;
+			sourceTree = "<group>";
+		};
+		E992EC5F21FAEDDA00917116 /* SideMenuCell */ = {
+			isa = PBXGroup;
+			children = (
+				E992EC6721FAEE3300917116 /* SideMenuMainCell.swift */,
+				E992EC6921FAEE3C00917116 /* SideMenuJournalListCell.swift */,
+				E992EC6B21FAEE4500917116 /* SideMenuJournalAddCell.swift */,
+				E992EC6D21FAEE4D00917116 /* SideMenuEditCell.swift */,
+			);
+			path = SideMenuCell;
+			sourceTree = "<group>";
+		};
+		E992EC7D21FB2CAD00917116 /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				E992EC7921FAFBC500917116 /* CalendarCell.swift */,
+				E992EC7B21FB1E5500917116 /* CalendarHeaderView.swift */,
+				E992EC7E21FB2CCE00917116 /* CalendarDaysOfWeek.swift */,
+			);
+			path = Calendar;
 			sourceTree = "<group>";
 		};
 		EB1B7AD6529795DA447F6EEB /* Pods */ = {
@@ -456,6 +528,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E992EC6521FAEE0600917116 /* FilterTableCell.swift in Sources */,
+				E992EC6E21FAEE4D00917116 /* SideMenuEditCell.swift in Sources */,
+				E992EC6A21FAEE3C00917116 /* SideMenuJournalListCell.swift in Sources */,
+				E992EC7621FAEF3F00917116 /* Colors.swift in Sources */,
+				E992EC6121FAEDF500917116 /* SearchedKeywordCell.swift in Sources */,
+				E992EC7A21FAFBC500917116 /* CalendarCell.swift in Sources */,
+				E992EC7221FAEE6700917116 /* SideMenuViewController.swift in Sources */,
+				E992EC7821FAF4C200917116 /* CalendarViewController.swift in Sources */,
+				E992EC7421FAEE7100917116 /* TestViewController.swift in Sources */,
+				D561692521FAD07000E00FED /* ViewController.swift in Sources */,
+				E992EC7021FAEE5B00917116 /* FilterViewController.swift in Sources */,
+				D561692B21FAD07000E00FED /* OneDay.xcdatamodeld in Sources */,
+				E992EC6321FAEDFD00917116 /* MatchingEntriesCell.swift in Sources */,
+				E992EC7C21FB1E5500917116 /* CalendarHeaderView.swift in Sources */,
+				D561692321FAD07000E00FED /* AppDelegate.swift in Sources */,
+				E992EC6821FAEE3300917116 /* SideMenuMainCell.swift in Sources */,
+				E9DA39AC2203FCD30026381E /* FilterSection.swift in Sources */,
+				E992EC6C21FAEE4500917116 /* SideMenuJournalAddCell.swift in Sources */,
+				E992EC7F21FB2CCE00917116 /* CalendarDaysOfWeek.swift in Sources */,
 				D50276B921FED1D200A0DB5E /* OneDay.xcdatamodeld in Sources */,
 				D50276EE2202D3C700A0DB5E /* SampleTableViewCell.swift in Sources */,
 				D502769321FEA18000A0DB5E /* CoreDataStack.swift in Sources */,
