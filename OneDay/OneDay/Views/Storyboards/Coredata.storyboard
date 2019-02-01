@@ -99,10 +99,10 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="36" translatesAutoresizingMaskIntoConstraints="NO" id="sgz-oG-uVD">
-                                            <rect key="frame" x="36" y="69.5" width="342" height="30"/>
+                                            <rect key="frame" x="36" y="69.5" width="303" height="30"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5hX-aZ-ZfX">
-                                                    <rect key="frame" x="0.0" y="0.0" width="153" height="30"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="133.5" height="30"/>
                                                     <state key="normal" title="카메라">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
@@ -111,7 +111,7 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TlL-rX-gN0">
-                                                    <rect key="frame" x="189" y="0.0" width="153" height="30"/>
+                                                    <rect key="frame" x="169.5" y="0.0" width="133.5" height="30"/>
                                                     <state key="normal" title="작성">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
@@ -228,10 +228,10 @@
             </objects>
             <point key="canvasLocation" x="2860" y="27"/>
         </scene>
-        <!--Sample Entry View Controller-->
+        <!--Entry View Controller-->
         <scene sceneID="VjH-1b-I7y">
             <objects>
-                <viewController id="GAO-3U-mcR" customClass="SampleEntryViewController" customModule="OneDay" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="GAO-3U-mcR" customClass="EntryViewController" customModule="OneDay" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="luO-4J-UVg">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -251,7 +251,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <action selector="saveAndDismiss:" destination="GAO-3U-mcR" eventType="touchUpInside" id="fGR-J4-PKD"/>
+                                            <action selector="saveAndDismiss:" destination="GAO-3U-mcR" eventType="touchUpInside" id="COK-BN-ude"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -303,7 +303,7 @@
                                         <rect key="frame" x="329" y="3.5" width="30" height="30"/>
                                         <state key="normal" title="사진"/>
                                         <connections>
-                                            <action selector="showPhoto:" destination="GAO-3U-mcR" eventType="touchUpInside" id="51d-rJ-yLh"/>
+                                            <action selector="showPhoto:" destination="GAO-3U-mcR" eventType="touchUpInside" id="jWm-nU-fkS"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -337,9 +337,9 @@
                         <viewLayoutGuide key="safeArea" id="rRh-hW-4PN"/>
                     </view>
                     <connections>
-                        <outlet property="dateLabel" destination="o3E-uk-gsi" id="eUQ-qa-GUm"/>
-                        <outlet property="textView" destination="JMn-5r-ZV0" id="DqL-dv-9D1"/>
-                        <outlet property="timeLabel" destination="h4N-zj-Et6" id="QLp-dB-r7H"/>
+                        <outlet property="dateLabel" destination="o3E-uk-gsi" id="Lo4-xf-Jdh"/>
+                        <outlet property="textView" destination="JMn-5r-ZV0" id="EKQ-2r-FQO"/>
+                        <outlet property="timeLabel" destination="h4N-zj-Et6" id="T3B-ne-ahr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HO4-b1-kGk" userLabel="First Responder" sceneMemberID="firstResponder"/>

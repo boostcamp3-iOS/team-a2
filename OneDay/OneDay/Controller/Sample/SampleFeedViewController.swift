@@ -46,7 +46,7 @@ class SampleFeedViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if sender is UITableViewCell {
             if let cell = sender as? UITableViewCell, let indexPath = feedTable.indexPath(for: cell) {
-                guard let destination = segue.destination as? SampleEntryViewController else {
+                guard let destination = segue.destination as? EntryViewController else {
                     return
                 }
                 let entry = fetchedResultsController.object(at: indexPath)
@@ -60,7 +60,7 @@ class SampleFeedViewController: UIViewController {
                 entry.weather = weather
                 coreDataStack.saveContext()
             }
-        } else if let destination = segue.destination as? SampleEntryViewController {
+        } else if let destination = segue.destination as? EntryViewController {
             destination.entry = entry()
         }
     }

@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import MobileCoreServices
 
-class SampleEntryViewController: UIViewController {
+class EntryViewController: UIViewController {
     
     // MARK: - properties
     @IBOutlet weak var dateLabel: UILabel!
@@ -89,12 +89,12 @@ class SampleEntryViewController: UIViewController {
         }
         
         entry.title = title
-        navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
 // MARK: - Extention
-extension SampleEntryViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension EntryViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
@@ -133,7 +133,7 @@ extension SampleEntryViewController: UIImagePickerControllerDelegate, UINavigati
     }
 }
 
-extension SampleEntryViewController: UITextDragDelegate {
+extension EntryViewController: UITextDragDelegate {
     
     func textDraggableView(_ textDraggableView: UIView & UITextDraggable, dragPreviewForLiftingItem item: UIDragItem, session: UIDragSession) -> UITargetedDragPreview? {
         
