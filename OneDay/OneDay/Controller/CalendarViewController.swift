@@ -76,6 +76,7 @@ extension CalendarViewController: UICollectionViewDelegateFlowLayout, UICollecti
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         showActionSheet(indexPath.section, indexPath.item)
         datePicker.removeFromSuperview()
+        collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -126,7 +127,7 @@ extension CalendarViewController: UICollectionViewDelegateFlowLayout, UICollecti
         if isPickingDate {     // 데이트피커에서 선택한 날로 이동
             isPickingDate = false
             let components = dateFormatter.string(from: datePicker.date).split {$0 == "-"}.map {Int($0) ?? -1}
-            collectionView.scrollToItem(at: [(components[0]-1)*12+components[1]-1, components[2]], at: .centeredVertically, animated: false)
+            collectionView.scrollToItem(at: [(components[0]-1)*12+components[1]-1, components[2]], at: .centeredVertically, animated: true)
         }
     }
     
