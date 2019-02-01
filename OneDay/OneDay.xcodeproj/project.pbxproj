@@ -35,8 +35,12 @@
 		D50276EA2202C7EE00A0DB5E /* SampleEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276E92202C7EE00A0DB5E /* SampleEntryViewController.swift */; };
 		D50276EC2202C82900A0DB5E /* DataStringSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276EB2202C82900A0DB5E /* DataStringSet.swift */; };
 		D50276EE2202D3C700A0DB5E /* SampleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276ED2202D3C700A0DB5E /* SampleTableViewCell.swift */; };
+		D50276F022041DA300A0DB5E /* TimeLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276EF22041DA300A0DB5E /* TimeLineViewController.swift */; };
+		D50276F222041DB100A0DB5E /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276F122041DB100A0DB5E /* PhotosViewController.swift */; };
+		D50276F422041DBA00A0DB5E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276F322041DBA00A0DB5E /* MapViewController.swift */; };
+		D50276F622041DC600A0DB5E /* CalendarTempViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276F522041DC600A0DB5E /* CalendarTempViewController.swift */; };
 		D561692321FAD07000E00FED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D561692221FAD07000E00FED /* AppDelegate.swift */; };
-		D561692521FAD07000E00FED /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D561692421FAD07000E00FED /* ViewController.swift */; };
+		D561692521FAD07000E00FED /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D561692421FAD07000E00FED /* MainTabBarViewController.swift */; };
 		D561692821FAD07000E00FED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D561692621FAD07000E00FED /* Main.storyboard */; };
 		D561692D21FAD07200E00FED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D561692C21FAD07200E00FED /* Assets.xcassets */; };
 		D561693021FAD07200E00FED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D561692E21FAD07200E00FED /* LaunchScreen.storyboard */; };
@@ -102,9 +106,13 @@
 		D50276E92202C7EE00A0DB5E /* SampleEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleEntryViewController.swift; sourceTree = "<group>"; };
 		D50276EB2202C82900A0DB5E /* DataStringSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStringSet.swift; sourceTree = "<group>"; };
 		D50276ED2202D3C700A0DB5E /* SampleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTableViewCell.swift; sourceTree = "<group>"; };
+		D50276EF22041DA300A0DB5E /* TimeLineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineViewController.swift; sourceTree = "<group>"; };
+		D50276F122041DB100A0DB5E /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
+		D50276F322041DBA00A0DB5E /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		D50276F522041DC600A0DB5E /* CalendarTempViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTempViewController.swift; sourceTree = "<group>"; };
 		D561691F21FAD07000E00FED /* OneDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D561692221FAD07000E00FED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D561692421FAD07000E00FED /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D561692421FAD07000E00FED /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 		D561692721FAD07000E00FED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D561692A21FAD07000E00FED /* OneDay.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OneDay.xcdatamodel; sourceTree = "<group>"; };
 		D561692C21FAD07200E00FED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -298,6 +306,11 @@
 				E992EC7121FAEE6700917116 /* SideMenuViewController.swift */,
 				E992EC7321FAEE7100917116 /* TestViewController.swift */,
 				E992EC7721FAF4C200917116 /* CalendarViewController.swift */,
+				D561692421FAD07000E00FED /* MainTabBarViewController.swift */,
+				D50276EF22041DA300A0DB5E /* TimeLineViewController.swift */,
+				D50276F122041DB100A0DB5E /* PhotosViewController.swift */,
+				D50276F322041DBA00A0DB5E /* MapViewController.swift */,
+				D50276F522041DC600A0DB5E /* CalendarTempViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -543,15 +556,18 @@
 				E992EC6C21FAEE4500917116 /* SideMenuJournalAddCell.swift in Sources */,
 				E992EC7F21FB2CCE00917116 /* CalendarDaysOfWeek.swift in Sources */,
 				D50276B921FED1D200A0DB5E /* OneDay.xcdatamodeld in Sources */,
+				D50276F222041DB100A0DB5E /* PhotosViewController.swift in Sources */,
 				D50276EE2202D3C700A0DB5E /* SampleTableViewCell.swift in Sources */,
 				D502769321FEA18000A0DB5E /* CoreDataStack.swift in Sources */,
 				D502765421FB0B8400A0DB5E /* Weather+CoreDataClass.swift in Sources */,
-				D561692521FAD07000E00FED /* ViewController.swift in Sources */,
+				D561692521FAD07000E00FED /* MainTabBarViewController.swift in Sources */,
 				D502765521FB0B8400A0DB5E /* Weather+CoreDataProperties.swift in Sources */,
 				D50276BB21FEEE4900A0DB5E /* SampleJournalsViewController.swift in Sources */,
 				D502769621FEA1CE00A0DB5E /* UIColor+NamedColor.swift in Sources */,
+				D50276F022041DA300A0DB5E /* TimeLineViewController.swift in Sources */,
 				D502765C21FB0B8400A0DB5E /* Location+CoreDataClass.swift in Sources */,
 				D502765B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift in Sources */,
+				D50276F622041DC600A0DB5E /* CalendarTempViewController.swift in Sources */,
 				D502765321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift in Sources */,
 				D502766721FB139300A0DB5E /* JournalService.swift in Sources */,
 				D561692321FAD07000E00FED /* AppDelegate.swift in Sources */,
@@ -562,6 +578,7 @@
 				D502765A21FB0B8400A0DB5E /* Device+CoreDataClass.swift in Sources */,
 				D50276EA2202C7EE00A0DB5E /* SampleEntryViewController.swift in Sources */,
 				D50276EC2202C82900A0DB5E /* DataStringSet.swift in Sources */,
+				D50276F422041DBA00A0DB5E /* MapViewController.swift in Sources */,
 				D502765D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift in Sources */,
 				D502765821FB0B8400A0DB5E /* Entry+CoreDataClass.swift in Sources */,
 				D502765221FB0B8400A0DB5E /* Journal+CoreDataClass.swift in Sources */,
@@ -769,7 +786,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = OneDay;
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -789,7 +806,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
