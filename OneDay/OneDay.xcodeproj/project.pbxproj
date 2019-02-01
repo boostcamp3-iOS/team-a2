@@ -46,6 +46,7 @@
 		EC0CFB0422030A29001293B1 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0322030A29001293B1 /* WeatherService.swift */; };
 		EC0CFB0622030A53001293B1 /* APIWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0522030A53001293B1 /* APIWeather.swift */; };
 		EC0CFB0922030C1D001293B1 /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0822030C1D001293B1 /* NetworkProvider.swift */; };
+		EC5E21AB220425390073D90E /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5E21AA220425390073D90E /* LocationService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +105,7 @@
 		EC0CFB0322030A29001293B1 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		EC0CFB0522030A53001293B1 /* APIWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIWeather.swift; sourceTree = "<group>"; };
 		EC0CFB0822030C1D001293B1 /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
+		EC5E21AA220425390073D90E /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +162,7 @@
 				D502766621FB139300A0DB5E /* JournalService.swift */,
 				D502766421FB138500A0DB5E /* EntryService.swift */,
 				EC0CFB0322030A29001293B1 /* WeatherService.swift */,
+				EC5E21AA220425390073D90E /* LocationService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -487,6 +490,7 @@
 				D502765B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift in Sources */,
 				D502765321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift in Sources */,
 				D502766721FB139300A0DB5E /* JournalService.swift in Sources */,
+				EC5E21AB220425390073D90E /* LocationService.swift in Sources */,
 				D561692321FAD07000E00FED /* AppDelegate.swift in Sources */,
 				D50276E82202C79300A0DB5E /* SampleFeedViewController.swift in Sources */,
 				D50276C021FEF4F400A0DB5E /* CoreDataService.swift in Sources */,

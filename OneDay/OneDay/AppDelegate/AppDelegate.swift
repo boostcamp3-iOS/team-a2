@@ -24,6 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        }
 //        
 //        viewController.managedObjectContext = coreDataStack.managedContext
+        
+        //사용자 위치정보 권한 요청
+        LocationService.service.requestAuth()
         return true
     }
 
