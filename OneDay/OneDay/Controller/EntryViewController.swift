@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import MobileCoreServices
+import CoreLocation
 
 class EntryViewController: UIViewController {
     
@@ -29,6 +30,8 @@ class EntryViewController: UIViewController {
     
     lazy var isImageSelected = false
     
+    let locationManager = CLLocationManager()
+    
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,8 +46,16 @@ class EntryViewController: UIViewController {
         timeLabel.text = dateSet.time
         textView.textDragDelegate = self
         
+        // 사용자 위치정보 권한 요청
+        locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
+        
         setUpPreview()
-        loadWeatherInfomation()
     }
     
     // MARK: - Setup
@@ -67,9 +78,10 @@ class EntryViewController: UIViewController {
         previewLabel.rightAnchor.constraint(equalTo: textPreview.rightAnchor, constant: -8).isActive = true
     }
     
-    func loadWeatherInfomation() {
-        WeatherService.service.weather(latitude: "1", longitude: "1", success: {[weak self] data in
+    func loadWeatherInfomation(latitude: String, longitude: String) {
+        WeatherService.service.weather(latitude: latitude, longitude: longitude, success: {[weak self] data in
             DispatchQueue.main.sync {
+                dump(data)
                 let degree: Int = Int((data.currently.temperature - 32) * (5/9))
                 self?.temperatureLabel.text = "\(degree)℃"
                 self?.weatherLabel.text = data.currently.summary
@@ -192,5 +204,13 @@ extension EntryViewController: UITextDragDelegate {
         } else {
             return []
         }
+    }
+}
+
+extension EntryViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let localValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        
+        loadWeatherInfomation(latitude: "\(localValue.latitude)", longitude: "\(localValue.longitude)")
     }
 }
