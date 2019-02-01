@@ -14,7 +14,6 @@
 		D561692B21FAD07000E00FED /* OneDay.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D561692921FAD07000E00FED /* OneDay.xcdatamodeld */; };
 		D561692D21FAD07200E00FED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D561692C21FAD07200E00FED /* Assets.xcassets */; };
 		D561693021FAD07200E00FED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D561692E21FAD07200E00FED /* LaunchScreen.storyboard */; };
-		E93AB5B421FEE8450029DD81 /* treviTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93AB5B321FEE8450029DD81 /* treviTest.swift */; };
 		E96BE83A21FAD96700266F6D /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E96BE83921FAD96700266F6D /* Colors.xcassets */; };
 		E96BE83F21FADA9600266F6D /* SideMenu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E96BE83E21FADA9600266F6D /* SideMenu.storyboard */; };
 		E96BE84121FADAAA00266F6D /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E96BE84021FADAAA00266F6D /* Setting.storyboard */; };
@@ -33,6 +32,7 @@
 		E992EC7A21FAFBC500917116 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7921FAFBC500917116 /* CalendarCell.swift */; };
 		E992EC7C21FB1E5500917116 /* CalendarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7B21FB1E5500917116 /* CalendarHeaderView.swift */; };
 		E992EC7F21FB2CCE00917116 /* CalendarDaysOfWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7E21FB2CCE00917116 /* CalendarDaysOfWeek.swift */; };
+		E9DA39AC2203FCD30026381E /* FilterSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DA39AB2203FCD20026381E /* FilterSection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,7 +47,6 @@
 		D561692C21FAD07200E00FED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D561692F21FAD07200E00FED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D561693121FAD07200E00FED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E93AB5B321FEE8450029DD81 /* treviTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = treviTest.swift; sourceTree = "<group>"; };
 		E96BE83921FAD96700266F6D /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		E96BE83E21FADA9600266F6D /* SideMenu.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SideMenu.storyboard; sourceTree = "<group>"; };
 		E96BE84021FADAAA00266F6D /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
@@ -66,6 +65,7 @@
 		E992EC7921FAFBC500917116 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		E992EC7B21FB1E5500917116 /* CalendarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHeaderView.swift; sourceTree = "<group>"; };
 		E992EC7E21FB2CCE00917116 /* CalendarDaysOfWeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDaysOfWeek.swift; sourceTree = "<group>"; };
+		E9DA39AB2203FCD20026381E /* FilterSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,7 +118,6 @@
 				E96BE83621FAD8FB00266F6D /* CoreData */,
 				E96BE83521FAD8F200266F6D /* Model */,
 				D561692921FAD07000E00FED /* OneDay.xcdatamodeld */,
-				E93AB5B321FEE8450029DD81 /* treviTest.swift */,
 				E992EC7521FAEF3F00917116 /* Colors.swift */,
 			);
 			path = OneDay;
@@ -160,6 +159,7 @@
 		E96BE83521FAD8F200266F6D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E9DA39AB2203FCD20026381E /* FilterSection.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -364,7 +364,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E992EC6521FAEE0600917116 /* FilterTableCell.swift in Sources */,
-				E93AB5B421FEE8450029DD81 /* treviTest.swift in Sources */,
 				E992EC6E21FAEE4D00917116 /* SideMenuEditCell.swift in Sources */,
 				E992EC6A21FAEE3C00917116 /* SideMenuJournalListCell.swift in Sources */,
 				E992EC7621FAEF3F00917116 /* Colors.swift in Sources */,
@@ -380,6 +379,7 @@
 				E992EC7C21FB1E5500917116 /* CalendarHeaderView.swift in Sources */,
 				D561692321FAD07000E00FED /* AppDelegate.swift in Sources */,
 				E992EC6821FAEE3300917116 /* SideMenuMainCell.swift in Sources */,
+				E9DA39AC2203FCD30026381E /* FilterSection.swift in Sources */,
 				E992EC6C21FAEE4500917116 /* SideMenuJournalAddCell.swift in Sources */,
 				E992EC7F21FB2CCE00917116 /* CalendarDaysOfWeek.swift in Sources */,
 			);

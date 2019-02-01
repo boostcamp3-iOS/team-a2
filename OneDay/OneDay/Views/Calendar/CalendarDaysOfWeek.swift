@@ -22,12 +22,6 @@ class CalendarDaysOfWeek: UIView {
         setupView()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension CalendarDaysOfWeek {
     func setupView() {
         let daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"]
         for index in 0..<7 {
@@ -38,11 +32,15 @@ extension CalendarDaysOfWeek {
             label.textColor = .black
             daysOfWeekView.addArrangedSubview(label)
         }
-
+        
         addSubview(daysOfWeekView)
         daysOfWeekView.topAnchor.constraint(equalTo: topAnchor).isActive=true
         daysOfWeekView.leftAnchor.constraint(equalTo: leftAnchor).isActive=true
         daysOfWeekView.rightAnchor.constraint(equalTo: rightAnchor).isActive=true
         daysOfWeekView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive=true
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

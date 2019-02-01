@@ -35,12 +35,6 @@ class CalendarViewController: UIViewController {
     var isPickingDate = false     // 데이트피커에서 선택되었는가
     var computedWeekday = 6 // 월의 첫 요일이 무엇인지 계산
     
-    var selectedDatePicker: [Int] = [0, 0] { // 데이트 피커에서 선택된 날짜로 이동한다
-        willSet {
-            collectionView.reloadData()
-        }
-    }
-    
     override func viewDidLoad() {
         view.backgroundColor = .white
         setupCalendar()
@@ -64,7 +58,7 @@ class CalendarViewController: UIViewController {
         let whatDay: String = "\(section/12+1)-\(section%12+1)-01"
         if let weekday = dateFormatter.date(from: whatDay) {
             return Calendar.current.component(.weekday, from: weekday)-1 // 0:일요일 ~ 6:토요일
-        } else { preconditionFailure("func firstWeekdayOfMonth Error") }
+        } else { preconditionFailure("Error") }
     }
     
     @objc func presentDatePicker() {
@@ -73,9 +67,7 @@ class CalendarViewController: UIViewController {
     
     @objc func pickDate() {
         isPickingDate = true
-
-        let dateComponents = dateFormatter.string(from: datePicker.date).split {$0 == "-"}.map {Int($0) ?? -1}
-        selectedDatePicker = [(dateComponents[0]-1)*12+dateComponents[1]-1, dateComponents[2]]
+        collectionView.reloadData()
     }
 }
 
@@ -83,20 +75,16 @@ class CalendarViewController: UIViewController {
 extension CalendarViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         showActionSheet(indexPath.section, indexPath.item)
-        
-        if isPickingDate {
-            isPickingDate = false
-            
-            let pickedDateIndexPath = IndexPath.init(item: selectedDatePicker[1], section: selectedDatePicker[0])
-            collectionView.scrollToItem(at: pickedDateIndexPath, at: .centeredVertically, animated: true)
-        } else {
-            let selectedCellIndexPath = indexPath
-            collectionView.scrollToItem(at: selectedCellIndexPath, at: .centeredVertically, animated: true)
-        }
+        datePicker.removeFromSuperview()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if section == 0 {
+            computedWeekday = 6
+        }
+        
         let numberOfItemsInSection = computedWeekday+lastDayOfMonth(at: section)
+
         computedWeekday = numberOfItemsInSection%7
 
         switch numberOfItemsInSection {
@@ -112,7 +100,7 @@ extension CalendarViewController: UICollectionViewDelegateFlowLayout, UICollecti
     // 셀 아이템 정보 - 날짜 표시
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as? CalendarCell
-            else { preconditionFailure("CalendarCell Error") }
+            else { preconditionFailure("Error") }
         
         let day = indexPath.item+1-firstWeekdayOfMonth(at: indexPath.section)
         let lastDay = lastDayOfMonth(at: indexPath.section)
@@ -134,33 +122,32 @@ extension CalendarViewController: UICollectionViewDelegateFlowLayout, UICollecti
             let currentIndex = 12*(Calendar.current.component(.year, from: Date())-1)+(Calendar.current.component(.month, from: Date())-1)
             collectionView.scrollToItem(at: [currentIndex, 0], at: .centeredVertically, animated: false)
         }
+        
         if isPickingDate {     // 데이트피커에서 선택한 날로 이동
             isPickingDate = false
-            
             let components = dateFormatter.string(from: datePicker.date).split {$0 == "-"}.map {Int($0) ?? -1}
             collectionView.scrollToItem(at: [(components[0]-1)*12+components[1]-1, components[2]], at: .centeredVertically, animated: false)
         }
     }
     
-    // MARK: Supplementary View
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 12*3000 // 0001년01월 ~ 3000년12월
+        return 12*3000
     }
     
-    // 셀 헤더 라벨 Supplementary View- ex: 2019년 01월
+    // MARK: Supplementary View
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: view.frame.width, height: 35)
+    }
+    
+    //Supplementary View-ex: 2019년 01월
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                            withReuseIdentifier: "headerId",
                                                                            for: indexPath) as? CalendarHeaderView else {
-                                                                            preconditionFailure("CalendarHeaderView Error") }
+                                                                            preconditionFailure("Error") }
         
         header.headerLabel.text = "\(indexPath.section/12+1)년 \(indexPath.section%12+1)월"
         return header
-    }
-    
-    // 셀 헤더 뷰
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 35)
     }
 }
 

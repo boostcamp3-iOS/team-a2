@@ -23,7 +23,6 @@ class TestViewController: UIViewController {
     }
     
     @objc func presentToCalendar() {
-        print("toCalendarButton clicked")
         present(CalendarViewController(), animated: false, completion: nil)
     }
 }

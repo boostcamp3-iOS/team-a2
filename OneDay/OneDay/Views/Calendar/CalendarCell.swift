@@ -21,6 +21,16 @@ class CalendarCell: UICollectionViewCell {
         return label
     }()
    
+    override var isSelected: Bool {
+        didSet {
+            if isSelected && dayLabel.text != "" {
+                dayLabel.backgroundColor = .gray
+            } else {
+                dayLabel.backgroundColor = .white
+            }
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupCellView()
@@ -31,15 +41,7 @@ class CalendarCell: UICollectionViewCell {
         dayLabel.backgroundColor = .white
     }
     
-    override var isSelected: Bool {
-            didSet {
-                if isSelected && dayLabel.text != "" {
-                    dayLabel.backgroundColor = .gray
-                } else {
-                    dayLabel.backgroundColor = .white
-                }
-            }
-    }
+
     
     func setupCellView() {
         addSubview(dayLabel)

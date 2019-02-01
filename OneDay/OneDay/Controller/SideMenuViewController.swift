@@ -10,8 +10,6 @@ import UIKit
 
 class SideMenuViewController: UIViewController {
     
-    override var prefersStatusBarHidden: Bool { return true }
-    
     var sideMenuWidth: CGFloat = UIScreen.main.bounds.width * 0.8
     
     // 테이블 섹션 헤더
@@ -50,6 +48,8 @@ class SideMenuViewController: UIViewController {
         return bar
     }()
     
+    override var prefersStatusBarHidden: Bool { return true }
+
     override func viewDidLoad() {
         print("SideMenuViewController viewDidLoad")
         view.backgroundColor = .clear
@@ -79,32 +79,32 @@ extension SideMenuViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let mainCells: [(name: String, icon: String)] = [("Filter", "sideMenuFilter"), ("On this Day", "sideMenuCalendar")]
         let journalTitle = ["모든 항목", "일지"]
-        let journalCount = ["7", "7"]
+        let journalCount = ["7", "7"] // 데이터와 연결
         let menuEdit = ["Edit Journals", "설정"]
         
         switch indexPath.section {
         case 0:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "mainCellId", for: indexPath) as? SideMenuMainCell else {
-                preconditionFailure("SideMenuMainCell Error")
+                preconditionFailure("Error")
             }
             cell.mainIcon.image = UIImage(named: mainCells[indexPath.row].icon) ?? UIImage()
             cell.mainLabel.text = mainCells[indexPath.row].name
             return cell
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "listCellId", for: indexPath) as? SideMenuJournalListCell else {
-                preconditionFailure("SideMenuJournalListCell Error")
+                preconditionFailure("Error")
             }
             cell.journalTitleLabel.text = journalTitle[indexPath.row]
             cell.journalCountLabel.text = journalCount[indexPath.row]
             return cell
         case 2:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "addCellId", for: indexPath) as? SideMenuJournalAddCell else {
-                preconditionFailure("SideMenuJournalAddCell Error")
+                preconditionFailure("Error")
             }
             return cell
         default:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "editCellId", for: indexPath) as? SideMenuEditCell else {
-                preconditionFailure("SideMenuViewController cellForRowAt Error")
+                preconditionFailure("Error")
             }
             cell.editTitleLabel.text = menuEdit[indexPath.row]
             return cell
@@ -129,7 +129,6 @@ extension SideMenuViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension SideMenuViewController {
-    
     func setupSideMenuView() {
         view.addSubview(sideMenuView)
         sideMenuView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
@@ -175,8 +174,7 @@ extension SideMenuViewController {
 // MARK: GestureRecognizer
 extension UIViewController {
     @objc func swipeToSideMenu(_ sender: UISwipeGestureRecognizer) {
-        print("swipeToSideMenu")
-        let sideMenuVC = SideMenuViewController()
+        let sideMenuViewController = SideMenuViewController()
         
         let transition = CATransition()
         transition.duration = 0.4
@@ -184,8 +182,8 @@ extension UIViewController {
         transition.subtype = CATransitionSubtype.fromLeft
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeIn)
         view.window!.layer.add(transition, forKey: kCATransition)
-        sideMenuVC.modalPresentationStyle = .overCurrentContext
-        present(sideMenuVC, animated: false, completion: nil)
+        sideMenuViewController.modalPresentationStyle = .overCurrentContext
+        present(sideMenuViewController, animated: false, completion: nil)
         
         //FIXME: 블러 해제 방법을 모르겠다 일단 보류
         //        overlayBlurredBackgroundView()

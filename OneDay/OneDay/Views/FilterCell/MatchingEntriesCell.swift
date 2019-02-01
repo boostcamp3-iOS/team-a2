@@ -9,10 +9,6 @@
 import UIKit
 //Matching Entries - SearchBar.text와 일치하는 문자열이 있는 엔트리를 보여주는 셀
 class MatchingEntriesCell: UITableViewCell {
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupCell()
-    }
     
     let matchingTextLabel: UILabel = {
         let label = UILabel()
@@ -41,12 +37,11 @@ class MatchingEntriesCell: UITableViewCell {
         return imageView
     }()
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupCell()
     }
-}
-
-extension MatchingEntriesCell {
+    
     func setupCell() {
         addSubview(matchingTextLabel)
         matchingTextLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 8).isActive = true
@@ -57,6 +52,9 @@ extension MatchingEntriesCell {
         matchingWeatherLabel.leftAnchor.constraint(equalTo: matchingTextLabel.leftAnchor, constant: 0).isActive = true
         matchingWeatherLabel.topAnchor.constraint(equalTo: matchingTextLabel.bottomAnchor, constant: 8).isActive = true
         matchingWeatherLabel.rightAnchor.constraint(equalTo: matchingTextLabel.rightAnchor, constant: 0).isActive = true
-        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

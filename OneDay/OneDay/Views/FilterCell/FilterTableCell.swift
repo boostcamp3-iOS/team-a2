@@ -10,10 +10,7 @@ import UIKit
 
 //Filter - Favorite, 체크리스트, 태그...를 위한 셀
 class FilterTableCell: UITableViewCell {
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupCell()
-    }
+
     let filterIcon: UIImageView = {
         var imageView = UIImageView()
         imageView.image = UIImage(named: "sideMenuFilter") ?? UIImage()
@@ -39,13 +36,18 @@ class FilterTableCell: UITableViewCell {
         return label
     }()
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupCell()
     }
     
-}
-
-extension FilterTableCell {
+    func bind(filter filterItem: (name: String, image: String, count: Int)) {
+        selectionStyle = .none
+        filterIcon.image = UIImage(named: filterItem.image)
+        filterLabel.text = filterItem.name
+        contentsCountLabel.text = "\(filterItem.count)"
+    }
+    
     func setupCell() {
         addSubview(filterIcon)
         filterIcon.leftAnchor.constraint(equalTo: leftAnchor, constant: 24).isActive = true
@@ -59,6 +61,9 @@ extension FilterTableCell {
         addSubview(contentsCountLabel)
         contentsCountLabel.leftAnchor.constraint(equalTo: rightAnchor, constant: -40).isActive = true
         contentsCountLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

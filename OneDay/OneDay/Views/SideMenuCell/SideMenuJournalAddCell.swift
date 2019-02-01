@@ -9,10 +9,6 @@
 import UIKit
 
 class SideMenuJournalAddCell: UITableViewCell {
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupCellView()
-    }
     
     let borderView: UIView = {
         let view = UIView()
@@ -33,12 +29,11 @@ class SideMenuJournalAddCell: UITableViewCell {
         return label
     }()
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupCellView()
     }
-}
-
-extension SideMenuJournalAddCell {
+    
     func setupCellView() {
         addSubview(borderView)
         borderView.leftAnchor.constraint(equalTo: leftAnchor, constant: 8).isActive = true
@@ -49,5 +44,9 @@ extension SideMenuJournalAddCell {
         addSubview(addLabel)
         addLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         addLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
