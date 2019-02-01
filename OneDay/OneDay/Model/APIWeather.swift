@@ -9,11 +9,8 @@
 import Foundation
 
 struct APIWeather: Codable {
-    let latitude: Double
-    var longitude: Double
     
     struct Currently: Codable {
-        let summary: String
         let temperature: Double
         let icon: String
     }

@@ -21,6 +21,7 @@ class EntryViewController: UIViewController {
     @IBOutlet weak var weatherLabel: UILabel!
     
     var entry: Entry!
+    var coreDataStack: CoreDataStack!
     
     //드레그시 사용되는 미리보기
     let imagePreview = UIImageView()
@@ -67,18 +68,32 @@ class EntryViewController: UIViewController {
         previewLabel.rightAnchor.constraint(equalTo: textPreview.rightAnchor, constant: -8).isActive = true
     }
     
-    func loadWeatherInfomation(latitude: String, longitude: String) {
-        WeatherService.service.weather(latitude: latitude, longitude: longitude, success: {[weak self] data in
-            DispatchQueue.main.sync {
-                dump(data)
-                let degree: Int = Int((data.currently.temperature - 32) * (5/9))
-                self?.temperatureLabel.text = "\(degree)℃"
-                self?.weatherLabel.text = data.currently.summary
-                self?.weatherImageView.image = UIImage(named: data.currently.icon)
-            }
-            }, errorHandler: { [weak self] in
-                print("Can't load weather information.")
-        })
+    func setUpWeather() {
+        if let weather = entry.weather {
+            temperatureLabel.text = "\(weather.tempature)℃"
+            weatherImageView.image = UIImage(named: weather.type!)
+            weatherLabel.text = WeatherType(rawValue: weather.type!)?.summary
+        } else {
+            let weather = Weather(context: coreDataStack.managedContext)
+            entry.weather = weather
+            WeatherService.service.weather(
+                latitude: LocationService.service.latitude,
+                longitude: LocationService.service.longitude,
+                success: {[weak self] data in
+                    let degree: Int = Int((data.currently.temperature - 32) * (5/9)) // ℉ to ℃
+                    weather.tempature = Int16(degree)
+                    weather.type = data.currently.icon
+                    DispatchQueue.main.sync {
+                        self?.temperatureLabel.text = "\(weather.tempature)℃"
+                        self?.weatherImageView.image = UIImage(named: data.currently.icon)
+                        self?.weatherLabel.text = WeatherType(rawValue: weather.type!)?.summary
+                    }
+                    
+                },
+                errorHandler: { [weak self] in
+                    print("Can't load weather information.")
+            })
+        }
     }
     
     // MARK: - IBAction
