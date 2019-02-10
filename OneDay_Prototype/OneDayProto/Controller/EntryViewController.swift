@@ -23,7 +23,7 @@ class EntryViewController: UIViewController {
     let imagePreview = UIImageView()
     let textPreview = UIView()
     let previewLabel = UILabel()
-    
+
     lazy var isImageSelected = false
 
     // MARK: - Life cycle
@@ -53,7 +53,7 @@ class EntryViewController: UIViewController {
         textPreview.widthAnchor.constraint(lessThanOrEqualToConstant: UIScreen.main.bounds.width/2).isActive = true
         textPreview.heightAnchor.constraint(lessThanOrEqualToConstant: 200).isActive = true
         textPreview.addSubview(previewLabel)
-        
+
         previewLabel.textAlignment = .left
         previewLabel.numberOfLines = 0
         previewLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -151,7 +151,7 @@ extension EntryViewController: UITextDragDelegate {
     func textDraggableView(_ textDraggableView: UIView & UITextDraggable, itemsForDrag dragRequest: UITextDragRequest) -> [UIDragItem] {
 
         if let selectedText = textView.text(in: dragRequest.dragRange) {
-            
+
             // UITextRange를 NSRange로 변경
             let startOffset: Int = textView.offset(from: textView.beginningOfDocument,
                                                    to: dragRequest.dragRange.start)
@@ -169,7 +169,7 @@ extension EntryViewController: UITextDragDelegate {
                 //드래그 요소가 텍스트인 경우
                 previewLabel.text = selectedText
             }
-            
+
             let itemProvider = NSItemProvider(object: selectedText as NSString)
             return [UIDragItem(itemProvider: itemProvider)]
         } else {
