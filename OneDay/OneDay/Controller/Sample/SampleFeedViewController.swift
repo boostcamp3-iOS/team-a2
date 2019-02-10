@@ -46,22 +46,18 @@ class SampleFeedViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if sender is UITableViewCell {
             if let cell = sender as? UITableViewCell, let indexPath = feedTable.indexPath(for: cell) {
-                guard let destination = segue.destination as? SampleEntryViewController else {
+                guard let destination = segue.destination as? EntryViewController else {
                     return
                 }
                 let entry = fetchedResultsController.object(at: indexPath)
                 destination.entry = entry
+                destination.coreDataStack = coreDataStack
                 
-                let weather = Weather(context: coreDataStack.managedContext)
-                weather.icon = ""
-                weather.summary = ""
-                weather.entry = entry
-                
-                entry.weather = weather
                 coreDataStack.saveContext()
             }
-        } else if let destination = segue.destination as? SampleEntryViewController {
+        } else if let destination = segue.destination as? EntryViewController {
             destination.entry = entry()
+            destination.coreDataStack = coreDataStack
         }
     }
     
@@ -71,7 +67,6 @@ class SampleFeedViewController: UIViewController {
     
     func entry() -> Entry {
         let entry = Entry(context: self.coreDataStack.managedContext)
-        
         entry.title = "새로운 메세지"
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YYYY-MM-dd"
