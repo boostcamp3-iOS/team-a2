@@ -32,7 +32,7 @@
 		D50276D521FEFD4500A0DB5E /* TestCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276D421FEFD4500A0DB5E /* TestCoreDataStack.swift */; };
 		D50276DA21FF09E100A0DB5E /* EntryServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276D921FF09E100A0DB5E /* EntryServiceTest.swift */; };
 		D50276E82202C79300A0DB5E /* SampleFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276E72202C79300A0DB5E /* SampleFeedViewController.swift */; };
-		D50276EA2202C7EE00A0DB5E /* SampleEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276E92202C7EE00A0DB5E /* SampleEntryViewController.swift */; };
+		D50276EA2202C7EE00A0DB5E /* EntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276E92202C7EE00A0DB5E /* EntryViewController.swift */; };
 		D50276EC2202C82900A0DB5E /* DataStringSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276EB2202C82900A0DB5E /* DataStringSet.swift */; };
 		D50276EE2202D3C700A0DB5E /* SampleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276ED2202D3C700A0DB5E /* SampleTableViewCell.swift */; };
 		D50276F022041DA300A0DB5E /* TimeLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276EF22041DA300A0DB5E /* TimeLineViewController.swift */; };
@@ -41,6 +41,8 @@
 		D50276F622041DC600A0DB5E /* CalendarTempViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276F522041DC600A0DB5E /* CalendarTempViewController.swift */; };
 		D53782C022113B9E00336646 /* CreateEntryPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53782BF22113B9E00336646 /* CreateEntryPhotosViewController.swift */; };
 		D53782C322113BAF00336646 /* CreateEntryCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53782C222113BAF00336646 /* CreateEntryCameraViewController.swift */; };
+		D53782B922110E6800336646 /* Photos.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D53782B822110E6800336646 /* Photos.storyboard */; };
+		D53782BD221113A100336646 /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53782BC221113A100336646 /* PhotosCollectionViewCell.swift */; };
 		D561692321FAD07000E00FED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D561692221FAD07000E00FED /* AppDelegate.swift */; };
 		D561692521FAD07000E00FED /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D561692421FAD07000E00FED /* MainTabBarViewController.swift */; };
 		D561692821FAD07000E00FED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D561692621FAD07000E00FED /* Main.storyboard */; };
@@ -64,6 +66,10 @@
 		E992EC7C21FB1E5500917116 /* CalendarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7B21FB1E5500917116 /* CalendarHeaderView.swift */; };
 		E992EC7F21FB2CCE00917116 /* CalendarDaysOfWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7E21FB2CCE00917116 /* CalendarDaysOfWeek.swift */; };
 		E9DA39AC2203FCD30026381E /* FilterSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DA39AB2203FCD20026381E /* FilterSection.swift */; };
+		EC0CFB0422030A29001293B1 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0322030A29001293B1 /* WeatherService.swift */; };
+		EC0CFB0622030A53001293B1 /* APIWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0522030A53001293B1 /* APIWeather.swift */; };
+		EC0CFB0922030C1D001293B1 /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0822030C1D001293B1 /* NetworkProvider.swift */; };
+		EC5E21AB220425390073D90E /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5E21AA220425390073D90E /* LocationService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,7 +111,7 @@
 		D50276D421FEFD4500A0DB5E /* TestCoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCoreDataStack.swift; sourceTree = "<group>"; };
 		D50276D921FF09E100A0DB5E /* EntryServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryServiceTest.swift; sourceTree = "<group>"; };
 		D50276E72202C79300A0DB5E /* SampleFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleFeedViewController.swift; sourceTree = "<group>"; };
-		D50276E92202C7EE00A0DB5E /* SampleEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleEntryViewController.swift; sourceTree = "<group>"; };
+		D50276E92202C7EE00A0DB5E /* EntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewController.swift; sourceTree = "<group>"; };
 		D50276EB2202C82900A0DB5E /* DataStringSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStringSet.swift; sourceTree = "<group>"; };
 		D50276ED2202D3C700A0DB5E /* SampleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTableViewCell.swift; sourceTree = "<group>"; };
 		D50276EF22041DA300A0DB5E /* TimeLineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineViewController.swift; sourceTree = "<group>"; };
@@ -114,6 +120,8 @@
 		D50276F522041DC600A0DB5E /* CalendarTempViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTempViewController.swift; sourceTree = "<group>"; };
 		D53782BF22113B9E00336646 /* CreateEntryPhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEntryPhotosViewController.swift; sourceTree = "<group>"; };
 		D53782C222113BAF00336646 /* CreateEntryCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEntryCameraViewController.swift; sourceTree = "<group>"; };
+		D53782B822110E6800336646 /* Photos.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Photos.storyboard; sourceTree = "<group>"; };
+		D53782BC221113A100336646 /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		D561691F21FAD07000E00FED /* OneDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D561692221FAD07000E00FED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D561692421FAD07000E00FED /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
@@ -140,6 +148,10 @@
 		E992EC7B21FB1E5500917116 /* CalendarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHeaderView.swift; sourceTree = "<group>"; };
 		E992EC7E21FB2CCE00917116 /* CalendarDaysOfWeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDaysOfWeek.swift; sourceTree = "<group>"; };
 		E9DA39AB2203FCD20026381E /* FilterSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSection.swift; sourceTree = "<group>"; };
+		EC0CFB0322030A29001293B1 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
+		EC0CFB0522030A53001293B1 /* APIWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIWeather.swift; sourceTree = "<group>"; };
+		EC0CFB0822030C1D001293B1 /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
+		EC5E21AA220425390073D90E /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +196,7 @@
 				D502764D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift */,
 				D502766121FB0D6000A0DB5E /* WeatherType.swift */,
 				D50276EB2202C82900A0DB5E /* DataStringSet.swift */,
+				EC0CFB0522030A53001293B1 /* APIWeather.swift */,
 				E9DA39AB2203FCD20026381E /* FilterSection.swift */,
 			);
 			path = Model;
@@ -195,6 +208,8 @@
 				D50276BF21FEF4F400A0DB5E /* CoreDataService.swift */,
 				D502766621FB139300A0DB5E /* JournalService.swift */,
 				D502766421FB138500A0DB5E /* EntryService.swift */,
+				EC0CFB0322030A29001293B1 /* WeatherService.swift */,
+				EC5E21AA220425390073D90E /* LocationService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -240,7 +255,6 @@
 			children = (
 				D50276BA21FEEE4900A0DB5E /* SampleJournalsViewController.swift */,
 				D50276E72202C79300A0DB5E /* SampleFeedViewController.swift */,
-				D50276E92202C7EE00A0DB5E /* SampleEntryViewController.swift */,
 			);
 			path = Sample;
 			sourceTree = "<group>";
@@ -252,6 +266,12 @@
 				D53782C222113BAF00336646 /* CreateEntryCameraViewController.swift */,
 			);
 			path = Entry;
+		D53782BB2211138900336646 /* Photos */ = {
+			isa = PBXGroup;
+			children = (
+				D53782BC221113A100336646 /* PhotosCollectionViewCell.swift */,
+			);
+			path = Photos;
 			sourceTree = "<group>";
 		};
 		D561691621FAD07000E00FED = {
@@ -277,6 +297,7 @@
 		D561692121FAD07000E00FED /* OneDay */ = {
 			isa = PBXGroup;
 			children = (
+				EC0CFB0722030BFB001293B1 /* Provider */,
 				D502769421FEA1AA00A0DB5E /* Extensions */,
 				D502769121FEA16D00A0DB5E /* CoreData */,
 				D502766321FB137300A0DB5E /* Service */,
@@ -293,6 +314,7 @@
 		E96BE83321FAD8DB00266F6D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D53782BB2211138900336646 /* Photos */,
 				E992EC7D21FB2CAD00917116 /* Calendar */,
 				E992EC5E21FAEDD100917116 /* FilterCell */,
 				E992EC5F21FAEDDA00917116 /* SideMenuCell */,
@@ -314,6 +336,7 @@
 			isa = PBXGroup;
 			children = (
 				D53782BE22113B7600336646 /* Entry */,
+				D50276E92202C7EE00A0DB5E /* EntryViewController.swift */,
 				D50276E52202C77100A0DB5E /* Sample */,
 				E992EC6F21FAEE5B00917116 /* FilterViewController.swift */,
 				E992EC7121FAEE6700917116 /* SideMenuViewController.swift */,
@@ -343,9 +366,10 @@
 			children = (
 				D561692E21FAD07200E00FED /* LaunchScreen.storyboard */,
 				D561692621FAD07000E00FED /* Main.storyboard */,
-				E96BE83E21FADA9600266F6D /* SideMenu.storyboard */,
 				E96BE84021FADAAA00266F6D /* Setting.storyboard */,
 				D50276BC21FEF0DC00A0DB5E /* Coredata.storyboard */,
+				E96BE83E21FADA9600266F6D /* SideMenu.storyboard */,
+				D53782B822110E6800336646 /* Photos.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -388,6 +412,14 @@
 				3469E7E8A80EBF3C6908DBCC /* Pods-OneDay.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		EC0CFB0722030BFB001293B1 /* Provider */ = {
+			isa = PBXGroup;
+			children = (
+				EC0CFB0822030C1D001293B1 /* NetworkProvider.swift */,
+			);
+			path = Provider;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -485,6 +517,7 @@
 				E96BE84121FADAAA00266F6D /* Setting.storyboard in Resources */,
 				D50276BD21FEF0DC00A0DB5E /* Coredata.storyboard in Resources */,
 				D561692D21FAD07200E00FED /* Assets.xcassets in Resources */,
+				D53782B922110E6800336646 /* Photos.storyboard in Resources */,
 				E96BE83A21FAD96700266F6D /* Colors.xcassets in Resources */,
 				D561692821FAD07000E00FED /* Main.storyboard in Resources */,
 			);
@@ -571,6 +604,7 @@
 				D50276B921FED1D200A0DB5E /* OneDay.xcdatamodeld in Sources */,
 				D50276F222041DB100A0DB5E /* PhotosViewController.swift in Sources */,
 				D50276EE2202D3C700A0DB5E /* SampleTableViewCell.swift in Sources */,
+				EC0CFB0922030C1D001293B1 /* NetworkProvider.swift in Sources */,
 				D502769321FEA18000A0DB5E /* CoreDataStack.swift in Sources */,
 				D502765421FB0B8400A0DB5E /* Weather+CoreDataClass.swift in Sources */,
 				D561692521FAD07000E00FED /* MainTabBarViewController.swift in Sources */,
@@ -580,9 +614,15 @@
 				D50276F022041DA300A0DB5E /* TimeLineViewController.swift in Sources */,
 				D502765C21FB0B8400A0DB5E /* Location+CoreDataClass.swift in Sources */,
 				D502765B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift in Sources */,
+				EC0CFB0622030A53001293B1 /* APIWeather.swift in Sources */,
+				D50276F022041DA300A0DB5E /* TimeLineViewController.swift in Sources */,
+				D502765C21FB0B8400A0DB5E /* Location+CoreDataClass.swift in Sources */,
+				D502765B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift in Sources */,
+				D53782BD221113A100336646 /* PhotosCollectionViewCell.swift in Sources */,
 				D50276F622041DC600A0DB5E /* CalendarTempViewController.swift in Sources */,
 				D502765321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift in Sources */,
 				D502766721FB139300A0DB5E /* JournalService.swift in Sources */,
+				EC5E21AB220425390073D90E /* LocationService.swift in Sources */,
 				D561692321FAD07000E00FED /* AppDelegate.swift in Sources */,
 				D50276E82202C79300A0DB5E /* SampleFeedViewController.swift in Sources */,
 				D50276C021FEF4F400A0DB5E /* CoreDataService.swift in Sources */,
@@ -590,8 +630,9 @@
 				D502765921FB0B8400A0DB5E /* Entry+CoreDataProperties.swift in Sources */,
 				D53782C322113BAF00336646 /* CreateEntryCameraViewController.swift in Sources */,
 				D502765A21FB0B8400A0DB5E /* Device+CoreDataClass.swift in Sources */,
-				D50276EA2202C7EE00A0DB5E /* SampleEntryViewController.swift in Sources */,
+				D50276EA2202C7EE00A0DB5E /* EntryViewController.swift in Sources */,
 				D50276EC2202C82900A0DB5E /* DataStringSet.swift in Sources */,
+				EC0CFB0422030A29001293B1 /* WeatherService.swift in Sources */,
 				D50276F422041DBA00A0DB5E /* MapViewController.swift in Sources */,
 				D502765D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift in Sources */,
 				D502765821FB0B8400A0DB5E /* Entry+CoreDataClass.swift in Sources */,

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="35L-p2-1kG">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -11,28 +11,12 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Photo-->
-        <scene sceneID="YuN-eE-LQM">
-            <objects>
-                <viewController id="zYB-wf-l4P" customClass="PhotosViewController" customModule="OneDay" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8tf-M2-UlF">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="JtD-ec-mCq"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Photo" id="wYr-yF-l1c"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="M6d-dR-pkc" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1991.2" y="-982.75862068965523"/>
-        </scene>
         <!--Add-->
         <scene sceneID="JgC-DZ-BJ4">
             <objects>
                 <viewController id="czp-v3-aQI" customClass="AddActionViewController" customModule="OneDay" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mK4-nY-bqL">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="w5c-hw-xTu"/>
@@ -41,14 +25,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MUX-vx-ZOg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1052" y="-287"/>
+            <point key="canvasLocation" x="1052" y="-309"/>
         </scene>
         <!--Timeline-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="TimeLineViewController" customModule="OneDay" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="620"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -58,6 +42,38 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1991" y="-1681"/>
+        </scene>
+        <!--Map-->
+        <scene sceneID="chG-y2-ejf">
+            <objects>
+                <viewController id="hMg-DJ-Hjx" customClass="MapViewController" customModule="OneDay" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mxg-ym-fni">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="620"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="pF0-mR-sPL"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Map" id="1uL-hx-qZe"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3VK-Zl-zVK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1991.2" y="407.94602698650675"/>
+        </scene>
+        <!--Calendar-->
+        <scene sceneID="xa3-5W-IEJ">
+            <objects>
+                <viewController id="7aQ-rC-704" customClass="CalendarTempViewController" customModule="OneDay" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sdf-BS-mXL">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="620"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="6uQ-5w-1Wb"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Calendar" id="is1-pg-qhU"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="K6o-rY-CBW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1991.2" y="1098.8005997001501"/>
         </scene>
         <!--Map-->
         <scene sceneID="chG-y2-ejf">
@@ -122,9 +138,12 @@
                     <tabBarItem key="tabBarItem" title="Timeline" image="tabs" id="btP-9u-q7E"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="5mc-y3-7KW">
-                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                        <rect key="frame" x="0.0" y="20" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" name="doBlue"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                         <textAttributes key="largeTitleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
@@ -145,21 +164,34 @@
                     <tabBarItem key="tabBarItem" title="Photos" image="picture" id="cmY-ZA-iQh"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="WAa-Ym-RNS">
-                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                        <rect key="frame" x="0.0" y="20" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" name="doBlue"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                         <textAttributes key="largeTitleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="zYB-wf-l4P" kind="relationship" relationship="rootViewController" id="LC5-sV-GSy"/>
+                        <segue destination="JIe-HO-AVl" kind="relationship" relationship="rootViewController" id="sL5-Nq-klQ"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eze-IJ-UpC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1052" y="-982.75862068965523"/>
+        </scene>
+        <!--Photos-->
+        <scene sceneID="uUj-1c-WwK">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="Photos" storyboardName="Photos" id="JIe-HO-AVl" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="4bA-mP-EKV"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="24H-aP-CI2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1913" y="-983"/>
         </scene>
         <!--Map-->
         <scene sceneID="oWR-D8-I2b">
@@ -168,7 +200,7 @@
                     <tabBarItem key="tabBarItem" title="Map" image="map" id="bg7-ie-jZV"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="RjI-LK-aci">
-                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                        <rect key="frame" x="0.0" y="20" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" name="doBlue"/>
                         <textAttributes key="titleTextAttributes">
@@ -194,7 +226,7 @@
                     <tabBarItem key="tabBarItem" title="Calendar" image="ic_calendar" id="eXY-vH-Moi"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="6MS-qJ-Pf2">
-                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                        <rect key="frame" x="0.0" y="20" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" name="doBlue"/>
                         <textAttributes key="titleTextAttributes">
