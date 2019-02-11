@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="lim-lE-fiS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -11,88 +11,16 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--저널-->
-        <scene sceneID="xRZ-gK-sTN">
-            <objects>
-                <viewController id="6J4-2q-R7h" customClass="SampleJournalsViewController" customModule="OneDay" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="gko-Xr-zqo">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WaY-7S-Pw3">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="journal_cell" id="lc0-3i-vf8">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lc0-3i-vf8" id="Jxv-CK-Yci">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="bAA-nC-BcN" kind="show" id="aqm-Po-6ur"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="6J4-2q-R7h" id="XBF-i5-ZUm"/>
-                                    <outlet property="delegate" destination="6J4-2q-R7h" id="dl9-vM-pev"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="WaY-7S-Pw3" firstAttribute="top" secondItem="eIt-RF-odm" secondAttribute="top" id="LZw-mE-12e"/>
-                            <constraint firstItem="eIt-RF-odm" firstAttribute="bottom" secondItem="WaY-7S-Pw3" secondAttribute="bottom" id="SfQ-sQ-eN9"/>
-                            <constraint firstItem="WaY-7S-Pw3" firstAttribute="leading" secondItem="eIt-RF-odm" secondAttribute="leading" id="azJ-FJ-jFj"/>
-                            <constraint firstItem="eIt-RF-odm" firstAttribute="trailing" secondItem="WaY-7S-Pw3" secondAttribute="trailing" id="eWj-rn-9Dd"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="eIt-RF-odm"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="저널" id="Xhf-H6-fbd">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="eXQ-Oh-u78">
-                            <connections>
-                                <action selector="alertAddJournal:" destination="6J4-2q-R7h" id="bZa-0a-vjr"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="journalTable" destination="WaY-7S-Pw3" id="Pxk-ba-sx1"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="PbC-PY-84P" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1932" y="26.53673163418291"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="Z0X-ZW-sEZ">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lim-lE-fiS" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="c1j-r3-oHj">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="6J4-2q-R7h" kind="relationship" relationship="rootViewController" id="9K7-dn-QF7"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="uLh-mZ-x52" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="992.79999999999995" y="26.53673163418291"/>
-        </scene>
-        <!--엔트리-->
+        <!--일기장-->
         <scene sceneID="VPX-WW-gqW">
             <objects>
-                <viewController id="bAA-nC-BcN" customClass="SampleFeedViewController" customModule="OneDay" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Timeline" id="bAA-nC-BcN" customClass="TimeLineViewController" customModule="OneDay" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bVj-Xg-OEB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8rm-cg-MDR">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="MEL-XZ-niL">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="169"/>
@@ -130,7 +58,7 @@
                                     </constraints>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="feed_cell" rowHeight="74" id="5ZM-WR-QeL" customClass="SampleFeedTableViewCell" customModule="OneDay" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="timeline_cell" rowHeight="74" id="5ZM-WR-QeL" customClass="TimeLineTableViewCell" customModule="OneDay" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="197" width="375" height="74"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5ZM-WR-QeL" id="UHr-z7-pNT">
@@ -215,13 +143,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Uem-sK-ygE"/>
                     </view>
-                    <navigationItem key="navigationItem" title="엔트리" id="9nm-xw-eAL">
+                    <navigationItem key="navigationItem" title="일기장" largeTitleDisplayMode="never" id="9nm-xw-eAL">
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="HuU-2K-d2e">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="feedTable" destination="8rm-cg-MDR" id="srs-Hl-Ywx"/>
+                        <outlet property="timelineTable" destination="8rm-cg-MDR" id="srs-Hl-Ywx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k4d-wh-yCK" sceneMemberID="firstResponder"/>
@@ -266,23 +194,9 @@
                                 </constraints>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" keyboardDismissMode="interactive" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JMn-5r-ZV0">
-                                <rect key="frame" x="0.0" y="56.5" width="375" height="494.5"/>
+                                <rect key="frame" x="0.0" y="56.5" width="375" height="510.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <attributedString key="attributedText">
-                                    <fragment>
-                                        <string key="content">helllo!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-123123123
-
-
-
-31413412312314123125</string>
-                                        <attributes>
-                                            <font key="NSFont" size="18" name=".AppleSDGothicNeoI-Regular"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
+                                <attributedString key="attributedText"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zcR-PM-JfH" userLabel="Grey View">
@@ -338,7 +252,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" name="doBlue"/>
                         <constraints>
                             <constraint firstItem="zcR-PM-JfH" firstAttribute="top" relation="lessThanOrEqual" secondItem="rRh-hW-4PN" secondAttribute="bottom" constant="50" id="0JZ-Zi-WgP"/>
                             <constraint firstItem="uUP-an-P7R" firstAttribute="leading" secondItem="rRh-hW-4PN" secondAttribute="leading" id="EhU-tV-rxg"/>
@@ -350,7 +264,7 @@
                             <constraint firstItem="uUP-an-P7R" firstAttribute="top" secondItem="rRh-hW-4PN" secondAttribute="top" id="fam-zY-8Ph"/>
                             <constraint firstItem="rRh-hW-4PN" firstAttribute="trailing" secondItem="JMn-5r-ZV0" secondAttribute="trailing" id="lzB-8H-JGC"/>
                             <constraint firstItem="JMn-5r-ZV0" firstAttribute="leading" secondItem="rRh-hW-4PN" secondAttribute="leading" id="t8o-8p-hAM"/>
-                            <constraint firstItem="zcR-PM-JfH" firstAttribute="top" secondItem="JMn-5r-ZV0" secondAttribute="bottom" constant="16" id="wTn-0I-8my"/>
+                            <constraint firstItem="zcR-PM-JfH" firstAttribute="top" secondItem="JMn-5r-ZV0" secondAttribute="bottom" id="wTn-0I-8my"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="rRh-hW-4PN"/>
                     </view>
