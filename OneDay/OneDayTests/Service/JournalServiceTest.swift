@@ -12,11 +12,11 @@ import XCTest
 class JournalServiceTest: XCTestCase {
     // MARK: Properties
     var journalService: JournalService!
-    var coreDataStack: CoreDataStack!
+    var coreDataStack: TestCoreDataStack!
 
     override func setUp() {
         coreDataStack = TestCoreDataStack()
-        journalService = JournalService(managedObjectContext: coreDataStack.mainContext, coreDataStack: coreDataStack)
+        journalService = JournalService(managedObjectContext: coreDataStack.managedContext, coreDataStack: coreDataStack)
     }
 
     override func tearDown() {
@@ -30,7 +30,7 @@ class JournalServiceTest: XCTestCase {
         journalService = JournalService(managedObjectContext: derivedContext, coreDataStack: coreDataStack)
         
         expectation(
-            forNotification: .NSManagedObjectContextDidSave, object: coreDataStack.mainContext) { _ in
+            forNotification: .NSManagedObjectContextDidSave, object: coreDataStack.managedContext) { _ in
                 return true
         }
         
