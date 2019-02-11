@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="35L-p2-1kG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="h8h-KH-rQv">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -91,10 +91,25 @@
             </objects>
             <point key="canvasLocation" x="1991.2" y="1098.8005997001501"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Base Sliding View Controller-->
+        <scene sceneID="SfZ-w6-lBe">
+            <objects>
+                <viewController id="h8h-KH-rQv" customClass="BaseSlidingViewController" customModule="OneDay" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wKs-aL-2Vo">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="iRa-fY-so9"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Nf-vS-cet" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1367" y="-295"/>
+        </scene>
+        <!--Main Tab Bar View Controller-->
         <scene sceneID="61Q-p0-foG">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="35L-p2-1kG" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabMain" automaticallyAdjustsScrollViewInsets="NO" id="35L-p2-1kG" customClass="MainTabBarViewController" customModule="OneDay" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="822-p0-SgC">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>

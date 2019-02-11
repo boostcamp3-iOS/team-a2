@@ -44,13 +44,10 @@
 		D561692821FAD07000E00FED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D561692621FAD07000E00FED /* Main.storyboard */; };
 		D561692D21FAD07200E00FED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D561692C21FAD07200E00FED /* Assets.xcassets */; };
 		D561693021FAD07200E00FED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D561692E21FAD07200E00FED /* LaunchScreen.storyboard */; };
+		E936659422110DF900DC660A /* BaseSlidingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E936659322110DF900DC660A /* BaseSlidingViewController.swift */; };
 		E96BE83A21FAD96700266F6D /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E96BE83921FAD96700266F6D /* Colors.xcassets */; };
 		E96BE83F21FADA9600266F6D /* SideMenu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E96BE83E21FADA9600266F6D /* SideMenu.storyboard */; };
 		E96BE84121FADAAA00266F6D /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E96BE84021FADAAA00266F6D /* Setting.storyboard */; };
-		EC0CFB0422030A29001293B1 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0322030A29001293B1 /* WeatherService.swift */; };
-		EC0CFB0622030A53001293B1 /* APIWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0522030A53001293B1 /* APIWeather.swift */; };
-		EC0CFB0922030C1D001293B1 /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0822030C1D001293B1 /* NetworkProvider.swift */; };
-		EC5E21AB220425390073D90E /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5E21AA220425390073D90E /* LocationService.swift */; };
 		E992EC6121FAEDF500917116 /* SearchedKeywordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6021FAEDF500917116 /* SearchedKeywordCell.swift */; };
 		E992EC6321FAEDFD00917116 /* MatchingEntriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6221FAEDFD00917116 /* MatchingEntriesCell.swift */; };
 		E992EC6521FAEE0600917116 /* FilterTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6421FAEE0600917116 /* FilterTableCell.swift */; };
@@ -66,6 +63,10 @@
 		E992EC7C21FB1E5500917116 /* CalendarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7B21FB1E5500917116 /* CalendarHeaderView.swift */; };
 		E992EC7F21FB2CCE00917116 /* CalendarDaysOfWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7E21FB2CCE00917116 /* CalendarDaysOfWeek.swift */; };
 		E9DA39AC2203FCD30026381E /* FilterSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DA39AB2203FCD20026381E /* FilterSection.swift */; };
+		EC0CFB0422030A29001293B1 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0322030A29001293B1 /* WeatherService.swift */; };
+		EC0CFB0622030A53001293B1 /* APIWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0522030A53001293B1 /* APIWeather.swift */; };
+		EC0CFB0922030C1D001293B1 /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0822030C1D001293B1 /* NetworkProvider.swift */; };
+		EC5E21AB220425390073D90E /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5E21AA220425390073D90E /* LocationService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,13 +123,10 @@
 		D561692C21FAD07200E00FED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D561692F21FAD07200E00FED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D561693121FAD07200E00FED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E936659322110DF900DC660A /* BaseSlidingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSlidingViewController.swift; sourceTree = "<group>"; };
 		E96BE83921FAD96700266F6D /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		E96BE83E21FADA9600266F6D /* SideMenu.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SideMenu.storyboard; sourceTree = "<group>"; };
 		E96BE84021FADAAA00266F6D /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
-		EC0CFB0322030A29001293B1 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
-		EC0CFB0522030A53001293B1 /* APIWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIWeather.swift; sourceTree = "<group>"; };
-		EC0CFB0822030C1D001293B1 /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
-		EC5E21AA220425390073D90E /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		E992EC6021FAEDF500917116 /* SearchedKeywordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedKeywordCell.swift; sourceTree = "<group>"; };
 		E992EC6221FAEDFD00917116 /* MatchingEntriesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchingEntriesCell.swift; sourceTree = "<group>"; };
 		E992EC6421FAEE0600917116 /* FilterTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTableCell.swift; sourceTree = "<group>"; };
@@ -144,7 +142,10 @@
 		E992EC7B21FB1E5500917116 /* CalendarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHeaderView.swift; sourceTree = "<group>"; };
 		E992EC7E21FB2CCE00917116 /* CalendarDaysOfWeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDaysOfWeek.swift; sourceTree = "<group>"; };
 		E9DA39AB2203FCD20026381E /* FilterSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSection.swift; sourceTree = "<group>"; };
-
+		EC0CFB0322030A29001293B1 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
+		EC0CFB0522030A53001293B1 /* APIWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIWeather.swift; sourceTree = "<group>"; };
+		EC0CFB0822030C1D001293B1 /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
+		EC5E21AA220425390073D90E /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -314,7 +315,7 @@
 			children = (
 				D50276E92202C7EE00A0DB5E /* EntryViewController.swift */,
 				D50276E52202C77100A0DB5E /* Sample */,
-				D561692421FAD07000E00FED /* ViewController.swift */,
+				E936659322110DF900DC660A /* BaseSlidingViewController.swift */,
 				E992EC6F21FAEE5B00917116 /* FilterViewController.swift */,
 				E992EC7121FAEE6700917116 /* SideMenuViewController.swift */,
 				E992EC7321FAEE7100917116 /* TestViewController.swift */,
@@ -567,7 +568,7 @@
 				E992EC7221FAEE6700917116 /* SideMenuViewController.swift in Sources */,
 				E992EC7821FAF4C200917116 /* CalendarViewController.swift in Sources */,
 				E992EC7421FAEE7100917116 /* TestViewController.swift in Sources */,
-				D561692521FAD07000E00FED /* ViewController.swift in Sources */,
+				D561692521FAD07000E00FED /* MainTabBarViewController.swift in Sources */,
 				E992EC7021FAEE5B00917116 /* FilterViewController.swift in Sources */,
 				E992EC6321FAEDFD00917116 /* MatchingEntriesCell.swift in Sources */,
 				E992EC7C21FB1E5500917116 /* CalendarHeaderView.swift in Sources */,
@@ -591,6 +592,7 @@
 				D502765C21FB0B8400A0DB5E /* Location+CoreDataClass.swift in Sources */,
 				D502765B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift in Sources */,
 				D50276F622041DC600A0DB5E /* CalendarTempViewController.swift in Sources */,
+				E936659422110DF900DC660A /* BaseSlidingViewController.swift in Sources */,
 				D502765321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift in Sources */,
 				D502766721FB139300A0DB5E /* JournalService.swift in Sources */,
 				EC5E21AB220425390073D90E /* LocationService.swift in Sources */,
