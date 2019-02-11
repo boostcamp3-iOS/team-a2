@@ -1,14 +1,14 @@
 //
-//  CalendarViewController.swift
+//  CreateEntryCameraViewController.swift
 //  OneDay
 //
-//  Created by juhee on 01/02/2019.
+//  Created by juhee on 11/02/2019.
 //  Copyright © 2019 teamA2. All rights reserved.
 //
 
 import UIKit
 
-class CalendarTempViewController: UIViewController {
+class CreateEntryCameraViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -45,9 +45,9 @@ class EntryViewController: UIViewController {
     
     func setUpDate() {
         var dateSet: DateStringSet = DateStringSet(date: Date())
-        if let data = entry {
-            dateSet = DateStringSet(date: data.date)
-            textView.attributedText = data.contents
+        if let entry = entry {
+            dateSet = DateStringSet(date: entry.date)
+            textView.attributedText = entry.contents
         }
         dateLabel.text = dateSet.full
         timeLabel.text = dateSet.time
@@ -104,6 +104,7 @@ class EntryViewController: UIViewController {
                     let degree: Int = Int((data.currently.temperature - 32) * (5/9)) /// ℉를 ℃로 변경
                     weather.tempature = Int16(degree)
                     weather.type = data.currently.icon
+                    weather.weatherId = UUID.init()
                     DispatchQueue.main.sync {
                         self?.temperatureLabel.text = "\(weather.tempature)℃"
                         guard let type = weather.type else { return }
@@ -144,6 +145,8 @@ class EntryViewController: UIViewController {
         }
         
         entry.title = title
+        entry.favorite = false
+        coreDataStack.saveContext()
         self.dismiss(animated: true, completion: nil)
     }
     
