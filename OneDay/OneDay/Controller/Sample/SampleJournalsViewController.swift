@@ -43,7 +43,7 @@ class SampleJournalsViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if sender is UITableViewCell {
             if let cell = sender as? UITableViewCell, let indexPath = journalTable.indexPath(for: cell) {
-                guard let destination = segue.destination as? SampleFeedViewController else {
+                guard let destination = segue.destination as? TimeLineViewController else {
                     return
                 }
                 let journal = fetchedResultsController.object(at: indexPath)

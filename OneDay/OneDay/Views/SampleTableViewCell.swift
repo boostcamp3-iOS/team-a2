@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SampleFeedTableViewCell: UITableViewCell {
+class TimeLineTableViewCell: UITableViewCell {
     
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var jornalLabel: UILabel!

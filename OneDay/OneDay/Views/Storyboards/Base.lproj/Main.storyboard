@@ -28,8 +28,12 @@
             <point key="canvasLocation" x="1052" y="-309"/>
         </scene>
         <!--Timeline-->
-        <scene sceneID="tne-QT-ifu">
+        <scene sceneID="aSf-8X-AG0">
             <objects>
+                <viewControllerPlaceholder storyboardName="Coredata" referencedIdentifier="Timeline" id="8yw-PF-Uz6" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Goh-VP-ypY"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="K7v-Ps-o3s" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="BYZ-38-t0r" customClass="TimeLineViewController" customModule="OneDay" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="620"/>
@@ -41,7 +45,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1991" y="-1681"/>
+            <point key="canvasLocation" x="1931" y="-1681"/>
         </scene>
         <!--Map-->
         <scene sceneID="chG-y2-ejf">
@@ -165,7 +169,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="8vK-wQ-Qsp"/>
+                        <segue destination="8yw-PF-Uz6" kind="relationship" relationship="rootViewController" id="u99-AA-QNy"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8st-5g-w6C" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -262,11 +266,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="add" width="36.799999237060547" height="36.799999237060547"/>
-        <image name="ic_calendar" width="34.5" height="34.5"/>
-        <image name="map" width="36.799999237060547" height="36.799999237060547"/>
-        <image name="picture" width="27" height="27"/>
-        <image name="tabs" width="36.799999237060547" height="36.799999237060547"/>
+        <image name="add" width="23" height="23"/>
+        <image name="ic_calendar" width="23" height="23"/>
+        <image name="map" width="23" height="23"/>
+        <image name="picture" width="36" height="36"/>
+        <image name="tabs" width="23" height="23"/>
         <namedColor name="doBlue">
             <color red="0.41176470588235292" green="0.74509803921568629" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

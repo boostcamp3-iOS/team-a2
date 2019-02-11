@@ -31,11 +31,10 @@
 		D50276D221FEFCE900A0DB5E /* JournalServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276D121FEFCE900A0DB5E /* JournalServiceTest.swift */; };
 		D50276D521FEFD4500A0DB5E /* TestCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276D421FEFD4500A0DB5E /* TestCoreDataStack.swift */; };
 		D50276DA21FF09E100A0DB5E /* EntryServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276D921FF09E100A0DB5E /* EntryServiceTest.swift */; };
-		D50276E82202C79300A0DB5E /* SampleFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276E72202C79300A0DB5E /* SampleFeedViewController.swift */; };
+		D50276E82202C79300A0DB5E /* TimeLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276E72202C79300A0DB5E /* TimeLineViewController.swift */; };
 		D50276EA2202C7EE00A0DB5E /* EntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276E92202C7EE00A0DB5E /* EntryViewController.swift */; };
 		D50276EC2202C82900A0DB5E /* DataStringSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276EB2202C82900A0DB5E /* DataStringSet.swift */; };
 		D50276EE2202D3C700A0DB5E /* SampleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276ED2202D3C700A0DB5E /* SampleTableViewCell.swift */; };
-		D50276F022041DA300A0DB5E /* TimeLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276EF22041DA300A0DB5E /* TimeLineViewController.swift */; };
 		D50276F222041DB100A0DB5E /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276F122041DB100A0DB5E /* PhotosViewController.swift */; };
 		D50276F422041DBA00A0DB5E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276F322041DBA00A0DB5E /* MapViewController.swift */; };
 		D50276F622041DC600A0DB5E /* CalendarTempViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276F522041DC600A0DB5E /* CalendarTempViewController.swift */; };
@@ -111,11 +110,10 @@
 		D50276D121FEFCE900A0DB5E /* JournalServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalServiceTest.swift; sourceTree = "<group>"; };
 		D50276D421FEFD4500A0DB5E /* TestCoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCoreDataStack.swift; sourceTree = "<group>"; };
 		D50276D921FF09E100A0DB5E /* EntryServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryServiceTest.swift; sourceTree = "<group>"; };
-		D50276E72202C79300A0DB5E /* SampleFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleFeedViewController.swift; sourceTree = "<group>"; };
+		D50276E72202C79300A0DB5E /* TimeLineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineViewController.swift; sourceTree = "<group>"; };
 		D50276E92202C7EE00A0DB5E /* EntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewController.swift; sourceTree = "<group>"; };
 		D50276EB2202C82900A0DB5E /* DataStringSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStringSet.swift; sourceTree = "<group>"; };
 		D50276ED2202D3C700A0DB5E /* SampleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTableViewCell.swift; sourceTree = "<group>"; };
-		D50276EF22041DA300A0DB5E /* TimeLineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineViewController.swift; sourceTree = "<group>"; };
 		D50276F122041DB100A0DB5E /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		D50276F322041DBA00A0DB5E /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		D50276F522041DC600A0DB5E /* CalendarTempViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTempViewController.swift; sourceTree = "<group>"; };
@@ -256,7 +254,6 @@
 			isa = PBXGroup;
 			children = (
 				D50276BA21FEEE4900A0DB5E /* SampleJournalsViewController.swift */,
-				D50276E72202C79300A0DB5E /* SampleFeedViewController.swift */,
 			);
 			path = Sample;
 			sourceTree = "<group>";
@@ -339,6 +336,7 @@
 			children = (
 				D53782BE22113B7600336646 /* Entry */,
 				D50276E92202C7EE00A0DB5E /* EntryViewController.swift */,
+				D50276E72202C79300A0DB5E /* TimeLineViewController.swift */,
 				D50276E52202C77100A0DB5E /* Sample */,
 				E936659322110DF900DC660A /* BaseSlidingViewController.swift */,
 				E992EC6F21FAEE5B00917116 /* FilterViewController.swift */,
@@ -346,7 +344,6 @@
 				E992EC7321FAEE7100917116 /* TestViewController.swift */,
 				E992EC7721FAF4C200917116 /* CalendarViewController.swift */,
 				D561692421FAD07000E00FED /* MainTabBarViewController.swift */,
-				D50276EF22041DA300A0DB5E /* TimeLineViewController.swift */,
 				D50276F122041DB100A0DB5E /* PhotosViewController.swift */,
 				D50276F322041DBA00A0DB5E /* MapViewController.swift */,
 			);
@@ -617,7 +614,6 @@
 				D502765C21FB0B8400A0DB5E /* Location+CoreDataClass.swift in Sources */,
 				D502765B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift in Sources */,
 				EC0CFB0622030A53001293B1 /* APIWeather.swift in Sources */,
-				D50276F022041DA300A0DB5E /* TimeLineViewController.swift in Sources */,
 				D502765C21FB0B8400A0DB5E /* Location+CoreDataClass.swift in Sources */,
 				D502765B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift in Sources */,
 				E936659422110DF900DC660A /* BaseSlidingViewController.swift in Sources */,
@@ -627,7 +623,7 @@
 				D502766721FB139300A0DB5E /* JournalService.swift in Sources */,
 				EC5E21AB220425390073D90E /* LocationService.swift in Sources */,
 				D561692321FAD07000E00FED /* AppDelegate.swift in Sources */,
-				D50276E82202C79300A0DB5E /* SampleFeedViewController.swift in Sources */,
+				D50276E82202C79300A0DB5E /* TimeLineViewController.swift in Sources */,
 				D50276C021FEF4F400A0DB5E /* CoreDataService.swift in Sources */,
 				D502766221FB0D6000A0DB5E /* WeatherType.swift in Sources */,
 				D502765921FB0B8400A0DB5E /* Entry+CoreDataProperties.swift in Sources */,
