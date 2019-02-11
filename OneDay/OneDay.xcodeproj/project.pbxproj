@@ -39,6 +39,8 @@
 		D50276F222041DB100A0DB5E /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276F122041DB100A0DB5E /* PhotosViewController.swift */; };
 		D50276F422041DBA00A0DB5E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276F322041DBA00A0DB5E /* MapViewController.swift */; };
 		D50276F622041DC600A0DB5E /* CalendarTempViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276F522041DC600A0DB5E /* CalendarTempViewController.swift */; };
+		D53782C022113B9E00336646 /* CreateEntryPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53782BF22113B9E00336646 /* CreateEntryPhotosViewController.swift */; };
+		D53782C322113BAF00336646 /* CreateEntryCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53782C222113BAF00336646 /* CreateEntryCameraViewController.swift */; };
 		D561692321FAD07000E00FED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D561692221FAD07000E00FED /* AppDelegate.swift */; };
 		D561692521FAD07000E00FED /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D561692421FAD07000E00FED /* MainTabBarViewController.swift */; };
 		D561692821FAD07000E00FED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D561692621FAD07000E00FED /* Main.storyboard */; };
@@ -110,6 +112,8 @@
 		D50276F122041DB100A0DB5E /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		D50276F322041DBA00A0DB5E /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		D50276F522041DC600A0DB5E /* CalendarTempViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTempViewController.swift; sourceTree = "<group>"; };
+		D53782BF22113B9E00336646 /* CreateEntryPhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEntryPhotosViewController.swift; sourceTree = "<group>"; };
+		D53782C222113BAF00336646 /* CreateEntryCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEntryCameraViewController.swift; sourceTree = "<group>"; };
 		D561691F21FAD07000E00FED /* OneDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D561692221FAD07000E00FED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D561692421FAD07000E00FED /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
@@ -241,6 +245,15 @@
 			path = Sample;
 			sourceTree = "<group>";
 		};
+		D53782BE22113B7600336646 /* Entry */ = {
+			isa = PBXGroup;
+			children = (
+				D53782BF22113B9E00336646 /* CreateEntryPhotosViewController.swift */,
+				D53782C222113BAF00336646 /* CreateEntryCameraViewController.swift */,
+			);
+			path = Entry;
+			sourceTree = "<group>";
+		};
 		D561691621FAD07000E00FED = {
 			isa = PBXGroup;
 			children = (
@@ -300,8 +313,8 @@
 		E96BE83721FAD90A00266F6D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				D53782BE22113B7600336646 /* Entry */,
 				D50276E52202C77100A0DB5E /* Sample */,
-				D561692421FAD07000E00FED /* ViewController.swift */,
 				E992EC6F21FAEE5B00917116 /* FilterViewController.swift */,
 				E992EC7121FAEE6700917116 /* SideMenuViewController.swift */,
 				E992EC7321FAEE7100917116 /* TestViewController.swift */,
@@ -546,7 +559,7 @@
 				E992EC7221FAEE6700917116 /* SideMenuViewController.swift in Sources */,
 				E992EC7821FAF4C200917116 /* CalendarViewController.swift in Sources */,
 				E992EC7421FAEE7100917116 /* TestViewController.swift in Sources */,
-				D561692521FAD07000E00FED /* ViewController.swift in Sources */,
+				D561692521FAD07000E00FED /* MainTabBarViewController.swift in Sources */,
 				E992EC7021FAEE5B00917116 /* FilterViewController.swift in Sources */,
 				E992EC6321FAEDFD00917116 /* MatchingEntriesCell.swift in Sources */,
 				E992EC7C21FB1E5500917116 /* CalendarHeaderView.swift in Sources */,
@@ -575,6 +588,7 @@
 				D50276C021FEF4F400A0DB5E /* CoreDataService.swift in Sources */,
 				D502766221FB0D6000A0DB5E /* WeatherType.swift in Sources */,
 				D502765921FB0B8400A0DB5E /* Entry+CoreDataProperties.swift in Sources */,
+				D53782C322113BAF00336646 /* CreateEntryCameraViewController.swift in Sources */,
 				D502765A21FB0B8400A0DB5E /* Device+CoreDataClass.swift in Sources */,
 				D50276EA2202C7EE00A0DB5E /* SampleEntryViewController.swift in Sources */,
 				D50276EC2202C82900A0DB5E /* DataStringSet.swift in Sources */,
@@ -582,6 +596,7 @@
 				D502765D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift in Sources */,
 				D502765821FB0B8400A0DB5E /* Entry+CoreDataClass.swift in Sources */,
 				D502765221FB0B8400A0DB5E /* Journal+CoreDataClass.swift in Sources */,
+				D53782C022113B9E00336646 /* CreateEntryPhotosViewController.swift in Sources */,
 				D502766521FB138500A0DB5E /* EntryService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
