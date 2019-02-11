@@ -48,6 +48,7 @@
 		D561692821FAD07000E00FED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D561692621FAD07000E00FED /* Main.storyboard */; };
 		D561692D21FAD07200E00FED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D561692C21FAD07200E00FED /* Assets.xcassets */; };
 		D561693021FAD07200E00FED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D561692E21FAD07200E00FED /* LaunchScreen.storyboard */; };
+		E936659422110DF900DC660A /* BaseSlidingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E936659322110DF900DC660A /* BaseSlidingViewController.swift */; };
 		E96BE83A21FAD96700266F6D /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E96BE83921FAD96700266F6D /* Colors.xcassets */; };
 		E96BE83F21FADA9600266F6D /* SideMenu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E96BE83E21FADA9600266F6D /* SideMenu.storyboard */; };
 		E96BE84121FADAAA00266F6D /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E96BE84021FADAAA00266F6D /* Setting.storyboard */; };
@@ -130,6 +131,7 @@
 		D561692C21FAD07200E00FED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D561692F21FAD07200E00FED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D561693121FAD07200E00FED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E936659322110DF900DC660A /* BaseSlidingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSlidingViewController.swift; sourceTree = "<group>"; };
 		E96BE83921FAD96700266F6D /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		E96BE83E21FADA9600266F6D /* SideMenu.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SideMenu.storyboard; sourceTree = "<group>"; };
 		E96BE84021FADAAA00266F6D /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 				D53782BE22113B7600336646 /* Entry */,
 				D50276E92202C7EE00A0DB5E /* EntryViewController.swift */,
 				D50276E52202C77100A0DB5E /* Sample */,
+				E936659322110DF900DC660A /* BaseSlidingViewController.swift */,
 				E992EC6F21FAEE5B00917116 /* FilterViewController.swift */,
 				E992EC7121FAEE6700917116 /* SideMenuViewController.swift */,
 				E992EC7321FAEE7100917116 /* TestViewController.swift */,
@@ -346,7 +349,6 @@
 				D50276EF22041DA300A0DB5E /* TimeLineViewController.swift */,
 				D50276F122041DB100A0DB5E /* PhotosViewController.swift */,
 				D50276F322041DBA00A0DB5E /* MapViewController.swift */,
-				D50276F522041DC600A0DB5E /* CalendarTempViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -618,6 +620,7 @@
 				D50276F022041DA300A0DB5E /* TimeLineViewController.swift in Sources */,
 				D502765C21FB0B8400A0DB5E /* Location+CoreDataClass.swift in Sources */,
 				D502765B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift in Sources */,
+				E936659422110DF900DC660A /* BaseSlidingViewController.swift in Sources */,
 				D53782BD221113A100336646 /* PhotosCollectionViewCell.swift in Sources */,
 				D50276F622041DC600A0DB5E /* CalendarTempViewController.swift in Sources */,
 				D502765321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift in Sources */,
