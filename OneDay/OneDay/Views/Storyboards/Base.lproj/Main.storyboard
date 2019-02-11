@@ -75,10 +75,42 @@
             </objects>
             <point key="canvasLocation" x="1991.2" y="1098.8005997001501"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Map-->
+        <scene sceneID="chG-y2-ejf">
+            <objects>
+                <viewController id="hMg-DJ-Hjx" customClass="MapViewController" customModule="OneDay" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mxg-ym-fni">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="pF0-mR-sPL"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Map" id="1uL-hx-qZe"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3VK-Zl-zVK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1991.2" y="407.94602698650675"/>
+        </scene>
+        <!--Calendar-->
+        <scene sceneID="xa3-5W-IEJ">
+            <objects>
+                <viewController id="7aQ-rC-704" customClass="CalendarTempViewController" customModule="OneDay" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sdf-BS-mXL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="6uQ-5w-1Wb"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Calendar" id="is1-pg-qhU"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="K6o-rY-CBW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1991.2" y="1098.8005997001501"/>
+        </scene>
+        <!--Main Tab Bar View Controller-->
         <scene sceneID="61Q-p0-foG">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="35L-p2-1kG" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="35L-p2-1kG" customClass="MainTabBarViewController" customModule="OneDay" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="822-p0-SgC">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
