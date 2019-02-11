@@ -8,10 +8,6 @@
 
 import UIKit
 
-class BaseMainView: UIView {}
-class BaseSideView: UIView {}
-class BlurCoverView: UIView {}
-
 class BaseSlidingViewController: UIViewController {
     
     fileprivate var isMenuOpened = false
@@ -20,17 +16,18 @@ class BaseSlidingViewController: UIViewController {
     fileprivate var baseMainViewLeftConstraint: NSLayoutConstraint!
     fileprivate var baseMainViewRightConstraint: NSLayoutConstraint!
     fileprivate let sideWidth = min(UIScreen.main.bounds.width, UIScreen.main.bounds.height)*0.75
-    
+    fileprivate let containerLayoutOffset: CGFloat = 24
+
     var statusBarAnimator = UIViewPropertyAnimator()
     
     let baseMainView: UIView = {
-        let view = BaseMainView()
+        let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     let baseSideView: UIView = {
-        let view = BaseSideView()
+        let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -141,7 +138,8 @@ class BaseSlidingViewController: UIViewController {
         self.setNeedsStatusBarAppearanceUpdate()
         
         isMenuOpened = true
-        baseMainViewLeftConstraint.constant = sideWidth
+        baseMainViewLeftConstraint.constant = sideWidth + containerLayoutOffset
+        baseMainViewRightConstraint.constant = sideWidth
         performAnimation()
         
     }
@@ -151,16 +149,16 @@ class BaseSlidingViewController: UIViewController {
         self.setNeedsStatusBarAppearanceUpdate()
         isStatusBarHidden = false
         self.setNeedsStatusBarAppearanceUpdate()
-        
         isMenuOpened = false
         baseMainViewLeftConstraint.constant = 0
+        baseMainViewRightConstraint.constant = 0
         performAnimation()
     }
     
     fileprivate func performAnimation() {
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.view.layoutIfNeeded()
             self.blurCoverView.alpha = self.isMenuOpened ? 1 : 0
+            self.view.layoutIfNeeded()
         }, completion: nil)
     }
     
@@ -177,7 +175,7 @@ class BaseSlidingViewController: UIViewController {
         
         view.addSubview(baseSideView)
         baseSideView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        baseSideView.rightAnchor.constraint(equalTo: baseMainView.safeAreaLayoutGuide.leftAnchor, constant: -24).isActive = true
+        baseSideView.rightAnchor.constraint(equalTo: baseMainView.safeAreaLayoutGuide.leftAnchor, constant: -containerLayoutOffset).isActive = true
         baseSideView.bottomAnchor.constraint(equalTo: baseMainView.bottomAnchor).isActive = true
         baseSideView.widthAnchor.constraint(equalToConstant: sideWidth).isActive = true
     }

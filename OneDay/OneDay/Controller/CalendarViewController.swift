@@ -31,18 +31,18 @@ class CalendarViewController: UIViewController {
         return formatter
     }
     
-    var isTodayIndex = false    // 오늘 날짜에 해당하는 캘린더가 화면에 띄워져 있는가
-    var isPickingDate = false     // 데이트피커에서 선택되었는가
-    var computedWeekday = 6 // 월의 첫 요일이 무엇인지 계산
+    var isTodayIndex = false
+    var isPickingDate = false
+    var computedWeekday = 6
     
     override func viewDidLoad() {
         view.backgroundColor = .white
         setupCalendar()
-        fixMeSetNavigation()
+        setupNavigationItem()
+        
         self.view.addGestureRecognizer(UISwipeGestureRecognizer(target: self, action:
             #selector(dismissFromVC)))
     }
-    
     func lastDayOfMonth(at section: Int) -> Int {
         var last = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
         let year = section/12+1
@@ -68,6 +68,16 @@ class CalendarViewController: UIViewController {
     @objc func pickDate() {
         isPickingDate = true
         collectionView.reloadData()
+    }
+    
+    fileprivate func setupNavigationItem() {
+        let pickerButton = UIButton(type: .custom)
+        let image = UIImage(named: "navCalendar")?.withRenderingMode(.alwaysTemplate)
+        pickerButton.setImage(image, for: .normal)
+        pickerButton.addTarget(self, action: #selector(presentDatePicker), for: .touchUpInside)
+        pickerButton.tintColor = .white
+        let barButton = UIBarButtonItem(customView: pickerButton)
+        self.navigationItem.rightBarButtonItem = barButton  
     }
 }
 
@@ -110,7 +120,7 @@ extension CalendarViewController: UICollectionViewDelegateFlowLayout, UICollecti
             cell.dayLabel.text = "\(day)"
         } else {
             cell.isUserInteractionEnabled = false
-            cell.dayLabel.backgroundColor = .doLight
+            cell.dayLabel.backgroundColor = .calendarBackgroundColor
         }
         
         return cell
@@ -162,16 +172,15 @@ extension CalendarViewController {
         }()
         
         view.addSubview(daysOfWeekView)
-        daysOfWeekView.topAnchor.constraint(equalTo: view.topAnchor, constant: 44).isActive = true
+        daysOfWeekView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         daysOfWeekView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         daysOfWeekView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        daysOfWeekView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        daysOfWeekView.heightAnchor.constraint(equalToConstant: 24).isActive = true
         
         view.addSubview(collectionView)
         collectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         collectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        collectionView.topAnchor.constraint(equalTo: daysOfWeekView.bottomAnchor, constant: 8).isActive = true
-        //FIXME: 이따가 삭제
+        collectionView.topAnchor.constraint(equalTo: daysOfWeekView.bottomAnchor, constant: 0).isActive = true
         collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
         collectionView.register(CalendarCell.self,
                                 forCellWithReuseIdentifier: "cellId")
@@ -198,7 +207,7 @@ extension CalendarViewController {
     }
 }
 
-//MARK: 액션시트, ActionSheet
+// MARK: 액션시트, ActionSheet
 extension CalendarViewController {
     func showActionSheet(_ section: Int, _ day: Int) {
         let date = dateComponents(section, item: day)
@@ -227,26 +236,5 @@ extension CalendarViewController {
         let date = dateFormatter.date(from: "\(section/12+1)-\(section%12+1)-\(day)")
         let components = Calendar.current.dateComponents([.year, .month, .day, .weekday], from: date ?? Date())
         return components
-    }
-}
-
-// FIXME: 네비게이션 바 아이템 대용 > 네비게이션 생기면 아래 전체 삭제
-extension CalendarViewController {
-    func fixMeSetNavigation() {
-        let navRightButton: UIButton = {
-            let button = UIButton()
-            button.backgroundColor = .black
-            button.setTitleColor(.white, for: .normal)
-            button.setTitle("date picker", for: .normal)
-            button.translatesAutoresizingMaskIntoConstraints = false
-            return button
-        }()
-        
-        view.addSubview(navRightButton)
-        navRightButton.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        navRightButton.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        navRightButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        navRightButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
-        navRightButton.addTarget(self, action: #selector(presentDatePicker), for: .touchUpInside)
     }
 }

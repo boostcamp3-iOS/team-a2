@@ -23,4 +23,9 @@ extension UIColor {
     static var doLight: UIColor {
         return UIColor(named: "doLight")!
     }
+    
+    static var calendarBackgroundColor: UIColor {
+        return UIColor(red: CGFloat(239/255.0), green: CGFloat(239/255.0), blue: CGFloat(245/255.0), alpha: CGFloat(1.0))
+    }
+
 }

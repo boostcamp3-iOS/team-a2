@@ -9,11 +9,11 @@
 import UIKit
 
 class CalendarCell: UICollectionViewCell {
-    
     let dayLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .white
+        label.backgroundColor = .doLight
         label.text = ""
+        label.font = UIFont.systemFont(ofSize: 20)
         label.textAlignment = .center
         label.layer.cornerRadius = 3
         label.layer.masksToBounds = true
@@ -25,23 +25,23 @@ class CalendarCell: UICollectionViewCell {
         didSet {
             if isSelected && dayLabel.text != "" {
                 dayLabel.backgroundColor = .gray
+                dayLabel.textColor = .white
             } else {
-                dayLabel.backgroundColor = .white
+                dayLabel.backgroundColor = .doLight
+                dayLabel.textColor = .black
             }
         }
     }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .calendarBackgroundColor
         setupCellView()
     }
     
     override func prepareForReuse() {
         dayLabel.text = ""
-        dayLabel.backgroundColor = .white
+        dayLabel.backgroundColor = .doLight
     }
-    
-
     
     func setupCellView() {
         addSubview(dayLabel)
