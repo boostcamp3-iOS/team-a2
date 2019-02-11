@@ -17,8 +17,8 @@ class EntryServiceTest: XCTestCase {
     
     override func setUp() {
         coreDataStack = TestCoreDataStack()
-        entryService = EntryService(managedObjectContext: coreDataStack.mainContext, coreDataStack: coreDataStack)
-        journalService = JournalService(managedObjectContext: coreDataStack.mainContext, coreDataStack: coreDataStack)
+        entryService = EntryService(managedObjectContext: coreDataStack.managedContext, coreDataStack: coreDataStack)
+        journalService = JournalService(managedObjectContext: coreDataStack.managedContext, coreDataStack: coreDataStack)
     }
     
     override func tearDown() {
@@ -29,11 +29,11 @@ class EntryServiceTest: XCTestCase {
     }
     
     func testRootContextIsSavedAfterAddingCamper() {
-        let derivedContext = coreDataStack.newDerivedContext()
+        let derivedContext = coreDataStack.managedContext
         entryService = EntryService(managedObjectContext: derivedContext, coreDataStack: coreDataStack)
         
         expectation(
-        forNotification: .NSManagedObjectContextDidSave, object: coreDataStack.mainContext) { _ in
+        forNotification: .NSManagedObjectContextDidSave, object: coreDataStack.managedContext) { _ in
             return true
         }
         

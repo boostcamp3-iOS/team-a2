@@ -11,7 +11,7 @@ import CoreData
 
 class TestCoreDataStack: CoreDataStack {
     
-    convenience override init() {
+    convenience init() {
         self.init(modelName: "OneDay")
     }
     
@@ -33,4 +33,10 @@ class TestCoreDataStack: CoreDataStack {
         
         self.storeContainer = container
     }
+    
+    public func newDerivedContext() -> NSManagedObjectContext {
+        let context = storeContainer.newBackgroundContext()
+        return context
+    }
+
 }

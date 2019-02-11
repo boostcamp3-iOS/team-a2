@@ -7,12 +7,31 @@
 //
 
 import UIKit
+import CoreData
 
 class PhotosViewController: UIViewController {
     
     @IBOutlet weak var photoCollectionView: UICollectionView!
+    // MARK :- FIXME
+    var coreDataStack: CoreDataStack = CoreDataStack(modelName: "OneDay")
+    var entries: [Entry] = []
     
-    var photos: [String] = ["image","image","image","image","image","image","image","image","image","image","image","image","image"]
+    lazy var fetchedResultsController: NSFetchedResultsController<Entry> = {
+        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
+        let photoPredicate = NSPredicate(format: "%K != nil", #keyPath(Entry.thumbnail))
+        fetchRequest.predicate = photoPredicate
+        let dateSort = NSSortDescriptor(key: #keyPath(Entry.date), ascending: false)
+        fetchRequest.sortDescriptors = [dateSort]
+        
+        let fetchedResultsController = NSFetchedResultsController (
+            fetchRequest: fetchRequest,
+            managedObjectContext: coreDataStack.managedContext,
+            sectionNameKeyPath: #keyPath(Entry.date),
+            cacheName: "photo_entries")
+        
+        return fetchedResultsController
+    }()
+    
     private let reuseIdentifier = "photo_cell"
     fileprivate let itemsPerRow: CGFloat = 3
     fileprivate let sectionInsets = UIEdgeInsets(top: 2.0, left: 4.0, bottom: 2.0, right: 2.0)
@@ -20,6 +39,13 @@ class PhotosViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setCollectionViewLayout()
+        do {
+            try fetchedResultsController.performFetch()
+            entries = fetchedResultsController.fetchedObjects ?? []
+            photoCollectionView.reloadData()
+        } catch let error as NSError {
+            print("Count not fetch \(error), \(error.userInfo)")
+        }
     }
     
     private func setCollectionViewLayout() {
@@ -39,7 +65,7 @@ class PhotosViewController: UIViewController {
 extension PhotosViewController : UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos.count
+        return entries.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
