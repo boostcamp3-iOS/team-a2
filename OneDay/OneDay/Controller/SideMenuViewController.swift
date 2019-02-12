@@ -10,11 +10,13 @@ import UIKit
 
 class SideMenuViewController: UIViewController {
     
-    var sideMenuWidth: CGFloat = UIScreen.main.bounds.width * 0.8
+    // Constants
+    let sideMenuWidth: CGFloat = UIScreen.main.bounds.width * 0.8
+    let sectionHeaderHeight: CGFloat = 5
     
     // 테이블 섹션 헤더
-    let headerView: UIView = {
-        let view = UIView()
+    lazy var sectionHeaderView: UIView = {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: sideMenuWidth, height: sectionHeaderHeight))
         view.backgroundColor = .doLight
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -48,75 +50,102 @@ class SideMenuViewController: UIViewController {
         return bar
     }()
     
+    var journals: [Journal] = CoreDataManager.shared.journals()
+    var currentJournal: Journal = CoreDataManager.shared.currentJournal
+    let filterCells: [(name: String, icon: String)] = [("Filter", "sideMenuFilter"), ("On this Day", "sideMenuCalendar")]
+    let editCells = ["Edit Journals", "설정"]
+    
     override var prefersStatusBarHidden: Bool { return true }
 
     override func viewDidLoad() {
-        print("SideMenuViewController viewDidLoad")
         view.backgroundColor = .clear
         self.view.addGestureRecognizer(UISwipeGestureRecognizer(target: self, action: #selector(dismissFromVC)))
         searchBarView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedSearchBarView)))
         setupSideMenuView()
         setupSearchBar()
         setupTableView()
+        
+        sideMenuTableView.selectRow(at: IndexPath(row: Int(CoreDataManager.shared.currentJournal.index), section: SideMenuSection.journals.sectionNumber), animated: false, scrollPosition: .top)
     }
 }
 
-extension SideMenuViewController: UITableViewDelegate, UITableViewDataSource {
+extension SideMenuViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return SideMenuSection.allCases.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0, 1, 3:
-            return 2
-        case 2:
-            return 1
-        default:
-            return 0
-        }    }
+        guard let menuSection = SideMenuSection(rawValue: section) else { return 0 }
+        return menuSection == .journals ? journals.count : menuSection.numberOfRows
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let mainCells: [(name: String, icon: String)] = [("Filter", "sideMenuFilter"), ("On this Day", "sideMenuCalendar")]
-        let journalTitle = ["모든 항목", "일지"]
-        let journalCount = ["7", "7"] // 데이터와 연결
-        let menuEdit = ["Edit Journals", "설정"]
+        guard let menuSection = SideMenuSection(rawValue: indexPath.section) else {
+            preconditionFailure("Inavlid Section")
+        }
         
-        switch indexPath.section {
-        case 0:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "mainCellId", for: indexPath) as? SideMenuMainCell else {
+        switch menuSection {
+        case .filters:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: menuSection.identifier, for: indexPath) as? SideMenuFilterCell else {
                 preconditionFailure("Error")
             }
-            cell.mainIcon.image = UIImage(named: mainCells[indexPath.row].icon) ?? UIImage()
-            cell.mainLabel.text = mainCells[indexPath.row].name
+            cell.mainIcon.image = UIImage(named: filterCells[indexPath.row].icon)
+            cell.mainLabel.text = filterCells[indexPath.row].name
             return cell
-        case 1:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "listCellId", for: indexPath) as? SideMenuJournalListCell else {
+        case .journals:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: menuSection.identifier, for: indexPath) as? SideMenuJournalListCell else {
                 preconditionFailure("Error")
             }
-            cell.journalTitleLabel.text = journalTitle[indexPath.row]
-            cell.journalCountLabel.text = journalCount[indexPath.row]
+            let journal = journals[indexPath.row]
+            cell.journalTitleLabel.text = journal.title
+            if CoreDataManager.shared.isDefaultJournal(uuid: journal.journalId) {
+                cell.journalCountLabel.text = "\(CoreDataManager.shared.allEntriesCount)"
+            } else {
+                cell.journalCountLabel.text = "\(journal.entries?.count ?? 0)"
+            }
             return cell
-        case 2:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "addCellId", for: indexPath) as? SideMenuJournalAddCell else {
-                preconditionFailure("Error")
+        case .addJournal:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: menuSection.identifier, for: indexPath) as? SideMenuJournalAddCell else {
+                preconditionFailure("Error at : \(indexPath)")
             }
             return cell
-        default:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "editCellId", for: indexPath) as? SideMenuEditCell else {
+        case .setting:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: menuSection.identifier, for: indexPath) as? SideMenuEditCell else {
                 preconditionFailure("Error")
             }
-            cell.editTitleLabel.text = menuEdit[indexPath.row]
+            cell.editTitleLabel.text = editCells[indexPath.row]
             return cell
         }
     }
     
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        guard let menuSection = SideMenuSection(rawValue: indexPath.section) else {
+//            return
+//        }
+//
+//        if menuSection == .journals {
+//            guard let cell = cell as? SideMenuJournalListCell else {
+//                return
+//            }
+//            let journal = journals[indexPath.row]
+//            if CoreDataManager.shared.currentJournal.journalId == journal.journalId {
+//                cell.setSelected(true, animated: false)
+//            }
+//       }
+//    }
+}
+
+extension SideMenuViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
     
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return " "
+    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return headerView
+        return sectionHeaderView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -124,7 +153,37 @@ extension SideMenuViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.present(FilterViewController(), animated: false, completion: nil)
+        guard let menuSection = SideMenuSection(rawValue: indexPath.section) else {
+            preconditionFailure("Inavlid Section")
+        }
+        
+        switch menuSection {
+        case .filters:
+            // TODO :- Filter Click 했을 때 조건 넘기기
+            self.present(FilterViewController(), animated: false, completion: nil)
+        case .journals:
+            let journal = journals[indexPath.row]
+            CoreDataManager.shared.changeJournal(journal: journal)
+        case .addJournal:
+            let alertController = UIAlertController(title: "저널 추가", message: nil, preferredStyle: .alert)
+            alertController.addTextField { textField in
+                textField.placeholder = "저널 이름"
+            }
+            let confirmAction = UIAlertAction(title: "저널 추가", style: .default) { [weak self, weak alertController] _ in
+                guard let alertController = alertController, let journalTitle = alertController.textFields?.first?.text else { return }
+                let journal = CoreDataManager.shared.journal(journalTitle)
+                self?.journals.append(journal)
+                self?.sideMenuTableView.reloadData()
+            }
+            let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+            alertController.addAction(confirmAction)
+            alertController.addAction(cancelAction)
+            present(alertController, animated: true)
+        case .setting:
+            // TODO :- 모든 항목 처리하기
+            // TODO :- 설정 화면 이동
+            ()
+        }
     }
 }
 
@@ -163,12 +222,12 @@ extension SideMenuViewController {
         
         sideMenuTableView.delegate = self
         sideMenuTableView.dataSource = self
-        sideMenuTableView.register(SideMenuMainCell.self, forCellReuseIdentifier: "mainCellId")
-        sideMenuTableView.register(SideMenuJournalListCell.self, forCellReuseIdentifier: "listCellId")
-        sideMenuTableView.register(SideMenuJournalAddCell.self, forCellReuseIdentifier: "addCellId")
-        sideMenuTableView.register(SideMenuEditCell.self, forCellReuseIdentifier: "editCellId")
+        sideMenuTableView.register(SideMenuFilterCell.self, forCellReuseIdentifier: SideMenuSection.filters.identifier)
+        sideMenuTableView.register(SideMenuJournalListCell.self, forCellReuseIdentifier: SideMenuSection.journals.identifier)
+        sideMenuTableView.register(SideMenuJournalAddCell.self, forCellReuseIdentifier: SideMenuSection.addJournal.identifier)
+        sideMenuTableView.register(SideMenuEditCell.self, forCellReuseIdentifier: SideMenuSection.setting.identifier)
+        
     }
-    
 }
 
 // MARK: GestureRecognizer

@@ -12,7 +12,6 @@ class SideMenuJournalListCell: UITableViewCell {
     
     let cellView: UIView = {
         let view = UIView()
-        view.backgroundColor = .doBlue
         view.layer.cornerRadius = 5
         view.layer.masksToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -36,6 +35,10 @@ class SideMenuJournalListCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupCellView()
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        cellView.backgroundColor = selected ? .doBlue : .white
     }
     
     func setupCellView() {
