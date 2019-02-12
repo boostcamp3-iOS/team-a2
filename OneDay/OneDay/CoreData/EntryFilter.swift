@@ -37,7 +37,6 @@ enum EntryFilter {
         let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Entry.journal.index), ascending: true)]
         var predicateArray : [NSPredicate] = []
-        predicateArray.append(NSPredicate(format: "%K == %@", argumentArray: [#keyPath(Entry.journal), currentJournal]))
         
         switch self {
         case .photo:
@@ -51,8 +50,9 @@ enum EntryFilter {
         case .thisDay:
             predicateArray.append(NSPredicate(format: "%K == Date()", argumentArray: [#keyPath(Entry.date)]))
         case .all:
-            break
+            return fetchRequest
         }
+        predicateArray.append(NSPredicate(format: "%K == %@", argumentArray: [#keyPath(Entry.journal), currentJournal]))
         fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicateArray)
         return fetchRequest
     }
