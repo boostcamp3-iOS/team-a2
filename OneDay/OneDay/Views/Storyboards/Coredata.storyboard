@@ -194,87 +194,27 @@
                                 </constraints>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" keyboardDismissMode="interactive" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JMn-5r-ZV0">
-                                <rect key="frame" x="0.0" y="56.5" width="375" height="510.5"/>
+                                <rect key="frame" x="0.0" y="56.5" width="375" height="610.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <attributedString key="attributedText"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zcR-PM-JfH" userLabel="Grey View">
-                                <rect key="frame" x="0.0" y="567" width="375" height="100"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="오후 3:44" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h4N-zj-Et6">
-                                        <rect key="frame" x="16" y="11.5" width="51" height="14.5"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="hcK-w1-TG8">
-                                        <rect key="frame" x="168" y="0.0" width="39" height="37"/>
-                                        <color key="pageIndicatorTintColor" name="doGray"/>
-                                        <color key="currentPageIndicatorTintColor" name="doGray"/>
-                                    </pageControl>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H11-EE-ckA">
-                                        <rect key="frame" x="329" y="3.5" width="30" height="30"/>
-                                        <state key="normal" title="사진"/>
-                                        <connections>
-                                            <action selector="showPhoto:" destination="GAO-3U-mcR" eventType="touchUpInside" id="jWm-nU-fkS"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QJu-go-bQG">
-                                        <rect key="frame" x="93" y="36" width="120" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e4E-51-Ah9">
-                                        <rect key="frame" x="66" y="36" width="21" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oLC-Jl-fqb">
-                                        <rect key="frame" x="16" y="36" width="59" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" name="doLight"/>
-                                <constraints>
-                                    <constraint firstItem="H11-EE-ckA" firstAttribute="centerY" secondItem="hcK-w1-TG8" secondAttribute="centerY" id="Bsq-OY-3mW"/>
-                                    <constraint firstItem="h4N-zj-Et6" firstAttribute="centerY" secondItem="hcK-w1-TG8" secondAttribute="centerY" id="LdQ-EZ-pgu"/>
-                                    <constraint firstItem="h4N-zj-Et6" firstAttribute="leading" secondItem="zcR-PM-JfH" secondAttribute="leading" constant="16" id="WaI-Vg-1Bf"/>
-                                    <constraint firstAttribute="trailing" secondItem="H11-EE-ckA" secondAttribute="trailing" constant="16" id="Xkp-jr-KS8"/>
-                                    <constraint firstItem="hcK-w1-TG8" firstAttribute="top" secondItem="zcR-PM-JfH" secondAttribute="top" id="YdM-hE-nWU"/>
-                                    <constraint firstAttribute="height" constant="100" id="awa-PH-cvP"/>
-                                    <constraint firstItem="hcK-w1-TG8" firstAttribute="centerX" secondItem="zcR-PM-JfH" secondAttribute="centerX" id="j3x-yw-HFa"/>
-                                    <constraint firstItem="hcK-w1-TG8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="h4N-zj-Et6" secondAttribute="trailing" constant="8" symbolic="YES" id="p6w-zg-MNl"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" name="doBlue"/>
                         <constraints>
-                            <constraint firstItem="zcR-PM-JfH" firstAttribute="top" relation="lessThanOrEqual" secondItem="rRh-hW-4PN" secondAttribute="bottom" constant="50" id="0JZ-Zi-WgP"/>
+                            <constraint firstItem="rRh-hW-4PN" firstAttribute="bottom" secondItem="JMn-5r-ZV0" secondAttribute="bottom" id="A7u-Rs-IxB"/>
                             <constraint firstItem="uUP-an-P7R" firstAttribute="leading" secondItem="rRh-hW-4PN" secondAttribute="leading" id="EhU-tV-rxg"/>
-                            <constraint firstItem="zcR-PM-JfH" firstAttribute="leading" secondItem="rRh-hW-4PN" secondAttribute="leading" id="Hk7-fC-M6f"/>
                             <constraint firstItem="JMn-5r-ZV0" firstAttribute="top" secondItem="uUP-an-P7R" secondAttribute="bottom" id="LXl-R8-taX"/>
-                            <constraint firstAttribute="bottom" secondItem="zcR-PM-JfH" secondAttribute="bottom" id="O8S-Ao-0yU"/>
                             <constraint firstItem="rRh-hW-4PN" firstAttribute="trailing" secondItem="uUP-an-P7R" secondAttribute="trailing" id="Ryt-hw-hCU"/>
-                            <constraint firstItem="rRh-hW-4PN" firstAttribute="trailing" secondItem="zcR-PM-JfH" secondAttribute="trailing" id="cH5-YF-3SQ"/>
                             <constraint firstItem="uUP-an-P7R" firstAttribute="top" secondItem="rRh-hW-4PN" secondAttribute="top" id="fam-zY-8Ph"/>
                             <constraint firstItem="rRh-hW-4PN" firstAttribute="trailing" secondItem="JMn-5r-ZV0" secondAttribute="trailing" id="lzB-8H-JGC"/>
                             <constraint firstItem="JMn-5r-ZV0" firstAttribute="leading" secondItem="rRh-hW-4PN" secondAttribute="leading" id="t8o-8p-hAM"/>
-                            <constraint firstItem="zcR-PM-JfH" firstAttribute="top" secondItem="JMn-5r-ZV0" secondAttribute="bottom" id="wTn-0I-8my"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="rRh-hW-4PN"/>
                     </view>
                     <connections>
                         <outlet property="dateLabel" destination="o3E-uk-gsi" id="Lo4-xf-Jdh"/>
-                        <outlet property="temperatureLabel" destination="oLC-Jl-fqb" id="tXx-hC-QrC"/>
                         <outlet property="textView" destination="JMn-5r-ZV0" id="EKQ-2r-FQO"/>
-                        <outlet property="timeLabel" destination="h4N-zj-Et6" id="T3B-ne-ahr"/>
-                        <outlet property="weatherImageView" destination="e4E-51-Ah9" id="xFe-Qb-x9b"/>
-                        <outlet property="weatherLabel" destination="QJu-go-bQG" id="ZaC-gd-QW0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HO4-b1-kGk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -285,12 +225,6 @@
     <resources>
         <namedColor name="doBlue">
             <color red="0.41176470588235292" green="0.74509803921568629" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="doGray">
-            <color red="0.41568627450980394" green="0.41568627450980394" blue="0.41568627450980394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="doLight">
-            <color red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>

@@ -16,7 +16,6 @@ class EntryViewController: UIViewController {
     
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var weatherImageView: UIImageView!
     @IBOutlet weak var weatherLabel: UILabel!
@@ -31,14 +30,25 @@ class EntryViewController: UIViewController {
     
     lazy var isImageSelected = false
     
+    ///하단 뷰 드래그시 사용되는 프로퍼티
+    var topY = CGFloat()            ///드래그 범위의 상단 기준
+    var bottomY = CGFloat()         ///드래그 범위의 하단 기준
+    var dragUpChangePointY = CGFloat()    ///하단 뷰 위로 드래그시 위로 붙는 기준 Y
+    var dragDownChangePointY = CGFloat()  ///하단 뷰 아래로 드래그시 아래로 붙는 기준 Y
+    var isBottom = true //하단 뷰의 위치 true: 하단, false: 하단
+    var willPositionChange = false //드래그 도중 기준을 넘었는지 판단
+    
+    let generator = UIImpactFeedbackGenerator(style: UIImpactFeedbackGenerator.FeedbackStyle.heavy)
+    
     // MARK: - Life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setUpDate()
-        setUpWeather()
+//        setUpWeather()
         setUpPreview()
+        setUpBottomView()
     }
     
     // MARK: - Setup
@@ -50,7 +60,6 @@ class EntryViewController: UIViewController {
             textView.attributedText = entry.contents
         }
         dateLabel.text = dateSet.full
-        timeLabel.text = dateSet.time
         textView.textDragDelegate = self
     }
     
@@ -118,6 +127,35 @@ class EntryViewController: UIViewController {
         }
     }
     
+    func setUpBottomView() {
+        let viewHeight = CGFloat(500)
+        let viewY = CGFloat(600)
+        let bottomView = UIView(frame: CGRect(
+            x: 0,
+            y: viewY,
+            width: textView.bounds.width,
+            height: viewHeight)
+        )
+        bottomView.backgroundColor = UIColor.red
+        view.addSubview(bottomView)
+        
+        let gesture = UIPanGestureRecognizer(
+            target: self,
+            action: #selector(wasDragged(gestureRecognizer:))
+        )
+        bottomView.addGestureRecognizer(gesture)
+        bottomView.isUserInteractionEnabled = true
+        
+        ///하단 뷰 드래그 시 사용되는 값을 하단 뷰의 값에 따라 지정
+        let point = textView.frame.origin
+        topY = point.y + viewHeight/2
+        bottomY = viewY + viewHeight/2
+        dragUpChangePointY = CGFloat(750)
+        dragDownChangePointY = CGFloat(450)
+        isBottom = true
+        willPositionChange = false
+    }
+    
     // MARK: - Actions
     
     @IBAction func showPhoto(_ sender: UIButton) {
@@ -161,6 +199,91 @@ class EntryViewController: UIViewController {
             handler: nil))
         
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    // MARK: - Gesture action
+    
+    @objc func wasDragged(gestureRecognizer: UIPanGestureRecognizer) {
+        if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
+            let translation = gestureRecognizer.translation(in: self.view)
+    
+            if let targetView = gestureRecognizer.view {
+                if targetView.center.y < topY {
+                    targetView.center = CGPoint(x: targetView.center.x, y: topY)
+                } else if targetView.center.y > bottomY {
+                    targetView.center = CGPoint(x: targetView.center.x, y: bottomY)
+                } else {
+                    checkPosition(targetView: targetView)
+                    targetView.center = CGPoint(
+                        x: targetView.center.x,
+                        y: targetView.center.y + translation.y
+                    )
+                }
+            }
+            gestureRecognizer.setTranslation(CGPoint(x: 0, y: 0), in: self.view)
+        } else if gestureRecognizer.state == .ended {
+            if let targetView = gestureRecognizer.view {
+                changePosition(targetView: targetView)
+            }
+            gestureRecognizer.setTranslation(CGPoint(x: 0, y: 0), in: self.view)
+        }
+    }
+    
+    /// targetView가 기준을 넘었는지 판단
+    func checkPosition(targetView: UIView) {
+        if isBottom {
+            if targetView.center.y > dragUpChangePointY {
+                if willPositionChange {
+                    willPositionChange = false
+                    generator.impactOccurred()
+                }
+            } else {
+                if willPositionChange == false {
+                    willPositionChange = true
+                    generator.impactOccurred()
+                }
+            }
+        } else {
+            if targetView.center.y < dragDownChangePointY {
+                if willPositionChange {
+                    willPositionChange = false
+                    generator.impactOccurred()
+                }
+            } else {
+                if willPositionChange == false {
+                    willPositionChange = true
+                    generator.impactOccurred()
+                }
+            }
+        }
+    }
+    
+    /// 조건에 따라 targetView의 위치 변경
+    func changePosition(targetView: UIView) {
+        if isBottom {
+            if willPositionChange {
+                UIView.animate(withDuration: 0.5) {
+                    targetView.center = CGPoint(x: targetView.center.x, y: self.topY)
+                }
+                isBottom = false
+            } else {
+                UIView.animate(withDuration: 0.5) {
+                    targetView.center = CGPoint(x: targetView.center.x, y: self.bottomY)
+                }
+            }
+        } else {
+            if willPositionChange {
+                UIView.animate(withDuration: 0.5) {
+                    targetView.center = CGPoint(x: targetView.center.x, y: self.bottomY)
+                }
+                isBottom = true
+            } else {
+                UIView.animate(withDuration: 0.5) {
+                    targetView.center = CGPoint(x: targetView.center.x, y: self.topY)
+                }
+            }
+        }
+        willPositionChange = false
     }
 }
 
