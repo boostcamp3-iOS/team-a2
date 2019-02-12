@@ -12,25 +12,9 @@ import CoreData
 class PhotosViewController: UIViewController {
     
     @IBOutlet weak var photoCollectionView: UICollectionView!
-    // MARK :- FIXME
-    var coreDataStack: CoreDataStack = CoreDataStack(modelName: "OneDay")
+    let coreDataManager = CoreDataManager.shared
+    let fetchedResultsController: NSFetchedResultsController<Entry> = CoreDataManager.shared.entries(type: .photo, sectionNameKeyPath: nil)
     var entries: [Entry] = []
-    
-    lazy var fetchedResultsController: NSFetchedResultsController<Entry> = {
-        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
-        let photoPredicate = NSPredicate(format: "%K != nil", #keyPath(Entry.thumbnail))
-        fetchRequest.predicate = photoPredicate
-        let dateSort = NSSortDescriptor(key: #keyPath(Entry.date), ascending: false)
-        fetchRequest.sortDescriptors = [dateSort]
-        
-        let fetchedResultsController = NSFetchedResultsController (
-            fetchRequest: fetchRequest,
-            managedObjectContext: coreDataStack.managedContext,
-            sectionNameKeyPath: #keyPath(Entry.date),
-            cacheName: "photo_entries")
-        
-        return fetchedResultsController
-    }()
     
     private let reuseIdentifier = "photo_cell"
     fileprivate let itemsPerRow: CGFloat = 3

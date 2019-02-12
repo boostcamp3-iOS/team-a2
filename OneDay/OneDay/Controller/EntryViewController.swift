@@ -21,7 +21,7 @@ class EntryViewController: UIViewController {
     @IBOutlet weak var weatherImageView: UIImageView!
     @IBOutlet weak var weatherLabel: UILabel!
     
-    var coreDataStack: CoreDataStack!
+    var coreDataManager: CoreDataManager!
     var entry: Entry!
     
     ///드레그시 사용되는 미리보기 뷰
@@ -94,9 +94,7 @@ class EntryViewController: UIViewController {
             weatherImageView.image = UIImage(named: type)
             weatherLabel.text = WeatherType(rawValue: type)?.summary
         } else {
-            let weather = Weather(context: coreDataStack.managedContext)
-            entry.weather = weather
-            
+            let weather = coreDataManager.weather()
             WeatherService.service.weather(
                 latitude: LocationService.service.latitude,
                 longitude: LocationService.service.longitude,
@@ -115,39 +113,9 @@ class EntryViewController: UIViewController {
                 errorHandler: { [weak self] in
                     self?.showAlert(title: "Error", message: "날씨 정보를 불러올 수 없습니다.")
             })
+            entry.weather = weather
+            coreDataManager.save()
         }
-    }
-    
-    // MARK: - Actions
-    
-    @IBAction func showPhoto(_ sender: UIButton) {
-        let pickerViewController = UIImagePickerController()
-        pickerViewController.delegate = self
-        pickerViewController.sourceType = .photoLibrary
-        pickerViewController.allowsEditing = true
-        present(pickerViewController, animated: true, completion: nil)
-    }
-    
-    @IBAction func saveAndDismiss(_ sender: UIButton) {
-        guard let content = textView.attributedText else {
-            return
-        }
-        entry.contents = content
-        
-        let title: String
-        let stringContent = content.string
-        if stringContent.count > 1 {
-            let start = stringContent.startIndex
-            let end = stringContent.index(start, offsetBy: min(stringContent.count - 1, 40))
-            title = String(stringContent[start...end])
-        } else {
-            title = "새로운 엔트리"
-        }
-        
-        entry.title = title
-        entry.favorite = false
-        coreDataStack.saveContext()
-        self.dismiss(animated: true, completion: nil)
     }
     
     func showAlert(title: String = "", message: String = "") {
@@ -162,6 +130,75 @@ class EntryViewController: UIViewController {
         
         self.present(alertController, animated: true, completion: nil)
     }
+    
+    func getFirstImage(attributedString: NSAttributedString) -> UIImage? {
+        let range = NSRange(location: 0, length: attributedString.length)
+        var result: UIImage?
+        attributedString.enumerateAttributes(in: range, options: NSAttributedString.EnumerationOptions(rawValue: 0)) { (object, range, stop) in
+            if object.keys.contains(NSAttributedString.Key.attachment) {
+                if let attachment = object[NSAttributedString.Key.attachment] as? NSTextAttachment {
+                    if let image = attachment.image {
+                        result = image
+                        stop.pointee = true
+                    } else if let image = attachment.image(forBounds: attachment.bounds, textContainer: nil, characterIndex: range.location) {
+                        result = image
+                        stop.pointee = true
+                    }
+                }
+            }
+        }
+        return result
+    }
+    
+    func saveImageFile(image: UIImage) -> URL? {
+        guard let data = image.jpegData(compressionQuality: 1) ?? image.pngData() else {
+            return nil
+        }
+        guard let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) as NSURL else {
+            return nil
+        }
+        do {
+            let timeStamp = Date().timeIntervalSince1970
+            let url = directory.appendingPathComponent("entry_image_\(timeStamp).png")!
+            try data.write(to: url)
+            return url
+        } catch {
+            print(error.localizedDescription)
+            return nil
+        }
+    }
+
+    // MARK: - Actions
+    @IBAction func showPhoto(_ sender: UIButton) {
+        let pickerViewController = UIImagePickerController()
+        pickerViewController.delegate = self
+        pickerViewController.sourceType = .photoLibrary
+        pickerViewController.allowsEditing = true
+        present(pickerViewController, animated: true, completion: nil)
+    }
+    
+    @IBAction func saveAndDismiss(_ sender: UIButton) {
+        guard let content = textView.attributedText else {
+            return
+        }
+        entry.contents = content
+        
+        let stringContent = content.string
+        if stringContent.count > 1 {
+            let start = stringContent.startIndex
+            let end = stringContent.index(start, offsetBy: min(stringContent.count - 1, 40))
+            entry.title = String(stringContent[start...end])
+        }
+        
+        entry.favorite = false
+        if let thumbnailImage = getFirstImage(attributedString: content) {
+            entry.thumbnail = saveImageFile(image: thumbnailImage)
+        }
+        
+        coreDataManager.save()
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 // MARK: - Extention
@@ -176,7 +213,7 @@ extension EntryViewController: UIImagePickerControllerDelegate, UINavigationCont
         _ picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]
     ) {
-        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
+        guard let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else { return }
         insertAtTextViewCursor(attributedString: createAttributedString(with: image))
         picker.dismiss(animated: true, completion: nil)
     }
