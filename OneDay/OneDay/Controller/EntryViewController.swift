@@ -20,6 +20,9 @@ class EntryViewController: UIViewController {
     @IBOutlet weak var weatherImageView: UIImageView!
     @IBOutlet weak var weatherLabel: UILabel!
     
+    @IBOutlet weak var bottomTableView: UITableView!
+    @IBOutlet weak var mapView:UIView!
+    
     var coreDataStack: CoreDataStack!
     var entry: Entry!
     
@@ -40,6 +43,9 @@ class EntryViewController: UIViewController {
     
     let generator = UIImpactFeedbackGenerator(style: UIImpactFeedbackGenerator.FeedbackStyle.heavy)
     
+    let settingIdentifier = "settingCellIdentifier"
+    var settingTableData: [[Setting]] = [[],[],[]]  /// [section][row]
+    
     // MARK: - Life cycle
     
     override func viewDidLoad() {
@@ -49,6 +55,7 @@ class EntryViewController: UIViewController {
 //        setUpWeather()
         setUpPreview()
         setUpBottomView()
+        setUpSettingTableViewData()
     }
     
     // MARK: - Setup
@@ -128,32 +135,59 @@ class EntryViewController: UIViewController {
     }
     
     func setUpBottomView() {
-        let viewHeight = CGFloat(500)
-        let viewY = CGFloat(600)
-        let bottomView = UIView(frame: CGRect(
-            x: 0,
-            y: viewY,
-            width: textView.bounds.width,
-            height: viewHeight)
+        bottomTableView.dataSource = self
+        bottomTableView.delegate = self
+        bottomTableView.register(
+            EditorSettingTableViewCell.self,
+            forCellReuseIdentifier: settingIdentifier
         )
-        bottomView.backgroundColor = UIColor.red
-        view.addSubview(bottomView)
         
         let gesture = UIPanGestureRecognizer(
             target: self,
             action: #selector(wasDragged(gestureRecognizer:))
         )
-        bottomView.addGestureRecognizer(gesture)
-        bottomView.isUserInteractionEnabled = true
+        bottomTableView.addGestureRecognizer(gesture)
+        bottomTableView.isUserInteractionEnabled = true
+        
+        mapView.backgroundColor = UIColor.doBlue
         
         ///하단 뷰 드래그 시 사용되는 값을 하단 뷰의 값에 따라 지정
-        let point = textView.frame.origin
-        topY = point.y + viewHeight/2
-        bottomY = viewY + viewHeight/2
-        dragUpChangePointY = CGFloat(750)
+        let origin = textView.frame.origin
+        let bottomOrigin = bottomTableView.frame.origin
+        topY = origin.y + bottomTableView.frame.height/2
+        bottomY = bottomOrigin.y + bottomTableView.frame.height/2
+        dragUpChangePointY = CGFloat(900)
         dragDownChangePointY = CGFloat(450)
         isBottom = true
         willPositionChange = false
+    }
+    
+    func setUpSettingTableViewData() {
+        let location = Setting("위치", "location_detail", UIImage(named: "setting_location"))
+        settingTableData[0].append(location)
+        let tag = Setting("테그", "tag_detail", UIImage(named: "setting_tag"))
+        settingTableData[0].append(tag)
+        let journal = Setting("저널", "journal_detail", UIImage(named: "setting_journal"))
+        settingTableData[0].append(journal)
+        let date = Setting("날짜", "date_detail", UIImage(named: "setting_date"))
+        settingTableData[0].append(date)
+        if entry.favorite {
+            let favorite = Setting("즐겨찾기", "즐겨찾기 해제", UIImage(named: "setting_like"))
+            settingTableData[0].append(favorite)
+        } else {
+            let favorite = Setting("즐겨찾기", "즐겨찾기 설정", UIImage(named: "setting_dislike"))
+            settingTableData[0].append(favorite)
+        }
+        
+        let thisDay = Setting("이 날에", "thisday", UIImage(named: "setting_thisday"))
+        settingTableData[1].append(thisDay)
+        let today = Setting("이 날", "today", UIImage(named: "setting_today"))
+        settingTableData[1].append(today)
+        
+        let weather = Setting("날씨", "~~", UIImage(named: "setting_weather"))
+        settingTableData[2].append(weather)
+        let device = Setting("일기를 작성한 기기", "iphone", UIImage(named: "setting_device"))
+        settingTableData[2].append(device)
     }
     
     // MARK: - Actions
@@ -398,5 +432,40 @@ extension EntryViewController: UITextDragDelegate {
         } else {
             return []
         }
+    }
+}
+
+extension EntryViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return 5
+        case 1:
+            return 2
+        case 2:
+            return 2
+        default:
+            return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 20
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: settingIdentifier,
+            for: indexPath
+        ) as? EditorSettingTableViewCell else {
+            preconditionFailure("EditorSettingTableViewCell reuse error!")
+        }
+        cell.setting = settingTableData[indexPath.section][indexPath.row]
+        return cell
     }
 }
