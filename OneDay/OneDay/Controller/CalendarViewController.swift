@@ -42,7 +42,7 @@ class CalendarViewController: UIViewController {
         return formatter
     }
     
-    var fetchedEntriesDate = Set<String>()
+    var fetchedEntriesDate = [String]()
 
     var isTodayIndex = false
     var isPickingDate = false
@@ -74,9 +74,8 @@ class CalendarViewController: UIViewController {
                     let month = components.month,
                     let day = components.day {
                     
-                    let index = (year-1)*12+(month-1)
-                    let path = "\(index)-\(day)"
-                    fetchedEntriesDate.insert(path)
+                    let date = "\(year)-\(month)-\(day)"
+                    fetchedEntriesDate.append(date)
                 }
             }
         } catch let fetchErr {
@@ -171,19 +170,19 @@ UICollectionViewDelegate {
         let sectionNumber = indexPath.section
         let day = indexPath.item+1-firstWeekdayOfMonth(at: sectionNumber)
         
-        let checkEntriesTheDay = "\(sectionNumber)-\(day)"
-        if fetchedEntriesDate.contains(checkEntriesTheDay) {
+        let dateForCheckingWrittenEntry = "\(sectionNumber/12+1)-\(sectionNumber%12+1)-\(day)"
+        if fetchedEntriesDate.contains(dateForCheckingWrittenEntry) {
             cell.dayLabel.backgroundColor = .doBlue
             cell.dayLabel.textColor = .white
         }
         
         let numberOfDaysOfMonth = lastDayOfMonth(at: sectionNumber)
         if (1...numberOfDaysOfMonth).contains(day) {
-        cell.isUserInteractionEnabled = true
-        cell.dayLabel.text = "\(day)"
+            cell.isUserInteractionEnabled = true
+            cell.dayLabel.text = "\(day)"
         } else {
-        cell.isUserInteractionEnabled = false
-        cell.dayLabel.backgroundColor = .calendarBackgroundColor
+            cell.isUserInteractionEnabled = false
+            cell.dayLabel.backgroundColor = .calendarBackgroundColor
         }
         
         return cell
@@ -291,37 +290,70 @@ extension CalendarViewController {
 
 // MARK: 액션시트, ActionSheet
 extension CalendarViewController {
-    func showActionSheet(_ section: Int, _ day: Int) {
-        let date = dateComponents(section, item: day)
+    func showActionSheet(_ sectionNumber: Int, _ day: Int) {
+        
+        let date = computeSectionNumberToWeekDay(sectionNumber, item: day)
         let list = ["일", "월", "화", "수", "목", "금", "토"]
         let weekday = list[date.weekday!-1]
         
-        let alertTitle = "\(date.year!)년 \(date.month!)월 \(date.day!)일 \(weekday)요일"
+        let year = date.year ?? 0000
+        let month = date.month ?? 00
+        let day = date.day ?? 00
+        
+        var numberOfEntriesAtDay = 0
+        var numberOfEntriesOnThisDay = 0
+
+        let checkerDateTheDay = "\(sectionNumber/12+1)-\(sectionNumber%12+1)-\(day)"
+        for index in 0..<fetchedEntriesDate.count
+            where fetchedEntriesDate[index] == checkerDateTheDay {
+                numberOfEntriesAtDay += 1
+        }
+        
+        for index in 0..<fetchedEntriesDate.count {
+            var yearCounter = 1
+            while yearCounter < 3000 {
+                let checkerDateForOnThisDay = "\(yearCounter)-\(sectionNumber%12+1)-\(day)"
+                if fetchedEntriesDate[index] == checkerDateForOnThisDay {
+                    numberOfEntriesOnThisDay += 1
+                }
+                yearCounter += 1
+            }
+        }
+    
+        let alertTitle = "\(year)년 \(month)월 \(day)일 \(weekday)요일"
         let dayAlertController = UIAlertController(title: alertTitle,
                                                    message: nil,
                                                    preferredStyle: .actionSheet)
         
-        let new = UIAlertAction(title: "새 엔트리 만들기", style: .default) { (_) in
-            
+        let newAlert = UIAlertAction(title: "새 엔트리 만들기", style: .default) { (_) in
+            self.present(EntryViewController(), animated: true, completion: nil)
         }
         
-        let todayTitle = "\(date.year!). \(date.month!). \(date.day!). (1111 entries)"
-        let today = UIAlertAction(title: todayTitle, style: .default) { (_) in
+        let todayAlertTitle = "\(year). \(month). \(day). (\(numberOfEntriesAtDay) entries)"
+        let todayAlert = UIAlertAction(title: todayAlertTitle, style: .default) { (_) in
 
         }
         
-        let yearTitle = "\(date.month!)월 \(date.day!)일 (1111 entries)"
-        let year = UIAlertAction(title: yearTitle, style: .default) { (_) in
+        let yearAlertTitle = "\(month)월 \(day)일 (\(numberOfEntriesOnThisDay) entries)"
+        let yearAlert = UIAlertAction(title: yearAlertTitle, style: .default) { (_) in
             
         }
         
-        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        let cancelAlert = UIAlertAction(title: "취소", style: .cancel)
         
-        for sheet in [new, today, year, cancel] { dayAlertController.addAction(sheet) }
+        if numberOfEntriesAtDay != 0 {
+            for sheet in [newAlert, todayAlert, yearAlert, cancelAlert] {
+                dayAlertController.addAction(sheet)
+            }
+        } else {
+            for sheet in [newAlert, cancelAlert] {
+                dayAlertController.addAction(sheet)
+            }
+        }
         present(dayAlertController, animated: false)
     }
     
-    func dateComponents(_ section: Int, item: Int) -> DateComponents {
+    func computeSectionNumberToWeekDay(_ section: Int, item: Int) -> DateComponents {
         let day = item+1-firstWeekdayOfMonth(at: section)
         let conmputedDate = "\(section/12+1)-\(section%12+1)-\(day)"
         let date = dateFormatter.date(from: conmputedDate)
