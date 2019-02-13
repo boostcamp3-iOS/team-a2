@@ -50,7 +50,7 @@ class SideMenuViewController: UIViewController {
         return bar
     }()
     
-    var journals: [Journal] = CoreDataManager.shared.journals()
+    var journals: [Journal] = CoreDataManager.shared.journals
     var currentJournal: Journal = CoreDataManager.shared.currentJournal
     let filterCells: [(name: String, icon: String)] = [("Filter", "sideMenuFilter"), ("On this Day", "sideMenuCalendar")]
     let editCells = ["Edit Journals", "설정"]
@@ -99,7 +99,7 @@ extension SideMenuViewController: UITableViewDataSource {
             let journal = journals[indexPath.row]
             cell.journalTitleLabel.text = journal.title
             if CoreDataManager.shared.isDefaultJournal(uuid: journal.journalId) {
-                cell.journalCountLabel.text = "\(CoreDataManager.shared.allEntriesCount)"
+                cell.journalCountLabel.text = "\(CoreDataManager.shared.journals.reduce(0, {$0 + ($1.entries?.count ?? 0)}))"
             } else {
                 cell.journalCountLabel.text = "\(journal.entries?.count ?? 0)"
             }
@@ -118,21 +118,21 @@ extension SideMenuViewController: UITableViewDataSource {
         }
     }
     
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        guard let menuSection = SideMenuSection(rawValue: indexPath.section) else {
-//            return
-//        }
-//
-//        if menuSection == .journals {
-//            guard let cell = cell as? SideMenuJournalListCell else {
-//                return
-//            }
-//            let journal = journals[indexPath.row]
-//            if CoreDataManager.shared.currentJournal.journalId == journal.journalId {
-//                cell.setSelected(true, animated: false)
-//            }
-//       }
-//    }
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let menuSection = SideMenuSection(rawValue: indexPath.section) else {
+            return
+        }
+
+        if menuSection == .journals {
+            guard let cell = cell as? SideMenuJournalListCell else {
+                return
+            }
+            let journal = journals[indexPath.row]
+            if CoreDataManager.shared.currentJournal.journalId == journal.journalId {
+                cell.setSelected(true, animated: false)
+            }
+       }
+    }
 }
 
 extension SideMenuViewController: UITableViewDelegate {
@@ -163,7 +163,7 @@ extension SideMenuViewController: UITableViewDelegate {
             self.present(FilterViewController(), animated: false, completion: nil)
         case .journals:
             let journal = journals[indexPath.row]
-            CoreDataManager.shared.changeJournal(journal: journal)
+            CoreDataManager.shared.changeCurrentJournal(to: journal)
         case .addJournal:
             let alertController = UIAlertController(title: "저널 추가", message: nil, preferredStyle: .alert)
             alertController.addTextField { textField in
@@ -171,7 +171,7 @@ extension SideMenuViewController: UITableViewDelegate {
             }
             let confirmAction = UIAlertAction(title: "저널 추가", style: .default) { [weak self, weak alertController] _ in
                 guard let alertController = alertController, let journalTitle = alertController.textFields?.first?.text else { return }
-                let journal = CoreDataManager.shared.journal(journalTitle)
+                let journal = CoreDataManager.shared.insert(journalTitle, index: -1)
                 self?.journals.append(journal)
                 self?.sideMenuTableView.reloadData()
             }
@@ -226,7 +226,6 @@ extension SideMenuViewController {
         sideMenuTableView.register(SideMenuJournalListCell.self, forCellReuseIdentifier: SideMenuSection.journals.identifier)
         sideMenuTableView.register(SideMenuJournalAddCell.self, forCellReuseIdentifier: SideMenuSection.addJournal.identifier)
         sideMenuTableView.register(SideMenuEditCell.self, forCellReuseIdentifier: SideMenuSection.setting.identifier)
-        
     }
 }
 

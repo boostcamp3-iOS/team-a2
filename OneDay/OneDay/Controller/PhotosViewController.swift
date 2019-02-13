@@ -12,25 +12,10 @@ import CoreData
 class PhotosViewController: UIViewController {
     
     @IBOutlet weak var photoCollectionView: UICollectionView!
-    // MARK :- FIXME
-    var coreDataStack: CoreDataStack = CoreDataStack(modelName: "OneDay")
-    var entries: [Entry] = []
+    let coreDataManager = CoreDataManager.shared
+    let fetchedResultsController: NSFetchedResultsController<Entry> = CoreDataManager.shared.currentJournalEntriesResultsController
     
-    lazy var fetchedResultsController: NSFetchedResultsController<Entry> = {
-        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
-        let photoPredicate = NSPredicate(format: "%K != nil", #keyPath(Entry.thumbnail))
-        fetchRequest.predicate = photoPredicate
-        let dateSort = NSSortDescriptor(key: #keyPath(Entry.date), ascending: false)
-        fetchRequest.sortDescriptors = [dateSort]
-        
-        let fetchedResultsController = NSFetchedResultsController (
-            fetchRequest: fetchRequest,
-            managedObjectContext: coreDataStack.managedContext,
-            sectionNameKeyPath: #keyPath(Entry.date),
-            cacheName: "photo_entries")
-        
-        return fetchedResultsController
-    }()
+    var entries: [Entry] = []
     
     private let reuseIdentifier = "photo_cell"
     fileprivate let itemsPerRow: CGFloat = 3
@@ -72,7 +57,18 @@ extension PhotosViewController : UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? PhotosCollectionViewCell else {
             preconditionFailure("No expected cell type casting by PhotosCollectionViewCell")
         }
+        let entry = entries[indexPath.row]
         cell.dayLabel.text = "12"
+        guard let imageURL = entry.thumbnail else { preconditionFailure("No thumbnail image")}
+        
+        do {
+            print(imageURL)
+            let imageData = try Data(contentsOf: imageURL)
+            cell.imageView.image = UIImage(data: imageData)
+        } catch {
+            print("Invalid image data")
+            return cell
+        }
         return cell
     }
 }
