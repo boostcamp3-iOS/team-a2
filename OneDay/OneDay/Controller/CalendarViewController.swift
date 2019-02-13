@@ -9,20 +9,29 @@
 import UIKit
 
 class CalendarViewController: UIViewController {
-    let datePicker = UIDatePicker()
-    
     let collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.sectionHeadersPinToVisibleBounds = true
-        flowLayout.itemSize = CGSize(width: UIScreen.main.bounds.width/7, height: UIScreen.main.bounds.width/7+10)
+        let screenWidth = UIScreen.main.bounds.width
+        flowLayout.itemSize = CGSize(width: screenWidth/7, height: screenWidth/7+10)
         flowLayout.minimumLineSpacing = 0
         flowLayout.minimumInteritemSpacing = 0
+        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         collectionView.backgroundColor = .doLight
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
     
+    //  네비게이션 바 아래의 |일 월 화 수 목 금 토| 를 그리는 뷰
+    let daysOfWeekView: CalendarDaysOfWeek = {
+        let view = CalendarDaysOfWeek()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let datePicker = UIDatePicker()
+
     var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko_KR")
@@ -36,27 +45,31 @@ class CalendarViewController: UIViewController {
     var computedWeekday = 6
     
     override func viewDidLoad() {
-        view.backgroundColor = .white
         setupCalendar()
         setupNavigationItem()
-        
-        self.view.addGestureRecognizer(UISwipeGestureRecognizer(target: self, action:
-            #selector(dismissFromVC)))
+
+        setupSwipeGesture()
     }
+    
+    func setupSwipeGesture() {
+        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeDismiss))
+        self.view.addGestureRecognizer(swipe)
+    }
+    
     func lastDayOfMonth(at section: Int) -> Int {
-        var last = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        var numberOfDaysOfMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
         let year = section/12+1
         let month = section%12+1
         
-        if month == 2 && ((year%4==0 && (year%100 != 0 || year%400 == 0)) || year%100 == 0 && year < 1600 ) {
-            last[1] = 29 // 윤년
+        if month==2 && ((year%4==0 && (year%100 != 0 || year%400==0)) || year%100==0 && year<1600) {
+            numberOfDaysOfMonth[1] = 29 // 윤년
         }
-        return section != 18981 ? last[month-1] : 21 // 1582년 10월은 5일부터 14일이 존재하지 않음
+        return section != 18981 ? numberOfDaysOfMonth[month-1] : 21 // 1582년 10월은 달력 문제
     }
     
     func firstWeekdayOfMonth(at section: Int) -> Int {
-        let whatDay: String = "\(section/12+1)-\(section%12+1)-01"
-        if let weekday = dateFormatter.date(from: whatDay) {
+        let whatDate: String = "\(section/12+1)-\(section%12+1)-01"
+        if let weekday = dateFormatter.date(from: whatDate) {
             return Calendar.current.component(.weekday, from: weekday)-1 // 0:일요일 ~ 6:토요일
         } else { preconditionFailure("Error") }
     }
@@ -72,33 +85,38 @@ class CalendarViewController: UIViewController {
     
     fileprivate func setupNavigationItem() {
         let pickerButton = UIButton(type: .custom)
-        let image = UIImage(named: "navCalendar")?.withRenderingMode(.alwaysTemplate)
-        pickerButton.setImage(image, for: .normal)
-        pickerButton.addTarget(self, action: #selector(presentDatePicker), for: .touchUpInside)
+        let calendarImage = UIImage(named: "navCalendar")?.withRenderingMode(.alwaysTemplate)
+        pickerButton.setImage(calendarImage, for: .normal)
         pickerButton.tintColor = .white
+        pickerButton.addTarget(self, action: #selector(presentDatePicker), for: .touchUpInside)
+
         let barButton = UIBarButtonItem(customView: pickerButton)
         self.navigationItem.rightBarButtonItem = barButton  
     }
 }
 
 // MARK: 콜렉션뷰, CollectionVie
-extension CalendarViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+extension CalendarViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource,
+UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        didSelectItemAt indexPath: IndexPath) {
         showActionSheet(indexPath.section, indexPath.item)
         datePicker.removeFromSuperview()
         collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
             computedWeekday = 6
         }
         
-        let numberOfItemsInSection = computedWeekday+lastDayOfMonth(at: section)
+        let numberOfDaysOfMonth = computedWeekday+lastDayOfMonth(at: section)
 
-        computedWeekday = numberOfItemsInSection%7
+        computedWeekday = numberOfDaysOfMonth%7
 
-        switch numberOfItemsInSection {
+        switch numberOfDaysOfMonth {
         case 1...28:
             return 28 // 7*4
         case 29...35:
@@ -109,35 +127,54 @@ extension CalendarViewController: UICollectionViewDelegateFlowLayout, UICollecti
     }
     
     // 셀 아이템 정보 - 날짜 표시
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as? CalendarCell
-            else { preconditionFailure("Error") }
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId",
+                                                            for: indexPath) as? CalendarCell
+        else {
+            preconditionFailure("Error")
+        }
         
         let day = indexPath.item+1-firstWeekdayOfMonth(at: indexPath.section)
-        let lastDay = lastDayOfMonth(at: indexPath.section)
-        if 0<day && day<=lastDay {
-            cell.isUserInteractionEnabled = true
-            cell.dayLabel.text = "\(day)"
+        let numberOfDaysOfMonth = lastDayOfMonth(at: indexPath.section)
+        
+        if (1...numberOfDaysOfMonth).contains(day) {
+        cell.isUserInteractionEnabled = true
+        cell.dayLabel.text = "\(day)"
+            
         } else {
-            cell.isUserInteractionEnabled = false
-            cell.dayLabel.backgroundColor = .calendarBackgroundColor
+        cell.isUserInteractionEnabled = false
+        cell.dayLabel.backgroundColor = .calendarBackgroundColor
         }
         
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView,
+                        willDisplay cell: UICollectionViewCell,
+                        forItemAt indexPath: IndexPath) {
         if !isTodayIndex {     // 오늘의 인덱스에 해당하는 캘린더로 이동
             isTodayIndex = true
             
-            let currentIndex = 12*(Calendar.current.component(.year, from: Date())-1)+(Calendar.current.component(.month, from: Date())-1)
-            collectionView.scrollToItem(at: [currentIndex, 0], at: .centeredVertically, animated: false)
+            let currentYear = Calendar.current.component(.year, from: Date())-1
+            let currentMonth = Calendar.current.component(.month, from: Date())-1
+            let currentDay = Calendar.current.component(.day, from: Date())
+
+            let currentIndex = 12*(currentYear)+(currentMonth)
+            collectionView.scrollToItem(at: [currentIndex, currentDay],
+                                        at: .centeredVertically,
+                                        animated: false)
         }
         
         if isPickingDate {     // 데이트피커에서 선택한 날로 이동
             isPickingDate = false
             let components = dateFormatter.string(from: datePicker.date).split {$0 == "-"}.map {Int($0) ?? -1}
-            collectionView.scrollToItem(at: [(components[0]-1)*12+components[1]-1, components[2]], at: .centeredVertically, animated: true)
+            let pickedIndex = (components[0]-1)*12+components[1]-1
+            let pickedDay = components[2]
+            
+            collectionView.scrollToItem(at: [pickedIndex, pickedDay],
+                                        at: .centeredVertically,
+                                        animated: true)
         }
     }
     
@@ -146,16 +183,22 @@ extension CalendarViewController: UICollectionViewDelegateFlowLayout, UICollecti
     }
     
     // MARK: Supplementary View
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: view.frame.width, height: 35)
     }
     
     //Supplementary View-ex: 2019년 01월
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    func collectionView(_ collectionView: UICollectionView,
+                        viewForSupplementaryElementOfKind kind: String,
+                        at indexPath: IndexPath) -> UICollectionReusableView {
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                            withReuseIdentifier: "headerId",
-                                                                           for: indexPath) as? CalendarHeaderView else {
-                                                                            preconditionFailure("Error") }
+                                                                           for: indexPath) as? CalendarHeaderView
+        else {
+            preconditionFailure("Error")
+        }
         
         header.headerLabel.text = "\(indexPath.section/12+1)년 \(indexPath.section%12+1)월"
         return header
@@ -164,13 +207,7 @@ extension CalendarViewController: UICollectionViewDelegateFlowLayout, UICollecti
 
 extension CalendarViewController {
     func setupCalendar() {
-        //        캘린더 탭 상단의 |일 월 화 수 목 금 토| 를 그리는 뷰
-        let daysOfWeekView: CalendarDaysOfWeek = {
-            let view = CalendarDaysOfWeek()
-            view.translatesAutoresizingMaskIntoConstraints = false
-            return view
-        }()
-        
+        view.backgroundColor = .white
         view.addSubview(daysOfWeekView)
         daysOfWeekView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         daysOfWeekView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -180,8 +217,8 @@ extension CalendarViewController {
         view.addSubview(collectionView)
         collectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         collectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        collectionView.topAnchor.constraint(equalTo: daysOfWeekView.bottomAnchor, constant: 0).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+        collectionView.topAnchor.constraint(equalTo: daysOfWeekView.bottomAnchor).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         collectionView.register(CalendarCell.self,
                                 forCellWithReuseIdentifier: "cellId")
         collectionView.register(CalendarHeaderView.self,
@@ -214,7 +251,10 @@ extension CalendarViewController {
         let list = ["일", "월", "화", "수", "목", "금", "토"]
         let weekday = list[date.weekday!-1]
         
-        let dayAlertController = UIAlertController(title: "\(date.year!)년 \(date.month!)월 \(date.day!)일 \(weekday)요일", message: nil, preferredStyle: .actionSheet)
+        let alertTitle = "\(date.year!)년 \(date.month!)월 \(date.day!)일 \(weekday)요일"
+        let dayAlertController = UIAlertController(title: alertTitle,
+                                                   message: nil,
+                                                   preferredStyle: .actionSheet)
         
         let new = UIAlertAction(title: "새 엔트리 만들기", style: .default) { (_) in
             
@@ -234,7 +274,8 @@ extension CalendarViewController {
     func dateComponents(_ section: Int, item: Int) -> DateComponents {
         let day = item+1-firstWeekdayOfMonth(at: section)
         let date = dateFormatter.date(from: "\(section/12+1)-\(section%12+1)-\(day)")
-        let components = Calendar.current.dateComponents([.year, .month, .day, .weekday], from: date ?? Date())
+        let components = Calendar.current.dateComponents([.year, .month, .day, .weekday],
+                                                         from: date ?? Date())
         return components
     }
 }
