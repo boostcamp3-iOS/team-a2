@@ -12,21 +12,33 @@ import CoreData
 final class CoreDataManager {
     // MARK: - Properties
     static let shared = CoreDataManager()
+    static let DidChangedFilterNotification: Notification.Name = Notification.Name("didChangedFilterNotification")
+    static let DidChangedDataNotification: Notification.Name = Notification.Name("didChangedDataNotification")
     
     private var defaultJournalUUID: UUID!
     private var coreDataStack: CoreDataStack = CoreDataStack(modelName: "OneDay")
     private lazy var managedContext: NSManagedObjectContext = coreDataStack.managedContext
     
-    private var sortDescriptors: [NSSortDescriptor] = []
-    private var predicates: [NSPredicate] = []
+    private var entrySortDescriptors: [NSSortDescriptor] = [] {
+        didSet {
+            NotificationCenter.default.post(name: CoreDataManager.DidChangedFilterNotification, object: nil)
+        }
+    }
+    private var entryPredicates: [NSPredicate] = [] {
+        didSet {
+            NotificationCenter.default.post(name: CoreDataManager.DidChangedFilterNotification, object: nil)
+        }
+    }
     
+    // 최근 저널인 애들만 불러오는 거
     final let dateSort = NSSortDescriptor(key: #keyPath(Entry.date), ascending: false)
+    
+    // 최근 저널인 애들만 불러오는 거
     var currentJournalPredicate: NSPredicate {
         return NSPredicate(format: "%K == %@", argumentArray: [#keyPath(Entry.journal), currentJournal])
     }
     
     // INITIAL
-    // defaultJo
     private init() {
         if OneDayDefaults.defaultJournalUUID == nil {
             let defaultJournal = insert("모든 항목", index: 0)
@@ -49,9 +61,20 @@ final class CoreDataManager {
 
     func save() {
         coreDataStack.saveContext()
+        NotificationCenter.default.post(name: CoreDataManager.DidChangedDataNotification, object: nil)
+    }
+}
+
+// MARK: Entry Journal
+extension CoreDataManager {
+    
+    func addEntryFilter(filter: EntryFilter) {
+        entryPredicates.append(contentsOf: filter.predicates)
     }
     
-    // TODO : filter 조건 계속 추가하기
+    func clearEntryFilter() {
+        entryPredicates = []
+    }
 }
 
 // MARK: Journal
@@ -72,7 +95,6 @@ extension CoreDataManager : CoreDataJournalService {
             fatalError("Couldn't get journals")
         }
     }
-    
     // 최근 저널
     var currentJournal: Journal {
         guard let uuidString = OneDayDefaults.currentJournalUUID else {
@@ -158,17 +180,26 @@ extension CoreDataManager: CoreDataEntryService {
         entry.entryId = UUID()
         entry.title = "새로운 엔트리"
         entry.journal = currentJournal
+        entry.dateComponent = Calendar.current.dateComponents(in: TimeZone.current, from: Date())
         coreDataStack.saveContext()
         return entry
     }
     
-    func filter(type filter: EntryFilter = .all) -> [Entry] {
-        let fetchRequest: NSFetchRequest<Entry> = filter.filterFetchRequest(currentJournal: currentJournal)
+    func filter(by filters: [EntryFilter]) -> [Entry] {
+        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
+        var predicate: [NSPredicate] = []
+        predicate.append(contentsOf: entryPredicates)
+        filters.forEach { filter in
+            predicate.append(contentsOf: filter.predicates)
+        }
+        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicate)
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Entry.journal.index), ascending: true),
+                                        NSSortDescriptor(key: #keyPath(Entry.date), ascending: false)]
         
         do {
-            return try coreDataStack.managedContext.fetch(fetchRequest)
+            return try managedContext.fetch(fetchRequest)
         } catch {
-            fatalError("Couldn't get entries")
+            fatalError("Failed get EntryData")
         }
     }
     

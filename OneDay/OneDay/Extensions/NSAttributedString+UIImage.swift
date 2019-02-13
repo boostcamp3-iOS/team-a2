@@ -41,12 +41,11 @@ extension UIImage {
         guard let data = self.jpegData(compressionQuality: 1) ?? self.pngData() else {
             return nil
         }
-        guard let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) as NSURL else {
-            return nil
-        }
+        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let timeStamp = Date().timeIntervalSince1970
+        let url = URL(fileURLWithPath: path).appendingPathComponent("/entry_image_\(timeStamp).png")
+        
         do {
-            let timeStamp = Date().timeIntervalSince1970
-            let url = directory.appendingPathComponent("entry_image_\(timeStamp).png")!
             try data.write(to: url)
             return url
         } catch {

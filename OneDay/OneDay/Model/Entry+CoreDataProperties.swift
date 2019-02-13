@@ -24,11 +24,12 @@ extension Entry {
     @NSManaged public var thumbnail: URL?
     @NSManaged public var title: String?
     @NSManaged public var updatedDate: Date?
+    @NSManaged public var dateComponent: DateComponents?
     @NSManaged public var device: Device?
     @NSManaged public var journal: Journal?
     @NSManaged public var location: Location?
-    @NSManaged public var weather: Weather?
     @NSManaged public var tags: NSSet?
+    @NSManaged public var weather: Weather?
 
 }
 

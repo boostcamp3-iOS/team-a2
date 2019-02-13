@@ -153,10 +153,12 @@ class EntryViewController: UIViewController {
             entry.title = String(stringContent[start...end])
         }
         
-        entry.favorite = false
+        entry.updatedDate = Date()
         
         if let thumbnailImage = content.firstImage {
             entry.thumbnail = thumbnailImage.saveToFile()
+        } else {
+            entry.thumbnail = nil
         }
         
         coreDataManager.save()
