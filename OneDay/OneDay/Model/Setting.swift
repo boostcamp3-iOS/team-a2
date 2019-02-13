@@ -13,10 +13,12 @@ class Setting {
     var title: String?
     var detail: String?
     var image: UIImage?
+    var hasDisclouserIndicator: Bool
     
     init(_ title: String?, _ detail: String?, _ image: UIImage?) {
         self.title = title
         self.detail = detail
         self.image = image
+        hasDisclouserIndicator = false
     }
 }

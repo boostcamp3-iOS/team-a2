@@ -199,12 +199,10 @@
                                 <attributedString key="attributedText"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="UIB-IW-r3p">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="UIB-IW-r3p">
                                 <rect key="frame" x="0.0" y="600" width="375" height="1000"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="1000" id="PgP-rT-rXf" userLabel="height = 1000"/>
-                                </constraints>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="97m-N0-jmb">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -217,10 +215,7 @@
                             <constraint firstItem="rRh-hW-4PN" firstAttribute="bottom" secondItem="JMn-5r-ZV0" secondAttribute="bottom" id="A7u-Rs-IxB"/>
                             <constraint firstItem="uUP-an-P7R" firstAttribute="leading" secondItem="rRh-hW-4PN" secondAttribute="leading" id="EhU-tV-rxg"/>
                             <constraint firstItem="JMn-5r-ZV0" firstAttribute="top" secondItem="uUP-an-P7R" secondAttribute="bottom" id="LXl-R8-taX"/>
-                            <constraint firstItem="rRh-hW-4PN" firstAttribute="trailing" secondItem="UIB-IW-r3p" secondAttribute="trailing" id="QrB-xX-Ajm"/>
                             <constraint firstItem="rRh-hW-4PN" firstAttribute="trailing" secondItem="uUP-an-P7R" secondAttribute="trailing" id="Ryt-hw-hCU"/>
-                            <constraint firstItem="UIB-IW-r3p" firstAttribute="top" secondItem="uUP-an-P7R" secondAttribute="bottom" constant="543" id="T4v-We-ioh"/>
-                            <constraint firstItem="UIB-IW-r3p" firstAttribute="leading" secondItem="rRh-hW-4PN" secondAttribute="leading" id="cqD-oH-AwZ"/>
                             <constraint firstItem="uUP-an-P7R" firstAttribute="top" secondItem="rRh-hW-4PN" secondAttribute="top" id="fam-zY-8Ph"/>
                             <constraint firstItem="rRh-hW-4PN" firstAttribute="trailing" secondItem="JMn-5r-ZV0" secondAttribute="trailing" id="lzB-8H-JGC"/>
                             <constraint firstItem="JMn-5r-ZV0" firstAttribute="leading" secondItem="rRh-hW-4PN" secondAttribute="leading" id="t8o-8p-hAM"/>

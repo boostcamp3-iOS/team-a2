@@ -34,12 +34,12 @@ class EntryViewController: UIViewController {
     lazy var isImageSelected = false
     
     ///하단 뷰 드래그시 사용되는 프로퍼티
-    var topY = CGFloat()            ///드래그 범위의 상단 기준
-    var bottomY = CGFloat()         ///드래그 범위의 하단 기준
-    var dragUpChangePointY = CGFloat()    ///하단 뷰 위로 드래그시 위로 붙는 기준 Y
-    var dragDownChangePointY = CGFloat()  ///하단 뷰 아래로 드래그시 아래로 붙는 기준 Y
-    var isBottom = true //하단 뷰의 위치 true: 하단, false: 하단
-    var willPositionChange = false //드래그 도중 기준을 넘었는지 판단
+    var topY = CGFloat()                    ///드래그 범위의 상단 기준
+    var bottomY = CGFloat()                 ///드래그 범위의 하단 기준
+    var dragUpChangePointY = CGFloat()      ///하단 뷰 위로 드래그시 위로 붙는 기준 Y
+    var dragDownChangePointY = CGFloat()    ///하단 뷰 아래로 드래그시 아래로 붙는 기준 Y
+    var isBottom = true                     ///하단 뷰의 위치
+    var willPositionChange = false          ///드래그 도중 기준을 넘었는지 판단
     
     let generator = UIImpactFeedbackGenerator(style: UIImpactFeedbackGenerator.FeedbackStyle.heavy)
     
@@ -154,22 +154,26 @@ class EntryViewController: UIViewController {
         ///하단 뷰 드래그 시 사용되는 값을 하단 뷰의 값에 따라 지정
         let origin = textView.frame.origin
         let bottomOrigin = bottomTableView.frame.origin
-        topY = origin.y + bottomTableView.frame.height/2
+        topY = origin.y + bottomTableView.frame.height/2 - 1
         bottomY = bottomOrigin.y + bottomTableView.frame.height/2
         dragUpChangePointY = CGFloat(900)
-        dragDownChangePointY = CGFloat(450)
+        dragDownChangePointY = CGFloat(650)
         isBottom = true
         willPositionChange = false
     }
     
     func setUpSettingTableViewData() {
         let location = Setting("위치", "location_detail", UIImage(named: "setting_location"))
+        location.hasDisclouserIndicator = true
         settingTableData[0].append(location)
         let tag = Setting("테그", "tag_detail", UIImage(named: "setting_tag"))
+        tag.hasDisclouserIndicator = true
         settingTableData[0].append(tag)
         let journal = Setting("저널", "journal_detail", UIImage(named: "setting_journal"))
+        journal.hasDisclouserIndicator = true
         settingTableData[0].append(journal)
         let date = Setting("날짜", "date_detail", UIImage(named: "setting_date"))
+        date.hasDisclouserIndicator = true
         settingTableData[0].append(date)
         if entry.favorite {
             let favorite = Setting("즐겨찾기", "즐겨찾기 해제", UIImage(named: "setting_like"))
@@ -180,10 +184,12 @@ class EntryViewController: UIViewController {
         }
         
         let thisDay = Setting("이 날에", "thisday", UIImage(named: "setting_thisday"))
+        thisDay.hasDisclouserIndicator = true
         settingTableData[1].append(thisDay)
         let today = Setting("이 날", "today", UIImage(named: "setting_today"))
+        today.hasDisclouserIndicator = true
         settingTableData[1].append(today)
-        
+
         let weather = Setting("날씨", "~~", UIImage(named: "setting_weather"))
         settingTableData[2].append(weather)
         let device = Setting("일기를 작성한 기기", "iphone", UIImage(named: "setting_device"))
@@ -292,7 +298,7 @@ class EntryViewController: UIViewController {
         }
     }
     
-    /// 조건에 따라 targetView의 위치 변경
+    /// 조건(isBottom, willPositionChange)에 따라 targetView의 위치 변경
     func changePosition(targetView: UIView) {
         if isBottom {
             if willPositionChange {
