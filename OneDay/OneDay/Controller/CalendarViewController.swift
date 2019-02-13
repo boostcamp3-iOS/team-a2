@@ -6,9 +6,11 @@
 //  Copyright © 2019 teamA2. All rights reserved.
 //
 
+import CoreData
 import UIKit
 
 class CalendarViewController: UIViewController {
+    
     let collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.sectionHeadersPinToVisibleBounds = true
@@ -40,15 +42,46 @@ class CalendarViewController: UIViewController {
         return formatter
     }
     
+    var fetchedEntriesDate = Set<String>()
+
     var isTodayIndex = false
     var isPickingDate = false
     var computedWeekday = 6
     
     override func viewDidLoad() {
+        setupCoreData()
         setupCalendar()
         setupNavigationItem()
-
         setupSwipeGesture()
+    }
+    
+    func setupCoreData() {
+        let coreDataManager = CoreDataManager.shared
+        let context = coreDataManager.managedContext
+        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
+        let dateSort = NSSortDescriptor(key: #keyPath(Entry.date), ascending: false)
+        fetchRequest.sortDescriptors = [dateSort]
+        
+        do {
+            let entries = try context.fetch(fetchRequest)
+            entries.forEach { (entry) in
+                
+                let date = entry.date
+                let calendar = Calendar.current
+                var components = calendar.dateComponents([.year, .month, .day],
+                                                         from: date ?? Date())
+                if let year = components.year,
+                    let month = components.month,
+                    let day = components.day {
+                    
+                    let index = (year-1)*12+(month-1)
+                    let path = "\(index)-\(day)"
+                    fetchedEntriesDate.insert(path)
+                }
+            }
+        } catch let fetchErr {
+            print("Faild to fetch err \(fetchErr)")
+        }
     }
     
     func setupSwipeGesture() {
@@ -135,13 +168,19 @@ UICollectionViewDelegate {
             preconditionFailure("Error")
         }
         
-        let day = indexPath.item+1-firstWeekdayOfMonth(at: indexPath.section)
-        let numberOfDaysOfMonth = lastDayOfMonth(at: indexPath.section)
+        let sectionNumber = indexPath.section
+        let day = indexPath.item+1-firstWeekdayOfMonth(at: sectionNumber)
         
+        let checkEntriesTheDay = "\(sectionNumber)-\(day)"
+        if fetchedEntriesDate.contains(checkEntriesTheDay) {
+            cell.dayLabel.backgroundColor = .doBlue
+            cell.dayLabel.textColor = .white
+        }
+        
+        let numberOfDaysOfMonth = lastDayOfMonth(at: sectionNumber)
         if (1...numberOfDaysOfMonth).contains(day) {
         cell.isUserInteractionEnabled = true
         cell.dayLabel.text = "\(day)"
-            
         } else {
         cell.isUserInteractionEnabled = false
         cell.dayLabel.backgroundColor = .calendarBackgroundColor
@@ -168,7 +207,11 @@ UICollectionViewDelegate {
         
         if isPickingDate {     // 데이트피커에서 선택한 날로 이동
             isPickingDate = false
-            let components = dateFormatter.string(from: datePicker.date).split {$0 == "-"}.map {Int($0) ?? -1}
+            let components = dateFormatter
+                .string(from: datePicker.date)
+                .split {$0 == "-"}
+                .map {Int($0) ?? -1}
+            
             let pickedIndex = (components[0]-1)*12+components[1]-1
             let pickedDay = components[2]
             
@@ -189,13 +232,13 @@ UICollectionViewDelegate {
         return CGSize(width: view.frame.width, height: 35)
     }
     
-    //Supplementary View-ex: 2019년 01월
     func collectionView(_ collectionView: UICollectionView,
                         viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                           withReuseIdentifier: "headerId",
-                                                                           for: indexPath) as? CalendarHeaderView
+        guard let header = collectionView.dequeueReusableSupplementaryView(
+                                            ofKind: kind,
+                                            withReuseIdentifier: "headerId",
+                                            for: indexPath) as? CalendarHeaderView
         else {
             preconditionFailure("Error")
         }
@@ -222,8 +265,10 @@ extension CalendarViewController {
         collectionView.register(CalendarCell.self,
                                 forCellWithReuseIdentifier: "cellId")
         collectionView.register(CalendarHeaderView.self,
-                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                forSupplementaryViewOfKind:
+                                UICollectionView.elementKindSectionHeader,
                                 withReuseIdentifier: "headerId")
+        
         collectionView.delegate = self
         collectionView.dataSource = self
     }
@@ -259,12 +304,17 @@ extension CalendarViewController {
         let new = UIAlertAction(title: "새 엔트리 만들기", style: .default) { (_) in
             
         }
-        let today = UIAlertAction(title: "\(date.year!). \(date.month!). \(date.day!). (1111 entries)", style: .default) { (_) in
+        
+        let todayTitle = "\(date.year!). \(date.month!). \(date.day!). (1111 entries)"
+        let today = UIAlertAction(title: todayTitle, style: .default) { (_) in
 
         }
-        let year = UIAlertAction(title: "\(date.month!)월 \(date.day!)일 (1111 entries)", style: .default) { (_) in
+        
+        let yearTitle = "\(date.month!)월 \(date.day!)일 (1111 entries)"
+        let year = UIAlertAction(title: yearTitle, style: .default) { (_) in
             
         }
+        
         let cancel = UIAlertAction(title: "취소", style: .cancel)
         
         for sheet in [new, today, year, cancel] { dayAlertController.addAction(sheet) }
@@ -273,7 +323,8 @@ extension CalendarViewController {
     
     func dateComponents(_ section: Int, item: Int) -> DateComponents {
         let day = item+1-firstWeekdayOfMonth(at: section)
-        let date = dateFormatter.date(from: "\(section/12+1)-\(section%12+1)-\(day)")
+        let conmputedDate = "\(section/12+1)-\(section%12+1)-\(day)"
+        let date = dateFormatter.date(from: conmputedDate)
         let components = Calendar.current.dateComponents([.year, .month, .day, .weekday],
                                                          from: date ?? Date())
         return components
