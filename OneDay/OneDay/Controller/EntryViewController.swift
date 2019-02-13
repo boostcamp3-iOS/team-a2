@@ -21,7 +21,7 @@ class EntryViewController: UIViewController {
     @IBOutlet weak var weatherImageView: UIImageView!
     @IBOutlet weak var weatherLabel: UILabel!
     
-    var coreDataManager: CoreDataManager!
+    var coreDataManager: CoreDataManager = CoreDataManager.shared
     var entry: Entry!
     
     ///드레그시 사용되는 미리보기 뷰
@@ -130,43 +130,6 @@ class EntryViewController: UIViewController {
         
         self.present(alertController, animated: true, completion: nil)
     }
-    
-    func getFirstImage(attributedString: NSAttributedString) -> UIImage? {
-        let range = NSRange(location: 0, length: attributedString.length)
-        var result: UIImage?
-        attributedString.enumerateAttributes(in: range, options: NSAttributedString.EnumerationOptions(rawValue: 0)) { (object, range, stop) in
-            if object.keys.contains(NSAttributedString.Key.attachment) {
-                if let attachment = object[NSAttributedString.Key.attachment] as? NSTextAttachment {
-                    if let image = attachment.image {
-                        result = image
-                        stop.pointee = true
-                    } else if let image = attachment.image(forBounds: attachment.bounds, textContainer: nil, characterIndex: range.location) {
-                        result = image
-                        stop.pointee = true
-                    }
-                }
-            }
-        }
-        return result
-    }
-    
-    func saveImageFile(image: UIImage) -> URL? {
-        guard let data = image.jpegData(compressionQuality: 1) ?? image.pngData() else {
-            return nil
-        }
-        guard let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) as NSURL else {
-            return nil
-        }
-        do {
-            let timeStamp = Date().timeIntervalSince1970
-            let url = directory.appendingPathComponent("entry_image_\(timeStamp).png")!
-            try data.write(to: url)
-            return url
-        } catch {
-            print(error.localizedDescription)
-            return nil
-        }
-    }
 
     // MARK: - Actions
     @IBAction func showPhoto(_ sender: UIButton) {
@@ -191,8 +154,9 @@ class EntryViewController: UIViewController {
         }
         
         entry.favorite = false
-        if let thumbnailImage = getFirstImage(attributedString: content) {
-            entry.thumbnail = saveImageFile(image: thumbnailImage)
+        
+        if let thumbnailImage = content.firstImage {
+            entry.thumbnail = thumbnailImage.saveToFile()
         }
         
         coreDataManager.save()
@@ -213,23 +177,24 @@ extension EntryViewController: UIImagePickerControllerDelegate, UINavigationCont
         _ picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]
     ) {
-        guard let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else { return }
-        insertAtTextViewCursor(attributedString: createAttributedString(with: image))
+        var pickedImage: UIImage?
+        if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            pickedImage = editedImage
+        } else if let originImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            pickedImage = originImage
+        }
+        
+        if let pickedImage = pickedImage {
+            let originWidth = pickedImage.size.width
+            let scaleFactor = originWidth / (textView.frame.size.width - 10)
+            let scaledImage =  UIImage(cgImage: pickedImage.cgImage!, scale: scaleFactor, orientation: .up)
+            insertAtTextViewCursor(attributedString: scaledImage.attributedString)
+        }
         picker.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func tapAndHideKeyboard(_ sender: UITapGestureRecognizer) {
+    @IBAction func hideKeyboardDidTap(_ sender: UITapGestureRecognizer) {
         view.endEditing(true)
-    }
-    
-    fileprivate func createAttributedString(with image: UIImage) -> NSAttributedString {
-        let textAttachment = NSTextAttachment()
-        textAttachment.image = image
-        let oldWidth = textAttachment.image!.size.width
-        let scaleFactor = oldWidth / (textView.frame.size.width - 10)
-        textAttachment.image = UIImage(cgImage: textAttachment.image!.cgImage!, scale: scaleFactor, orientation: .up)
-        let attrStringWithImage = NSAttributedString(attachment: textAttachment)
-        return attrStringWithImage
     }
     
     fileprivate func insertAtTextViewCursor(attributedString: NSAttributedString) {

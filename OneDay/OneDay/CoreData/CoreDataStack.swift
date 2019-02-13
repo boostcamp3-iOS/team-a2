@@ -25,7 +25,6 @@ class CoreDataStack {
         let storePath = storePaths[0] as NSString
         let fileManager = FileManager.default
         
-        print(storePath)
         do {
             try fileManager.createDirectory(
                 atPath: storePath as String,

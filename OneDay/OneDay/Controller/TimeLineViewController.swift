@@ -16,11 +16,7 @@ class TimeLineViewController: UIViewController {
     
     @IBOutlet weak var timelineTable: UITableView!
     var journal: Journal!
-    let coreDataManager = CoreDataManager.shared
-    let fetchedResultsController: NSFetchedResultsController<Entry> = CoreDataManager.shared.entries(
-        type: .all,
-        sectionNameKeyPath: #keyPath(Entry.date)
-    )
+    let fetchedResultsController: NSFetchedResultsController<Entry> = CoreDataManager.shared.currentJournalEntriesResultsController
     
     private let cellIdentifier = "timeline_cell"
     
@@ -67,11 +63,9 @@ class TimeLineViewController: UIViewController {
                 }
                 let entry = fetchedResultsController.object(at: indexPath)
                 destination.entry = entry
-                destination.coreDataManager = coreDataManager
             }
         } else if let destination = segue.destination as? EntryViewController {
-            destination.entry = coreDataManager.entry()
-            destination.coreDataManager = coreDataManager
+            destination.entry = CoreDataManager.shared.insert()
         }
     }
     
@@ -133,7 +127,7 @@ extension TimeLineViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard case(.delete) = editingStyle else { return }
-        coreDataManager.entry(remove: fetchedResultsController.object(at: indexPath))
+        CoreDataManager.shared.remove(entry: fetchedResultsController.object(at: indexPath))
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -13,7 +13,8 @@ class PhotosViewController: UIViewController {
     
     @IBOutlet weak var photoCollectionView: UICollectionView!
     let coreDataManager = CoreDataManager.shared
-    let fetchedResultsController: NSFetchedResultsController<Entry> = CoreDataManager.shared.entries(type: .photo, sectionNameKeyPath: nil)
+    let fetchedResultsController: NSFetchedResultsController<Entry> = CoreDataManager.shared.currentJournalEntriesResultsController
+    
     var entries: [Entry] = []
     
     private let reuseIdentifier = "photo_cell"
@@ -56,7 +57,18 @@ extension PhotosViewController : UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? PhotosCollectionViewCell else {
             preconditionFailure("No expected cell type casting by PhotosCollectionViewCell")
         }
+        let entry = entries[indexPath.row]
         cell.dayLabel.text = "12"
+        guard let imageURL = entry.thumbnail else { preconditionFailure("No thumbnail image")}
+        
+        do {
+            print(imageURL)
+            let imageData = try Data(contentsOf: imageURL)
+            cell.imageView.image = UIImage(data: imageData)
+        } catch {
+            print("Invalid image data")
+            return cell
+        }
         return cell
     }
 }

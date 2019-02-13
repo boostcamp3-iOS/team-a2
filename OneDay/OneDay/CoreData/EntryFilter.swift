@@ -13,6 +13,7 @@ enum EntryFilter {
     case photo
     case location
     case favorite
+    case tag
     case today
     case thisDay
     
@@ -26,6 +27,8 @@ enum EntryFilter {
             return "location_entries"
         case .favorite:
             return "favorite_entries"
+        case .tag:
+            return "tag_entries"
         case .today:
             return "today_entries"
         case .thisDay:
@@ -45,6 +48,8 @@ enum EntryFilter {
             predicateArray.append(NSPredicate(format: "%K != nil", argumentArray: [#keyPath(Entry.location)]))
         case .favorite:
             predicateArray.append(NSPredicate(format:"%K", argumentArray: [#keyPath(Entry.favorite)]))
+        case .tag:
+            predicateArray.append(NSPredicate(format:"%K", argumentArray: [#keyPath(Entry.tags)]))
         case .today:
             predicateArray.append(NSPredicate(format: "%K == Date()", argumentArray: [#keyPath(Entry.date)]))
         case .thisDay:
