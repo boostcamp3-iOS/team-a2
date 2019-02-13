@@ -39,7 +39,6 @@ class CoreDataStack {
     }
     
     // 저장할 file URL
-    // 사실 디스크립션은 옵션이에요 없어도 되요.
     lazy var storeDescription: NSPersistentStoreDescription = {
         let description = NSPersistentStoreDescription(url: self.storeURL)
         description.shouldMigrateStoreAutomatically = true

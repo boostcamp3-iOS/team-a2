@@ -15,22 +15,8 @@ class TimeLineViewController: UIViewController {
     // MARK: - Properties
     
     @IBOutlet weak var timelineTable: UITableView!
-    var coreDataStack: CoreDataStack!
     var journal: Journal!
-    lazy var fetchedResultsController: NSFetchedResultsController<Entry> = {
-        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
-        let dateSort = NSSortDescriptor(key: #keyPath(Entry.date), ascending: false)
-        fetchRequest.sortDescriptors = [dateSort]
-        
-        let fetchedResultsController = NSFetchedResultsController(
-            fetchRequest: fetchRequest,
-            managedObjectContext: coreDataStack.managedContext,
-            sectionNameKeyPath: #keyPath(Entry.date),
-            cacheName: "entries")
-        
-        fetchedResultsController.delegate = self
-        return fetchedResultsController
-    }()
+    let fetchedResultsController: NSFetchedResultsController<Entry> = CoreDataManager.shared.currentJournalEntriesResultsController
     
     private let cellIdentifier = "timeline_cell"
     
@@ -38,9 +24,9 @@ class TimeLineViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        coreDataStack = CoreDataStack(modelName: "OneDay")
         
         do {
+            fetchedResultsController.delegate = self
             try fetchedResultsController.performFetch()
         } catch let error as NSError {
             print("Fetching error: \(error), \(error.userInfo)")
@@ -77,11 +63,9 @@ class TimeLineViewController: UIViewController {
                 }
                 let entry = fetchedResultsController.object(at: indexPath)
                 destination.entry = entry
-                destination.coreDataStack = coreDataStack
             }
         } else if let destination = segue.destination as? EntryViewController {
-            destination.entry = entry()
-            destination.coreDataStack = coreDataStack
+            destination.entry = CoreDataManager.shared.insert()
         }
     }
     
@@ -89,18 +73,6 @@ class TimeLineViewController: UIViewController {
         _ = entry()
     }
     
-    func entry() -> Entry {
-        let entry = Entry(context: self.coreDataStack.managedContext)
-        entry.title = "새로운 메세지"
-        entry.date = Date()
-        print(entry.date)
-        entry.entryId = UUID.init()
-        entry.journal = journal
-        entry.favorite = false
-        
-        self.coreDataStack.saveContext()
-        return entry
-    }
 }
 
 extension TimeLineViewController: UITableViewDelegate, UITableViewDataSource {
@@ -155,9 +127,7 @@ extension TimeLineViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard case(.delete) = editingStyle else { return }
-        
-        coreDataStack.managedContext.delete(fetchedResultsController.object(at: indexPath))
-        coreDataStack.saveContext()
+        CoreDataManager.shared.remove(entry: fetchedResultsController.object(at: indexPath))
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

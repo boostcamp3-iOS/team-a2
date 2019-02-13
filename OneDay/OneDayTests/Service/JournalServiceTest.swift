@@ -11,12 +11,12 @@ import XCTest
 
 class JournalServiceTest: XCTestCase {
     // MARK: Properties
-    var journalService: JournalService!
+    var journalService: CoreDataJournalService!
     var coreDataStack: TestCoreDataStack!
 
     override func setUp() {
         coreDataStack = TestCoreDataStack()
-        journalService = JournalService(managedObjectContext: coreDataStack.managedContext, coreDataStack: coreDataStack)
+//        journalService = JournalService(managedObjectContext: coreDataStack.managedContext, coreDataStack: coreDataStack)
     }
 
     override func tearDown() {
@@ -27,7 +27,7 @@ class JournalServiceTest: XCTestCase {
     
     func testRootContextIsSavedAfterAddingCamper() {
         let derivedContext = coreDataStack.newDerivedContext()
-        journalService = JournalService(managedObjectContext: derivedContext, coreDataStack: coreDataStack)
+//        journalService = JournalService(managedObjectContext: derivedContext, coreDataStack: coreDataStack)
         
         expectation(
             forNotification: .NSManagedObjectContextDidSave, object: coreDataStack.managedContext) { _ in
