@@ -44,7 +44,7 @@ enum EntryFilter {
 
         switch self {
         case .all:
-            return predicateArray
+            return []
         case .currentJournal:
             let currentJournal = CoreDataManager.shared.currentJournal
             predicateArray.append(NSPredicate(format: "journal == %@", currentJournal))
@@ -61,15 +61,16 @@ enum EntryFilter {
         case .tag:
             predicateArray.append(NSPredicate(format:"%K", argumentArray: [#keyPath(Entry.tags)]))
         case .today:
-            predicateArray.append(NSPredicate(format: "%K == Date()", argumentArray: [#keyPath(Entry.date)]))
+            let dateComponents = Calendar.current.dateComponents(in: TimeZone.current, from: Date())
+            guard let month = dateComponents.month as NSNumber?, let day = dateComponents.day as NSNumber?, let year = dateComponents.year as NSNumber? else { return [] }
+            predicateArray.append(NSPredicate(format: "year == %@", year))
+            predicateArray.append(NSPredicate(format: "month == %@", month))
+            predicateArray.append(NSPredicate(format: "day == %@", day))
         case .thisDay:
-            var dateComponents = Calendar.current.dateComponents(in: TimeZone.current, from: Date())
-            if let month = dateComponents.month {
-                predicateArray.append(NSPredicate(format: "%K == %@", [#keyPath(Entry.dateComponent.month)], month))
-            }
-            if let day = dateComponents.day {
-                predicateArray.append(NSPredicate(format: "%K == %@", [#keyPath(Entry.dateComponent.day)], day))
-            }
+            let dateComponents = Calendar.current.dateComponents(in: TimeZone.current, from: Date())
+            guard let month = dateComponents.month as NSNumber?, let day = dateComponents.day as NSNumber? else { return [] }
+            predicateArray.append(NSPredicate(format: "month == %@", month))
+            predicateArray.append(NSPredicate(format: "day == %@", day))
         }
         return predicateArray
     }

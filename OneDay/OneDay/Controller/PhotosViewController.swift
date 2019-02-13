@@ -87,9 +87,9 @@ extension PhotosViewController : UICollectionViewDataSource {
             preconditionFailure("No expected cell type casting by PhotosCollectionViewCell")
         }
         let entry = entries[indexPath.row]
-        if let dateComponent = entry.dateComponent {
-            cell.dayLabel.text = "\(dateComponent.day ?? 0)"
-            cell.monthAndYearLabel.text = "\(dateComponent.monthAndYear)"
+        if let date = entry.date {
+            cell.dayLabel.text = "\(date.day)"
+            cell.monthAndYearLabel.text = "\(date.monthAndYear)"
         }
         
         guard let imageURL = entry.thumbnail else { preconditionFailure("No thumbnail image") }

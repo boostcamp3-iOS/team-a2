@@ -180,7 +180,10 @@ extension CoreDataManager: CoreDataEntryService {
         entry.entryId = UUID()
         entry.title = "새로운 엔트리"
         entry.journal = currentJournal
-        entry.dateComponent = Calendar.current.dateComponents(in: TimeZone.current, from: Date())
+        let dateComponents = Calendar.current.dateComponents(in: TimeZone.current, from: today)
+        entry.month = dateComponents.month as NSNumber?
+        entry.year = dateComponents.year as NSNumber?
+        entry.day = dateComponents.day as NSNumber?
         coreDataStack.saveContext()
         return entry
     }
@@ -195,7 +198,6 @@ extension CoreDataManager: CoreDataEntryService {
         fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicate)
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Entry.journal.index), ascending: true),
                                         NSSortDescriptor(key: #keyPath(Entry.date), ascending: false)]
-        
         do {
             return try managedContext.fetch(fetchRequest)
         } catch {

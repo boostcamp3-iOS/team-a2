@@ -13,13 +13,15 @@
     </entity>
     <entity name="Entry" representedClassName="Entry" syncable="YES">
         <attribute name="contents" optional="YES" attributeType="Transformable" customClassName="NSAttributedString" syncable="YES"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" customClassName="Date" syncable="YES"/>
-        <attribute name="dateComponent" optional="YES" attributeType="Transformable" customClassName="DateComponents" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Transformable" customClassName="Date" syncable="YES"/>
+        <attribute name="day" optional="YES" attributeType="Transformable" customClassName="NSNumber" syncable="YES"/>
         <attribute name="entryId" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="favorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="month" optional="YES" attributeType="Transformable" customClassName="NSNumber" syncable="YES"/>
         <attribute name="thumbnail" optional="YES" attributeType="URI" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" customClassName="Date" syncable="YES"/>
         <attribute name="updatedDate" optional="YES" attributeType="Transformable" customClassName="Date" syncable="YES"/>
+        <attribute name="year" optional="YES" attributeType="Transformable" customClassName="NSNumber" syncable="YES"/>
         <relationship name="device" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Device" inverseName="entries" inverseEntity="Device" syncable="YES"/>
         <relationship name="journal" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Journal" inverseName="entries" inverseEntity="Journal" syncable="YES"/>
         <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="entry" inverseEntity="Location" syncable="YES"/>
@@ -72,7 +74,7 @@
     </entity>
     <elements>
         <element name="Device" positionX="-6946.73828125" positionY="-5085.91796875" width="128" height="105"/>
-        <element name="Entry" positionX="-7121.9765625" positionY="-4929.296875" width="128" height="240"/>
+        <element name="Entry" positionX="-7121.9765625" positionY="-4929.296875" width="128" height="270"/>
         <element name="Journal" positionX="-7125.07421875" positionY="-5096.95703125" width="128" height="120"/>
         <element name="Location" positionX="-6925.2578125" positionY="-4617.64453125" width="128" height="120"/>
         <element name="Tag" positionX="-7029" positionY="-4941" width="128" height="75"/>
