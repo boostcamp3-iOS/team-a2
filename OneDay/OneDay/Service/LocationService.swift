@@ -15,11 +15,11 @@ class LocationService: NSObject {
     
     static let service = LocationService()
     private let locationManager = CLLocationManager()
-    private var _latitude: String = ""
-    private var _longitude: String = ""
+    private var _latitude: CLLocationDegrees = 0
+    private var _longitude: CLLocationDegrees = 0
     
-    var latitude: String { return _latitude }
-    var longitude: String { return _longitude }
+    var latitude: CLLocationDegrees { return _latitude }
+    var longitude: CLLocationDegrees { return _longitude }
     
     // MARK: - Methods
     
@@ -41,7 +41,7 @@ extension LocationService: CLLocationManagerDelegate {
         didUpdateLocations locations: [CLLocation]
     ) {
         guard let localValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        _latitude = "\(localValue.latitude)"
-        _longitude = "\(localValue.longitude)"
+        _latitude = localValue.latitude
+        _longitude = localValue.longitude
     }
 }
