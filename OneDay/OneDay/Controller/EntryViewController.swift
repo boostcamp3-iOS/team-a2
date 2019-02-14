@@ -147,8 +147,10 @@ class EntryViewController: UIViewController {
                         let cell = self?.bottomTableView.cellForRow(at: IndexPath(row: 0, section: 2))
                         if let summary = WeatherType(rawValue: type)?.summary {
                             cell?.detailTextLabel?.text = "\(weather.tempature)℃ \(summary)"
+                            self?.settingTableData[2][0].detail = "\(weather.tempature)℃ \(summary)"
                         } else {
                             cell?.detailTextLabel?.text = "\(weather.tempature)℃"
+                            self?.settingTableData[2][0].detail = "\(weather.tempature)℃"
                         }
                     }
                 },
@@ -174,6 +176,7 @@ class EntryViewController: UIViewController {
                     DispatchQueue.main.sync {
                         let cell = self?.bottomTableView.cellForRow(at: IndexPath(row: 0, section: 0))
                         cell?.detailTextLabel?.text = location.address
+                        self?.settingTableData[0][0].detail = location.address
                     }
                 },
                 errorHandler: { [weak self] in
