@@ -37,20 +37,21 @@ extension UIImage {
         return attrStringWithImage
     }
     
-    func saveToFile() -> URL? {
-        guard let data = self.jpegData(compressionQuality: 1) ?? self.pngData() else {
+    func saveToFile() -> String? {
+        guard let data = self.jpegData(compressionQuality: 0.8) else {
             return nil
         }
-        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
         let timeStamp = Date().timeIntervalSince1970
-        let url = URL(fileURLWithPath: path).appendingPathComponent("/entry_image_\(timeStamp).png")
+        let fileName = "entry_image_\(timeStamp)"
+        guard let urlForDataStorage = fileName.urlForDataStorage else { return nil }
         
         do {
-            try data.write(to: url)
-            return url
+            try data.write(to: urlForDataStorage)
+            return fileName
         } catch {
             print(error.localizedDescription)
             return nil
         }
     }
+    
 }

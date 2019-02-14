@@ -22,19 +22,19 @@ class PhotosViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setCollectionViewLayout()
-        addConditionChangeNotificationObserver()
-        addDataChangeNotificationObserver()
-        requestData()
+        configureCollectionViewLayout()
+        addCoreDataChangedNotificationObserver()
+        addEntriesFiltersChangeNotificationObserver()
+        loadData()
     }
     
     // CoreData에서 Filter 조건을 넘기고 데이터를 받아서 CollectionView Reload
-    private func requestData() {
+    private func loadData() {
         entries = CoreDataManager.shared.filter(by: defaultFilters)
         photoCollectionView.reloadData()
     }
     
-    private func setCollectionViewLayout() {
+    private func configureCollectionViewLayout() {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         let insets = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
         let itemsPerRow: CGFloat = 3
@@ -46,32 +46,32 @@ class PhotosViewController: UIViewController {
         photoCollectionView.collectionViewLayout = layout
     }
     // Notification Observer를 추가
-    func addDataChangeNotificationObserver() {
+    func addCoreDataChangedNotificationObserver() {
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(didReceiveDataNotification(_:)),
-            name: CoreDataManager.DidChangedDataNotification,
+            selector: #selector(didReceiveCoreDataChangedNotification(_:)),
+            name: CoreDataManager.DidChangedCoredDataNotification,
             object: nil)
     }
-    func addConditionChangeNotificationObserver() {
+    func addEntriesFiltersChangeNotificationObserver() {
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(didReceiveConditionsNotification(_:)),
-            name: CoreDataManager.DidChangedFilterNotification,
+            selector: #selector(didReceiveEntriesFilterNotification(_:)),
+            name: CoreDataManager.DidChangedEntriesFilterNotification,
             object: nil)
     }
     
     // 두 function은 현재 동일합니다. 추후에 달라질 수 있을 것 같아서 2개로 나누었습니다.
     // Data가 변경되었다는 Notification 을 받았을 때: collectionView reload
-    @objc func didReceiveDataNotification(_: Notification) {
+    @objc func didReceiveCoreDataChangedNotification(_: Notification) {
         DispatchQueue.main.async { [weak self] in
-            self?.requestData()
+            self?.loadData()
         }
     }
     // Filter Condition이 변경되었다는 을 받았을 때: collectionView reload
-    @objc func didReceiveConditionsNotification(_: Notification) {
+    @objc func didReceiveEntriesFilterNotification(_: Notification) {
         DispatchQueue.main.async { [weak self] in
-            self?.requestData()
+            self?.loadData()
         }
     }
 }
@@ -87,12 +87,11 @@ extension PhotosViewController : UICollectionViewDataSource {
             preconditionFailure("No expected cell type casting by PhotosCollectionViewCell")
         }
         let entry = entries[indexPath.row]
-        if let date = entry.date {
-            cell.dayLabel.text = "\(date.day)"
-            cell.monthAndYearLabel.text = "\(date.monthAndYear)"
-        }
+        cell.dayLabel.text = "\(entry.day)"
+        cell.monthAndYearLabel.text = "\(entry.monthAndYear)"
         
-        guard let imageURL = entry.thumbnail else { preconditionFailure("No thumbnail image") }
+        guard let fileName = entry.thumbnail else { preconditionFailure("No thumbnail image") }
+        guard let imageURL = fileName.urlForDataStorage else { preconditionFailure("No thumbnail image") }
         
         do {
             let imageData = try Data(contentsOf: imageURL)

@@ -16,7 +16,7 @@ enum EntryFilter {
     case favorite
     case tag(tag: String)
     case today
-    case thisDay
+    case thisDay(year: Int?, month: Int?, day: Int?)
     
     var cacheName: String {
         switch self {
@@ -66,11 +66,16 @@ enum EntryFilter {
             predicateArray.append(NSPredicate(format: "year == %@", year))
             predicateArray.append(NSPredicate(format: "month == %@", month))
             predicateArray.append(NSPredicate(format: "day == %@", day))
-        case .thisDay:
-            let dateComponents = Calendar.current.dateComponents(in: TimeZone.current, from: Date())
-            guard let month = dateComponents.month as NSNumber?, let day = dateComponents.day as NSNumber? else { return [] }
-            predicateArray.append(NSPredicate(format: "month == %@", month))
-            predicateArray.append(NSPredicate(format: "day == %@", day))
+        case .thisDay(let year, let month, let day):
+            if let year = year as NSNumber? {
+                predicateArray.append(NSPredicate(format: "year == %@", year))
+            }
+            if let month = month as NSNumber? {
+                predicateArray.append(NSPredicate(format: "month == %@", month))
+            }
+            if let day = day as NSNumber? {
+                predicateArray.append(NSPredicate(format: "day == %@", day))
+            }
         }
         return predicateArray
     }

@@ -2,7 +2,7 @@
 //  Entry+CoreDataProperties.swift
 //  OneDay
 //
-//  Created by juhee on 13/02/2019.
+//  Created by juhee on 14/02/2019.
 //  Copyright © 2019 teamA2. All rights reserved.
 //
 //
@@ -18,15 +18,15 @@ extension Entry {
     }
 
     @NSManaged public var contents: NSAttributedString?
-    @NSManaged public var date: Date?
-    @NSManaged public var day: NSNumber?
+    @NSManaged public var date: Date
+    @NSManaged public var day: NSNumber
     @NSManaged public var entryId: UUID?
     @NSManaged public var favorite: Bool
-    @NSManaged public var month: NSNumber?
-    @NSManaged public var thumbnail: URL?
+    @NSManaged public var month: NSNumber
+    @NSManaged public var thumbnail: String?
     @NSManaged public var title: String?
     @NSManaged public var updatedDate: Date?
-    @NSManaged public var year: NSNumber?
+    @NSManaged public var year: NSNumber
     @NSManaged public var device: Device?
     @NSManaged public var journal: Journal?
     @NSManaged public var location: Location?
@@ -37,6 +37,25 @@ extension Entry {
 
 // MARK: Generated accessors for tags
 extension Entry {
+    
+    var monthAndYear: String {
+        return "\(month)년 \(year)"
+    }
+    
+    func updateDate(date: Date) {
+        self.date = date
+        let dateComponents = Calendar.current.dateComponents(in: TimeZone.current, from: Date())
+        if let month = dateComponents.month as NSNumber? {
+            self.month = month
+        }
+        if let day = dateComponents.day as NSNumber? {
+            self.day = day
+        }
+        if let year = dateComponents.year as NSNumber? {
+            self.year = year
+        }
+        
+    }
 
     @objc(addTagsObject:)
     @NSManaged public func addToTags(_ value: Tag)

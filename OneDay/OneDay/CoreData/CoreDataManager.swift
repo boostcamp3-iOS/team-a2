@@ -12,8 +12,8 @@ import CoreData
 final class CoreDataManager {
     // MARK: - Properties
     static let shared = CoreDataManager()
-    static let DidChangedFilterNotification: Notification.Name = Notification.Name("didChangedFilterNotification")
-    static let DidChangedDataNotification: Notification.Name = Notification.Name("didChangedDataNotification")
+    static let DidChangedEntriesFilterNotification: Notification.Name = Notification.Name("didChangedEntriesFilterNotification")
+    static let DidChangedCoredDataNotification: Notification.Name = Notification.Name("didChangedCoreDataNotification")
     
     private var defaultJournalUUID: UUID!
     private var coreDataStack: CoreDataStack = CoreDataStack(modelName: "OneDay")
@@ -21,17 +21,14 @@ final class CoreDataManager {
     
     private var entrySortDescriptors: [NSSortDescriptor] = [] {
         didSet {
-            NotificationCenter.default.post(name: CoreDataManager.DidChangedFilterNotification, object: nil)
+            NotificationCenter.default.post(name: CoreDataManager.DidChangedEntriesFilterNotification, object: nil)
         }
     }
     private var entryPredicates: [NSPredicate] = [] {
         didSet {
-            NotificationCenter.default.post(name: CoreDataManager.DidChangedFilterNotification, object: nil)
+            NotificationCenter.default.post(name: CoreDataManager.DidChangedEntriesFilterNotification, object: nil)
         }
     }
-    
-    // 최근 저널인 애들만 불러오는 거
-    final let dateSort = NSSortDescriptor(key: #keyPath(Entry.date), ascending: false)
     
     // 최근 저널인 애들만 불러오는 거
     var currentJournalPredicate: NSPredicate {
@@ -60,8 +57,10 @@ final class CoreDataManager {
     }
 
     func save() {
-        coreDataStack.saveContext()
-        NotificationCenter.default.post(name: CoreDataManager.DidChangedDataNotification, object: nil)
+        if coreDataStack.managedContext.hasChanges {
+            coreDataStack.saveContext()
+            NotificationCenter.default.post(name: CoreDataManager.DidChangedCoredDataNotification, object: nil)
+        }
     }
 }
 
@@ -140,8 +139,13 @@ extension CoreDataManager : CoreDataJournalService {
 // Entries
 extension CoreDataManager: CoreDataEntryService {
     
-    // 최근 저널에 포함된 Entries의 개수
+    // 모든 저널에 포함된 Entries의 개수
     var numberOfEntries: Int {
+        return journals.reduce(0, { $0 + ($1.entries?.count ?? 0) })
+    }
+    
+    // 최근 저널에 포함된 Entries의 개수
+    var numberOfCurrentJournalEntries: Int {
         return currentJournalEntries.count
     }
     
@@ -157,6 +161,8 @@ extension CoreDataManager: CoreDataEntryService {
     var currentJournalEntriesRequest: NSFetchRequest<Entry> {
         let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
         fetchRequest.predicate = currentJournalPredicate
+        // 데이트 최신인 순으로 정렬하기
+        let dateSort = NSSortDescriptor(key: #keyPath(Entry.date), ascending: false)
         fetchRequest.sortDescriptors = [dateSort]
         
         return fetchRequest
@@ -174,17 +180,12 @@ extension CoreDataManager: CoreDataEntryService {
     
     func insert() -> Entry {
         let entry = Entry(context: managedContext)
-        let today: Date = Date()
-        entry.updatedDate = today
-        entry.date = today
         entry.entryId = UUID()
         entry.title = "새로운 엔트리"
         entry.journal = currentJournal
-        let dateComponents = Calendar.current.dateComponents(in: TimeZone.current, from: today)
-        entry.month = dateComponents.month as NSNumber?
-        entry.year = dateComponents.year as NSNumber?
-        entry.day = dateComponents.day as NSNumber?
-        coreDataStack.saveContext()
+        entry.updateDate(date: Date())
+    
+        save()
         return entry
     }
     
