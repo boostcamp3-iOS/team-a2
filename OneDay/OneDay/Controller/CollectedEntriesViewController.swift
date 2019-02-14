@@ -10,6 +10,10 @@ import CoreData
 import MapKit
 import UIKit
 
+extension CollectedEntriesViewController: NSFetchedResultsControllerDelegate {
+}
+
+
 class CollectedEntriesViewController: UIViewController {
     
     let topFloatingView: UIView = {
@@ -50,6 +54,47 @@ class CollectedEntriesViewController: UIViewController {
         super.viewDidLoad()
         setupTableView()
         view.backgroundColor = .white
+        doneButton.addTarget(self, action: #selector(backToCalendar), for: .touchUpInside)
+      
+        coreDataStack = CoreDataStack(modelName: "OneDay")
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch let error as NSError {
+            print("Fetching error: \(error), \(error.userInfo)")
+        }
+    }
+    
+    var coreDataStack: CoreDataStack!
+    var journal: Journal!
+    lazy var fetchedResultsController: NSFetchedResultsController<Entry> = {
+        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
+        let dateSort = NSSortDescriptor(key: #keyPath(Entry.date), ascending: false)
+        fetchRequest.sortDescriptors = [dateSort]
+        
+        let fetchedResultsController = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: coreDataStack.managedContext,
+            sectionNameKeyPath: #keyPath(Entry.date),
+            cacheName: "entries")
+        
+        fetchedResultsController.delegate = self
+        return fetchedResultsController
+    }()
+    
+    @objc func backToCalendar() {
+        dismiss(animated: false, completion: nil)
+    }
+    
+    var dateInfo = "" {
+        didSet {
+            let dateComponents = dateInfo.split {$0 == "-"}
+            if dateComponents.count == 2 {
+                dateInfo = "\(dateComponents[0])월 \(dateComponents[1])일"
+            } else {
+                dateInfo = "\(dateComponents[0])년 \(dateComponents[1])월 \(dateComponents[2])일"
+            }
+        }
     }
 }
 
@@ -65,7 +110,16 @@ extension CollectedEntriesViewController: UITableViewDelegate, UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 1 : 10
+//        return section == 0 ? 1 : 10
+        
+        if section == 0 {
+            return 1
+        } else {
+            guard let sectionInfo = fetchedResultsController.sections?[section] else {
+                return 0
+            }
+            return sectionInfo.numberOfObjects
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -103,6 +157,7 @@ extension CollectedEntriesViewController {
         topFloatingView.addSubview(dateLabel)
         dateLabel.leftAnchor.constraint(equalTo: topFloatingView.leftAnchor, constant: 24).isActive = true
         dateLabel.centerYAnchor.constraint(equalTo: topFloatingView.centerYAnchor).isActive = true
+        dateLabel.text = dateInfo
 
         topFloatingView.addSubview(doneButton)
         doneButton.rightAnchor.constraint(equalTo: topFloatingView.rightAnchor, constant: -24).isActive = true

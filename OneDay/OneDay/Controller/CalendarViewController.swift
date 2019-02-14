@@ -345,12 +345,16 @@ extension CalendarViewController {
         
         let todayAlertTitle = "\(year). \(month). \(day). (\(numberOfEntriesAtDay) entries)"
         let todayAlert = UIAlertAction(title: todayAlertTitle, style: .default) { (_) in
-            self.present(CollectedEntriesViewController(), animated: true, completion: nil)
+           let collectedEntriesViewController = CollectedEntriesViewController()
+            collectedEntriesViewController.dateInfo = "\(year)-\(month)-\(day)"
+            self.present(collectedEntriesViewController, animated: true, completion: nil)
         }
         
         let yearAlertTitle = "\(month)월 \(day)일 (\(numberOfEntriesOnThisDay) entries)"
         let yearAlert = UIAlertAction(title: yearAlertTitle, style: .default) { (_) in
-            
+            let collectedEntriesViewController = CollectedEntriesViewController()
+            collectedEntriesViewController.dateInfo = "\(month)-\(day)"
+            self.present(collectedEntriesViewController, animated: true, completion: nil)
         }
         
         let cancelAlert = UIAlertAction(title: "취소", style: .cancel)

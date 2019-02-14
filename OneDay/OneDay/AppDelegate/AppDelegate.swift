@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     // MARK: - Core Data stack
-    lazy var coreDataStack = CoreDataStack(modelName: "OneDay")
+//    lazy var coreDataStack = CoreDataStack(modelName: "OneDay")
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 //        guard let navController = window?.rootViewController as? UINavigationController,
@@ -25,6 +25,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        
 //        viewController.managedObjectContext = coreDataStack.managedContext
         
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.makeKeyAndVisible()
+//        window?.rootViewController = CollectedEntriesViewController()
+        window?.rootViewController = CalendarViewController()
+
         //사용자 위치정보 권한 요청
         LocationService.service.requestAuth()
         return true

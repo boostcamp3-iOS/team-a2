@@ -53,7 +53,7 @@ class SideMenuViewController: UIViewController {
     override func viewDidLoad() {
         print("SideMenuViewController viewDidLoad")
         view.backgroundColor = .clear
-        self.view.addGestureRecognizer(UISwipeGestureRecognizer(target: self, action: #selector(dismissFromVC)))
+        self.view.addGestureRecognizer(UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeDismiss)))
         searchBarView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedSearchBarView)))
         setupSideMenuView()
         setupSearchBar()
@@ -196,7 +196,7 @@ extension UIViewController {
         view.addSubview(blurredBackgroundView)
     }
     
-    @objc func dismissFromVC(_ sender: UISwipeGestureRecognizer) {
+    @objc func handleSwipeDismiss(_ sender: UISwipeGestureRecognizer) {
         if sender.direction == .right {
             dismiss(animated: false, completion: nil)
         }
