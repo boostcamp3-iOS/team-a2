@@ -203,11 +203,10 @@
                                 <rect key="frame" x="0.0" y="600" width="375" height="1000"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <view key="tableHeaderView" contentMode="scaleToFill" id="97m-N0-jmb">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                                <mapView key="tableHeaderView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="uym-XA-7yS">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </view>
+                                </mapView>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" name="doBlue"/>
@@ -225,7 +224,7 @@
                     <connections>
                         <outlet property="bottomTableView" destination="UIB-IW-r3p" id="F8Y-x2-KR8"/>
                         <outlet property="dateLabel" destination="o3E-uk-gsi" id="Lo4-xf-Jdh"/>
-                        <outlet property="mapView" destination="97m-N0-jmb" id="oDw-QA-TQW"/>
+                        <outlet property="mapView" destination="uym-XA-7yS" id="Keq-6f-SFZ"/>
                         <outlet property="textView" destination="JMn-5r-ZV0" id="EKQ-2r-FQO"/>
                     </connections>
                 </viewController>

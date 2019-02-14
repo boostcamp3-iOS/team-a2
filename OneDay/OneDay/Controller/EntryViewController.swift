@@ -9,6 +9,7 @@
 import CoreData
 import MobileCoreServices
 import UIKit
+import MapKit
 
 class EntryViewController: UIViewController {
     
@@ -18,7 +19,7 @@ class EntryViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
     
     @IBOutlet weak var bottomTableView: UITableView!
-    @IBOutlet weak var mapView:UIView!
+    @IBOutlet weak var mapView: MKMapView!
     
     var coreDataStack: CoreDataStack!
     var entry: Entry!
@@ -43,6 +44,8 @@ class EntryViewController: UIViewController {
     let settingIdentifier = "settingCellIdentifier"
     var settingTableData: [[Setting]] = [[],[],[]]  /// [section][row]
     
+    let regionRadius: CLLocationDegrees = 1000
+    
     // MARK: - Life cycle
     
     override func viewDidLoad() {
@@ -57,6 +60,8 @@ class EntryViewController: UIViewController {
         setUpDevice()
         setUpPreview()
         setUpBottomView()
+        setUpMap()
+        
     }
     
     // MARK: - Setup
@@ -218,6 +223,21 @@ class EntryViewController: UIViewController {
         dragDownChangePointY = CGFloat(650)
         isBottom = true
         willPositionChange = false
+    }
+    
+    func setUpMap() {
+        let initialLocation = CLLocation(
+            latitude: LocationService.service.latitude,
+            longitude: LocationService.service.longitude
+        )
+        centerMapOnLocation(location: initialLocation)
+        
+        let point = CustomPointAnnotation()
+        point.coordinate = CLLocationCoordinate2D(latitude: LocationService.service.latitude, longitude: LocationService.service.longitude)
+        point.imageName = "setting_location"
+        mapView.addAnnotation(point)
+        mapView.delegate = self
+        mapView.isUserInteractionEnabled = false
     }
     
     func setUpSettingTableViewData() {
@@ -387,6 +407,12 @@ class EntryViewController: UIViewController {
         }
         willPositionChange = false
     }
+    
+    // MARK: - MAP
+    func centerMapOnLocation(location: CLLocation) {
+        let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+        mapView.setRegion(coordinateRegion, animated: true)
+    }
 }
 
 // MARK: - Extention
@@ -544,5 +570,24 @@ extension EntryViewController: UITableViewDataSource, UITableViewDelegate {
         }
         cell.setting = settingTableData[indexPath.section][indexPath.row]
         return cell
+    }
+}
+
+extension EntryViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let reuseIdentifier = "pin"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
+        
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
+            annotationView?.canShowCallout = true
+        } else {
+            annotationView?.annotation = annotation
+        }
+        
+        let customPointAnnotation = annotation as! CustomPointAnnotation
+        annotationView?.image = UIImage(named: customPointAnnotation.imageName)
+        
+        return annotationView
     }
 }
