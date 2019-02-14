@@ -16,9 +16,6 @@ class EntryViewController: UIViewController {
     
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var temperatureLabel: UILabel!
-    @IBOutlet weak var weatherImageView: UIImageView!
-    @IBOutlet weak var weatherLabel: UILabel!
     
     @IBOutlet weak var bottomTableView: UITableView!
     @IBOutlet weak var mapView:UIView!
@@ -51,11 +48,15 @@ class EntryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        textView.textDragDelegate = self
+        
+        setUpSettingTableViewData()
         setUpDate()
-//        setUpWeather()
+        setUpWeather()
+        setUpLocation()
+        setUpDevice()
         setUpPreview()
         setUpBottomView()
-        setUpSettingTableViewData()
     }
     
     // MARK: - Setup
@@ -67,7 +68,19 @@ class EntryViewController: UIViewController {
             textView.attributedText = entry.contents
         }
         dateLabel.text = dateSet.full
-        textView.textDragDelegate = self
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "a HH:mm, YYYY년 MM월 dd일"
+        if let entryDate = entry.date {
+            let fullDate = dateFormatter.string(from: entryDate)
+            settingTableData[0][3].detail = fullDate
+        } else {
+            entry.date = Date()
+            if let entryDate = entry.date {
+                let fullDate = dateFormatter.string(from: entryDate)
+                settingTableData[0][3].detail = fullDate
+            }
+        }
     }
     
     func setUpPreview() {
@@ -105,10 +118,13 @@ class EntryViewController: UIViewController {
     
     func setUpWeather() {
         if let weather = entry.weather {
-            temperatureLabel.text = "\(weather.tempature)℃"
             guard let type = weather.type else { return }
-            weatherImageView.image = UIImage(named: type)
-            weatherLabel.text = WeatherType(rawValue: type)?.summary
+            
+            if let summary = WeatherType(rawValue: type)?.summary {
+                settingTableData[2][0].detail = "\(weather.tempature)℃ \(summary)"
+            } else {
+                settingTableData[2][0].detail = "\(weather.tempature)℃"
+            }
         } else {
             let weather = Weather(context: coreDataStack.managedContext)
             entry.weather = weather
@@ -122,15 +138,57 @@ class EntryViewController: UIViewController {
                     weather.type = data.currently.icon
                     weather.weatherId = UUID.init()
                     DispatchQueue.main.sync {
-                        self?.temperatureLabel.text = "\(weather.tempature)℃"
                         guard let type = weather.type else { return }
-                        self?.weatherImageView.image = UIImage(named: type)
-                        self?.weatherLabel.text = WeatherType(rawValue: type)?.summary
+                        let cell = self?.bottomTableView.cellForRow(at: IndexPath(row: 0, section: 2))
+                        if let summary = WeatherType(rawValue: type)?.summary {
+                            cell?.detailTextLabel?.text = "\(weather.tempature)℃ \(summary)"
+                        } else {
+                            cell?.detailTextLabel?.text = "\(weather.tempature)℃"
+                        }
                     }
                 },
                 errorHandler: { [weak self] in
                     self?.showAlert(title: "Error", message: "날씨 정보를 불러올 수 없습니다.")
             })
+        }
+    }
+    
+    func setUpLocation() {
+        if let location = entry.location {
+            settingTableData[0][0].detail = location.address
+        } else {
+            let location = Location(context: coreDataStack.managedContext)
+            entry.location = location
+            
+            LocationService.service.currentAddress(
+                success: {[weak self] data in
+                    location.address = data.results[0].fullAddress
+                    location.latitude = LocationService.service.latitude
+                    location.longitude = LocationService.service.longitude
+                    location.locId = UUID.init()
+                    DispatchQueue.main.sync {
+                        let cell = self?.bottomTableView.cellForRow(at: IndexPath(row: 0, section: 0))
+                        cell?.detailTextLabel?.text = location.address
+                    }
+                },
+                errorHandler: { [weak self] in
+                    self?.showAlert(title: "Error", message: "위치 정보를 불러올 수 없습니다.")
+            })
+        }
+    }
+    
+    func setUpDevice() {
+        if let entryDevice = entry.device {
+            if let entryDeviceName = entryDevice.name, let entryDeviceModel = entryDevice.model {
+                settingTableData[2][1].detail = "\(entryDeviceName), \(entryDeviceModel)"
+            }
+        } else {
+            let device = Device(context: coreDataStack.managedContext)
+            entry.device = device
+            device.deviceId = UUID.init()
+            device.name = UIDevice.current.name
+            device.model = UIDevice.current.model
+            settingTableData[2][1].detail = "\(UIDevice.current.name), \(UIDevice.current.model)"
         }
     }
     
@@ -166,15 +224,19 @@ class EntryViewController: UIViewController {
         let location = Setting("위치", "location_detail", UIImage(named: "setting_location"))
         location.hasDisclouserIndicator = true
         settingTableData[0].append(location)
-        let tag = Setting("테그", "tag_detail", UIImage(named: "setting_tag"))
+        
+        let tag = Setting("태그", "추가...", UIImage(named: "setting_tag"))
         tag.hasDisclouserIndicator = true
         settingTableData[0].append(tag)
-        let journal = Setting("저널", "journal_detail", UIImage(named: "setting_journal"))
+        
+        let journal = Setting("일기장", "일기장", UIImage(named: "setting_journal"))
         journal.hasDisclouserIndicator = true
         settingTableData[0].append(journal)
+        
         let date = Setting("날짜", "date_detail", UIImage(named: "setting_date"))
         date.hasDisclouserIndicator = true
         settingTableData[0].append(date)
+        
         if entry.favorite {
             let favorite = Setting("즐겨찾기", "즐겨찾기 해제", UIImage(named: "setting_like"))
             settingTableData[0].append(favorite)
@@ -190,9 +252,9 @@ class EntryViewController: UIViewController {
         today.hasDisclouserIndicator = true
         settingTableData[1].append(today)
 
-        let weather = Setting("날씨", "~~", UIImage(named: "setting_weather"))
+        let weather = Setting("날씨", "weather_detail", UIImage(named: "setting_weather"))
         settingTableData[2].append(weather)
-        let device = Setting("일기를 작성한 기기", "iphone", UIImage(named: "setting_device"))
+        let device = Setting("일기를 작성한 기기", "device_detail", UIImage(named: "setting_device"))
         settingTableData[2].append(device)
     }
     
@@ -461,7 +523,16 @@ extension EntryViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 20
+        switch section {
+        case 0:
+            return 0
+        default:
+            return 20
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

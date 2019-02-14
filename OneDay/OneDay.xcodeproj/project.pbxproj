@@ -67,6 +67,8 @@
 		E9DA39AC2203FCD30026381E /* FilterSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DA39AB2203FCD20026381E /* FilterSection.swift */; };
 		EC0BB2252213E26F00E2BB6F /* EditorSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0BB2242213E26F00E2BB6F /* EditorSettingTableViewCell.swift */; };
 		EC0BB2272213FCEA00E2BB6F /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0BB2262213FCEA00E2BB6F /* Setting.swift */; };
+		EC0BB22C2215069500E2BB6F /* CustomPointAnnotaion.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0BB22B2215069500E2BB6F /* CustomPointAnnotaion.swift */; };
+		EC0BB22E22150EA300E2BB6F /* APILocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0BB22D22150EA300E2BB6F /* APILocation.swift */; };
 		EC0CFB0422030A29001293B1 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0322030A29001293B1 /* WeatherService.swift */; };
 		EC0CFB0622030A53001293B1 /* APIWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0522030A53001293B1 /* APIWeather.swift */; };
 		EC0CFB0922030C1D001293B1 /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0822030C1D001293B1 /* NetworkProvider.swift */; };
@@ -150,6 +152,8 @@
 		E9DA39AB2203FCD20026381E /* FilterSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSection.swift; sourceTree = "<group>"; };
 		EC0BB2242213E26F00E2BB6F /* EditorSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorSettingTableViewCell.swift; sourceTree = "<group>"; };
 		EC0BB2262213FCEA00E2BB6F /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
+		EC0BB22B2215069500E2BB6F /* CustomPointAnnotaion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPointAnnotaion.swift; sourceTree = "<group>"; };
+		EC0BB22D22150EA300E2BB6F /* APILocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APILocation.swift; sourceTree = "<group>"; };
 		EC0CFB0322030A29001293B1 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		EC0CFB0522030A53001293B1 /* APIWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIWeather.swift; sourceTree = "<group>"; };
 		EC0CFB0822030C1D001293B1 /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
@@ -201,6 +205,7 @@
 				EC0CFB0522030A53001293B1 /* APIWeather.swift */,
 				E9DA39AB2203FCD20026381E /* FilterSection.swift */,
 				EC0BB2262213FCEA00E2BB6F /* Setting.swift */,
+				EC0BB22D22150EA300E2BB6F /* APILocation.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -318,6 +323,7 @@
 		E96BE83321FAD8DB00266F6D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				EC0BB22A2215067500E2BB6F /* Annotation */,
 				EC0BB2212213E1E900E2BB6F /* EditorSettingCell */,
 				D53782BB2211138900336646 /* Photos */,
 				E992EC7D21FB2CAD00917116 /* Calendar */,
@@ -425,6 +431,14 @@
 				EC0BB2242213E26F00E2BB6F /* EditorSettingTableViewCell.swift */,
 			);
 			path = EditorSettingCell;
+			sourceTree = "<group>";
+		};
+		EC0BB22A2215067500E2BB6F /* Annotation */ = {
+			isa = PBXGroup;
+			children = (
+				EC0BB22B2215069500E2BB6F /* CustomPointAnnotaion.swift */,
+			);
+			path = Annotation;
 			sourceTree = "<group>";
 		};
 		EC0CFB0722030BFB001293B1 /* Provider */ = {
@@ -606,6 +620,7 @@
 				E992EC7821FAF4C200917116 /* CalendarViewController.swift in Sources */,
 				E992EC7421FAEE7100917116 /* TestViewController.swift in Sources */,
 				D561692521FAD07000E00FED /* MainTabBarViewController.swift in Sources */,
+				EC0BB22E22150EA300E2BB6F /* APILocation.swift in Sources */,
 				E992EC7021FAEE5B00917116 /* FilterViewController.swift in Sources */,
 				E992EC6321FAEDFD00917116 /* MatchingEntriesCell.swift in Sources */,
 				E992EC7C21FB1E5500917116 /* CalendarHeaderView.swift in Sources */,
@@ -647,6 +662,7 @@
 				EC0CFB0422030A29001293B1 /* WeatherService.swift in Sources */,
 				D50276F422041DBA00A0DB5E /* MapViewController.swift in Sources */,
 				D502765D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift in Sources */,
+				EC0BB22C2215069500E2BB6F /* CustomPointAnnotaion.swift in Sources */,
 				EC0BB2272213FCEA00E2BB6F /* Setting.swift in Sources */,
 				D502765821FB0B8400A0DB5E /* Entry+CoreDataClass.swift in Sources */,
 				D502765221FB0B8400A0DB5E /* Journal+CoreDataClass.swift in Sources */,

@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:OneDay/Model/Device+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
       location = "group:OneDay.xcodeproj">
    </FileRef>
    <FileRef
