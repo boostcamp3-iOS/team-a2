@@ -16,7 +16,8 @@ enum EntryFilter {
     case favorite
     case tag(tag: String)
     case today
-    case thisDay(year: Int?, month: Int?, day: Int?)
+    case thisDay(month: Int?, day: Int?)
+    case thisYear(year: Int)
     
     var cacheName: String {
         switch self {
@@ -36,6 +37,8 @@ enum EntryFilter {
             return "today_entries"
         case .thisDay:
             return "thisDay_entries"
+        case .thisYear(let year):
+            return "thisYear_entries_\(year)"
         }
     }
     
@@ -66,24 +69,18 @@ enum EntryFilter {
             predicateArray.append(NSPredicate(format: "year == %@", year))
             predicateArray.append(NSPredicate(format: "month == %@", month))
             predicateArray.append(NSPredicate(format: "day == %@", day))
-        case .thisDay(let year, let month, let day):
-            if let year = year as NSNumber? {
-                predicateArray.append(NSPredicate(format: "year == %@", year))
-            }
+        case .thisDay(let month, let day):
             if let month = month as NSNumber? {
                 predicateArray.append(NSPredicate(format: "month == %@", month))
             }
             if let day = day as NSNumber? {
                 predicateArray.append(NSPredicate(format: "day == %@", day))
             }
+        case .thisYear(let year):
+            if let year = year as NSNumber? {
+                predicateArray.append(NSPredicate(format: "year == %@", year))
+            }
         }
         return predicateArray
-    }
-    
-    func filterFetchRequest(currentJournal: Journal) -> NSFetchRequest<Entry> {
-        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Entry.journal.index), ascending: true)]
-        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: self.predicates)
-        return fetchRequest
     }
 }

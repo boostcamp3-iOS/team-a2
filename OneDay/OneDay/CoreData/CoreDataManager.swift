@@ -230,7 +230,11 @@ extension CoreDataManager: CoreDataEntryService {
     
     // filter type 별로 검색된 FetchedResultController
     func filterdResultsController(type filter: EntryFilter, sectionNameKeyPath: String?) -> NSFetchedResultsController<Entry> {
-        let fetchRequest: NSFetchRequest<Entry> = filter.filterFetchRequest(currentJournal: currentJournal)
+        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Entry.journal.index), ascending: true)]
+        var predicateArray: [NSPredicate] = filter.predicates
+        predicateArray.append(contentsOf: EntryFilter.currentJournal.predicates)
+        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicateArray)
         
         return NSFetchedResultsController (
             fetchRequest: fetchRequest,
