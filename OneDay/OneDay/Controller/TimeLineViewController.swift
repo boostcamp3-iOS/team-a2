@@ -72,7 +72,6 @@ class TimeLineViewController: UIViewController {
     @IBAction func insertEntry() {
         _ = entry()
     }
-    
 }
 
 extension TimeLineViewController: UITableViewDelegate, UITableViewDataSource {
@@ -82,15 +81,14 @@ extension TimeLineViewController: UITableViewDelegate, UITableViewDataSource {
         let entry = fetchedResultsController.object(at: indexPath)
         cell.contentLabel.text = entry.title
         
-        if let date = entry.date {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "a HH:mm"
-            cell.timeLabel.text = dateFormatter.string(from: date)
-            dateFormatter.dateFormat = "dd"
-            cell.dayLabel.text = dateFormatter.string(from: date)
-            dateFormatter.dateFormat = "EEEE"
-            cell.weekDayLabel.text = dateFormatter.string(from: date)
-        }
+        let dateFormatter = DateFormatter.defualtInstance
+        dateFormatter.dateFormat = "a HH:mm"
+        cell.timeLabel.text = dateFormatter.string(from: entry.date)
+        dateFormatter.dateFormat = "dd"
+        cell.dayLabel.text = dateFormatter.string(from: entry.date)
+        dateFormatter.dateFormat = "EEEE"
+        cell.weekDayLabel.text = dateFormatter.string(from: entry.date)
+        
         cell.dayLabel.isHidden = indexPath.row != 0
     }
     
