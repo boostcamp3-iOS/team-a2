@@ -44,7 +44,7 @@ extension Entry {
     
     func updateDate(date: Date) {
         self.date = date
-        let dateComponents = Calendar.current.dateComponents(in: TimeZone.current, from: Date())
+        let dateComponents = Calendar.current.dateComponents(in: TimeZone.current, from: date)
         if let month = dateComponents.month as NSNumber? {
             self.month = month
         }
