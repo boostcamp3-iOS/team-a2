@@ -226,6 +226,7 @@
                         <outlet property="dateLabel" destination="o3E-uk-gsi" id="Lo4-xf-Jdh"/>
                         <outlet property="mapView" destination="uym-XA-7yS" id="Keq-6f-SFZ"/>
                         <outlet property="textView" destination="JMn-5r-ZV0" id="EKQ-2r-FQO"/>
+                        <outlet property="topView" destination="uUP-an-P7R" id="yJp-bB-mDD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HO4-b1-kGk" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -15,6 +15,7 @@ class EntryViewController: UIViewController {
     
     // MARK: - Properties
     
+    @IBOutlet weak var topView: UIView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
     
@@ -32,12 +33,12 @@ class EntryViewController: UIViewController {
     lazy var isImageSelected = false
     
     ///하단 뷰 드래그시 사용되는 프로퍼티
-    var topY = CGFloat()                    ///드래그 범위의 상단 기준
-    var bottomY = CGFloat()                 ///드래그 범위의 하단 기준
-    var dragUpChangePointY = CGFloat()      ///하단 뷰 위로 드래그시 위로 붙는 기준 Y
-    var dragDownChangePointY = CGFloat()    ///하단 뷰 아래로 드래그시 아래로 붙는 기준 Y
-    var isBottom = true                     ///하단 뷰의 위치
-    var willPositionChange = false          ///드래그 도중 기준을 넘었는지 판단
+    var topConstant = CGFloat()         /// 하단 뷰 최상단
+    var bottomConstant = CGFloat()      /// 하단 뷰 최하단
+    var dragUpChangePoint = CGFloat()   ///하단 뷰 위로 드래그시 위로 붙는 기준
+    var dragDownChangePoint = CGFloat() ///하단 뷰 아래로 드래그시 아래로 붙는 기준
+    var isBottom = true                 ///하단 뷰가 아래에 있는지 여부
+    var willPositionChange = false      ///드래그 종료시 변경되야하는지 여부
     
     let generator = UIImpactFeedbackGenerator(style: UIImpactFeedbackGenerator.FeedbackStyle.heavy)
     
@@ -46,11 +47,13 @@ class EntryViewController: UIViewController {
     
     let regionRadius: CLLocationDegrees = 1000
     
+    fileprivate var bottomViewTopConstraint: NSLayoutConstraint!
+    fileprivate var bottomViewBottomConstraint: NSLayoutConstraint!
+    
     // MARK: - Life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         textView.textDragDelegate = self
         
         setUpSettingTableViewData()
@@ -208,22 +211,32 @@ class EntryViewController: UIViewController {
             forCellReuseIdentifier: settingIdentifier
         )
         
+        topConstant = 0
+        bottomConstant = 520
+        bottomTableView.translatesAutoresizingMaskIntoConstraints = false
+        bottomTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        bottomTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        bottomViewTopConstraint = bottomTableView.topAnchor.constraint(
+            equalTo: topView.bottomAnchor,
+            constant: bottomConstant
+        )
+        bottomViewTopConstraint.isActive = true
+        bottomViewBottomConstraint = bottomTableView.bottomAnchor.constraint(
+            equalTo: view.bottomAnchor,
+            constant: bottomConstant
+        )
+        bottomViewBottomConstraint.isActive = true
+        
         let gesture = UIPanGestureRecognizer(
             target: self,
-            action: #selector(wasDragged(gestureRecognizer:))
+            action: #selector(didDrag(gestureRecognizer:))
         )
         bottomTableView.addGestureRecognizer(gesture)
         bottomTableView.isUserInteractionEnabled = true
         
-        mapView.backgroundColor = UIColor.doBlue
+        dragUpChangePoint = 400
+        dragDownChangePoint = 100
         
-        ///하단 뷰 드래그 시 사용되는 값을 하단 뷰의 값에 따라 지정
-        let origin = textView.frame.origin
-        let bottomOrigin = bottomTableView.frame.origin
-        topY = origin.y + bottomTableView.frame.height/2 - 1
-        bottomY = bottomOrigin.y + bottomTableView.frame.height/2
-        dragUpChangePointY = CGFloat(900)
-        dragDownChangePointY = CGFloat(650)
         isBottom = true
         willPositionChange = false
     }
@@ -326,94 +339,66 @@ class EntryViewController: UIViewController {
         self.present(alertController, animated: true, completion: nil)
     }
     
-    // MARK: - Gesture action
+    // MARK: - Gesture
     
-    @objc func wasDragged(gestureRecognizer: UIPanGestureRecognizer) {
-        if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
-            let translation = gestureRecognizer.translation(in: self.view)
-    
-            if let targetView = gestureRecognizer.view {
-                if targetView.center.y < topY {
-                    targetView.center = CGPoint(x: targetView.center.x, y: topY)
-                } else if targetView.center.y > bottomY {
-                    targetView.center = CGPoint(x: targetView.center.x, y: bottomY)
-                } else {
-                    checkPosition(targetView: targetView)
-                    targetView.center = CGPoint(
-                        x: targetView.center.x,
-                        y: targetView.center.y + translation.y
-                    )
+    @objc func didDrag(gestureRecognizer: UIPanGestureRecognizer) {
+        if gestureRecognizer.state == .changed {
+            let translation = gestureRecognizer.translation(in: view)
+            var distance = translation.y
+            distance += isBottom ? bottomConstant : topConstant
+            distance = min(bottomConstant, distance)
+            distance = max(topConstant, distance)
+        
+            bottomViewTopConstraint.constant = distance
+            bottomViewBottomConstraint.constant = distance
+            
+            if isBottom {
+                if !willPositionChange && distance <= dragUpChangePoint {
+                    willPositionChange = true
+                    generator.impactOccurred()
+                } else if willPositionChange && distance > dragUpChangePoint {
+                    willPositionChange = false
+                    generator.impactOccurred()
                 }
             }
-            gestureRecognizer.setTranslation(CGPoint(x: 0, y: 0), in: self.view)
         } else if gestureRecognizer.state == .ended {
-            if let targetView = gestureRecognizer.view {
-                changePosition(targetView: targetView)
-            }
-            gestureRecognizer.setTranslation(CGPoint(x: 0, y: 0), in: self.view)
+            changeBottomTableViewConstraints()
         }
     }
     
-    /// targetView가 기준을 넘었는지 판단
-    func checkPosition(targetView: UIView) {
-        if isBottom {
-            if targetView.center.y > dragUpChangePointY {
-                if willPositionChange {
-                    willPositionChange = false
-                    generator.impactOccurred()
-                }
-            } else {
-                if willPositionChange == false {
-                    willPositionChange = true
-                    generator.impactOccurred()
-                }
-            }
+    func changeBottomTableViewConstraints() {
+        if isBottom, willPositionChange {
+            isBottom = false
+            bottomTableView.isScrollEnabled = true
+            bottomTableView.gestureRecognizers?.removeLast()
+            self.bottomViewTopConstraint.constant = self.topConstant
+            self.bottomViewBottomConstraint.constant = self.topConstant
         } else {
-            if targetView.center.y < dragDownChangePointY {
-                if willPositionChange {
-                    willPositionChange = false
-                    generator.impactOccurred()
-                }
-            } else {
-                if willPositionChange == false {
-                    willPositionChange = true
-                    generator.impactOccurred()
-                }
-            }
+            isBottom = true
+            self.bottomViewTopConstraint.constant = self.bottomConstant
+            self.bottomViewBottomConstraint.constant = self.bottomConstant
         }
-    }
-    
-    /// 조건(isBottom, willPositionChange)에 따라 targetView의 위치 변경
-    func changePosition(targetView: UIView) {
-        if isBottom {
-            if willPositionChange {
-                UIView.animate(withDuration: 0.5) {
-                    targetView.center = CGPoint(x: targetView.center.x, y: self.topY)
-                }
-                isBottom = false
-            } else {
-                UIView.animate(withDuration: 0.5) {
-                    targetView.center = CGPoint(x: targetView.center.x, y: self.bottomY)
-                }
-            }
-        } else {
-            if willPositionChange {
-                UIView.animate(withDuration: 0.5) {
-                    targetView.center = CGPoint(x: targetView.center.x, y: self.bottomY)
-                }
-                isBottom = true
-            } else {
-                UIView.animate(withDuration: 0.5) {
-                    targetView.center = CGPoint(x: targetView.center.x, y: self.topY)
-                }
-            }
-        }
+        UIView.animate(
+            withDuration: 0.5,
+            delay: 0,
+            usingSpringWithDamping: 1,
+            initialSpringVelocity: 1,
+            options: .curveEaseOut,
+            animations: {
+                self.view.layoutIfNeeded()
+        },
+            completion: nil
+        )
         willPositionChange = false
     }
     
     // MARK: - MAP
     func centerMapOnLocation(location: CLLocation) {
-        let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+        let coordinateRegion = MKCoordinateRegion(
+            center: location.coordinate,
+            latitudinalMeters: regionRadius,
+            longitudinalMeters: regionRadius
+        )
         mapView.setRegion(coordinateRegion, animated: true)
     }
 }
@@ -534,6 +519,8 @@ extension EntryViewController: UITextDragDelegate {
 
 extension EntryViewController: UITableViewDataSource, UITableViewDelegate {
     
+    // MARK: TableView
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
@@ -573,6 +560,33 @@ extension EntryViewController: UITableViewDataSource, UITableViewDelegate {
         }
         cell.setting = settingTableData[indexPath.section][indexPath.row]
         return cell
+    }
+    
+    // MARK: ScrollView
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if !isBottom {
+            if dragDownChangePoint * -1 > scrollView.contentOffset.y, willPositionChange == false {
+                willPositionChange = true
+                generator.impactOccurred()
+            }
+            if dragDownChangePoint * -1 <= scrollView.contentOffset.y, willPositionChange == true {
+                willPositionChange = false
+                generator.impactOccurred()
+            }
+        }
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if willPositionChange {
+            let gesture = UIPanGestureRecognizer(
+                target: self,
+                action: #selector(didDrag(gestureRecognizer:))
+            )
+            bottomTableView.isScrollEnabled = false
+            bottomTableView.addGestureRecognizer(gesture)
+            changeBottomTableViewConstraints()
+        }
     }
 }
 
