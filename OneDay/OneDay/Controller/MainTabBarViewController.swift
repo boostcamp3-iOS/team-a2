@@ -34,7 +34,8 @@ extension MainTabBarViewController: UITabBarControllerDelegate, UIImagePickerCon
                 self?.selectImage(from: .camera)
             }))
             actionVC.addAction(UIAlertAction(title: "일기 쓰기", style: .default, handler: { [weak self] _ in
-                guard let nextVC = UIStoryboard(name: "Coredata", bundle: nil).instantiateViewController(withIdentifier: "entry_detail") as? EntryViewController else { return }
+                guard let nextVC = UIStoryboard(name: "Coredata", bundle: nil)
+                    .instantiateViewController(withIdentifier: "entry_detail") as? EntryViewController else { return }
                 nextVC.entry = CoreDataManager.shared.insert()
                 self?.present(nextVC, animated: true)
             }))

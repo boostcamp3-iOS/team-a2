@@ -34,7 +34,8 @@ extension UIImagePickerControllerDelegate where Self: UIViewController, Self: UI
         let scaleFactor = originWidth / (view.frame.size.width - 10)
         let scaledImage =  UIImage(cgImage: pickedImage.cgImage!, scale: scaleFactor, orientation: .up)
         
-        guard let nextVC = UIStoryboard(name: "Coredata", bundle: nil).instantiateViewController(withIdentifier: "entry_detail") as? EntryViewController else { return }
+        guard let nextVC = UIStoryboard(name: "Coredata", bundle: nil)
+            .instantiateViewController(withIdentifier: "entry_detail") as? EntryViewController else { return }
         let newEntry: Entry = CoreDataManager.shared.insert()
         newEntry.contents = scaledImage.attributedString
         nextVC.entry = newEntry
