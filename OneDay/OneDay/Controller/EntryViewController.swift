@@ -78,7 +78,8 @@ class EntryViewController: UIViewController {
         dateLabel.text = dateSet.full
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "a HH:mm, YYYY년 MM월 dd일"
+        dateFormatter.locale = Locale(identifier: "ko-KR")
+        dateFormatter.dateFormat = "a h:mm, YYYY년 MM월 dd일"
         if let entryDate = entry.date {
             let fullDate = dateFormatter.string(from: entryDate)
             settingTableData[0][3].detail = fullDate
