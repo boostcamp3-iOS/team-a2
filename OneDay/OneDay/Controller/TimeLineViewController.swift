@@ -93,7 +93,6 @@ class TimeLineViewController: UIViewController {
         let entry = Entry(context: self.coreDataStack.managedContext)
         entry.title = "새로운 메세지"
         entry.date = Date()
-        print(entry.date)
         entry.entryId = UUID.init()
         entry.journal = journal
         entry.favorite = false

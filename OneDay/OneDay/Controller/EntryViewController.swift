@@ -9,7 +9,6 @@
 import CoreData
 import MobileCoreServices
 import UIKit
-import MapKit
 
 class EntryViewController: UIViewController {
     
@@ -18,9 +17,7 @@ class EntryViewController: UIViewController {
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
-    
-    @IBOutlet weak var bottomTableView: UITableView!
-    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var bottomContainerView: UIView!
     
     var coreDataStack: CoreDataStack!
     var entry: Entry!
@@ -33,38 +30,29 @@ class EntryViewController: UIViewController {
     lazy var isImageSelected = false
     
     ///하단 뷰 드래그시 사용되는 프로퍼티
-    var topConstant = CGFloat()         /// 하단 뷰 최상단
-    var bottomConstant = CGFloat()      /// 하단 뷰 최하단
-    var dragUpChangePoint = CGFloat()   ///하단 뷰 위로 드래그시 위로 붙는 기준
-    var dragDownChangePoint = CGFloat() ///하단 뷰 아래로 드래그시 아래로 붙는 기준
-    var isBottom = true                 ///하단 뷰가 아래에 있는지 여부
-    var willPositionChange = false      ///드래그 종료시 변경되야하는지 여부
+    var topConstant = CGFloat(0)            /// 하단 뷰 최상단
+    var bottomConstant = CGFloat(520)       /// 하단 뷰 최하단
+    var dragUpChangePoint = CGFloat(400)    ///하단 뷰 위로 드래그시 위로 붙는 기준
+    var isBottom = true                     ///하단 뷰가 아래에 있는지 여부
+    var willPositionChange = false          ///드래그 종료시 변경되야하는지 여부
     
     let generator = UIImpactFeedbackGenerator(style: UIImpactFeedbackGenerator.FeedbackStyle.heavy)
     
-    let settingIdentifier = "settingCellIdentifier"
-    var settingTableData: [[Setting]] = [[],[],[]]  /// [section][row]
-    
-    let regionRadius: CLLocationDegrees = 1000
-    
     fileprivate var bottomViewTopConstraint: NSLayoutConstraint!
     fileprivate var bottomViewBottomConstraint: NSLayoutConstraint!
+    
+    var bottomViewController: BottomViewController!
+    var sendDelegate: SendNotificationDelegate?
     
     // MARK: - Life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         textView.textDragDelegate = self
-        
-        setUpSettingTableViewData()
+
         setUpDate()
-        setUpWeather()
-        setUpLocation()
-        setUpDevice()
         setUpPreview()
         setUpBottomView()
-        setUpMap()
-        
     }
     
     // MARK: - Setup
@@ -76,20 +64,6 @@ class EntryViewController: UIViewController {
             textView.attributedText = entry.contents
         }
         dateLabel.text = dateSet.full
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ko-KR")
-        dateFormatter.dateFormat = "a h:mm, YYYY년 MM월 dd일"
-        if let entryDate = entry.date {
-            let fullDate = dateFormatter.string(from: entryDate)
-            settingTableData[0][3].detail = fullDate
-        } else {
-            entry.date = Date()
-            if let entryDate = entry.date {
-                let fullDate = dateFormatter.string(from: entryDate)
-                settingTableData[0][3].detail = fullDate
-            }
-        }
     }
     
     func setUpPreview() {
@@ -125,104 +99,16 @@ class EntryViewController: UIViewController {
         ).isActive = true
     }
     
-    func setUpWeather() {
-        if let weather = entry.weather {
-            guard let type = weather.type else { return }
-            
-            if let summary = WeatherType(rawValue: type)?.summary {
-                settingTableData[2][0].detail = "\(weather.tempature)℃ \(summary)"
-            } else {
-                settingTableData[2][0].detail = "\(weather.tempature)℃"
-            }
-        } else {
-            let weather = Weather(context: coreDataStack.managedContext)
-            entry.weather = weather
-            
-            WeatherService.service.weather(
-                latitude: LocationService.service.latitude,
-                longitude: LocationService.service.longitude,
-                success: {[weak self] data in
-                    let degree: Int = Int((data.currently.temperature - 32) * (5/9)) /// ℉를 ℃로 변경
-                    weather.tempature = Int16(degree)
-                    weather.type = data.currently.icon
-                    weather.weatherId = UUID.init()
-                    DispatchQueue.main.sync {
-                        guard let type = weather.type else { return }
-                        let cell = self?.bottomTableView.cellForRow(at: IndexPath(row: 0, section: 2))
-                        if let summary = WeatherType(rawValue: type)?.summary {
-                            cell?.detailTextLabel?.text = "\(weather.tempature)℃ \(summary)"
-                            self?.settingTableData[2][0].detail = "\(weather.tempature)℃ \(summary)"
-                        } else {
-                            cell?.detailTextLabel?.text = "\(weather.tempature)℃"
-                            self?.settingTableData[2][0].detail = "\(weather.tempature)℃"
-                        }
-                    }
-                },
-                errorHandler: { [weak self] in
-                    self?.showAlert(title: "Error", message: "날씨 정보를 불러올 수 없습니다.")
-            })
-        }
-    }
-    
-    func setUpLocation() {
-        if let location = entry.location {
-            settingTableData[0][0].detail = location.address
-        } else {
-            let location = Location(context: coreDataStack.managedContext)
-            entry.location = location
-            
-            LocationService.service.currentAddress(
-                success: {[weak self] data in
-                    location.address = data.results[0].fullAddress
-                    location.latitude = LocationService.service.latitude
-                    location.longitude = LocationService.service.longitude
-                    location.locId = UUID.init()
-                    DispatchQueue.main.sync {
-                        let cell = self?.bottomTableView.cellForRow(at: IndexPath(row: 0, section: 0))
-                        cell?.detailTextLabel?.text = location.address
-                        self?.settingTableData[0][0].detail = location.address
-                    }
-                },
-                errorHandler: { [weak self] in
-                    self?.showAlert(title: "Error", message: "위치 정보를 불러올 수 없습니다.")
-            })
-        }
-    }
-    
-    func setUpDevice() {
-        if let entryDevice = entry.device {
-            if let entryDeviceName = entryDevice.name, let entryDeviceModel = entryDevice.model {
-                settingTableData[2][1].detail = "\(entryDeviceName), \(entryDeviceModel)"
-            }
-        } else {
-            let device = Device(context: coreDataStack.managedContext)
-            entry.device = device
-            device.deviceId = UUID.init()
-            device.name = UIDevice.current.name
-            device.model = UIDevice.current.model
-            settingTableData[2][1].detail = "\(UIDevice.current.name), \(UIDevice.current.model)"
-        }
-    }
-    
     func setUpBottomView() {
-        bottomTableView.dataSource = self
-        bottomTableView.delegate = self
-        bottomTableView.register(
-            EditorSettingTableViewCell.self,
-            forCellReuseIdentifier: settingIdentifier
-        )
-        
-        topConstant = 0
-        bottomConstant = 520
-        bottomTableView.translatesAutoresizingMaskIntoConstraints = false
-        bottomTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        bottomTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        bottomViewTopConstraint = bottomTableView.topAnchor.constraint(
+        bottomContainerView.translatesAutoresizingMaskIntoConstraints = false
+        bottomContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        bottomContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        bottomViewTopConstraint = bottomContainerView.topAnchor.constraint(
             equalTo: topView.bottomAnchor,
             constant: bottomConstant
         )
         bottomViewTopConstraint.isActive = true
-        bottomViewBottomConstraint = bottomTableView.bottomAnchor.constraint(
+        bottomViewBottomConstraint = bottomContainerView.bottomAnchor.constraint(
             equalTo: view.bottomAnchor,
             constant: bottomConstant
         )
@@ -232,67 +118,8 @@ class EntryViewController: UIViewController {
             target: self,
             action: #selector(didDrag(gestureRecognizer:))
         )
-        bottomTableView.addGestureRecognizer(gesture)
-        bottomTableView.isUserInteractionEnabled = true
-        
-        dragUpChangePoint = 400
-        dragDownChangePoint = 100
-        
-        isBottom = true
-        willPositionChange = false
-    }
-    
-    func setUpMap() {
-        let initialLocation = CLLocation(
-            latitude: LocationService.service.latitude,
-            longitude: LocationService.service.longitude
-        )
-        centerMapOnLocation(location: initialLocation)
-        
-        let point = CustomPointAnnotation()
-        point.coordinate = CLLocationCoordinate2D(latitude: LocationService.service.latitude, longitude: LocationService.service.longitude)
-        point.imageName = "setting_location"
-        mapView.addAnnotation(point)
-        mapView.delegate = self
-        mapView.isUserInteractionEnabled = false
-    }
-    
-    func setUpSettingTableViewData() {
-        let location = Setting("위치", "location_detail", UIImage(named: "setting_location"))
-        location.hasDisclouserIndicator = true
-        settingTableData[0].append(location)
-        
-        let tag = Setting("태그", "추가...", UIImage(named: "setting_tag"))
-        tag.hasDisclouserIndicator = true
-        settingTableData[0].append(tag)
-        
-        let journal = Setting("일기장", "일기장", UIImage(named: "setting_journal"))
-        journal.hasDisclouserIndicator = true
-        settingTableData[0].append(journal)
-        
-        let date = Setting("날짜", "date_detail", UIImage(named: "setting_date"))
-        date.hasDisclouserIndicator = true
-        settingTableData[0].append(date)
-        
-        if entry.favorite {
-            let favorite = Setting("즐겨찾기", "즐겨찾기 해제", UIImage(named: "setting_like"))
-            settingTableData[0].append(favorite)
-        } else {
-            let favorite = Setting("즐겨찾기", "즐겨찾기 설정", UIImage(named: "setting_dislike"))
-            settingTableData[0].append(favorite)
-        }
-        
-        let thisDay = Setting("이 날에", "thisday", UIImage(named: "setting_thisday"))
-        thisDay.hasDisclouserIndicator = true
-        settingTableData[1].append(thisDay)
-        let today = Setting("이 날", "today", UIImage(named: "setting_today"))
-        today.hasDisclouserIndicator = true
-        settingTableData[1].append(today)
-
-        let weather = Setting("날씨", "weather_detail", UIImage(named: "setting_weather"))
-        settingTableData[2].append(weather)
-        let device = Setting("일기를 작성한 기기", "device_detail", UIImage(named: "setting_device"))
-        settingTableData[2].append(device)
+        bottomContainerView.addGestureRecognizer(gesture)
+        bottomContainerView.isUserInteractionEnabled = true
     }
     
     // MARK: - Actions
@@ -345,22 +172,19 @@ class EntryViewController: UIViewController {
     @objc func didDrag(gestureRecognizer: UIPanGestureRecognizer) {
         if gestureRecognizer.state == .changed {
             let translation = gestureRecognizer.translation(in: view)
-            var distance = translation.y
-            distance += isBottom ? bottomConstant : topConstant
+            var distance = translation.y + bottomConstant
             distance = min(bottomConstant, distance)
             distance = max(topConstant, distance)
         
             bottomViewTopConstraint.constant = distance
             bottomViewBottomConstraint.constant = distance
             
-            if isBottom {
-                if !willPositionChange && distance <= dragUpChangePoint {
-                    willPositionChange = true
-                    generator.impactOccurred()
-                } else if willPositionChange && distance > dragUpChangePoint {
-                    willPositionChange = false
-                    generator.impactOccurred()
-                }
+            if !willPositionChange && distance <= dragUpChangePoint {
+                willPositionChange = true
+                generator.impactOccurred()
+            } else if willPositionChange && distance > dragUpChangePoint {
+                willPositionChange = false
+                generator.impactOccurred()
             }
         } else if gestureRecognizer.state == .ended {
             changeBottomTableViewConstraints()
@@ -370,8 +194,8 @@ class EntryViewController: UIViewController {
     func changeBottomTableViewConstraints() {
         if isBottom, willPositionChange {
             isBottom = false
-            bottomTableView.isScrollEnabled = true
-            bottomTableView.gestureRecognizers?.removeLast()
+            sendDelegate?.sendNotification()
+            bottomContainerView.gestureRecognizers?.removeLast()
             self.bottomViewTopConstraint.constant = self.topConstant
             self.bottomViewBottomConstraint.constant = self.topConstant
         } else {
@@ -393,14 +217,16 @@ class EntryViewController: UIViewController {
         willPositionChange = false
     }
     
-    // MARK: - MAP
-    func centerMapOnLocation(location: CLLocation) {
-        let coordinateRegion = MKCoordinateRegion(
-            center: location.coordinate,
-            latitudinalMeters: regionRadius,
-            longitudinalMeters: regionRadius
-        )
-        mapView.setRegion(coordinateRegion, animated: true)
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "bottomViewSegue" {
+            if let bottomViewController = segue.destination as? BottomViewController {
+                bottomViewController.entryViewController = self
+                sendDelegate = bottomViewController
+                bottomViewController.sendDelegate = self
+            }
+        }
     }
 }
 
@@ -518,94 +344,13 @@ extension EntryViewController: UITextDragDelegate {
     }
 }
 
-extension EntryViewController: UITableViewDataSource, UITableViewDelegate {
-    
-    // MARK: TableView
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return 5
-        case 1:
-            return 2
-        case 2:
-            return 2
-        default:
-            return 0
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        switch section {
-        case 0:
-            return 0
-        default:
-            return 20
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: settingIdentifier,
-            for: indexPath
-        ) as? EditorSettingTableViewCell else {
-            preconditionFailure("EditorSettingTableViewCell reuse error!")
-        }
-        cell.setting = settingTableData[indexPath.section][indexPath.row]
-        return cell
-    }
-    
-    // MARK: ScrollView
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if !isBottom {
-            if dragDownChangePoint * -1 > scrollView.contentOffset.y, willPositionChange == false {
-                willPositionChange = true
-                generator.impactOccurred()
-            }
-            if dragDownChangePoint * -1 <= scrollView.contentOffset.y, willPositionChange == true {
-                willPositionChange = false
-                generator.impactOccurred()
-            }
-        }
-    }
-    
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if willPositionChange {
-            let gesture = UIPanGestureRecognizer(
-                target: self,
-                action: #selector(didDrag(gestureRecognizer:))
-            )
-            bottomTableView.isScrollEnabled = false
-            bottomTableView.addGestureRecognizer(gesture)
-            changeBottomTableViewConstraints()
-        }
-    }
-}
-
-extension EntryViewController: MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        let reuseIdentifier = "pin"
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
-        
-        if annotationView == nil {
-            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
-            annotationView?.canShowCallout = true
-        } else {
-            annotationView?.annotation = annotation
-        }
-        
-        let customPointAnnotation = annotation as! CustomPointAnnotation
-        annotationView?.image = UIImage(named: customPointAnnotation.imageName)
-        
-        return annotationView
+extension EntryViewController: SendNotificationDelegate {
+    func sendNotification() {
+        let gesture = UIPanGestureRecognizer(
+            target: self,
+            action: #selector(didDrag(gestureRecognizer:))
+        )
+        bottomContainerView.addGestureRecognizer(gesture)
+        changeBottomTableViewConstraints()
     }
 }

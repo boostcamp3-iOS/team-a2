@@ -199,15 +199,13 @@
                                 <attributedString key="attributedText"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="UIB-IW-r3p">
-                                <rect key="frame" x="0.0" y="600" width="375" height="1000"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mapView key="tableHeaderView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="uym-XA-7yS">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                </mapView>
-                            </tableView>
+                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R2l-FQ-25q">
+                                <rect key="frame" x="67" y="519" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <connections>
+                                    <segue destination="OeQ-9d-RGu" kind="embed" identifier="bottomViewSegue" id="MNA-hf-fB0"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" name="doBlue"/>
                         <constraints>
@@ -222,9 +220,8 @@
                         <viewLayoutGuide key="safeArea" id="rRh-hW-4PN"/>
                     </view>
                     <connections>
-                        <outlet property="bottomTableView" destination="UIB-IW-r3p" id="F8Y-x2-KR8"/>
+                        <outlet property="bottomContainerView" destination="R2l-FQ-25q" id="AfH-cB-97D"/>
                         <outlet property="dateLabel" destination="o3E-uk-gsi" id="Lo4-xf-Jdh"/>
-                        <outlet property="mapView" destination="uym-XA-7yS" id="Keq-6f-SFZ"/>
                         <outlet property="textView" destination="JMn-5r-ZV0" id="EKQ-2r-FQO"/>
                         <outlet property="topView" destination="uUP-an-P7R" id="yJp-bB-mDD"/>
                     </connections>
@@ -232,6 +229,40 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HO4-b1-kGk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3844" y="44.527736131934034"/>
+        </scene>
+        <!--Bottom View Controller-->
+        <scene sceneID="CTM-9G-ohm">
+            <objects>
+                <viewController id="OeQ-9d-RGu" customClass="BottomViewController" customModule="OneDay" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zLq-aq-L6Z">
+                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="UIB-IW-r3p">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <mapView key="tableHeaderView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="uym-XA-7yS">
+                                    <rect key="frame" x="0.0" y="0.0" width="240" height="100"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </mapView>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="UIB-IW-r3p" secondAttribute="bottom" id="7Iz-v9-f6t"/>
+                            <constraint firstItem="UIB-IW-r3p" firstAttribute="top" secondItem="zLq-aq-L6Z" secondAttribute="top" id="KwP-Qb-JMf"/>
+                            <constraint firstItem="UIB-IW-r3p" firstAttribute="leading" secondItem="zLq-aq-L6Z" secondAttribute="leading" id="h0J-Xq-cyP"/>
+                            <constraint firstAttribute="trailing" secondItem="UIB-IW-r3p" secondAttribute="trailing" id="yN9-3B-gFV"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="bottomTableView" destination="UIB-IW-r3p" id="lXZ-VG-MnY"/>
+                        <outlet property="mapView" destination="uym-XA-7yS" id="XJM-yE-Jc3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dyS-Az-Bgf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3843" y="848"/>
         </scene>
     </scenes>
     <resources>
