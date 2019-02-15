@@ -10,16 +10,11 @@ import UIKit
 
 extension UIImagePickerControllerDelegate where Self: UIViewController, Self: UINavigationControllerDelegate {
     
-    func selectImageFrom(_ source: ImageSource) {
+    func selectImage(from source: ImageSource) {
         let imagePicker =  UIImagePickerController()
         imagePicker.delegate = self
-        switch source {
-        case .camera:
-            imagePicker.sourceType = .camera
-        case .photoLibrary:
-            imagePicker.sourceType = .photoLibrary
-            imagePicker.allowsEditing = true
-        }
+        imagePicker.allowsEditing = true
+        imagePicker.sourceType = source.sourceType
         present(imagePicker, animated: true, completion: nil)
     }
     

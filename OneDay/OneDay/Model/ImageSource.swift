@@ -6,9 +6,18 @@
 //  Copyright © 2019 teamA2. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 enum ImageSource {
     case photoLibrary
     case camera
+    
+    var sourceType: UIImagePickerController.SourceType {
+        switch self {
+        case .photoLibrary:
+            return .photoLibrary
+        case .camera:
+            return .camera
+        }
+    }
 }

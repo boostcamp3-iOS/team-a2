@@ -91,12 +91,12 @@ extension PhotosViewController: UIImagePickerControllerDelegate, UINavigationCon
         switch sender.title {
         case "camera":
             guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
-                selectImageFrom(.photoLibrary)
+                selectImage(from: .photoLibrary)
                 return
             }
-            selectImageFrom(.camera)
+            selectImage(from: .camera)
         default:
-            selectImageFrom(.photoLibrary)
+            selectImage(from: .photoLibrary)
         }
     }
     
