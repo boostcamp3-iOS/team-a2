@@ -19,14 +19,10 @@
 		D502765C21FB0B8400A0DB5E /* Location+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764C21FB0B8400A0DB5E /* Location+CoreDataClass.swift */; };
 		D502765D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift */; };
 		D502766221FB0D6000A0DB5E /* WeatherType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502766121FB0D6000A0DB5E /* WeatherType.swift */; };
-		D502766521FB138500A0DB5E /* EntryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502766421FB138500A0DB5E /* EntryService.swift */; };
-		D502766721FB139300A0DB5E /* JournalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502766621FB139300A0DB5E /* JournalService.swift */; };
 		D502769321FEA18000A0DB5E /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502769221FEA18000A0DB5E /* CoreDataStack.swift */; };
 		D502769621FEA1CE00A0DB5E /* UIColor+NamedColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502769521FEA1CD00A0DB5E /* UIColor+NamedColor.swift */; };
 		D50276B921FED1D200A0DB5E /* OneDay.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D561692921FAD07000E00FED /* OneDay.xcdatamodeld */; };
-		D50276BB21FEEE4900A0DB5E /* SampleJournalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276BA21FEEE4900A0DB5E /* SampleJournalsViewController.swift */; };
 		D50276BD21FEF0DC00A0DB5E /* Coredata.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D50276BC21FEF0DC00A0DB5E /* Coredata.storyboard */; };
-		D50276C021FEF4F400A0DB5E /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276BF21FEF4F400A0DB5E /* CoreDataService.swift */; };
 		D50276CA21FEFC8400A0DB5E /* OneDayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276C921FEFC8400A0DB5E /* OneDayTests.swift */; };
 		D50276D221FEFCE900A0DB5E /* JournalServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276D121FEFCE900A0DB5E /* JournalServiceTest.swift */; };
 		D50276D521FEFD4500A0DB5E /* TestCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276D421FEFD4500A0DB5E /* TestCoreDataStack.swift */; };
@@ -37,15 +33,26 @@
 		D50276EE2202D3C700A0DB5E /* SampleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276ED2202D3C700A0DB5E /* SampleTableViewCell.swift */; };
 		D50276F222041DB100A0DB5E /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276F122041DB100A0DB5E /* PhotosViewController.swift */; };
 		D50276F422041DBA00A0DB5E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276F322041DBA00A0DB5E /* MapViewController.swift */; };
+		D516C8B52213B4CD00A4BDAC /* EntryFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516C8AD2213B4CD00A4BDAC /* EntryFilter.swift */; };
+		D516C8B62213B4CD00A4BDAC /* CoreDataJournalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516C8AF2213B4CD00A4BDAC /* CoreDataJournalService.swift */; };
+		D516C8B82213B4CD00A4BDAC /* CoreDataWeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516C8B12213B4CD00A4BDAC /* CoreDataWeatherService.swift */; };
+		D516C8B92213B4CD00A4BDAC /* CoreDataEntryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516C8B22213B4CD00A4BDAC /* CoreDataEntryService.swift */; };
+		D516C8BC2213B7D900A4BDAC /* OneDayDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516C8BB2213B7D900A4BDAC /* OneDayDefaults.swift */; };
+		D516C8BF2213C2F600A4BDAC /* NSAttributedString+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516C8BE2213C2F600A4BDAC /* NSAttributedString+UIImage.swift */; };
+		D516C8C22213DD4800A4BDAC /* Tag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516C8C02213DD4800A4BDAC /* Tag+CoreDataClass.swift */; };
+		D516C8C32213DD4800A4BDAC /* Tag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516C8C12213DD4800A4BDAC /* Tag+CoreDataProperties.swift */; };
 		D53782B922110E6800336646 /* Photos.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D53782B822110E6800336646 /* Photos.storyboard */; };
 		D53782BD221113A100336646 /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53782BC221113A100336646 /* PhotosCollectionViewCell.swift */; };
 		D53782C022113B9E00336646 /* CreateEntryPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53782BF22113B9E00336646 /* CreateEntryPhotosViewController.swift */; };
 		D53782C322113BAF00336646 /* CreateEntryCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53782C222113BAF00336646 /* CreateEntryCameraViewController.swift */; };
+		D53782C62211447500336646 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53782C52211447500336646 /* CoreDataManager.swift */; };
 		D561692321FAD07000E00FED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D561692221FAD07000E00FED /* AppDelegate.swift */; };
 		D561692521FAD07000E00FED /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D561692421FAD07000E00FED /* MainTabBarViewController.swift */; };
 		D561692821FAD07000E00FED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D561692621FAD07000E00FED /* Main.storyboard */; };
 		D561692D21FAD07200E00FED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D561692C21FAD07200E00FED /* Assets.xcassets */; };
 		D561693021FAD07200E00FED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D561692E21FAD07200E00FED /* LaunchScreen.storyboard */; };
+		D5CCA1162215104A0055D264 /* DateFormatter+Datet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CCA1152215104A0055D264 /* DateFormatter+Datet.swift */; };
+		D5CCA11B2215309C0055D264 /* String+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CCA11A2215309C0055D264 /* String+URL.swift */; };
 		E936659422110DF900DC660A /* BaseSlidingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E936659322110DF900DC660A /* BaseSlidingViewController.swift */; };
 		E96BE83A21FAD96700266F6D /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E96BE83921FAD96700266F6D /* Colors.xcassets */; };
 		E96BE83F21FADA9600266F6D /* SideMenu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E96BE83E21FADA9600266F6D /* SideMenu.storyboard */; };
@@ -53,7 +60,6 @@
 		E992EC6121FAEDF500917116 /* SearchedKeywordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6021FAEDF500917116 /* SearchedKeywordCell.swift */; };
 		E992EC6321FAEDFD00917116 /* MatchingEntriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6221FAEDFD00917116 /* MatchingEntriesCell.swift */; };
 		E992EC6521FAEE0600917116 /* FilterTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6421FAEE0600917116 /* FilterTableCell.swift */; };
-		E992EC6821FAEE3300917116 /* SideMenuMainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6721FAEE3300917116 /* SideMenuMainCell.swift */; };
 		E992EC6A21FAEE3C00917116 /* SideMenuJournalListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6921FAEE3C00917116 /* SideMenuJournalListCell.swift */; };
 		E992EC6C21FAEE4500917116 /* SideMenuJournalAddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6B21FAEE4500917116 /* SideMenuJournalAddCell.swift */; };
 		E992EC6E21FAEE4D00917116 /* SideMenuEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6D21FAEE4D00917116 /* SideMenuEditCell.swift */; };
@@ -102,13 +108,9 @@
 		D502764C21FB0B8400A0DB5E /* Location+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D502764D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D502766121FB0D6000A0DB5E /* WeatherType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherType.swift; sourceTree = "<group>"; };
-		D502766421FB138500A0DB5E /* EntryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryService.swift; sourceTree = "<group>"; };
-		D502766621FB139300A0DB5E /* JournalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalService.swift; sourceTree = "<group>"; };
 		D502769221FEA18000A0DB5E /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		D502769521FEA1CD00A0DB5E /* UIColor+NamedColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+NamedColor.swift"; sourceTree = "<group>"; };
-		D50276BA21FEEE4900A0DB5E /* SampleJournalsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleJournalsViewController.swift; sourceTree = "<group>"; };
 		D50276BC21FEF0DC00A0DB5E /* Coredata.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Coredata.storyboard; sourceTree = "<group>"; };
-		D50276BF21FEF4F400A0DB5E /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 		D50276C721FEFC8400A0DB5E /* OneDayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OneDayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D50276C921FEFC8400A0DB5E /* OneDayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneDayTests.swift; sourceTree = "<group>"; };
 		D50276CB21FEFC8400A0DB5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -121,10 +123,19 @@
 		D50276ED2202D3C700A0DB5E /* SampleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTableViewCell.swift; sourceTree = "<group>"; };
 		D50276F122041DB100A0DB5E /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		D50276F322041DBA00A0DB5E /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		D516C8AD2213B4CD00A4BDAC /* EntryFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryFilter.swift; sourceTree = "<group>"; };
+		D516C8AF2213B4CD00A4BDAC /* CoreDataJournalService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataJournalService.swift; sourceTree = "<group>"; };
+		D516C8B12213B4CD00A4BDAC /* CoreDataWeatherService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataWeatherService.swift; sourceTree = "<group>"; };
+		D516C8B22213B4CD00A4BDAC /* CoreDataEntryService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataEntryService.swift; sourceTree = "<group>"; };
+		D516C8BB2213B7D900A4BDAC /* OneDayDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneDayDefaults.swift; sourceTree = "<group>"; };
+		D516C8BE2213C2F600A4BDAC /* NSAttributedString+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+UIImage.swift"; sourceTree = "<group>"; };
+		D516C8C02213DD4800A4BDAC /* Tag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D516C8C12213DD4800A4BDAC /* Tag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D53782B822110E6800336646 /* Photos.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Photos.storyboard; sourceTree = "<group>"; };
 		D53782BC221113A100336646 /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		D53782BF22113B9E00336646 /* CreateEntryPhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEntryPhotosViewController.swift; sourceTree = "<group>"; };
 		D53782C222113BAF00336646 /* CreateEntryCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEntryCameraViewController.swift; sourceTree = "<group>"; };
+		D53782C52211447500336646 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		D561691F21FAD07000E00FED /* OneDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D561692221FAD07000E00FED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D561692421FAD07000E00FED /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
@@ -133,6 +144,8 @@
 		D561692C21FAD07200E00FED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D561692F21FAD07200E00FED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D561693121FAD07200E00FED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D5CCA1152215104A0055D264 /* DateFormatter+Datet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Datet.swift"; sourceTree = "<group>"; };
+		D5CCA11A2215309C0055D264 /* String+URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+URL.swift"; sourceTree = "<group>"; };
 		E936659322110DF900DC660A /* BaseSlidingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSlidingViewController.swift; sourceTree = "<group>"; };
 		E96BE83921FAD96700266F6D /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		E96BE83E21FADA9600266F6D /* SideMenu.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SideMenu.storyboard; sourceTree = "<group>"; };
@@ -140,7 +153,6 @@
 		E992EC6021FAEDF500917116 /* SearchedKeywordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedKeywordCell.swift; sourceTree = "<group>"; };
 		E992EC6221FAEDFD00917116 /* MatchingEntriesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchingEntriesCell.swift; sourceTree = "<group>"; };
 		E992EC6421FAEE0600917116 /* FilterTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTableCell.swift; sourceTree = "<group>"; };
-		E992EC6721FAEE3300917116 /* SideMenuMainCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuMainCell.swift; sourceTree = "<group>"; };
 		E992EC6921FAEE3C00917116 /* SideMenuJournalListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuJournalListCell.swift; sourceTree = "<group>"; };
 		E992EC6B21FAEE4500917116 /* SideMenuJournalAddCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuJournalAddCell.swift; sourceTree = "<group>"; };
 		E992EC6D21FAEE4D00917116 /* SideMenuEditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuEditCell.swift; sourceTree = "<group>"; };
@@ -194,6 +206,8 @@
 		D502763F21FB0B5E00A0DB5E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D516C8C02213DD4800A4BDAC /* Tag+CoreDataClass.swift */,
+				D516C8C12213DD4800A4BDAC /* Tag+CoreDataProperties.swift */,
 				D502764221FB0B8400A0DB5E /* Journal+CoreDataClass.swift */,
 				D502764321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift */,
 				D502764421FB0B8400A0DB5E /* Weather+CoreDataClass.swift */,
@@ -217,9 +231,6 @@
 		D502766321FB137300A0DB5E /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				D50276BF21FEF4F400A0DB5E /* CoreDataService.swift */,
-				D502766621FB139300A0DB5E /* JournalService.swift */,
-				D502766421FB138500A0DB5E /* EntryService.swift */,
 				EC0CFB0322030A29001293B1 /* WeatherService.swift */,
 				EC5E21AA220425390073D90E /* LocationService.swift */,
 			);
@@ -229,7 +240,10 @@
 		D502769121FEA16D00A0DB5E /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				D516C8AE2213B4CD00A4BDAC /* protocol */,
 				D502769221FEA18000A0DB5E /* CoreDataStack.swift */,
+				D53782C52211447500336646 /* CoreDataManager.swift */,
+				D516C8AD2213B4CD00A4BDAC /* EntryFilter.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -238,6 +252,9 @@
 			isa = PBXGroup;
 			children = (
 				D502769521FEA1CD00A0DB5E /* UIColor+NamedColor.swift */,
+				D516C8BE2213C2F600A4BDAC /* NSAttributedString+UIImage.swift */,
+				D5CCA1152215104A0055D264 /* DateFormatter+Datet.swift */,
+				D5CCA11A2215309C0055D264 /* String+URL.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -262,12 +279,23 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
-		D50276E52202C77100A0DB5E /* Sample */ = {
+		D516C8AE2213B4CD00A4BDAC /* protocol */ = {
 			isa = PBXGroup;
 			children = (
-				D50276BA21FEEE4900A0DB5E /* SampleJournalsViewController.swift */,
+				D516C8AF2213B4CD00A4BDAC /* CoreDataJournalService.swift */,
+				D516C8B12213B4CD00A4BDAC /* CoreDataWeatherService.swift */,
+				D516C8B22213B4CD00A4BDAC /* CoreDataEntryService.swift */,
 			);
-			path = Sample;
+			path = protocol;
+			sourceTree = "<group>";
+		};
+		D516C8BA2213B7D900A4BDAC /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				D516C8BB2213B7D900A4BDAC /* OneDayDefaults.swift */,
+			);
+			path = Entry;
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		D53782BB2211138900336646 /* Photos */ = {
@@ -310,6 +338,7 @@
 		D561692121FAD07000E00FED /* OneDay */ = {
 			isa = PBXGroup;
 			children = (
+				D516C8BA2213B7D900A4BDAC /* Utils */,
 				EC0CFB0722030BFB001293B1 /* Provider */,
 				D502769421FEA1AA00A0DB5E /* Extensions */,
 				D502769121FEA16D00A0DB5E /* CoreData */,
@@ -355,7 +384,6 @@
 				EC0BB233221699F500E2BB6F /* BottomViewController.swift */,
 				EC0BB2352216A34700E2BB6F /* SendNotificationProtocol.swift */,
 				D50276E72202C79300A0DB5E /* TimeLineViewController.swift */,
-				D50276E52202C77100A0DB5E /* Sample */,
 				E936659322110DF900DC660A /* BaseSlidingViewController.swift */,
 				E992EC6F21FAEE5B00917116 /* FilterViewController.swift */,
 				E992EC7121FAEE6700917116 /* SideMenuViewController.swift */,
@@ -404,7 +432,6 @@
 		E992EC5F21FAEDDA00917116 /* SideMenuCell */ = {
 			isa = PBXGroup;
 			children = (
-				E992EC6721FAEE3300917116 /* SideMenuMainCell.swift */,
 				E992EC6921FAEE3C00917116 /* SideMenuJournalListCell.swift */,
 				E992EC6B21FAEE4500917116 /* SideMenuJournalAddCell.swift */,
 				E992EC6D21FAEE4D00917116 /* SideMenuEditCell.swift */,
@@ -617,8 +644,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5CCA1162215104A0055D264 /* DateFormatter+Datet.swift in Sources */,
 				E992EC6521FAEE0600917116 /* FilterTableCell.swift in Sources */,
 				E992EC6E21FAEE4D00917116 /* SideMenuEditCell.swift in Sources */,
+				D516C8C32213DD4800A4BDAC /* Tag+CoreDataProperties.swift in Sources */,
+				D516C8BC2213B7D900A4BDAC /* OneDayDefaults.swift in Sources */,
 				E992EC6A21FAEE3C00917116 /* SideMenuJournalListCell.swift in Sources */,
 				E992EC6121FAEDF500917116 /* SearchedKeywordCell.swift in Sources */,
 				E992EC7A21FAFBC500917116 /* CalendarCell.swift in Sources */,
@@ -627,39 +657,42 @@
 				E992EC7421FAEE7100917116 /* TestViewController.swift in Sources */,
 				D561692521FAD07000E00FED /* MainTabBarViewController.swift in Sources */,
 				EC0BB22E22150EA300E2BB6F /* APILocation.swift in Sources */,
+				D516C8B52213B4CD00A4BDAC /* EntryFilter.swift in Sources */,
 				E992EC7021FAEE5B00917116 /* FilterViewController.swift in Sources */,
 				E992EC6321FAEDFD00917116 /* MatchingEntriesCell.swift in Sources */,
+				D516C8BF2213C2F600A4BDAC /* NSAttributedString+UIImage.swift in Sources */,
 				E992EC7C21FB1E5500917116 /* CalendarHeaderView.swift in Sources */,
 				D561692321FAD07000E00FED /* AppDelegate.swift in Sources */,
-				E992EC6821FAEE3300917116 /* SideMenuMainCell.swift in Sources */,
 				E9DA39AC2203FCD30026381E /* FilterSection.swift in Sources */,
 				E992EC6C21FAEE4500917116 /* SideMenuJournalAddCell.swift in Sources */,
+				D516C8B62213B4CD00A4BDAC /* CoreDataJournalService.swift in Sources */,
 				E992EC7F21FB2CCE00917116 /* CalendarDaysOfWeek.swift in Sources */,
 				D50276B921FED1D200A0DB5E /* OneDay.xcdatamodeld in Sources */,
 				D50276F222041DB100A0DB5E /* PhotosViewController.swift in Sources */,
 				D50276EE2202D3C700A0DB5E /* SampleTableViewCell.swift in Sources */,
 				EC0CFB0922030C1D001293B1 /* NetworkProvider.swift in Sources */,
+				D53782C62211447500336646 /* CoreDataManager.swift in Sources */,
 				D502769321FEA18000A0DB5E /* CoreDataStack.swift in Sources */,
 				D502765421FB0B8400A0DB5E /* Weather+CoreDataClass.swift in Sources */,
 				D561692521FAD07000E00FED /* MainTabBarViewController.swift in Sources */,
 				EC0BB234221699F500E2BB6F /* BottomViewController.swift in Sources */,
 				D502765521FB0B8400A0DB5E /* Weather+CoreDataProperties.swift in Sources */,
-				D50276BB21FEEE4900A0DB5E /* SampleJournalsViewController.swift in Sources */,
 				D502769621FEA1CE00A0DB5E /* UIColor+NamedColor.swift in Sources */,
 				D502765C21FB0B8400A0DB5E /* Location+CoreDataClass.swift in Sources */,
 				D502765B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift in Sources */,
 				EC0CFB0622030A53001293B1 /* APIWeather.swift in Sources */,
 				D502765C21FB0B8400A0DB5E /* Location+CoreDataClass.swift in Sources */,
+				D516C8C22213DD4800A4BDAC /* Tag+CoreDataClass.swift in Sources */,
 				D502765B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift in Sources */,
 				E936659422110DF900DC660A /* BaseSlidingViewController.swift in Sources */,
 				D53782BD221113A100336646 /* PhotosCollectionViewCell.swift in Sources */,
+				D516C8B82213B4CD00A4BDAC /* CoreDataWeatherService.swift in Sources */,
 				D502765321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift in Sources */,
-				D502766721FB139300A0DB5E /* JournalService.swift in Sources */,
 				EC5E21AB220425390073D90E /* LocationService.swift in Sources */,
 				D561692321FAD07000E00FED /* AppDelegate.swift in Sources */,
 				D50276E82202C79300A0DB5E /* TimeLineViewController.swift in Sources */,
-				D50276C021FEF4F400A0DB5E /* CoreDataService.swift in Sources */,
 				D502766221FB0D6000A0DB5E /* WeatherType.swift in Sources */,
+				D5CCA11B2215309C0055D264 /* String+URL.swift in Sources */,
 				D502765921FB0B8400A0DB5E /* Entry+CoreDataProperties.swift in Sources */,
 				EC0BB2252213E26F00E2BB6F /* EditorSettingTableViewCell.swift in Sources */,
 				D53782C322113BAF00336646 /* CreateEntryCameraViewController.swift in Sources */,
@@ -672,10 +705,10 @@
 				EC0BB22C2215069500E2BB6F /* CustomPointAnnotaion.swift in Sources */,
 				EC0BB2272213FCEA00E2BB6F /* Setting.swift in Sources */,
 				EC0BB2362216A34700E2BB6F /* SendNotificationProtocol.swift in Sources */,
+				D516C8B92213B4CD00A4BDAC /* CoreDataEntryService.swift in Sources */,
 				D502765821FB0B8400A0DB5E /* Entry+CoreDataClass.swift in Sources */,
 				D502765221FB0B8400A0DB5E /* Journal+CoreDataClass.swift in Sources */,
 				D53782C022113B9E00336646 /* CreateEntryPhotosViewController.swift in Sources */,
-				D502766521FB138500A0DB5E /* EntryService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

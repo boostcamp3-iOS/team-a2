@@ -19,7 +19,7 @@ class EntryViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var bottomContainerView: UIView!
     
-    var coreDataStack: CoreDataStack!
+    var coreDataManager: CoreDataManager = CoreDataManager.shared
     var entry: Entry!
     
     ///드레그시 사용되는 미리보기 뷰
@@ -122,8 +122,20 @@ class EntryViewController: UIViewController {
         bottomContainerView.isUserInteractionEnabled = true
     }
     
+    func showAlert(title: String = "", message: String = "") {
+        let alertController = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(
+            title: "확인",
+            style: .default,
+            handler: nil))
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+
     // MARK: - Actions
-    
     @IBAction func showPhoto(_ sender: UIButton) {
         let pickerViewController = UIImagePickerController()
         pickerViewController.delegate = self
@@ -138,19 +150,22 @@ class EntryViewController: UIViewController {
         }
         entry.contents = content
         
-        let title: String
         let stringContent = content.string
         if stringContent.count > 1 {
             let start = stringContent.startIndex
             let end = stringContent.index(start, offsetBy: min(stringContent.count - 1, 40))
-            title = String(stringContent[start...end])
-        } else {
-            title = "새로운 엔트리"
+            entry.title = String(stringContent[start...end])
         }
         
-        entry.title = title
-        entry.favorite = false
-        coreDataStack.saveContext()
+        entry.updatedDate = Date()
+        
+        if let thumbnailImage = content.firstImage {
+            entry.thumbnail = thumbnailImage.saveToFile()
+        } else {
+            entry.thumbnail = nil
+        }
+        
+        coreDataManager.save()
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -242,23 +257,24 @@ extension EntryViewController: UIImagePickerControllerDelegate, UINavigationCont
         _ picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]
     ) {
-        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        insertAtTextViewCursor(attributedString: createAttributedString(with: image))
+        var pickedImage: UIImage?
+        if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            pickedImage = editedImage
+        } else if let originImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            pickedImage = originImage
+        }
+        
+        if let pickedImage = pickedImage {
+            let originWidth = pickedImage.size.width
+            let scaleFactor = originWidth / (textView.frame.size.width - 10)
+            let scaledImage =  UIImage(cgImage: pickedImage.cgImage!, scale: scaleFactor, orientation: .up)
+            insertAtTextViewCursor(attributedString: scaledImage.attributedString)
+        }
         picker.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func tapAndHideKeyboard(_ sender: UITapGestureRecognizer) {
+    @IBAction func hideKeyboardDidTap(_ sender: UITapGestureRecognizer) {
         view.endEditing(true)
-    }
-    
-    fileprivate func createAttributedString(with image: UIImage) -> NSAttributedString {
-        let textAttachment = NSTextAttachment()
-        textAttachment.image = image
-        let oldWidth = textAttachment.image!.size.width
-        let scaleFactor = oldWidth / (textView.frame.size.width - 10)
-        textAttachment.image = UIImage(cgImage: textAttachment.image!.cgImage!, scale: scaleFactor, orientation: .up)
-        let attrStringWithImage = NSAttributedString(attachment: textAttachment)
-        return attrStringWithImage
     }
     
     fileprivate func insertAtTextViewCursor(attributedString: NSAttributedString) {
