@@ -52,6 +52,7 @@ class EntryViewController: UIViewController {
         dateLabel.text = dateSet.full
         timeLabel.text = dateSet.time
         textView.textDragDelegate = self
+        textView.delegate = self
     }
     
     func setUpPreview() {
@@ -141,33 +142,37 @@ class EntryViewController: UIViewController {
     }
     
     @IBAction func saveAndDismiss(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
+}
+
+// MARK: - Extention
+extension EntryViewController: UITextViewDelegate {
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        
         guard let content = textView.attributedText else {
             return
         }
-        entry.contents = content
         
+        entry.contents = content
         let stringContent = content.string
         if stringContent.count > 1 {
             let start = stringContent.startIndex
-            let end = stringContent.index(start, offsetBy: min(stringContent.count - 1, 40))
+            let end = stringContent.index(start, offsetBy: min(stringContent.count - 1, 10))
             entry.title = String(stringContent[start...end])
         }
         
         entry.updatedDate = Date()
         
         if let thumbnailImage = content.firstImage {
-            entry.thumbnail = thumbnailImage.saveToFile()
+            entry.thumbnail = thumbnailImage.saveToFile(fileName: entry.thmbnailFileName)
         } else {
             entry.thumbnail = nil
         }
-        
         coreDataManager.save()
-        self.dismiss(animated: true, completion: nil)
     }
-    
 }
-
-// MARK: - Extention
 
 extension EntryViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -188,7 +193,7 @@ extension EntryViewController: UIImagePickerControllerDelegate, UINavigationCont
         
         if let pickedImage = pickedImage {
             let originWidth = pickedImage.size.width
-            let scaleFactor = originWidth / (textView.frame.size.width - 10)
+            let scaleFactor = originWidth / (textView.frame.size.width - 100)
             let scaledImage =  UIImage(cgImage: pickedImage.cgImage!, scale: scaleFactor, orientation: .up)
             insertAtTextViewCursor(attributedString: scaledImage.attributedString)
         }

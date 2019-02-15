@@ -32,7 +32,7 @@
             <objects>
                 <viewController id="hMg-DJ-Hjx" customClass="MapViewController" customModule="OneDay" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mxg-ym-fni">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="pF0-mR-sPL"/>
@@ -104,8 +104,8 @@
                 <navigationController storyboardIdentifier="timeline" automaticallyAdjustsScrollViewInsets="NO" id="zjw-iT-gzd" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Timeline" image="tabs" id="btP-9u-q7E"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="5mc-y3-7KW">
-                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="5mc-y3-7KW">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" name="doBlue"/>
                         <textAttributes key="titleTextAttributes">
@@ -176,8 +176,8 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="S6q-Jg-lHd" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Map" image="map" id="bg7-ie-jZV"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="RjI-LK-aci">
-                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="RjI-LK-aci">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" name="doBlue"/>
                         <textAttributes key="titleTextAttributes">
@@ -202,8 +202,8 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="HdZ-9r-lYZ" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Calendar" image="ic_calendar" id="eXY-vH-Moi"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="6MS-qJ-Pf2">
-                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="6MS-qJ-Pf2">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" name="doBlue"/>
                         <textAttributes key="titleTextAttributes">

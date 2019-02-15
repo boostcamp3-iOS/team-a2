@@ -20,7 +20,7 @@ extension Entry {
     @NSManaged public var contents: NSAttributedString?
     @NSManaged public var date: Date
     @NSManaged public var day: NSNumber
-    @NSManaged public var entryId: UUID?
+    @NSManaged public var entryId: UUID
     @NSManaged public var favorite: Bool
     @NSManaged public var month: NSNumber
     @NSManaged public var thumbnail: String?
@@ -55,6 +55,10 @@ extension Entry {
             self.year = year
         }
         
+    }
+    
+    var thmbnailFileName: String {
+        return "entry_thumbnail_\(entryId.uuidString)"
     }
 
     @objc(addTagsObject:)

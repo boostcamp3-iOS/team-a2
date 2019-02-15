@@ -65,7 +65,6 @@ class CoreDataStack {
     
     // 변경사항 저장
     func saveContext () {
-        guard managedContext.hasChanges else { return }
         
         do {
             try managedContext.save()
