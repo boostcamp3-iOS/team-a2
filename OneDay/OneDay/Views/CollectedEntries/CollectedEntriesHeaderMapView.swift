@@ -37,10 +37,10 @@ class CollectedEntriesHeaderMapView: MKMapView, MKMapViewDelegate {
             annotation: annotation,
             reuseIdentifier: "collectedEntriesMapId")
         if regionRadius < 5000000 {
-            configureAnotation(at: annotationView, size: 20)
+            configureAnnotation(at: annotationView, size: 20)
             return annotationView
         } else {
-            configureAnotation(at: annotationView, size: 10)
+            configureAnnotation(at: annotationView, size: 10)
             return annotationView
         }
     }
@@ -53,7 +53,7 @@ class CollectedEntriesHeaderMapView: MKMapView, MKMapViewDelegate {
         setRegion(coordinateRegion, animated: false)
     }
     
-    fileprivate func configureAnotation(at annotationView: MKAnnotationView, size: CGFloat) {
+    fileprivate func configureAnnotation(at annotationView: MKAnnotationView, size: CGFloat) {
         annotationView.frame = CGRect(x: 0, y: 0, width: size, height: size)
         annotationView.backgroundColor = .gray
         annotationView.alpha = 0.5
