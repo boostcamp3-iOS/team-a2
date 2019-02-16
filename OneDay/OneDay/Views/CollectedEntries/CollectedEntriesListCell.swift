@@ -9,7 +9,6 @@
 import UIKit
 
 class CollectedEntriesListCell: UITableViewCell {
-    
     let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .collectedEntriesListBorder
@@ -17,7 +16,7 @@ class CollectedEntriesListCell: UITableViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-     
+
     let contentsListTextView: UITextView = {
        let textView = UITextView()
         textView.layer.cornerRadius = 3
@@ -44,7 +43,6 @@ class CollectedEntriesListCell: UITableViewCell {
 
 extension CollectedEntriesListCell {
     fileprivate func setupCellView() {
-        
         addSubview(containerView)
         containerView.topAnchor.constraint(
             equalTo: topAnchor,
