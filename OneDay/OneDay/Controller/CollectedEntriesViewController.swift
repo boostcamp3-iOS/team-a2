@@ -48,7 +48,7 @@ class CollectedEntriesViewController: UIViewController {
     }()
     
     var entriesData = [Entry]()
-    var willPresentMapView = false
+    var shouldPresentMapView = false
     let headerMapView = CollectedEntriesHeaderMapView()
     
     override func viewDidLoad() {
@@ -56,10 +56,13 @@ class CollectedEntriesViewController: UIViewController {
         view.backgroundColor = .doBlue
         setupTableView()
         addLocationToMapView()
-        doneButton.addTarget(self, action: #selector(backToCalendar), for: .touchUpInside)
+        doneButton.addTarget(
+            self,
+            action: #selector(dismissCollectedEntriesView),
+            for: .touchUpInside)
     }
 
-    @objc func backToCalendar() {
+    @objc func dismissCollectedEntriesView() {
         dismiss(animated: false, completion: nil)
     }
     
@@ -68,9 +71,9 @@ class CollectedEntriesViewController: UIViewController {
     var longitude = [CLLocationDegrees]()
     
     fileprivate func addLocationToMapView() {
-        entriesData.forEach { (entry) in
+        entriesData.forEach { entry in
             if let location = entry.location {
-                willPresentMapView = true
+                shouldPresentMapView = true
                 
                 coordinates.append(
                     MapPinLocation(
@@ -110,7 +113,11 @@ extension CollectedEntriesViewController: UITableViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let mapViewHeight = UIScreen.main.bounds.height*0.4
-        return willPresentMapView ? mapViewHeight : 0
+        if shouldPresentMapView {
+            return mapViewHeight
+        } else {
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -142,7 +149,7 @@ extension CollectedEntriesViewController {
         }
         
         let formatter = DateFormatter.defualtInstance
-        formatter.locale = Locale(identifier: "ko-·")
+        formatter.locale = Locale(identifier: "ko_KR")
         formatter.dateFormat = "YYYY년 MM월 dd일 EEEE a hh:mm"
         
         appendDot(at: attributedText)
@@ -201,7 +208,7 @@ extension CollectedEntriesViewController {
 
 extension CollectedEntriesViewController {
     func averageLocationOfCoordinates() -> CLLocation {
-        coordinates.forEach { (coordinates) in
+        coordinates.forEach { coordinates in
             latitude.append(coordinates.coordinate.latitude)
             longitude.append(coordinates.coordinate.longitude)
         }
@@ -209,9 +216,7 @@ extension CollectedEntriesViewController {
         let averageLatitude = latitude.reduce(0, +) / Double(latitude.count)
         let averagelongitude = longitude.reduce(0, +) / Double(longitude.count)
         
-        let averageLocation = CLLocation(
-            latitude: averageLatitude,
-            longitude: averagelongitude)
+        let averageLocation = CLLocation(latitude: averageLatitude, longitude: averagelongitude)
         return averageLocation
     }
     
