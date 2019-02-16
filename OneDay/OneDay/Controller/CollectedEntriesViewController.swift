@@ -114,7 +114,7 @@ extension CollectedEntriesViewController: UITableViewDelegate, UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let initialLocation = setInitialLocation()
+        let initialLocation = averageLocationOfCoordinates()
         var regionRadiusOnMap = mapViewPresentingRange(from: initialLocation, scale: 3)
         if regionRadiusOnMap < 5000 {
             regionRadiusOnMap = 5000 // 최소 5km 반경까지 지도가 그려짐
@@ -200,7 +200,7 @@ extension CollectedEntriesViewController {
 }
 
 extension CollectedEntriesViewController {
-    func setInitialLocation() -> CLLocation {
+    func averageLocationOfCoordinates() -> CLLocation {
         coordinates.forEach { (coordinates) in
             latitude.append(coordinates.coordinate.latitude)
             longitude.append(coordinates.coordinate.longitude)
