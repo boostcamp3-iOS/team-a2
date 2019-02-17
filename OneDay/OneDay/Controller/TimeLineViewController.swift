@@ -24,7 +24,6 @@ class TimeLineViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         do {
             fetchedResultsController.delegate = self
             try fetchedResultsController.performFetch()

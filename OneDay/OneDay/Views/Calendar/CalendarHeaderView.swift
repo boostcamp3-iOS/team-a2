@@ -16,14 +16,15 @@ class CalendarHeaderView: UICollectionViewCell {
         label.text = "년 월"
         label.textAlignment = .center
         label.font = label.font.withSize(12)
-        label.textColor = .black
+        label.textColor = .calendarHeaderTextColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor(white: 1, alpha: 0.8)
+        backgroundColor = .calendarHeader
+        
         setupCellView()
     }
     

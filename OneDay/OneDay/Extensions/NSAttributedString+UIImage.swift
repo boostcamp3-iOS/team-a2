@@ -37,12 +37,11 @@ extension UIImage {
         return attrStringWithImage
     }
     
-    func saveToFile() -> String? {
+    func saveToFile(fileName: String) -> String? {
         guard let data = self.jpegData(compressionQuality: 0.8) else {
             return nil
         }
-        let timeStamp = Date().timeIntervalSince1970
-        let fileName = "entry_image_\(timeStamp)"
+
         guard let urlForDataStorage = fileName.urlForDataStorage else { return nil }
         
         do {
