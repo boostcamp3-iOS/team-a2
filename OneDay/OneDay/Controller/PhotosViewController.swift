@@ -74,9 +74,41 @@ class PhotosViewController: UIViewController {
             self?.loadData()
         }
     }
+    
+    // MARK: Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let nextViewController: EntryViewController = segue.destination as? EntryViewController,
+            let cell: PhotosCollectionViewCell = sender as? PhotosCollectionViewCell {
+            guard let indexPath: IndexPath = photoCollectionView.indexPath(for: cell) else { return }
+            nextViewController.entry = entries[indexPath.item]
+        }
+    }
 }
 
-extension PhotosViewController : UICollectionViewDataSource {
+extension PhotosViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    @IBAction func showCreateEntryModalViewController(_ sender: UIBarButtonItem) {
+        switch sender.title {
+        case "camera":
+            guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+                selectImage(from: .photoLibrary)
+                return
+            }
+            selectImage(from: .camera)
+        default:
+            selectImage(from: .photoLibrary)
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
+        ) {
+        picker.dismiss(animated: true, completion: nil)
+        createEntryWithImage(pickingMediaWithInfo: info)
+    }
+}
+
+extension PhotosViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return entries.count
@@ -86,7 +118,7 @@ extension PhotosViewController : UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? PhotosCollectionViewCell else {
             preconditionFailure("No expected cell type casting by PhotosCollectionViewCell")
         }
-        let entry = entries[indexPath.row]
+        let entry = entries[indexPath.item]
         cell.dayLabel.text = "\(entry.day)"
         cell.monthAndYearLabel.text = "\(entry.monthAndYear)"
         

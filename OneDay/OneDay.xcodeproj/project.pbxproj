@@ -15,8 +15,6 @@
 		D502765821FB0B8400A0DB5E /* Entry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764821FB0B8400A0DB5E /* Entry+CoreDataClass.swift */; };
 		D502765921FB0B8400A0DB5E /* Entry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764921FB0B8400A0DB5E /* Entry+CoreDataProperties.swift */; };
 		D502765A21FB0B8400A0DB5E /* Device+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764A21FB0B8400A0DB5E /* Device+CoreDataClass.swift */; };
-		D502765B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift */; };
-		D502765C21FB0B8400A0DB5E /* Location+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764C21FB0B8400A0DB5E /* Location+CoreDataClass.swift */; };
 		D502765D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift */; };
 		D502766221FB0D6000A0DB5E /* WeatherType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502766121FB0D6000A0DB5E /* WeatherType.swift */; };
 		D502769321FEA18000A0DB5E /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502769221FEA18000A0DB5E /* CoreDataStack.swift */; };
@@ -41,18 +39,22 @@
 		D516C8BF2213C2F600A4BDAC /* NSAttributedString+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516C8BE2213C2F600A4BDAC /* NSAttributedString+UIImage.swift */; };
 		D516C8C22213DD4800A4BDAC /* Tag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516C8C02213DD4800A4BDAC /* Tag+CoreDataClass.swift */; };
 		D516C8C32213DD4800A4BDAC /* Tag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516C8C12213DD4800A4BDAC /* Tag+CoreDataProperties.swift */; };
-		D53782B922110E6800336646 /* Photos.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D53782B822110E6800336646 /* Photos.storyboard */; };
 		D53782BD221113A100336646 /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53782BC221113A100336646 /* PhotosCollectionViewCell.swift */; };
-		D53782C022113B9E00336646 /* CreateEntryPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53782BF22113B9E00336646 /* CreateEntryPhotosViewController.swift */; };
-		D53782C322113BAF00336646 /* CreateEntryCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53782C222113BAF00336646 /* CreateEntryCameraViewController.swift */; };
 		D53782C62211447500336646 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53782C52211447500336646 /* CoreDataManager.swift */; };
-		D561692321FAD07000E00FED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D561692221FAD07000E00FED /* AppDelegate.swift */; };
-		D561692521FAD07000E00FED /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D561692421FAD07000E00FED /* MainTabBarViewController.swift */; };
 		D561692821FAD07000E00FED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D561692621FAD07000E00FED /* Main.storyboard */; };
 		D561692D21FAD07200E00FED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D561692C21FAD07200E00FED /* Assets.xcassets */; };
 		D561693021FAD07200E00FED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D561692E21FAD07200E00FED /* LaunchScreen.storyboard */; };
 		D5CCA1162215104A0055D264 /* DateFormatter+Datet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CCA1152215104A0055D264 /* DateFormatter+Datet.swift */; };
 		D5CCA11B2215309C0055D264 /* String+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CCA11A2215309C0055D264 /* String+URL.swift */; };
+		D5CCA120221543860055D264 /* Photos.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5CCA11F221543860055D264 /* Photos.storyboard */; };
+		D5CCA12D2216775F0055D264 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D561692221FAD07000E00FED /* AppDelegate.swift */; };
+		D5CCA12E2216775F0055D264 /* Location+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764C21FB0B8400A0DB5E /* Location+CoreDataClass.swift */; };
+		D5CCA12F2216775F0055D264 /* Device+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift */; };
+		D5CCA1302216775F0055D264 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D561692421FAD07000E00FED /* MainTabBarViewController.swift */; };
+		D5CCA134221697EA0055D264 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CCA133221697EA0055D264 /* Constants.swift */; };
+		D5CCA136221698000055D264 /* AddActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CCA135221698000055D264 /* AddActionViewController.swift */; };
+		D5CCA138221698140055D264 /* UIViewController+UIImagePickerControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CCA137221698140055D264 /* UIViewController+UIImagePickerControllerDelegate.swift */; };
+		D5CCA13A221698260055D264 /* ImageSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CCA139221698260055D264 /* ImageSource.swift */; };
 		E936659422110DF900DC660A /* BaseSlidingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E936659322110DF900DC660A /* BaseSlidingViewController.swift */; };
 		E96BE83A21FAD96700266F6D /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E96BE83921FAD96700266F6D /* Colors.xcassets */; };
 		E96BE83F21FADA9600266F6D /* SideMenu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E96BE83E21FADA9600266F6D /* SideMenu.storyboard */; };
@@ -125,10 +127,7 @@
 		D516C8BE2213C2F600A4BDAC /* NSAttributedString+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+UIImage.swift"; sourceTree = "<group>"; };
 		D516C8C02213DD4800A4BDAC /* Tag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D516C8C12213DD4800A4BDAC /* Tag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		D53782B822110E6800336646 /* Photos.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Photos.storyboard; sourceTree = "<group>"; };
 		D53782BC221113A100336646 /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
-		D53782BF22113B9E00336646 /* CreateEntryPhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEntryPhotosViewController.swift; sourceTree = "<group>"; };
-		D53782C222113BAF00336646 /* CreateEntryCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEntryCameraViewController.swift; sourceTree = "<group>"; };
 		D53782C52211447500336646 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		D561691F21FAD07000E00FED /* OneDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D561692221FAD07000E00FED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -140,6 +139,11 @@
 		D561693121FAD07200E00FED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D5CCA1152215104A0055D264 /* DateFormatter+Datet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Datet.swift"; sourceTree = "<group>"; };
 		D5CCA11A2215309C0055D264 /* String+URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+URL.swift"; sourceTree = "<group>"; };
+		D5CCA11F221543860055D264 /* Photos.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Photos.storyboard; sourceTree = "<group>"; };
+		D5CCA133221697EA0055D264 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D5CCA135221698000055D264 /* AddActionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddActionViewController.swift; sourceTree = "<group>"; };
+		D5CCA137221698140055D264 /* UIViewController+UIImagePickerControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+UIImagePickerControllerDelegate.swift"; sourceTree = "<group>"; };
+		D5CCA139221698260055D264 /* ImageSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSource.swift; sourceTree = "<group>"; };
 		E936659322110DF900DC660A /* BaseSlidingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSlidingViewController.swift; sourceTree = "<group>"; };
 		E96BE83921FAD96700266F6D /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		E96BE83E21FADA9600266F6D /* SideMenu.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SideMenu.storyboard; sourceTree = "<group>"; };
@@ -194,6 +198,7 @@
 		D502763F21FB0B5E00A0DB5E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D5CCA139221698260055D264 /* ImageSource.swift */,
 				D516C8C02213DD4800A4BDAC /* Tag+CoreDataClass.swift */,
 				D516C8C12213DD4800A4BDAC /* Tag+CoreDataProperties.swift */,
 				D502764221FB0B8400A0DB5E /* Journal+CoreDataClass.swift */,
@@ -237,6 +242,7 @@
 		D502769421FEA1AA00A0DB5E /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				D5CCA137221698140055D264 /* UIViewController+UIImagePickerControllerDelegate.swift */,
 				D502769521FEA1CD00A0DB5E /* UIColor+NamedColor.swift */,
 				D516C8BE2213C2F600A4BDAC /* NSAttributedString+UIImage.swift */,
 				D5CCA1152215104A0055D264 /* DateFormatter+Datet.swift */,
@@ -278,6 +284,7 @@
 		D516C8BA2213B7D900A4BDAC /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				D5CCA133221697EA0055D264 /* Constants.swift */,
 				D516C8BB2213B7D900A4BDAC /* OneDayDefaults.swift */,
 			);
 			path = Utils;
@@ -289,15 +296,6 @@
 				D53782BC221113A100336646 /* PhotosCollectionViewCell.swift */,
 			);
 			path = Photos;
-			sourceTree = "<group>";
-		};
-		D53782BE22113B7600336646 /* Entry */ = {
-			isa = PBXGroup;
-			children = (
-				D53782BF22113B9E00336646 /* CreateEntryPhotosViewController.swift */,
-				D53782C222113BAF00336646 /* CreateEntryCameraViewController.swift */,
-			);
-			path = Entry;
 			sourceTree = "<group>";
 		};
 		D561691621FAD07000E00FED = {
@@ -362,7 +360,7 @@
 		E96BE83721FAD90A00266F6D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				D53782BE22113B7600336646 /* Entry */,
+				D5CCA135221698000055D264 /* AddActionViewController.swift */,
 				D50276E92202C7EE00A0DB5E /* EntryViewController.swift */,
 				D50276E72202C79300A0DB5E /* TimeLineViewController.swift */,
 				E936659322110DF900DC660A /* BaseSlidingViewController.swift */,
@@ -390,12 +388,12 @@
 		E96BE83B21FAD98500266F6D /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				D5CCA11F221543860055D264 /* Photos.storyboard */,
 				D561692E21FAD07200E00FED /* LaunchScreen.storyboard */,
 				D561692621FAD07000E00FED /* Main.storyboard */,
 				E96BE84021FADAAA00266F6D /* Setting.storyboard */,
 				D50276BC21FEF0DC00A0DB5E /* Coredata.storyboard */,
 				E96BE83E21FADA9600266F6D /* SideMenu.storyboard */,
-				D53782B822110E6800336646 /* Photos.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -542,7 +540,7 @@
 				E96BE84121FADAAA00266F6D /* Setting.storyboard in Resources */,
 				D50276BD21FEF0DC00A0DB5E /* Coredata.storyboard in Resources */,
 				D561692D21FAD07200E00FED /* Assets.xcassets in Resources */,
-				D53782B922110E6800336646 /* Photos.storyboard in Resources */,
+				D5CCA120221543860055D264 /* Photos.storyboard in Resources */,
 				E96BE83A21FAD96700266F6D /* Colors.xcassets in Resources */,
 				D561692821FAD07000E00FED /* Main.storyboard in Resources */,
 			);
@@ -620,16 +618,18 @@
 				E992EC7221FAEE6700917116 /* SideMenuViewController.swift in Sources */,
 				E992EC7821FAF4C200917116 /* CalendarViewController.swift in Sources */,
 				E992EC7421FAEE7100917116 /* TestViewController.swift in Sources */,
-				D561692521FAD07000E00FED /* MainTabBarViewController.swift in Sources */,
+				D5CCA1302216775F0055D264 /* MainTabBarViewController.swift in Sources */,
 				D516C8B52213B4CD00A4BDAC /* EntryFilter.swift in Sources */,
 				E992EC7021FAEE5B00917116 /* FilterViewController.swift in Sources */,
 				E992EC6321FAEDFD00917116 /* MatchingEntriesCell.swift in Sources */,
+				D5CCA138221698140055D264 /* UIViewController+UIImagePickerControllerDelegate.swift in Sources */,
 				D516C8BF2213C2F600A4BDAC /* NSAttributedString+UIImage.swift in Sources */,
 				E992EC7C21FB1E5500917116 /* CalendarHeaderView.swift in Sources */,
-				D561692321FAD07000E00FED /* AppDelegate.swift in Sources */,
+				D5CCA12D2216775F0055D264 /* AppDelegate.swift in Sources */,
 				E9DA39AC2203FCD30026381E /* FilterSection.swift in Sources */,
 				E992EC6C21FAEE4500917116 /* SideMenuJournalAddCell.swift in Sources */,
 				D516C8B62213B4CD00A4BDAC /* CoreDataJournalService.swift in Sources */,
+				D5CCA13A221698260055D264 /* ImageSource.swift in Sources */,
 				E992EC7F21FB2CCE00917116 /* CalendarDaysOfWeek.swift in Sources */,
 				D50276B921FED1D200A0DB5E /* OneDay.xcdatamodeld in Sources */,
 				D50276F222041DB100A0DB5E /* PhotosViewController.swift in Sources */,
@@ -638,26 +638,22 @@
 				D53782C62211447500336646 /* CoreDataManager.swift in Sources */,
 				D502769321FEA18000A0DB5E /* CoreDataStack.swift in Sources */,
 				D502765421FB0B8400A0DB5E /* Weather+CoreDataClass.swift in Sources */,
-				D561692521FAD07000E00FED /* MainTabBarViewController.swift in Sources */,
 				D502765521FB0B8400A0DB5E /* Weather+CoreDataProperties.swift in Sources */,
 				D502769621FEA1CE00A0DB5E /* UIColor+NamedColor.swift in Sources */,
-				D502765C21FB0B8400A0DB5E /* Location+CoreDataClass.swift in Sources */,
-				D502765B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift in Sources */,
+				D5CCA12E2216775F0055D264 /* Location+CoreDataClass.swift in Sources */,
+				D5CCA12F2216775F0055D264 /* Device+CoreDataProperties.swift in Sources */,
 				EC0CFB0622030A53001293B1 /* APIWeather.swift in Sources */,
-				D502765C21FB0B8400A0DB5E /* Location+CoreDataClass.swift in Sources */,
 				D516C8C22213DD4800A4BDAC /* Tag+CoreDataClass.swift in Sources */,
-				D502765B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift in Sources */,
 				E936659422110DF900DC660A /* BaseSlidingViewController.swift in Sources */,
 				D53782BD221113A100336646 /* PhotosCollectionViewCell.swift in Sources */,
 				D516C8B82213B4CD00A4BDAC /* CoreDataWeatherService.swift in Sources */,
 				D502765321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift in Sources */,
 				EC5E21AB220425390073D90E /* LocationService.swift in Sources */,
-				D561692321FAD07000E00FED /* AppDelegate.swift in Sources */,
 				D50276E82202C79300A0DB5E /* TimeLineViewController.swift in Sources */,
 				D502766221FB0D6000A0DB5E /* WeatherType.swift in Sources */,
+				D5CCA136221698000055D264 /* AddActionViewController.swift in Sources */,
 				D5CCA11B2215309C0055D264 /* String+URL.swift in Sources */,
 				D502765921FB0B8400A0DB5E /* Entry+CoreDataProperties.swift in Sources */,
-				D53782C322113BAF00336646 /* CreateEntryCameraViewController.swift in Sources */,
 				D502765A21FB0B8400A0DB5E /* Device+CoreDataClass.swift in Sources */,
 				D50276EA2202C7EE00A0DB5E /* EntryViewController.swift in Sources */,
 				D50276EC2202C82900A0DB5E /* DataStringSet.swift in Sources */,
@@ -667,7 +663,7 @@
 				D516C8B92213B4CD00A4BDAC /* CoreDataEntryService.swift in Sources */,
 				D502765821FB0B8400A0DB5E /* Entry+CoreDataClass.swift in Sources */,
 				D502765221FB0B8400A0DB5E /* Journal+CoreDataClass.swift in Sources */,
-				D53782C022113B9E00336646 /* CreateEntryPhotosViewController.swift in Sources */,
+				D5CCA134221697EA0055D264 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

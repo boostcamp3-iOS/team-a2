@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Sxp-rh-amh">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="s09-dl-epl">
                                     <size key="itemSize" width="136" height="138"/>
@@ -74,6 +74,7 @@
                                             <outlet property="dayLabel" destination="fTO-d8-guc" id="9Bw-bW-O1a"/>
                                             <outlet property="imageView" destination="8Nq-aJ-kwF" id="p8U-hw-CJl"/>
                                             <outlet property="monthAndYearLabel" destination="8dx-w9-bow" id="Jb8-3B-hPO"/>
+                                            <segue destination="tSC-Lh-YCe" kind="presentation" id="LW3-r7-bDf"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -92,14 +93,39 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="nZK-mX-d3e"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Photo" id="dbV-rg-QL9"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Photo" id="dbV-rg-QL9">
+                        <rightBarButtonItems>
+                            <barButtonItem title="camera" id="yr2-X1-jbM">
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="showCreateEntryModalViewController:" destination="lpW-5x-ilg" id="mNH-EW-ETV"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="album" id="F9T-Lu-bHw">
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="showCreateEntryModalViewController:" destination="lpW-5x-ilg" id="zMk-l2-tMS"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="photoCollectionView" destination="Sxp-rh-amh" id="Uvt-8S-ZKK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jnB-d5-cay" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1991.2" y="-982.75862068965523"/>
+            <point key="canvasLocation" x="1953" y="-993"/>
+        </scene>
+        <!--entry_detail-->
+        <scene sceneID="n7Z-1z-a78">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Coredata" referencedIdentifier="entry_detail" id="tSC-Lh-YCe" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fHf-bd-90L" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2666" y="-1073"/>
         </scene>
     </scenes>
     <resources>
