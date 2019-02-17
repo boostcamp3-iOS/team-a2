@@ -193,8 +193,11 @@ class EntryInformationViewController: UIViewController {
             
             LocationService.service.currentAddress(
                 success: {[weak self] data in
-                    location.address = data.results[0].fullAddress
-                    
+                    if data.results.isEmpty {
+                        location.address = "위치 정보를 불러올 수 없습니다."
+                    } else {
+                        location.address = data.results[0].fullAddress
+                    }
                     DispatchQueue.main.sync {
                         self?.settingTableData[0][0].detail = location.address
                         self?.tableView.reloadData()
