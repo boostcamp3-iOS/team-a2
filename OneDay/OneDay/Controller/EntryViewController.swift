@@ -21,7 +21,7 @@ class EntryViewController: UIViewController {
     @IBOutlet weak var weatherImageView: UIImageView!
     @IBOutlet weak var weatherLabel: UILabel!
     
-    var coreDataStack: CoreDataStack!
+    var coreDataManager: CoreDataManager = CoreDataManager.shared
     var entry: Entry!
     
     ///드레그시 사용되는 미리보기 뷰
@@ -94,9 +94,7 @@ class EntryViewController: UIViewController {
             weatherImageView.image = UIImage(named: type)
             weatherLabel.text = WeatherType(rawValue: type)?.summary
         } else {
-            let weather = Weather(context: coreDataStack.managedContext)
-            entry.weather = weather
-            
+            let weather = coreDataManager.weather()
             WeatherService.service.weather(
                 latitude: LocationService.service.latitude,
                 longitude: LocationService.service.longitude,
@@ -115,39 +113,9 @@ class EntryViewController: UIViewController {
                 errorHandler: { [weak self] in
                     self?.showAlert(title: "Error", message: "날씨 정보를 불러올 수 없습니다.")
             })
+            entry.weather = weather
+            coreDataManager.save()
         }
-    }
-    
-    // MARK: - Actions
-    
-    @IBAction func showPhoto(_ sender: UIButton) {
-        let pickerViewController = UIImagePickerController()
-        pickerViewController.delegate = self
-        pickerViewController.sourceType = .photoLibrary
-        pickerViewController.allowsEditing = true
-        present(pickerViewController, animated: true, completion: nil)
-    }
-    
-    @IBAction func saveAndDismiss(_ sender: UIButton) {
-        guard let content = textView.attributedText else {
-            return
-        }
-        entry.contents = content
-        
-        let title: String
-        let stringContent = content.string
-        if stringContent.count > 1 {
-            let start = stringContent.startIndex
-            let end = stringContent.index(start, offsetBy: min(stringContent.count - 1, 40))
-            title = String(stringContent[start...end])
-        } else {
-            title = "새로운 엔트리"
-        }
-        
-        entry.title = title
-        entry.favorite = false
-        coreDataStack.saveContext()
-        self.dismiss(animated: true, completion: nil)
     }
     
     func showAlert(title: String = "", message: String = "") {
@@ -162,6 +130,41 @@ class EntryViewController: UIViewController {
         
         self.present(alertController, animated: true, completion: nil)
     }
+
+    // MARK: - Actions
+    @IBAction func showPhoto(_ sender: UIButton) {
+        let pickerViewController = UIImagePickerController()
+        pickerViewController.delegate = self
+        pickerViewController.sourceType = .photoLibrary
+        pickerViewController.allowsEditing = true
+        present(pickerViewController, animated: true, completion: nil)
+    }
+    
+    @IBAction func saveAndDismiss(_ sender: UIButton) {
+        guard let content = textView.attributedText else {
+            return
+        }
+        entry.contents = content
+        
+        let stringContent = content.string
+        if stringContent.count > 1 {
+            let start = stringContent.startIndex
+            let end = stringContent.index(start, offsetBy: min(stringContent.count - 1, 40))
+            entry.title = String(stringContent[start...end])
+        }
+        
+        entry.updatedDate = Date()
+        
+        if let thumbnailImage = content.firstImage {
+            entry.thumbnail = thumbnailImage.saveToFile()
+        } else {
+            entry.thumbnail = nil
+        }
+        
+        coreDataManager.save()
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 // MARK: - Extention
@@ -176,23 +179,24 @@ extension EntryViewController: UIImagePickerControllerDelegate, UINavigationCont
         _ picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]
     ) {
-        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        insertAtTextViewCursor(attributedString: createAttributedString(with: image))
+        var pickedImage: UIImage?
+        if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            pickedImage = editedImage
+        } else if let originImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            pickedImage = originImage
+        }
+        
+        if let pickedImage = pickedImage {
+            let originWidth = pickedImage.size.width
+            let scaleFactor = originWidth / (textView.frame.size.width - 10)
+            let scaledImage =  UIImage(cgImage: pickedImage.cgImage!, scale: scaleFactor, orientation: .up)
+            insertAtTextViewCursor(attributedString: scaledImage.attributedString)
+        }
         picker.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func tapAndHideKeyboard(_ sender: UITapGestureRecognizer) {
+    @IBAction func hideKeyboardDidTap(_ sender: UITapGestureRecognizer) {
         view.endEditing(true)
-    }
-    
-    fileprivate func createAttributedString(with image: UIImage) -> NSAttributedString {
-        let textAttachment = NSTextAttachment()
-        textAttachment.image = image
-        let oldWidth = textAttachment.image!.size.width
-        let scaleFactor = oldWidth / (textView.frame.size.width - 10)
-        textAttachment.image = UIImage(cgImage: textAttachment.image!.cgImage!, scale: scaleFactor, orientation: .up)
-        let attrStringWithImage = NSAttributedString(attachment: textAttachment)
-        return attrStringWithImage
     }
     
     fileprivate func insertAtTextViewCursor(attributedString: NSAttributedString) {
