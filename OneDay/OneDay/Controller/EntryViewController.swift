@@ -29,9 +29,9 @@ class EntryViewController: UIViewController {
     lazy var isImageSelected = false
     
     ///하단 뷰 드래그시 사용되는 프로퍼티
-    var topConstant = CGFloat(0)            /// 하단 뷰 최상단
-    var bottomConstant = CGFloat(520)       /// 하단 뷰 최하단
-    var dragUpChangePoint = CGFloat(400)    ///하단 뷰 위로 드래그시 위로 붙는 기준
+    var topConstant: CGFloat = 0            /// 하단 뷰 최상단
+    var bottomConstant: CGFloat = 520       /// 하단 뷰 최하단
+    var dragUpChangePoint: CGFloat = 400    ///하단 뷰 위로 드래그시 위로 붙는 기준
     var isBottom = true                     ///하단 뷰가 아래에 있는지 여부
     var willPositionChange = false          ///드래그 종료시 변경되야하는지 여부
     
@@ -41,7 +41,7 @@ class EntryViewController: UIViewController {
     fileprivate var bottomViewBottomConstraint: NSLayoutConstraint!
     
     var bottomViewController: EntryInformationViewController!
-    var sendDelegate: stateChangeDelegate?
+    weak var statusChangeDelegate: StateChangeDelegate?
     
     // MARK: - Life cycle
     
@@ -195,7 +195,7 @@ class EntryViewController: UIViewController {
     func changeBottomTableViewConstraints() {
         if isBottom, willPositionChange {
             isBottom = false
-            sendDelegate?.sendNotification()
+            statusChangeDelegate?.changeState()
             bottomContainerView.gestureRecognizers?.removeLast()
             self.bottomViewTopConstraint.constant = self.topConstant
             self.bottomViewBottomConstraint.constant = self.topConstant
@@ -224,8 +224,8 @@ class EntryViewController: UIViewController {
         if segue.identifier == "bottomViewSegue" {
             if let bottomViewController = segue.destination as? EntryInformationViewController {
                 bottomViewController.entryViewController = self
-                sendDelegate = bottomViewController
-                bottomViewController.sendDelegate = self
+                statusChangeDelegate = bottomViewController
+                bottomViewController.statusChangeDelegate = self
             }
         }
     }
@@ -346,8 +346,8 @@ extension EntryViewController: UITextDragDelegate {
     }
 }
 
-extension EntryViewController: stateChangeDelegate {
-    func sendNotification() {
+extension EntryViewController: StateChangeDelegate {
+    func changeState() {
         let gesture = UIPanGestureRecognizer(
             target: self,
             action: #selector(didDrag(gestureRecognizer:))

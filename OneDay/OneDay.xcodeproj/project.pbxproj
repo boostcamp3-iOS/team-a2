@@ -72,11 +72,11 @@
 		E992EC7F21FB2CCE00917116 /* CalendarDaysOfWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7E21FB2CCE00917116 /* CalendarDaysOfWeek.swift */; };
 		E9DA39AC2203FCD30026381E /* FilterSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DA39AB2203FCD20026381E /* FilterSection.swift */; };
 		EC0BB2252213E26F00E2BB6F /* EditorSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0BB2242213E26F00E2BB6F /* EditorSettingTableViewCell.swift */; };
-		EC0BB2272213FCEA00E2BB6F /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0BB2262213FCEA00E2BB6F /* Setting.swift */; };
+		EC0BB2272213FCEA00E2BB6F /* EntrySetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0BB2262213FCEA00E2BB6F /* EntrySetting.swift */; };
 		EC0BB22C2215069500E2BB6F /* CustomPointAnnotaion.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0BB22B2215069500E2BB6F /* CustomPointAnnotaion.swift */; };
 		EC0BB22E22150EA300E2BB6F /* APILocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0BB22D22150EA300E2BB6F /* APILocation.swift */; };
 		EC0BB234221699F500E2BB6F /* EntryInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0BB233221699F500E2BB6F /* EntryInformationViewController.swift */; };
-		EC0BB2362216A34700E2BB6F /* SendNotificationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0BB2352216A34700E2BB6F /* SendNotificationProtocol.swift */; };
+		EC0BB2362216A34700E2BB6F /* StateChangeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0BB2352216A34700E2BB6F /* StateChangeProtocol.swift */; };
 		EC0CFB0422030A29001293B1 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0322030A29001293B1 /* WeatherService.swift */; };
 		EC0CFB0622030A53001293B1 /* APIWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0522030A53001293B1 /* APIWeather.swift */; };
 		EC0CFB0922030C1D001293B1 /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0822030C1D001293B1 /* NetworkProvider.swift */; };
@@ -167,11 +167,11 @@
 		E992EC7E21FB2CCE00917116 /* CalendarDaysOfWeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDaysOfWeek.swift; sourceTree = "<group>"; };
 		E9DA39AB2203FCD20026381E /* FilterSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSection.swift; sourceTree = "<group>"; };
 		EC0BB2242213E26F00E2BB6F /* EditorSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorSettingTableViewCell.swift; sourceTree = "<group>"; };
-		EC0BB2262213FCEA00E2BB6F /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
+		EC0BB2262213FCEA00E2BB6F /* EntrySetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntrySetting.swift; sourceTree = "<group>"; };
 		EC0BB22B2215069500E2BB6F /* CustomPointAnnotaion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPointAnnotaion.swift; sourceTree = "<group>"; };
 		EC0BB22D22150EA300E2BB6F /* APILocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APILocation.swift; sourceTree = "<group>"; };
 		EC0BB233221699F500E2BB6F /* EntryInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryInformationViewController.swift; sourceTree = "<group>"; };
-		EC0BB2352216A34700E2BB6F /* SendNotificationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendNotificationProtocol.swift; sourceTree = "<group>"; };
+		EC0BB2352216A34700E2BB6F /* StateChangeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateChangeProtocol.swift; sourceTree = "<group>"; };
 		EC0CFB0322030A29001293B1 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		EC0CFB0522030A53001293B1 /* APIWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIWeather.swift; sourceTree = "<group>"; };
 		EC0CFB0822030C1D001293B1 /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
@@ -226,7 +226,7 @@
 				D50276EB2202C82900A0DB5E /* DataStringSet.swift */,
 				EC0CFB0522030A53001293B1 /* APIWeather.swift */,
 				E9DA39AB2203FCD20026381E /* FilterSection.swift */,
-				EC0BB2262213FCEA00E2BB6F /* Setting.swift */,
+				EC0BB2262213FCEA00E2BB6F /* EntrySetting.swift */,
 				EC0BB22D22150EA300E2BB6F /* APILocation.swift */,
 			);
 			path = Model;
@@ -387,7 +387,7 @@
 				D53782BE22113B7600336646 /* Entry */,
 				D50276E92202C7EE00A0DB5E /* EntryViewController.swift */,
 				EC0BB233221699F500E2BB6F /* EntryInformationViewController.swift */,
-				EC0BB2352216A34700E2BB6F /* SendNotificationProtocol.swift */,
+				EC0BB2352216A34700E2BB6F /* StateChangeProtocol.swift */,
 				D50276E72202C79300A0DB5E /* TimeLineViewController.swift */,
 				E936659322110DF900DC660A /* BaseSlidingViewController.swift */,
 				E992EC6F21FAEE5B00917116 /* FilterViewController.swift */,
@@ -709,9 +709,9 @@
 				D50276F422041DBA00A0DB5E /* MapViewController.swift in Sources */,
 				D502765D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift in Sources */,
 				EC0BB22C2215069500E2BB6F /* CustomPointAnnotaion.swift in Sources */,
-				EC0BB2272213FCEA00E2BB6F /* Setting.swift in Sources */,
+				EC0BB2272213FCEA00E2BB6F /* EntrySetting.swift in Sources */,
 				EC51AD0622193E3700049686 /* CoreDataLocationService.swift in Sources */,
-				EC0BB2362216A34700E2BB6F /* SendNotificationProtocol.swift in Sources */,
+				EC0BB2362216A34700E2BB6F /* StateChangeProtocol.swift in Sources */,
 				D516C8B92213B4CD00A4BDAC /* CoreDataEntryService.swift in Sources */,
 				D502765821FB0B8400A0DB5E /* Entry+CoreDataClass.swift in Sources */,
 				D502765221FB0B8400A0DB5E /* Journal+CoreDataClass.swift in Sources */,

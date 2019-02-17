@@ -11,29 +11,30 @@ import MapKit
 
 class EntryInformationViewController: UIViewController {
     
-    @IBOutlet weak var bottomTableView: UITableView!
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var mapView: MKMapView!
     
     let settingIdentifier = "settingCellIdentifier"
-    var settingTableData: [[Setting]] = [[],[],[]]  /// [section][row]
+    var settingTableData: [[EntrySetting]] = [[],[],[]]  /// [section][row]
     
     let regionRadius: CLLocationDegrees = 1000
     
     let generator = UIImpactFeedbackGenerator(style: UIImpactFeedbackGenerator.FeedbackStyle.heavy)
     
-    var dragDownChangePoint = CGFloat(100) ///하단 뷰 아래로 드래그시 아래로 붙는 기준
-    var willPositionChange = false      ///드래그 종료시 변경되야하는지 여부
+    var dragDownChangePoint: CGFloat = 100  ///하단 뷰 아래로 드래그시 아래로 붙는 기준
+    var willPositionChange = false          ///드래그 종료시 변경되야하는지 여부
     var canScroll = false
     
     var entryViewController: EntryViewController!
-    var sendDelegate: stateChangeDelegate?
+    weak var statusChangeDelegate: StateChangeDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
         setUpTable()
-        setUpSettingTableViewData()
+        setUpSettingTableBaseSectionData()
+        setUpSettingTableDaySectionData()
+        setUpSettingTableEctSectionData()
         setUpDate()
         setUpWeather()
         setUpLocation()
@@ -42,50 +43,92 @@ class EntryInformationViewController: UIViewController {
     }
     
     func setUpTable() {
-        bottomTableView.delegate = self
-        bottomTableView.dataSource = self
-        bottomTableView.register(
+        tableView.register(
             EditorSettingTableViewCell.self,
             forCellReuseIdentifier: settingIdentifier
         )
-        bottomTableView.isScrollEnabled = false
+        tableView.isScrollEnabled = false
     }
     
-    func setUpSettingTableViewData() {
-        let location = Setting("위치", "", UIImage(named: "setting_location"))
+    func setUpSettingTableBaseSectionData() {
+        let location = EntrySetting(
+            title: "위치",
+            detail: "",
+            image: UIImage(named: "setting_location")
+        )
         location.hasDisclouserIndicator = true
         settingTableData[0].append(location)
         
-        let tag = Setting("태그", "추가...", UIImage(named: "setting_tag"))
+        let tag = EntrySetting(
+            title: "태그",
+            detail: "추가...",
+            image: UIImage(named: "setting_tag")
+        )
         tag.hasDisclouserIndicator = true
         settingTableData[0].append(tag)
         
-        let journal = Setting("일기장", "일기장", UIImage(named: "setting_journal"))
+        let journal = EntrySetting(
+            title: "일기장",
+            detail: "일기장",
+            image: UIImage(named: "setting_journal")
+        )
         journal.hasDisclouserIndicator = true
         settingTableData[0].append(journal)
         
-        let date = Setting("날짜", "", UIImage(named: "setting_date"))
+        let date = EntrySetting(
+            title: "날짜",
+            detail: "",
+            image: UIImage(named: "setting_date")
+        )
         date.hasDisclouserIndicator = true
         settingTableData[0].append(date)
         
         if entryViewController.entry.favorite {
-            let favorite = Setting("즐겨찾기", "즐겨찾기 해제", UIImage(named: "setting_like"))
+            let favorite = EntrySetting(
+                title: "즐겨찾기",
+                detail: "즐겨찾기 해제",
+                image: UIImage(named: "setting_like")
+            )
             settingTableData[0].append(favorite)
         } else {
-            let favorite = Setting("즐겨찾기", "즐겨찾기 설정", UIImage(named: "setting_dislike"))
+            let favorite = EntrySetting(
+                title: "즐겨찾기",
+                detail: "즐겨찾기 설정",
+                image: UIImage(named: "setting_dislike")
+            )
             settingTableData[0].append(favorite)
         }
-        
-        let thisDay = Setting("이 날에", "thisday", UIImage(named: "setting_thisday"))
+    }
+    
+    func setUpSettingTableDaySectionData() {
+        let thisDay = EntrySetting(
+            title: "이 날에",
+            detail: "thisday",
+            image: UIImage(named: "setting_thisday")
+        )
         thisDay.hasDisclouserIndicator = true
         settingTableData[1].append(thisDay)
-        let today = Setting("이 날", "today", UIImage(named: "setting_today"))
+        let today = EntrySetting(
+            title: "이 날",
+            detail: "today",
+            image: UIImage(named: "setting_today")
+        )
         today.hasDisclouserIndicator = true
         settingTableData[1].append(today)
-        
-        let weather = Setting("날씨", "", UIImage(named: "setting_weather"))
+    }
+    
+    func setUpSettingTableEctSectionData() {
+        let weather = EntrySetting(
+            title: "날씨",
+            detail: "",
+            image: UIImage(named: "setting_weather")
+        )
         settingTableData[2].append(weather)
-        let device = Setting("일기를 작성한 기기", "", UIImage(named: "setting_device"))
+        let device = EntrySetting(
+            title: "일기를 작성한 기기",
+            detail: "",
+            image: UIImage(named: "setting_device")
+        )
         settingTableData[2].append(device)
     }
     
@@ -125,7 +168,7 @@ class EntryInformationViewController: UIViewController {
                         } else {
                             self?.settingTableData[2][0].detail = "\(weather.tempature)℃"
                         }
-                        self?.bottomTableView.reloadData()
+                        self?.tableView.reloadData()
                     }
                 },
                 errorHandler: { [weak self] in
@@ -148,7 +191,7 @@ class EntryInformationViewController: UIViewController {
                     location.longitude = LocationService.service.longitude
                     DispatchQueue.main.sync {
                         self?.settingTableData[0][0].detail = location.address
-                        self?.bottomTableView.reloadData()
+                        self?.tableView.reloadData()
                     }
                 },
                 errorHandler: { [weak self] in
@@ -251,12 +294,10 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
             if dragDownChangePoint * -1 > scrollView.contentOffset.y, willPositionChange == false {
                 willPositionChange = true
                 generator.impactOccurred()
-                print(1)
             }
             if dragDownChangePoint * -1 <= scrollView.contentOffset.y, willPositionChange == true {
                 willPositionChange = false
                 generator.impactOccurred()
-                print(2)
             }
         }
     }
@@ -264,9 +305,9 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if willPositionChange {
             canScroll = false
-            bottomTableView.isScrollEnabled = false
+            tableView.isScrollEnabled = false
             willPositionChange = false
-            sendDelegate?.sendNotification()
+            statusChangeDelegate?.changeState()
         }
     }
 }
@@ -283,22 +324,23 @@ extension EntryInformationViewController: MKMapViewDelegate {
             annotationView?.annotation = annotation
         }
         
-        if let customPointAnnotation = annotation as? CustomPointAnnotation {
-            annotationView?.image = UIImage(named: customPointAnnotation.imageName)
-        } else {
-            preconditionFailure("CustomPointAnnotation cast error!")
+        guard let customPointAnnotation = annotation as? CustomPointAnnotation else {
+            return annotationView
         }
+        annotationView?.image = UIImage(named: customPointAnnotation.imageName)
         
         return annotationView
     }
 }
 
-extension EntryInformationViewController: stateChangeDelegate {
-    func sendNotification() {
-        bottomTableView.isScrollEnabled = true
+extension EntryInformationViewController: StateChangeDelegate {
+    func changeState() {
+        tableView.isScrollEnabled = true
         canScroll = true
     }
 }
+
+// MARK: - enum
 
 private enum Section: Int {
     case base
