@@ -64,11 +64,6 @@ class EntryViewController: UIViewController {
         textView.attributedText = entry.contents
         textView.textDragDelegate = self
         textView.delegate = self
-        
-        if entry != nil {
-            setUpDate()
-            setUpWeather()
-        }
     }
     
     func setUpDate() {
@@ -107,7 +102,6 @@ class EntryViewController: UIViewController {
         ).isActive = true
     }
     
-
     func setUpBottomView() {
         bottomContainerView.translatesAutoresizingMaskIntoConstraints = false
         bottomContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
