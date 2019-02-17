@@ -42,6 +42,8 @@ class EntryInformationViewController: UIViewController {
         setUpMap()
     }
     
+    // MARK: - Set up
+    
     func setUpTable() {
         tableView.register(
             EditorSettingTableViewCell.self,
@@ -182,13 +184,14 @@ class EntryInformationViewController: UIViewController {
             settingTableData[0][0].detail = location.address
         } else {
             let location = CoreDataManager.shared.location()
+            location.latitude = LocationService.service.latitude
+            location.longitude = LocationService.service.longitude
             entryViewController.entry.location = location
             
             LocationService.service.currentAddress(
                 success: {[weak self] data in
                     location.address = data.results[0].fullAddress
-                    location.latitude = LocationService.service.latitude
-                    location.longitude = LocationService.service.longitude
+                    
                     DispatchQueue.main.sync {
                         self?.settingTableData[0][0].detail = location.address
                         self?.tableView.reloadData()
@@ -215,17 +218,28 @@ class EntryInformationViewController: UIViewController {
     }
     
     func setUpMap() {
-        let initialLocation = CLLocation(
-            latitude: LocationService.service.latitude,
-            longitude: LocationService.service.longitude
-        )
-        centerMapOnLocation(location: initialLocation)
-        
+        var initialLocation = CLLocation()
         let point = CustomPointAnnotation()
-        point.coordinate = CLLocationCoordinate2D(
-            latitude: LocationService.service.latitude,
-            longitude: LocationService.service.longitude
-        )
+        if let location = entryViewController.entry.location {
+            initialLocation = CLLocation(
+                latitude: location.latitude,
+                longitude: location.longitude
+            )
+            point.coordinate = CLLocationCoordinate2D(
+                latitude: location.latitude,
+                longitude: location.longitude
+            )
+        } else {
+            initialLocation = CLLocation(
+                latitude: LocationService.service.latitude,
+                longitude: LocationService.service.longitude
+            )
+            point.coordinate = CLLocationCoordinate2D(
+                latitude: LocationService.service.latitude,
+                longitude: LocationService.service.longitude
+            )
+        }
+        centerMapOnLocation(location: initialLocation)
         point.imageName = "setting_location"
         mapView.addAnnotation(point)
         mapView.delegate = self

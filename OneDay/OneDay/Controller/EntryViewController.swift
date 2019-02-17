@@ -54,7 +54,7 @@ class EntryViewController: UIViewController {
         setUpBottomView()
     }
     
-    // MARK: - Setup
+    // MARK: - Set up
     
     func setUpDate() {
         var dateSet: DateStringSet = DateStringSet(date: Date())
