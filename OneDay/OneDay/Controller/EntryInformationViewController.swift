@@ -165,8 +165,11 @@ class EntryInformationViewController: UIViewController {
                     weather.weatherId = UUID.init()
                     DispatchQueue.main.sync {
                         guard let type = weather.type else { return }
-                        if let summary = WeatherType(rawValue: type)?.summary {
-                            self?.settingTableData[2][0].detail = "\(weather.tempature)℃ \(summary)"
+                        if let weatherType = WeatherType(rawValue: type) {
+                            self?.settingTableData[2][0].detail =
+                                "\(weather.tempature)℃ \(weatherType.summary)"
+                            self?.settingTableData[2][0].image =
+                                UIImage(named: "setting-\(weatherType.rawValue)")
                         } else {
                             self?.settingTableData[2][0].detail = "\(weather.tempature)℃"
                         }
