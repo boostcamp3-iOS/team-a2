@@ -64,12 +64,19 @@ class CoreDataStack {
     }
     
     // 변경사항 저장
-    func saveContext () {
-        
-        do {
-            try managedContext.save()
-        } catch let error as NSError {
-            print("Unresolved error \(error), \(error.userInfo)")
+    func saveContext(successHandler: (() -> Void)? = nil, errorHandler: ((NSError) -> Void)? = nil) {
+        if managedContext.hasChanges {
+            do {
+                try managedContext.save()
+                if let successHandler = successHandler {
+                    successHandler()
+                }
+            } catch let error as NSError {
+                print("Unresolved error \(error), userInfo: \(error.userInfo)")
+                if let errorHandler = errorHandler {
+                    errorHandler(error)
+                }
+            }
         }
     }
 }

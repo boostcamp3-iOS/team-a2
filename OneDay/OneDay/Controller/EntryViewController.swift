@@ -19,6 +19,9 @@ class EntryViewController: UIViewController {
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var weatherImageView: UIImageView!
     @IBOutlet weak var weatherLabel: UILabel!
+    @IBOutlet weak var blockView: UIView!
+    @IBOutlet weak var checkImageView: UIImageView!
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     
     var entry: Entry!
     
@@ -28,6 +31,7 @@ class EntryViewController: UIViewController {
     private let previewLabel = UILabel()
     
     lazy var isImageSelected = false
+    private var shouldSaveEntry = false
     
     // MARK: - Life cycle
     override func viewDidLoad() {
@@ -142,7 +146,55 @@ extension EntryViewController {
     }
     
     @IBAction func didTapDone(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
+        if shouldSaveEntry {
+            self.blockView.isHidden = false
+            
+            UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [.calculationModeLinear], animations: {
+                UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1, animations: {
+                    self.activityIndicatorView.startAnimating()
+                    self.blockView.alpha = 1
+                })
+            }, completion: { _ in
+                guard let contents = self.textView.attributedText else { return }
+                
+                // 이미지 파일 변환 및 파일로 저장, CoreData 저장
+                self.entry.contents = contents
+                self.entry.updatedDate = Date()
+                
+                // title로 사용할 string 추출
+                let stringContent = contents.string
+                if stringContent.count > 1 {
+                    let start = stringContent.startIndex
+                    let end = stringContent.index(start, offsetBy: min(stringContent.count - 1, Constants.maximumNumberOfEntryTitle))
+                    self.entry.title = String(stringContent[start...end])
+                }
+                
+                // thumbnail image 추출
+                if let thumbnailImage = contents.firstImage {
+                    self.entry.thumbnail = thumbnailImage.saveToFile(fileName: self.entry.thmbnailFileName)
+                } else {
+                    self.entry.thumbnail = nil
+                }
+                CoreDataManager.shared.save(successHandler: {
+                    UIView.animate(withDuration: 0.5, animations: {
+                        self.activityIndicatorView.stopAnimating()
+                        self.checkImageView.isHidden = false
+                        self.checkImageView.alpha = 1
+                    }, completion: { _ in
+                        self.dismiss(animated: true, completion: nil)
+                    })
+                }, errorHandler: { _ in
+                    let alert = UIAlertController(title: "저장 실패", message: "다시 시도해주세요", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: .cancel , handler: { _ in
+                        self.blockView.isHidden = true
+                    }))
+                    self.present(alert, animated: true)
+                })
+            })
+            
+        } else {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     @IBAction func hideKeyboardDidTap(_ sender: UITapGestureRecognizer) {
@@ -152,9 +204,8 @@ extension EntryViewController {
 
 // MARK: UITextViewDelegate
 extension EntryViewController: UITextViewDelegate {
-    func textViewDidEndEditing(_ textView: UITextView) {
-        guard let content = textView.attributedText else { return }
-        CoreDataManager.shared.updateContents(entry: entry, contents: content)
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        shouldSaveEntry = true
     }
 }
 

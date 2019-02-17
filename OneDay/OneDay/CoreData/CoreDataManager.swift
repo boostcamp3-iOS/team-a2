@@ -56,11 +56,14 @@ final class CoreDataManager {
         return uuid == defaultJournalUUID
     }
 
-    func save() {
-        if coreDataStack.managedContext.hasChanges {
-            coreDataStack.saveContext()
+    func save(successHandler: (() -> Void)? = nil, errorHandler: ((NSError) -> Void)? = nil) {
+        
+        coreDataStack.saveContext(successHandler: {
             NotificationCenter.default.post(name: CoreDataManager.DidChangedCoredDataNotification, object: nil)
-        }
+            if let successHandler = successHandler {
+                successHandler()
+            }
+        }, errorHandler: errorHandler)
     }
 }
 
@@ -132,13 +135,12 @@ extension CoreDataManager : CoreDataJournalService {
     
     func remove(journal: Journal) {
         managedContext.delete(journal)
-        coreDataStack.saveContext()
+        save()
     }
 }
 
 // Entries
 extension CoreDataManager: CoreDataEntryService {
-    
     // 모든 저널에 포함된 Entries의 개수
     var numberOfEntries: Int {
         return journals.reduce(0, { $0 + ($1.entries?.count ?? 0) })
@@ -223,9 +225,9 @@ extension CoreDataManager: CoreDataEntryService {
         }
     }
     
-    func updateContents(entry: Entry, contents: NSAttributedString) {
-        // 부하가 될 법한 부분 Background 에서 처리 : 이미지 파일 변환 및 파일로 저장, CoreData 저장
+    func updateContents(entry: Entry, contents: NSAttributedString, completion: (() -> Void), error: ((Error) -> Void)?) {
         DispatchQueue.global().async {
+            // 부하가 될 법한 부분 Background 에서 처리 : 이미지 파일 변환 및 파일로 저장, CoreData 저장
             entry.contents = contents
             entry.updatedDate = Date()
             
@@ -249,7 +251,7 @@ extension CoreDataManager: CoreDataEntryService {
     
     func remove(entry: Entry) {
         managedContext.delete(entry)
-        coreDataStack.saveContext()
+        save()
     }
     
     // filter type 별로 검색된 FetchedResultController
