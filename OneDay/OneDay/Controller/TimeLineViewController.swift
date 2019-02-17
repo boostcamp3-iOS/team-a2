@@ -72,18 +72,6 @@ class TimeLineViewController: UIViewController {
     @IBAction func insertEntry() {
         _ = entry()
     }
-    
-    func entry() -> Entry {
-        let entry = Entry(context: self.coreDataStack.managedContext)
-        entry.title = "새로운 메세지"
-        entry.date = Date()
-        entry.entryId = UUID.init()
-        entry.journal = journal
-        entry.favorite = false
-        
-        self.coreDataStack.saveContext()
-        return entry
-    }
 }
 
 extension TimeLineViewController: UITableViewDelegate, UITableViewDataSource {
@@ -128,7 +116,7 @@ extension TimeLineViewController: UITableViewDelegate, UITableViewDataSource {
         dateFormatter.locale = Locale.init(identifier: "ko")
         dateFormatter.timeZone = TimeZone.current
         dateFormatter.dateFormat = "YYYY-MM-dd"
-        return dateFormatter.string(from: entry.date ?? Date())
+        return dateFormatter.string(from: entry.date)
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

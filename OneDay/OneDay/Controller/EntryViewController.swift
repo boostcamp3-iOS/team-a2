@@ -19,7 +19,6 @@ class EntryViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var bottomContainerView: UIView!
     
-    var coreDataManager: CoreDataManager = CoreDataManager.shared
     var entry: Entry!
     
     ///드레그시 사용되는 미리보기 뷰
@@ -41,8 +40,8 @@ class EntryViewController: UIViewController {
     fileprivate var bottomViewTopConstraint: NSLayoutConstraint!
     fileprivate var bottomViewBottomConstraint: NSLayoutConstraint!
     
-    var bottomViewController: BottomViewController!
-    var sendDelegate: SendNotificationDelegate?
+    var bottomViewController: EntryInformationViewController!
+    var sendDelegate: stateChangeDelegate?
     
     // MARK: - Life cycle
     
@@ -165,21 +164,8 @@ class EntryViewController: UIViewController {
             entry.thumbnail = nil
         }
         
-        coreDataManager.save()
+        CoreDataManager.shared.save()
         self.dismiss(animated: true, completion: nil)
-    }
-    
-    func showAlert(title: String = "", message: String = "") {
-        let alertController = UIAlertController(
-            title: title,
-            message: message,
-            preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(
-            title: "확인",
-            style: .default,
-            handler: nil))
-        
-        self.present(alertController, animated: true, completion: nil)
     }
     
     // MARK: - Gesture
@@ -236,7 +222,7 @@ class EntryViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "bottomViewSegue" {
-            if let bottomViewController = segue.destination as? BottomViewController {
+            if let bottomViewController = segue.destination as? EntryInformationViewController {
                 bottomViewController.entryViewController = self
                 sendDelegate = bottomViewController
                 bottomViewController.sendDelegate = self
@@ -360,7 +346,7 @@ extension EntryViewController: UITextDragDelegate {
     }
 }
 
-extension EntryViewController: SendNotificationDelegate {
+extension EntryViewController: stateChangeDelegate {
     func sendNotification() {
         let gesture = UIPanGestureRecognizer(
             target: self,

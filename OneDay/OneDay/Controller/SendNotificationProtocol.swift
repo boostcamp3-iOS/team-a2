@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol SendNotificationDelegate {
+protocol stateChangeDelegate {
     func sendNotification()
 }

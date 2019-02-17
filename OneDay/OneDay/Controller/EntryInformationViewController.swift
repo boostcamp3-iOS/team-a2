@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class BottomViewController: UIViewController {
+class EntryInformationViewController: UIViewController {
     
     @IBOutlet weak var bottomTableView: UITableView!
     @IBOutlet weak var mapView: MKMapView!
@@ -26,7 +26,7 @@ class BottomViewController: UIViewController {
     var canScroll = false
     
     var entryViewController: EntryViewController!
-    var sendDelegate: SendNotificationDelegate?
+    var sendDelegate: stateChangeDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,16 +93,8 @@ class BottomViewController: UIViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko-KR")
         dateFormatter.dateFormat = "a h:mm, YYYY년 MM월 dd일"
-        if let entryDate = entryViewController.entry.date {
-            let fullDate = dateFormatter.string(from: entryDate)
-            settingTableData[0][3].detail = fullDate
-        } else {
-            entryViewController.entry.date = Date()
-            if let entryDate = entryViewController.entry.date {
-                let fullDate = dateFormatter.string(from: entryDate)
-                settingTableData[0][3].detail = fullDate
-            }
-        }
+        let fullDate = dateFormatter.string(from: entryViewController.entry.date)
+        settingTableData[0][3].detail = fullDate
     }
     
     func setUpWeather() {
@@ -115,7 +107,7 @@ class BottomViewController: UIViewController {
                 settingTableData[2][0].detail = "\(weather.tempature)℃"
             }
         } else {
-            let weather = Weather(context: entryViewController.coreDataStack.managedContext)
+            let weather = CoreDataManager.shared.weather()
             entryViewController.entry.weather = weather
             
             WeatherService.service.weather(
@@ -146,7 +138,7 @@ class BottomViewController: UIViewController {
         if let location = entryViewController.entry.location {
             settingTableData[0][0].detail = location.address
         } else {
-            let location = Location(context: entryViewController.coreDataStack.managedContext)
+            let location = CoreDataManager.shared.location()
             entryViewController.entry.location = location
             
             LocationService.service.currentAddress(
@@ -154,7 +146,6 @@ class BottomViewController: UIViewController {
                     location.address = data.results[0].fullAddress
                     location.latitude = LocationService.service.latitude
                     location.longitude = LocationService.service.longitude
-                    location.locId = UUID.init()
                     DispatchQueue.main.sync {
                         self?.settingTableData[0][0].detail = location.address
                         self?.bottomTableView.reloadData()
@@ -172,9 +163,8 @@ class BottomViewController: UIViewController {
                 settingTableData[2][1].detail = "\(entryDeviceName), \(entryDeviceModel)"
             }
         } else {
-            let device = Device(context: entryViewController.coreDataStack.managedContext)
+            let device = CoreDataManager.shared.device()
             entryViewController.entry.device = device
-            device.deviceId = UUID.init()
             device.name = UIDevice.current.name
             device.model = UIDevice.current.model
             settingTableData[2][1].detail = "\(UIDevice.current.name), \(UIDevice.current.model)"
@@ -211,7 +201,7 @@ class BottomViewController: UIViewController {
 
 }
 
-extension BottomViewController: UITableViewDataSource, UITableViewDelegate {
+extension EntryInformationViewController: UITableViewDataSource, UITableViewDelegate {
     
     // MARK: TableView
     
@@ -220,23 +210,21 @@ extension BottomViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let section = Section(rawValue: section) else { return 0 }
         switch section {
-        case 0:
+        case .base:
             return 5
-        case 1:
+        case .day, .ect:
             return 2
-        case 2:
-            return 2
-        default:
-            return 0
         }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        guard let section = Section(rawValue: section) else { return 0 }
         switch section {
-        case 0:
+        case .base:
             return 0
-        default:
+        case .day, .ect:
             return 20
         }
     }
@@ -283,7 +271,7 @@ extension BottomViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-extension BottomViewController: MKMapViewDelegate {
+extension EntryInformationViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseIdentifier = "pin"
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
@@ -305,9 +293,15 @@ extension BottomViewController: MKMapViewDelegate {
     }
 }
 
-extension BottomViewController: SendNotificationDelegate {
+extension EntryInformationViewController: stateChangeDelegate {
     func sendNotification() {
         bottomTableView.isScrollEnabled = true
         canScroll = true
     }
+}
+
+private enum Section: Int {
+    case base
+    case day
+    case ect
 }

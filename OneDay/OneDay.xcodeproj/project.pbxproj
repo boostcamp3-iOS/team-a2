@@ -75,11 +75,13 @@
 		EC0BB2272213FCEA00E2BB6F /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0BB2262213FCEA00E2BB6F /* Setting.swift */; };
 		EC0BB22C2215069500E2BB6F /* CustomPointAnnotaion.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0BB22B2215069500E2BB6F /* CustomPointAnnotaion.swift */; };
 		EC0BB22E22150EA300E2BB6F /* APILocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0BB22D22150EA300E2BB6F /* APILocation.swift */; };
-		EC0BB234221699F500E2BB6F /* BottomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0BB233221699F500E2BB6F /* BottomViewController.swift */; };
+		EC0BB234221699F500E2BB6F /* EntryInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0BB233221699F500E2BB6F /* EntryInformationViewController.swift */; };
 		EC0BB2362216A34700E2BB6F /* SendNotificationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0BB2352216A34700E2BB6F /* SendNotificationProtocol.swift */; };
 		EC0CFB0422030A29001293B1 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0322030A29001293B1 /* WeatherService.swift */; };
 		EC0CFB0622030A53001293B1 /* APIWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0522030A53001293B1 /* APIWeather.swift */; };
 		EC0CFB0922030C1D001293B1 /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0822030C1D001293B1 /* NetworkProvider.swift */; };
+		EC51AD0422193DA900049686 /* CoreDataDeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC51AD0322193DA900049686 /* CoreDataDeviceService.swift */; };
+		EC51AD0622193E3700049686 /* CoreDataLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC51AD0522193E3700049686 /* CoreDataLocationService.swift */; };
 		EC5E21AB220425390073D90E /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5E21AA220425390073D90E /* LocationService.swift */; };
 /* End PBXBuildFile section */
 
@@ -168,11 +170,13 @@
 		EC0BB2262213FCEA00E2BB6F /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		EC0BB22B2215069500E2BB6F /* CustomPointAnnotaion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPointAnnotaion.swift; sourceTree = "<group>"; };
 		EC0BB22D22150EA300E2BB6F /* APILocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APILocation.swift; sourceTree = "<group>"; };
-		EC0BB233221699F500E2BB6F /* BottomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomViewController.swift; sourceTree = "<group>"; };
+		EC0BB233221699F500E2BB6F /* EntryInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryInformationViewController.swift; sourceTree = "<group>"; };
 		EC0BB2352216A34700E2BB6F /* SendNotificationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendNotificationProtocol.swift; sourceTree = "<group>"; };
 		EC0CFB0322030A29001293B1 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		EC0CFB0522030A53001293B1 /* APIWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIWeather.swift; sourceTree = "<group>"; };
 		EC0CFB0822030C1D001293B1 /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
+		EC51AD0322193DA900049686 /* CoreDataDeviceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataDeviceService.swift; sourceTree = "<group>"; };
+		EC51AD0522193E3700049686 /* CoreDataLocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataLocationService.swift; sourceTree = "<group>"; };
 		EC5E21AA220425390073D90E /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -285,6 +289,8 @@
 				D516C8AF2213B4CD00A4BDAC /* CoreDataJournalService.swift */,
 				D516C8B12213B4CD00A4BDAC /* CoreDataWeatherService.swift */,
 				D516C8B22213B4CD00A4BDAC /* CoreDataEntryService.swift */,
+				EC51AD0322193DA900049686 /* CoreDataDeviceService.swift */,
+				EC51AD0522193E3700049686 /* CoreDataLocationService.swift */,
 			);
 			path = protocol;
 			sourceTree = "<group>";
@@ -294,7 +300,6 @@
 			children = (
 				D516C8BB2213B7D900A4BDAC /* OneDayDefaults.swift */,
 			);
-			path = Entry;
 			path = Utils;
 			sourceTree = "<group>";
 		};
@@ -381,7 +386,7 @@
 			children = (
 				D53782BE22113B7600336646 /* Entry */,
 				D50276E92202C7EE00A0DB5E /* EntryViewController.swift */,
-				EC0BB233221699F500E2BB6F /* BottomViewController.swift */,
+				EC0BB233221699F500E2BB6F /* EntryInformationViewController.swift */,
 				EC0BB2352216A34700E2BB6F /* SendNotificationProtocol.swift */,
 				D50276E72202C79300A0DB5E /* TimeLineViewController.swift */,
 				E936659322110DF900DC660A /* BaseSlidingViewController.swift */,
@@ -675,7 +680,7 @@
 				D502769321FEA18000A0DB5E /* CoreDataStack.swift in Sources */,
 				D502765421FB0B8400A0DB5E /* Weather+CoreDataClass.swift in Sources */,
 				D561692521FAD07000E00FED /* MainTabBarViewController.swift in Sources */,
-				EC0BB234221699F500E2BB6F /* BottomViewController.swift in Sources */,
+				EC0BB234221699F500E2BB6F /* EntryInformationViewController.swift in Sources */,
 				D502765521FB0B8400A0DB5E /* Weather+CoreDataProperties.swift in Sources */,
 				D502769621FEA1CE00A0DB5E /* UIColor+NamedColor.swift in Sources */,
 				D502765C21FB0B8400A0DB5E /* Location+CoreDataClass.swift in Sources */,
@@ -700,10 +705,12 @@
 				D50276EA2202C7EE00A0DB5E /* EntryViewController.swift in Sources */,
 				D50276EC2202C82900A0DB5E /* DataStringSet.swift in Sources */,
 				EC0CFB0422030A29001293B1 /* WeatherService.swift in Sources */,
+				EC51AD0422193DA900049686 /* CoreDataDeviceService.swift in Sources */,
 				D50276F422041DBA00A0DB5E /* MapViewController.swift in Sources */,
 				D502765D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift in Sources */,
 				EC0BB22C2215069500E2BB6F /* CustomPointAnnotaion.swift in Sources */,
 				EC0BB2272213FCEA00E2BB6F /* Setting.swift in Sources */,
+				EC51AD0622193E3700049686 /* CoreDataLocationService.swift in Sources */,
 				EC0BB2362216A34700E2BB6F /* SendNotificationProtocol.swift in Sources */,
 				D516C8B92213B4CD00A4BDAC /* CoreDataEntryService.swift in Sources */,
 				D502765821FB0B8400A0DB5E /* Entry+CoreDataClass.swift in Sources */,
