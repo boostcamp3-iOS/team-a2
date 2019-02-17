@@ -1,51 +1,33 @@
 //
-//  SampleJournalViewController.swift
+//  TimelineViewController.swift
 //  OneDay
 //
 //  Created by juhee on 31/01/2019.
 //  Copyright © 2019 teamA2. All rights reserved.
 //
 
-import UIKit
-import CoreLocation
 import CoreData
+import CoreLocation
+import UIKit
 
-class TimeLineViewController: UIViewController {
+class TimelineViewController: UIViewController {
     
     // MARK: - Properties
     
-    @IBOutlet weak var timelineTable: UITableView!
-    var coreDataStack: CoreDataStack!
-    var journal: Journal!
-    lazy var fetchedResultsController: NSFetchedResultsController<Entry> = {
-        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
-        let dateSort = NSSortDescriptor(key: #keyPath(Entry.date), ascending: false)
-        fetchRequest.sortDescriptors = [dateSort]
-        
-        let fetchedResultsController = NSFetchedResultsController(
-            fetchRequest: fetchRequest,
-            managedObjectContext: coreDataStack.managedContext,
-            sectionNameKeyPath: #keyPath(Entry.date),
-            cacheName: "entries")
-        
-        fetchedResultsController.delegate = self
-        return fetchedResultsController
-    }()
-    
-    private let cellIdentifier = "timeline_cell"
+    @IBOutlet weak var timelineTableView: UITableView!
+
+    let fetchedResultsController: NSFetchedResultsController<Entry> =
+        CoreDataManager.shared.timelineResultsController
+
+    var shouldDayLabelVisibleIndexPath = Set<IndexPath>()
+    var shouldDayLabelVisibleDateComponents = Set<[Int]>()
     
     // MARK: - Life cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        coreDataStack = CoreDataStack(modelName: "OneDay")
-        
-        do {
-            try fetchedResultsController.performFetch()
-        } catch let error as NSError {
-            print("Fetching error: \(error), \(error.userInfo)")
-        }
-        
+        registerCellId()
+        setupFetchedResultsController()
         setupTopView()
     }
     
@@ -53,14 +35,14 @@ class TimeLineViewController: UIViewController {
     
     func setupTopView() {
         //테이블뷰 상단 배경 채우기
-        let backgroundView = UIView(frame: CGRect(
-            x: 0,
-            y: -480,
-            width: UIScreen.main.bounds.size.width,
-            height: 480)
-        )
-        backgroundView.backgroundColor = UIColor.doBlue
-        timelineTable.addSubview(backgroundView)
+//        let backgroundView = UIView(
+//            frame: CGRect(
+//            x: 0,
+//            y: -600,
+//            width: UIScreen.main.bounds.size.width,
+//            height: 800)
+//        )
+//        timelineTableView.addSubview(backgroundView)
         
         //navigationBar 경계선 제거
         if let navigationBar = self.navigationController?.navigationBar {
@@ -69,57 +51,72 @@ class TimeLineViewController: UIViewController {
         }
     }
     
+    fileprivate func registerCellId() {
+        timelineTableView.register(
+            TimelineTableViewCell.self,
+            forCellReuseIdentifier: "timelineCellId")
+        timelineTableView.register(
+            TimelineHeaderCell.self,
+            forCellReuseIdentifier: "timelineHeaderViewId")
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("세구")
         if sender is UITableViewCell {
-            if let cell = sender as? UITableViewCell, let indexPath = timelineTable.indexPath(for: cell) {
-                guard let destination = segue.destination as? EntryViewController else {
+            if let cell = sender as? UITableViewCell,
+                let indexPath = timelineTableView.indexPath(for: cell) {
+                guard let destination = segue.destination as? EntryViewController
+                else {
                     return
                 }
                 let entry = fetchedResultsController.object(at: indexPath)
                 destination.entry = entry
-                destination.coreDataStack = coreDataStack
             }
         } else if let destination = segue.destination as? EntryViewController {
-            destination.entry = entry()
-            destination.coreDataStack = coreDataStack
+            destination.entry = CoreDataManager.shared.insert()
         }
     }
     
-    @IBAction func insertEntry() {
-        _ = entry()
-    }
-    
-    func entry() -> Entry {
-        let entry = Entry(context: self.coreDataStack.managedContext)
-        entry.title = "새로운 메세지"
-        entry.date = Date()
-        print(entry.date)
-        entry.entryId = UUID.init()
-        entry.journal = journal
-        entry.favorite = false
-        
-        self.coreDataStack.saveContext()
-        return entry
+    fileprivate func setupFetchedResultsController() {
+        do {
+            fetchedResultsController.delegate = self
+            try fetchedResultsController.performFetch()
+        } catch let error as NSError {
+            print("Fetching error: \(error), \(error.userInfo)")
+        }
     }
 }
 
-extension TimeLineViewController: UITableViewDelegate, UITableViewDataSource {
+extension TimelineViewController: UITableViewDelegate, UITableViewDataSource {
     func configure(cell: UITableViewCell, indexPath: IndexPath) {
-        
-        guard let cell = cell as? TimeLineTableViewCell else { return }
-        let entry = fetchedResultsController.object(at: indexPath)
-        cell.contentLabel.text = entry.title
-        
-        if let date = entry.date {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "a HH:mm"
-            cell.timeLabel.text = dateFormatter.string(from: date)
-            dateFormatter.dateFormat = "dd"
-            cell.dayLabel.text = dateFormatter.string(from: date)
-            dateFormatter.dateFormat = "EEEE"
-            cell.weekDayLabel.text = dateFormatter.string(from: date)
+        guard let cell = cell as? TimelineTableViewCell
+        else {
+            preconditionFailure("Error")
         }
-        cell.dayLabel.isHidden = indexPath.row != 0
+        let fetchedEntryData = fetchedResultsController.object(at: indexPath)
+        cell.bind(entry: fetchedEntryData, indexPath: indexPath)
+        makeVisibleDayLabels(entry: fetchedEntryData, indexPath: indexPath, cell: cell)
+    }
+    
+    func makeVisibleDayLabels(entry: Entry, indexPath: IndexPath, cell: UITableViewCell) {
+        guard let cell = cell as? TimelineTableViewCell
+        else {
+            preconditionFailure("Error")
+        }
+        let components = Calendar.current.dateComponents([.month, .day, .year], from: entry.date)
+        if let month = components.month, let day = components.day, let year = components.year {
+            let arrCount = shouldDayLabelVisibleDateComponents.count
+            shouldDayLabelVisibleDateComponents.insert([month, day, year])
+            let newArrCount = shouldDayLabelVisibleDateComponents.count
+            if arrCount != newArrCount {
+                shouldDayLabelVisibleIndexPath.insert(indexPath)
+            }
+        }
+        
+        if shouldDayLabelVisibleIndexPath.contains(indexPath) {
+            cell.dayLabel.isHidden = false
+            cell.weekDayLabel.isHidden = false
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -127,84 +124,121 @@ extension TimeLineViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sectionInfo = fetchedResultsController.sections?[section] else {
+        guard let sectionInfo = fetchedResultsController.sections?[section]
+        else {
             return 0
         }
         return sectionInfo.numberOfObjects
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "timeline_cell", for: indexPath)
+    func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+        ) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "timelineCellId", for: indexPath)
         configure(cell: cell, indexPath: indexPath)
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let entry = fetchedResultsController.sections?[section].objects?.first as? Entry else { return "섹션헤더" }
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale.init(identifier: "ko")
-        dateFormatter.timeZone = TimeZone.current
-        dateFormatter.dateFormat = "YYYY-MM-dd"
-        return dateFormatter.string(from: entry.date ?? Date())
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+
+    func tableView(
+        _ tableView: UITableView,
+        commit editingStyle: UITableViewCell.EditingStyle,
+        forRowAt indexPath: IndexPath) {
         guard case(.delete) = editingStyle else { return }
-        
-        coreDataStack.managedContext.delete(fetchedResultsController.object(at: indexPath))
-        coreDataStack.saveContext()
+        CoreDataManager.shared.remove(entry: fetchedResultsController.object(at: indexPath))
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
     }
-}
-
-extension TimeLineViewController: NSFetchedResultsControllerDelegate {
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        timelineTable.beginUpdates()
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let fetchedEntryData = fetchedResultsController.sections?[section].objects?.first
+            as? Entry
+        else {
+            return UIView()
+        }
+        guard let headerCellView = tableView.dequeueReusableCell(
+            withIdentifier: "timelineHeaderViewId"
+            ) as? TimelineHeaderCell
+        else {
+            preconditionFailure("error")
+        }
+        
+        let formatter = DateFormatter.defualtInstance
+        formatter.dateFormat = "YYYY년 MM월"
+        let sectionTitleHeader = formatter.string(from: fetchedEntryData.date)
+        
+        headerCellView.headerLabel.text = sectionTitleHeader
+        return headerCellView
     }
     
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange sectionInfo: NSFetchedResultsSectionInfo,
-                    atSectionIndex sectionIndex: Int,
-                    for type: NSFetchedResultsChangeType) {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 2
+    }
+    
+}
+
+extension TimelineViewController: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(
+        _ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        timelineTableView.beginUpdates()
+    }
+    
+    func controller(
+        _ controller: NSFetchedResultsController<NSFetchRequestResult>,
+        didChange sectionInfo: NSFetchedResultsSectionInfo,
+        atSectionIndex sectionIndex: Int,
+        for type: NSFetchedResultsChangeType) {
+        shouldDayLabelVisibleIndexPath = []
+        shouldDayLabelVisibleDateComponents = []
+        timelineTableView.reloadData()
         let indexSet = IndexSet(integer: sectionIndex)
         switch type {
         case .insert:
-            timelineTable.insertSections(indexSet, with: .automatic)
+            timelineTableView.insertSections(indexSet, with: .automatic)
         case .delete:
-            timelineTable.deleteSections(indexSet, with: .automatic)
+            timelineTableView.deleteSections(indexSet, with: .automatic)
         default:
             break
         }
     }
     
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange anObject: Any,
-                    at indexPath: IndexPath?,
-                    for type: NSFetchedResultsChangeType,
-                    newIndexPath: IndexPath?) {
+    func controller(
+        _ controller: NSFetchedResultsController<NSFetchRequestResult>,
+        didChange anObject: Any,
+        at indexPath: IndexPath?,
+        for type: NSFetchedResultsChangeType,
+        newIndexPath: IndexPath?) {
+        shouldDayLabelVisibleIndexPath = []
+        shouldDayLabelVisibleDateComponents = []
+        timelineTableView.reloadData()
+
         switch type {
         case .insert:
-            timelineTable.insertRows(at: [newIndexPath!], with: .fade)
+            timelineTableView.insertRows(at: [newIndexPath!], with: .fade)
         case .delete:
-            timelineTable.deleteRows(at: [indexPath!], with: .fade)
+            timelineTableView.deleteRows(at: [indexPath!], with: .fade)
         case .update:
-            guard let cell = timelineTable.cellForRow(at: indexPath!) as? TimeLineTableViewCell else { return }
+            guard let cell = timelineTableView.cellForRow(at: indexPath!) as? TimelineTableViewCell
+            else { return }
             configure(cell: cell, indexPath: indexPath!)
         case .move:
-            timelineTable.deleteRows(at: [indexPath!], with: .fade)
-            timelineTable.insertRows(at: [newIndexPath!], with: .automatic)
+            timelineTableView.deleteRows(at: [indexPath!], with: .fade)
+            timelineTableView.insertRows(at: [newIndexPath!], with: .automatic)
         }
     }
     
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        timelineTable.endUpdates()
+    func controllerDidChangeContent(
+        _ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        timelineTableView.endUpdates()
     }
 }

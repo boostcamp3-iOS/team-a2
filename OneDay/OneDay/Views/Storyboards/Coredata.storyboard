@@ -14,7 +14,7 @@
         <!--일기장-->
         <scene sceneID="VPX-WW-gqW">
             <objects>
-                <viewController storyboardIdentifier="Timeline" id="bAA-nC-BcN" customClass="TimeLineViewController" customModule="OneDay" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Timeline" id="bAA-nC-BcN" customClass="TimelineViewController" customModule="OneDay" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bVj-Xg-OEB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -23,28 +23,21 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="MEL-XZ-niL">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="169"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="238"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="36" translatesAutoresizingMaskIntoConstraints="NO" id="sgz-oG-uVD">
-                                            <rect key="frame" x="36" y="69.5" width="303" height="30"/>
+                                            <rect key="frame" x="36" y="71" width="303" height="96"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5hX-aZ-ZfX">
-                                                    <rect key="frame" x="0.0" y="0.0" width="133.5" height="30"/>
-                                                    <state key="normal" title="카메라">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="insertEntry" destination="bAA-nC-BcN" eventType="touchUpInside" id="IQ7-kf-fZb"/>
-                                                    </connections>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FMw-1s-nCv">
+                                                    <rect key="frame" x="0.0" y="0.0" width="133.5" height="96"/>
+                                                    <state key="normal" image="timelineCamera"/>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TlL-rX-gN0">
-                                                    <rect key="frame" x="169.5" y="0.0" width="133.5" height="30"/>
-                                                    <state key="normal" title="작성">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </state>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hrq-ji-RmT">
+                                                    <rect key="frame" x="169.5" y="0.0" width="133.5" height="96"/>
+                                                    <state key="normal" image="timelineEdit"/>
                                                     <connections>
-                                                        <segue destination="GAO-3U-mcR" kind="presentation" id="VlK-WX-QNC"/>
+                                                        <segue destination="GAO-3U-mcR" kind="presentation" id="1Rx-Ve-1Bc"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -58,73 +51,15 @@
                                     </constraints>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="timeline_cell" rowHeight="74" id="5ZM-WR-QeL" customClass="TimeLineTableViewCell" customModule="OneDay" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="197" width="375" height="74"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="timelineCellId" id="TjK-1m-Jlj" customClass="TimelineTableViewCell" customModule="OneDay" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="266" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5ZM-WR-QeL" id="UHr-z7-pNT">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="73.5"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="TjK-1m-Jlj" id="gPk-0x-Rmc">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="22" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="afo-5N-yPs">
-                                                    <rect key="frame" x="332.5" y="21.5" width="30.5" height="31.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" text="화요일" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Bd-DX-VrL">
-                                                    <rect key="frame" x="334" y="8" width="29" height="13.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
-                                                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="6pc-Si-Sky">
-                                                    <rect key="frame" x="12" y="8" width="312.5" height="57.5"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="LabelLabelLab" lineBreakMode="characterWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gcl-uZ-7yP">
-                                                            <rect key="frame" x="0.0" y="0.0" width="82.5" height="14.5"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Bnb-d9-2Bh">
-                                                            <rect key="frame" x="0.0" y="44" width="79" height="13.5"/>
-                                                            <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="저널" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nc0-f5-nep">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="19.5" height="13.5"/>
-                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
-                                                                    <color key="textColor" name="doBlue"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="* 오후 3:44" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ouF-Po-rYL">
-                                                                    <rect key="frame" x="23.5" y="0.0" width="55.5" height="13.5"/>
-                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                            </subviews>
-                                                        </stackView>
-                                                    </subviews>
-                                                </stackView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="1Bd-DX-VrL" firstAttribute="top" secondItem="UHr-z7-pNT" secondAttribute="top" constant="8" id="0zx-xs-pJP"/>
-                                                <constraint firstAttribute="trailing" secondItem="afo-5N-yPs" secondAttribute="trailing" constant="12" id="2l7-SR-QTW"/>
-                                                <constraint firstItem="6pc-Si-Sky" firstAttribute="top" secondItem="UHr-z7-pNT" secondAttribute="top" constant="8" id="4UE-Rn-mNJ"/>
-                                                <constraint firstItem="afo-5N-yPs" firstAttribute="top" secondItem="1Bd-DX-VrL" secondAttribute="bottom" id="4fb-lE-aqw"/>
-                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="afo-5N-yPs" secondAttribute="bottom" constant="16" id="6e6-5m-Atr"/>
-                                                <constraint firstAttribute="bottom" secondItem="6pc-Si-Sky" secondAttribute="bottom" constant="8" id="PuD-GD-Mkh"/>
-                                                <constraint firstAttribute="trailing" secondItem="1Bd-DX-VrL" secondAttribute="trailing" constant="12" id="c8m-QH-vSD"/>
-                                                <constraint firstItem="afo-5N-yPs" firstAttribute="leading" secondItem="6pc-Si-Sky" secondAttribute="trailing" constant="8" id="cw0-yg-NUF"/>
-                                                <constraint firstItem="6pc-Si-Sky" firstAttribute="leading" secondItem="UHr-z7-pNT" secondAttribute="leading" constant="12" id="fKe-AV-D3o"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="contentLabel" destination="Gcl-uZ-7yP" id="Cak-7w-9sd"/>
-                                            <outlet property="dayLabel" destination="afo-5N-yPs" id="sVd-3P-xl2"/>
-                                            <outlet property="jornalLabel" destination="Nc0-f5-nep" id="IGV-6T-JD2"/>
-                                            <outlet property="timeLabel" destination="ouF-Po-rYL" id="yU8-4V-oDM"/>
-                                            <outlet property="weekDayLabel" destination="1Bd-DX-VrL" id="KoF-NV-X7m"/>
-                                            <segue destination="GAO-3U-mcR" kind="presentation" id="glj-Ad-NwW"/>
+                                            <segue destination="GAO-3U-mcR" kind="presentation" id="kGq-GZ-HmX"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -149,12 +84,12 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="timelineTable" destination="8rm-cg-MDR" id="srs-Hl-Ywx"/>
+                        <outlet property="timelineTableView" destination="8rm-cg-MDR" id="srs-Hl-Ywx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k4d-wh-yCK" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2860" y="27"/>
+            <point key="canvasLocation" x="2860" y="26.53673163418291"/>
         </scene>
         <!--Entry View Controller-->
         <scene sceneID="VjH-1b-I7y">
@@ -283,6 +218,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="timelineCamera" width="96" height="96"/>
+        <image name="timelineEdit" width="96" height="96"/>
         <namedColor name="doBlue">
             <color red="0.41176470588235292" green="0.74509803921568629" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -294,6 +231,6 @@
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="glj-Ad-NwW"/>
+        <segue reference="1Rx-Ve-1Bc"/>
     </inferredMetricsTieBreakers>
 </document>

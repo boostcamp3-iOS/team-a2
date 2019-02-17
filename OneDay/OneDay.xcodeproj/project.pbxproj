@@ -27,10 +27,10 @@
 		D50276D221FEFCE900A0DB5E /* JournalServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276D121FEFCE900A0DB5E /* JournalServiceTest.swift */; };
 		D50276D521FEFD4500A0DB5E /* TestCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276D421FEFD4500A0DB5E /* TestCoreDataStack.swift */; };
 		D50276DA21FF09E100A0DB5E /* EntryServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276D921FF09E100A0DB5E /* EntryServiceTest.swift */; };
-		D50276E82202C79300A0DB5E /* TimeLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276E72202C79300A0DB5E /* TimeLineViewController.swift */; };
+		D50276E82202C79300A0DB5E /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276E72202C79300A0DB5E /* TimelineViewController.swift */; };
 		D50276EA2202C7EE00A0DB5E /* EntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276E92202C7EE00A0DB5E /* EntryViewController.swift */; };
 		D50276EC2202C82900A0DB5E /* DataStringSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276EB2202C82900A0DB5E /* DataStringSet.swift */; };
-		D50276EE2202D3C700A0DB5E /* SampleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276ED2202D3C700A0DB5E /* SampleTableViewCell.swift */; };
+		D50276EE2202D3C700A0DB5E /* TimelineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276ED2202D3C700A0DB5E /* TimelineTableViewCell.swift */; };
 		D50276F222041DB100A0DB5E /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276F122041DB100A0DB5E /* PhotosViewController.swift */; };
 		D50276F422041DBA00A0DB5E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276F322041DBA00A0DB5E /* MapViewController.swift */; };
 		D516C8B52213B4CD00A4BDAC /* EntryFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516C8AD2213B4CD00A4BDAC /* EntryFilter.swift */; };
@@ -74,6 +74,7 @@
 		E992EC7A21FAFBC500917116 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7921FAFBC500917116 /* CalendarCell.swift */; };
 		E992EC7C21FB1E5500917116 /* CalendarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7B21FB1E5500917116 /* CalendarHeaderView.swift */; };
 		E992EC7F21FB2CCE00917116 /* CalendarDaysOfWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7E21FB2CCE00917116 /* CalendarDaysOfWeek.swift */; };
+		E9AA2814221875FC00B81E23 /* TimelineHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AA2813221875FC00B81E23 /* TimelineHeaderCell.swift */; };
 		E9DA39AC2203FCD30026381E /* FilterSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DA39AB2203FCD20026381E /* FilterSection.swift */; };
 		EC0CFB0422030A29001293B1 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0322030A29001293B1 /* WeatherService.swift */; };
 		EC0CFB0622030A53001293B1 /* APIWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0522030A53001293B1 /* APIWeather.swift */; };
@@ -115,10 +116,10 @@
 		D50276D121FEFCE900A0DB5E /* JournalServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalServiceTest.swift; sourceTree = "<group>"; };
 		D50276D421FEFD4500A0DB5E /* TestCoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCoreDataStack.swift; sourceTree = "<group>"; };
 		D50276D921FF09E100A0DB5E /* EntryServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryServiceTest.swift; sourceTree = "<group>"; };
-		D50276E72202C79300A0DB5E /* TimeLineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineViewController.swift; sourceTree = "<group>"; };
+		D50276E72202C79300A0DB5E /* TimelineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
 		D50276E92202C7EE00A0DB5E /* EntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewController.swift; sourceTree = "<group>"; };
 		D50276EB2202C82900A0DB5E /* DataStringSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStringSet.swift; sourceTree = "<group>"; };
-		D50276ED2202D3C700A0DB5E /* SampleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTableViewCell.swift; sourceTree = "<group>"; };
+		D50276ED2202D3C700A0DB5E /* TimelineTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineTableViewCell.swift; sourceTree = "<group>"; };
 		D50276F122041DB100A0DB5E /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		D50276F322041DBA00A0DB5E /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		D516C8AD2213B4CD00A4BDAC /* EntryFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryFilter.swift; sourceTree = "<group>"; };
@@ -165,6 +166,7 @@
 		E992EC7921FAFBC500917116 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		E992EC7B21FB1E5500917116 /* CalendarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHeaderView.swift; sourceTree = "<group>"; };
 		E992EC7E21FB2CCE00917116 /* CalendarDaysOfWeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDaysOfWeek.swift; sourceTree = "<group>"; };
+		E9AA2813221875FC00B81E23 /* TimelineHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineHeaderCell.swift; sourceTree = "<group>"; };
 		E9DA39AB2203FCD20026381E /* FilterSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSection.swift; sourceTree = "<group>"; };
 		EC0CFB0322030A29001293B1 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		EC0CFB0522030A53001293B1 /* APIWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIWeather.swift; sourceTree = "<group>"; };
@@ -356,16 +358,25 @@
 			path = CollectedEntries;
 			sourceTree = "<group>";
 		};
+		E9483C3B221921460028E7D9 /* Timeline */ = {
+			isa = PBXGroup;
+			children = (
+				D50276ED2202D3C700A0DB5E /* TimelineTableViewCell.swift */,
+				E9AA2813221875FC00B81E23 /* TimelineHeaderCell.swift */,
+			);
+			path = Timeline;
+			sourceTree = "<group>";
+		};
 		E96BE83321FAD8DB00266F6D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E9483C3B221921460028E7D9 /* Timeline */,
 				E934115422168EA8004CF8DF /* CollectedEntries */,
 				D53782BB2211138900336646 /* Photos */,
 				E992EC7D21FB2CAD00917116 /* Calendar */,
 				E992EC5E21FAEDD100917116 /* FilterCell */,
 				E992EC5F21FAEDDA00917116 /* SideMenuCell */,
 				E96BE83B21FAD98500266F6D /* Storyboards */,
-				D50276ED2202D3C700A0DB5E /* SampleTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -383,7 +394,7 @@
 			children = (
 				D53782BE22113B7600336646 /* Entry */,
 				D50276E92202C7EE00A0DB5E /* EntryViewController.swift */,
-				D50276E72202C79300A0DB5E /* TimeLineViewController.swift */,
+				D50276E72202C79300A0DB5E /* TimelineViewController.swift */,
 				E936659322110DF900DC660A /* BaseSlidingViewController.swift */,
 				E992EC6F21FAEE5B00917116 /* FilterViewController.swift */,
 				E992EC7121FAEE6700917116 /* SideMenuViewController.swift */,
@@ -643,6 +654,7 @@
 				E992EC7221FAEE6700917116 /* SideMenuViewController.swift in Sources */,
 				E992EC7821FAF4C200917116 /* CalendarViewController.swift in Sources */,
 				E992EC7421FAEE7100917116 /* TestViewController.swift in Sources */,
+				E9AA2814221875FC00B81E23 /* TimelineHeaderCell.swift in Sources */,
 				D561692521FAD07000E00FED /* MainTabBarViewController.swift in Sources */,
 				D516C8B52213B4CD00A4BDAC /* EntryFilter.swift in Sources */,
 				E992EC7021FAEE5B00917116 /* FilterViewController.swift in Sources */,
@@ -656,7 +668,7 @@
 				E992EC7F21FB2CCE00917116 /* CalendarDaysOfWeek.swift in Sources */,
 				D50276B921FED1D200A0DB5E /* OneDay.xcdatamodeld in Sources */,
 				D50276F222041DB100A0DB5E /* PhotosViewController.swift in Sources */,
-				D50276EE2202D3C700A0DB5E /* SampleTableViewCell.swift in Sources */,
+				D50276EE2202D3C700A0DB5E /* TimelineTableViewCell.swift in Sources */,
 				EC0CFB0922030C1D001293B1 /* NetworkProvider.swift in Sources */,
 				D53782C62211447500336646 /* CoreDataManager.swift in Sources */,
 				D502769321FEA18000A0DB5E /* CoreDataStack.swift in Sources */,
@@ -677,7 +689,7 @@
 				EC5E21AB220425390073D90E /* LocationService.swift in Sources */,
 				E9083DF922154370002A0E6F /* CollectedEntriesViewController.swift in Sources */,
 				D561692321FAD07000E00FED /* AppDelegate.swift in Sources */,
-				D50276E82202C79300A0DB5E /* TimeLineViewController.swift in Sources */,
+				D50276E82202C79300A0DB5E /* TimelineViewController.swift in Sources */,
 				D502766221FB0D6000A0DB5E /* WeatherType.swift in Sources */,
 				D5CCA11B2215309C0055D264 /* String+URL.swift in Sources */,
 				D502765921FB0B8400A0DB5E /* Entry+CoreDataProperties.swift in Sources */,
