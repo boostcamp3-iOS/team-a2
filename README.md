@@ -3,6 +3,14 @@ BoostCamp 2019 iOS A2
 
 넘사벽 저널링 서비스로 알려져 있는 **[DayOne](https://dayone.me/)** 모방 프로젝트
 
+## 함께한 사람
+Mentor : [Yagom](https://github.com/yagom)
+
+A2 Members
+* [Trevi : 서정화](https://github.com/mohok)
+* [Hybree : 송원근](https://github.com/yk1028)
+* [Coco : 김주희](https://github.com/caution-dev)
+
 ## Screen Shot
 |TimeLine|Photos|Add New Entry| Editor|
 | :--: | :--: | :--: | :--: |
@@ -19,6 +27,14 @@ BoostCamp 2019 iOS A2
   - 사진
 - 저널 단위로 일기 관리
 - iCloud 동기화
+
+## 사용 기술
+* **Core Data**   : 사용자의 데이터를 로컬에 저장하고 불러옵니다.
+* **Core Location**   : 사용자의 현재 위치를 불러옵니다.
+* **DarkSky API**   : 사용자 위치에 따른 현재 날씨 정보를 불러옵니다.
+* **MapKit**   : 사용자의 현재 위치 및 일기가 작성된 위치들을 보여줍니다.
+* **CloubKit**   : iCloud를 통해 데이터를 동기화하고 백업합니다.
+* **AutoLayout**
 
 ## 주차별 목표
 **모든 활동 기록 및 중간산출물은 [Wiki](https://github.com/boostcamp3-iOS/team-a2/wiki) 에 저장합니다.**
