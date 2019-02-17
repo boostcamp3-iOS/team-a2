@@ -17,7 +17,9 @@ class LocationService: NSObject {
     private let locationManager = CLLocationManager()
     private var _latitude: String = ""
     private var _longitude: String = ""
+    private var _location: CLLocation? = nil
     
+    var location: CLLocation? { return _location }
     var latitude: String { return _latitude }
     var longitude: String { return _longitude }
     
@@ -40,8 +42,10 @@ extension LocationService: CLLocationManagerDelegate {
         _ manager: CLLocationManager,
         didUpdateLocations locations: [CLLocation]
     ) {
-        guard let localValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        _latitude = "\(localValue.latitude)"
-        _longitude = "\(localValue.longitude)"
+        guard let location: CLLocation = manager.location else { return }
+        _location = location
+        let coordinate: CLLocationCoordinate2D = location.coordinate
+        _latitude = "\(coordinate.latitude)"
+        _longitude = "\(coordinate.longitude)"
     }
 }

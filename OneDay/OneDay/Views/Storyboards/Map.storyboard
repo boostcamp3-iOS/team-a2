@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Map View Controller-->
+        <!--Map-->
         <scene sceneID="EdS-ce-1zq">
             <objects>
                 <viewController id="1IN-uQ-cZV" customClass="MapViewController" customModule="OneDay" customModuleProvider="target" sceneMemberID="viewController">
@@ -24,11 +24,23 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AId-rh-Jrh">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <items>
-                                    <barButtonItem title="Item" image="ic_navigation" id="RyP-Rq-879"/>
+                                    <barButtonItem title="Item" image="ic_navigation" id="RyP-Rq-879">
+                                        <connections>
+                                            <action selector="didTaplocationItem:" destination="1IN-uQ-cZV" id="va0-5t-LOH"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="WzJ-Fv-FAb"/>
-                                    <barButtonItem title="일지 목록 보기" id="GUe-7N-5mB"/>
+                                    <barButtonItem title="일지 목록 보기" id="GUe-7N-5mB">
+                                        <connections>
+                                            <action selector="didTapEntriesItem:" destination="1IN-uQ-cZV" id="tdJ-0a-3uJ"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="anU-L8-7dq"/>
-                                    <barButtonItem title="Item" image="ic_info" id="KKn-cp-XJ8"/>
+                                    <barButtonItem title="Item" image="ic_info" id="KKn-cp-XJ8">
+                                        <connections>
+                                            <action selector="didTapInfoItem:" destination="1IN-uQ-cZV" id="UuX-wG-Wgb"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -44,6 +56,11 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="y0S-wu-Vm6"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Map" id="6DY-ds-dSv"/>
+                    <connections>
+                        <outlet property="currentLocationItem" destination="RyP-Rq-879" id="idD-u1-6fs"/>
+                        <outlet property="mapView" destination="QUB-S2-7BM" id="oiF-g1-Wt2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y0C-nC-e6X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
