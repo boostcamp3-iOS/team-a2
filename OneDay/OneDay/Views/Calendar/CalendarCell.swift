@@ -24,7 +24,7 @@ class CalendarCell: UICollectionViewCell {
     override var isSelected: Bool {
         didSet {
             if isSelected && dayLabel.text != "" {
-                dayLabel.backgroundColor = .gray
+                dayLabel.backgroundColor = .black
                 dayLabel.textColor = .white
             } else {
                 dayLabel.backgroundColor = .doLight
@@ -40,6 +40,7 @@ class CalendarCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         dayLabel.text = ""
+        dayLabel.textColor = .black
         dayLabel.backgroundColor = .doLight
     }
     

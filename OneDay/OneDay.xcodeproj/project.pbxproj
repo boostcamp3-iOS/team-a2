@@ -46,6 +46,9 @@
 		D561693021FAD07200E00FED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D561692E21FAD07200E00FED /* LaunchScreen.storyboard */; };
 		D5CCA1162215104A0055D264 /* DateFormatter+Datet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CCA1152215104A0055D264 /* DateFormatter+Datet.swift */; };
 		D5CCA11B2215309C0055D264 /* String+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CCA11A2215309C0055D264 /* String+URL.swift */; };
+		E9083DF922154370002A0E6F /* CollectedEntriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9083DF622154370002A0E6F /* CollectedEntriesViewController.swift */; };
+		E9083DFA22154370002A0E6F /* CollectedEntriesHeaderMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9083DF722154370002A0E6F /* CollectedEntriesHeaderMapView.swift */; };
+		E9083DFB22154370002A0E6F /* CollectedEntriesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9083DF822154370002A0E6F /* CollectedEntriesListCell.swift */; };
 		D5CCA120221543860055D264 /* Photos.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5CCA11F221543860055D264 /* Photos.storyboard */; };
 		D5CCA12D2216775F0055D264 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D561692221FAD07000E00FED /* AppDelegate.swift */; };
 		D5CCA12E2216775F0055D264 /* Location+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764C21FB0B8400A0DB5E /* Location+CoreDataClass.swift */; };
@@ -139,6 +142,9 @@
 		D561693121FAD07200E00FED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D5CCA1152215104A0055D264 /* DateFormatter+Datet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Datet.swift"; sourceTree = "<group>"; };
 		D5CCA11A2215309C0055D264 /* String+URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+URL.swift"; sourceTree = "<group>"; };
+		E9083DF622154370002A0E6F /* CollectedEntriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectedEntriesViewController.swift; sourceTree = "<group>"; };
+		E9083DF722154370002A0E6F /* CollectedEntriesHeaderMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectedEntriesHeaderMapView.swift; sourceTree = "<group>"; };
+		E9083DF822154370002A0E6F /* CollectedEntriesListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectedEntriesListCell.swift; sourceTree = "<group>"; };
 		D5CCA11F221543860055D264 /* Photos.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Photos.storyboard; sourceTree = "<group>"; };
 		D5CCA133221697EA0055D264 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D5CCA135221698000055D264 /* AddActionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddActionViewController.swift; sourceTree = "<group>"; };
@@ -245,6 +251,7 @@
 				D5CCA137221698140055D264 /* UIViewController+UIImagePickerControllerDelegate.swift */,
 				D502769521FEA1CD00A0DB5E /* UIColor+NamedColor.swift */,
 				D516C8BE2213C2F600A4BDAC /* NSAttributedString+UIImage.swift */,
+				E9083DFC22158B7A002A0E6F /* DateComponents.swift */,
 				D5CCA1152215104A0055D264 /* DateFormatter+Datet.swift */,
 				D5CCA11A2215309C0055D264 /* String+URL.swift */,
 			);
@@ -336,9 +343,19 @@
 			path = OneDay;
 			sourceTree = "<group>";
 		};
+		E934115422168EA8004CF8DF /* CollectedEntries */ = {
+			isa = PBXGroup;
+			children = (
+				E9083DF822154370002A0E6F /* CollectedEntriesListCell.swift */,
+				E9083DF722154370002A0E6F /* CollectedEntriesHeaderMapView.swift */,
+			);
+			path = CollectedEntries;
+			sourceTree = "<group>";
+		};
 		E96BE83321FAD8DB00266F6D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E934115422168EA8004CF8DF /* CollectedEntries */,
 				D53782BB2211138900336646 /* Photos */,
 				E992EC7D21FB2CAD00917116 /* Calendar */,
 				E992EC5E21FAEDD100917116 /* FilterCell */,
@@ -371,6 +388,7 @@
 				D561692421FAD07000E00FED /* MainTabBarViewController.swift */,
 				D50276F122041DB100A0DB5E /* PhotosViewController.swift */,
 				D50276F322041DBA00A0DB5E /* MapViewController.swift */,
+				E9083DF622154370002A0E6F /* CollectedEntriesViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -608,8 +626,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5CCA1162215104A0055D264 /* DateFormatter+Datet.swift in Sources */,
+				E9083DFA22154370002A0E6F /* CollectedEntriesHeaderMapView.swift in Sources */,
 				E992EC6521FAEE0600917116 /* FilterTableCell.swift in Sources */,
+				E9083DFD22158B7A002A0E6F /* DateComponents.swift in Sources */,
 				E992EC6E21FAEE4D00917116 /* SideMenuEditCell.swift in Sources */,
+				E9083DFB22154370002A0E6F /* CollectedEntriesListCell.swift in Sources */,
 				D516C8C32213DD4800A4BDAC /* Tag+CoreDataProperties.swift in Sources */,
 				D516C8BC2213B7D900A4BDAC /* OneDayDefaults.swift in Sources */,
 				E992EC6A21FAEE3C00917116 /* SideMenuJournalListCell.swift in Sources */,
@@ -649,6 +670,7 @@
 				D516C8B82213B4CD00A4BDAC /* CoreDataWeatherService.swift in Sources */,
 				D502765321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift in Sources */,
 				EC5E21AB220425390073D90E /* LocationService.swift in Sources */,
+				E9083DF922154370002A0E6F /* CollectedEntriesViewController.swift in Sources */,
 				D50276E82202C79300A0DB5E /* TimeLineViewController.swift in Sources */,
 				D502766221FB0D6000A0DB5E /* WeatherType.swift in Sources */,
 				D5CCA136221698000055D264 /* AddActionViewController.swift in Sources */,
