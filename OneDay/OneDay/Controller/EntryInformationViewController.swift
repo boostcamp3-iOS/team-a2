@@ -378,7 +378,9 @@ extension EntryInformationViewController {
         let datePickerViewController = DatePickerViewController()
         datePickerViewController.date = self.entryViewController.entry.date
         let okAction = UIAlertAction(title: "확인", style: .cancel) { _ in
+            let date = datePickerViewController.datePicker.date
             self.entryViewController.entry.date = datePickerViewController.datePicker.date
+            self.entryViewController.entry.updateDate(date: date)
             self.setUpDate()
             self.tableView.reloadRows(at: [indexPath], with: .none)
         }

@@ -211,7 +211,7 @@ class BaseSlidingViewController: UIViewController {
         mainView.leftAnchor.constraint(equalTo: baseMainView.leftAnchor).isActive = true
         mainView.topAnchor.constraint(
             equalTo: baseMainView.topAnchor,
-            constant: 20).isActive = true
+            constant: 0).isActive = true
         mainView.rightAnchor.constraint(equalTo: baseMainView.rightAnchor).isActive = true
         mainView.bottomAnchor.constraint(equalTo: baseMainView.bottomAnchor).isActive = true
         
