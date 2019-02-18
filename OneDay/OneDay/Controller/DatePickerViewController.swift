@@ -13,6 +13,7 @@ class DatePickerViewController: UIViewController {
     var date: Date!
     let dateLabel = UILabel()
     let datePicker = UIDatePicker()
+    let customSC = UISegmentedControl(items: ["Date", "Time"])
     let currentDateButton = UIButton(type: UIButton.ButtonType.system)
     
     let dateFormatter: DateFormatter = {
@@ -24,10 +25,16 @@ class DatePickerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
         view.backgroundColor = UIColor.white
         
+        setUpDateLabel()
+        setUpSegmentControl()
+        setUpDatePicker()
+        setUpCurrentDateButton()
+    }
+    
+    func setUpDateLabel() {
         dateLabel.text = dateFormatter.string(from: date)
         view.addSubview(dateLabel)
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -36,9 +43,9 @@ class DatePickerViewController: UIViewController {
         dateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         dateLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
         dateLabel.textAlignment = .center
-        
-        let items = ["Date", "Time"]
-        let customSC = UISegmentedControl(items: items)
+    }
+    
+    func setUpSegmentControl() {
         customSC.selectedSegmentIndex = 0
         customSC.tintColor = UIColor.doBlue
         customSC.addTarget(
@@ -52,7 +59,9 @@ class DatePickerViewController: UIViewController {
         customSC.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
         customSC.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
         customSC.heightAnchor.constraint(equalToConstant: 25).isActive = true
-        
+    }
+    
+    func setUpDatePicker() {
         datePicker.timeZone = NSTimeZone.local
         datePicker.backgroundColor = UIColor.white
         datePicker.datePickerMode = .date
@@ -64,7 +73,9 @@ class DatePickerViewController: UIViewController {
         datePicker.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
         datePicker.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
         datePicker.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        
+    }
+    
+    func setUpCurrentDateButton() {
         currentDateButton.setTitle("현재 날짜/시간으로 설정", for: .normal)
         currentDateButton.setTitleColor(UIColor.black, for: .normal)
         currentDateButton.addTarget(
@@ -78,7 +89,6 @@ class DatePickerViewController: UIViewController {
         currentDateButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
         currentDateButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
         currentDateButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8).isActive = true
-
     }
     
     @objc func changeDatePockerMode(sender: UISegmentedControl) {
