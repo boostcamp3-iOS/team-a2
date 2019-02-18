@@ -72,7 +72,6 @@
 		E992EC6E21FAEE4D00917116 /* SideMenuEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6D21FAEE4D00917116 /* SideMenuEditCell.swift */; };
 		E992EC7021FAEE5B00917116 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6F21FAEE5B00917116 /* FilterViewController.swift */; };
 		E992EC7221FAEE6700917116 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7121FAEE6700917116 /* SideMenuViewController.swift */; };
-		E992EC7421FAEE7100917116 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7321FAEE7100917116 /* TestViewController.swift */; };
 		E992EC7821FAF4C200917116 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7721FAF4C200917116 /* CalendarViewController.swift */; };
 		E992EC7A21FAFBC500917116 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7921FAFBC500917116 /* CalendarCell.swift */; };
 		E992EC7C21FB1E5500917116 /* CalendarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7B21FB1E5500917116 /* CalendarHeaderView.swift */; };
@@ -176,7 +175,6 @@
 		E992EC6D21FAEE4D00917116 /* SideMenuEditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuEditCell.swift; sourceTree = "<group>"; };
 		E992EC6F21FAEE5B00917116 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		E992EC7121FAEE6700917116 /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
-		E992EC7321FAEE7100917116 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		E992EC7721FAF4C200917116 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		E992EC7921FAFBC500917116 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		E992EC7B21FB1E5500917116 /* CalendarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHeaderView.swift; sourceTree = "<group>"; };
@@ -425,7 +423,6 @@
 				E936659322110DF900DC660A /* BaseSlidingViewController.swift */,
 				E992EC6F21FAEE5B00917116 /* FilterViewController.swift */,
 				E992EC7121FAEE6700917116 /* SideMenuViewController.swift */,
-				E992EC7321FAEE7100917116 /* TestViewController.swift */,
 				E992EC7721FAF4C200917116 /* CalendarViewController.swift */,
 				D561692421FAD07000E00FED /* MainTabBarViewController.swift */,
 				D50276F122041DB100A0DB5E /* PhotosViewController.swift */,
@@ -705,7 +702,6 @@
 				E992EC7A21FAFBC500917116 /* CalendarCell.swift in Sources */,
 				E992EC7221FAEE6700917116 /* SideMenuViewController.swift in Sources */,
 				E992EC7821FAF4C200917116 /* CalendarViewController.swift in Sources */,
-				E992EC7421FAEE7100917116 /* TestViewController.swift in Sources */,
 				E9AA2814221875FC00B81E23 /* TimelineHeaderCell.swift in Sources */,
 				EC0BB22E22150EA300E2BB6F /* APILocation.swift in Sources */,
 				D5CCA1302216775F0055D264 /* MainTabBarViewController.swift in Sources */,
@@ -742,7 +738,6 @@
 				D502765321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift in Sources */,
 				EC5E21AB220425390073D90E /* LocationService.swift in Sources */,
 				E9083DF922154370002A0E6F /* CollectedEntriesViewController.swift in Sources */,
-				D561692321FAD07000E00FED /* AppDelegate.swift in Sources */,
 				D50276E82202C79300A0DB5E /* TimelineViewController.swift in Sources */,
 				D502766221FB0D6000A0DB5E /* WeatherType.swift in Sources */,
 				D5CCA136221698000055D264 /* AddActionViewController.swift in Sources */,

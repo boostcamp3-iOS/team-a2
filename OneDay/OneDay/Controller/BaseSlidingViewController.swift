@@ -50,6 +50,7 @@ class BaseSlidingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .doBlue
         setupViews()
         setupViewControllers()
         setupGesture()
@@ -172,9 +173,8 @@ class BaseSlidingViewController: UIViewController {
     
     fileprivate func setupViews() {
         view.addSubview(baseMainView)
-        baseMainView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        baseMainView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         baseMainView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        
         baseMainViewRightConstraint = baseMainView.rightAnchor.constraint(
             equalTo: view.rightAnchor)
         baseMainViewRightConstraint.isActive = true

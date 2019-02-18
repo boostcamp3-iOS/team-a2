@@ -248,6 +248,8 @@ extension CoreDataManager: CoreDataEntryService {
             return dateCount
         } catch {
             fatalError("Failed get EntryData")
+        }
+    }
 
     func updateContents(entry: Entry, contents: NSAttributedString, completion: (() -> Void), error: ((Error) -> Void)?) {
         DispatchQueue.global().async {

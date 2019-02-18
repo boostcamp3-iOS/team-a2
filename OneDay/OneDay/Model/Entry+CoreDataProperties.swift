@@ -51,41 +51,6 @@ extension Entry {
         if let year = dateComponents.year as NSNumber? {
             self.year = year
         }
-        monthAndYear = "\(month)년 \(year)"
-    }
-    @objc(addTagsObject:)
-    @NSManaged public func addToTags(_ value: Tag)
-
-    @objc(removeTagsObject:)
-    @NSManaged public func removeFromTags(_ value: Tag)
-
-    @objc(addTags:)
-    @NSManaged public func addToTags(_ values: NSSet)
-
-    @objc(removeTags:)
-    @NSManaged public func removeFromTags(_ values: NSSet)
-
-}
-
-// MARK: Generated accessors for tags
-extension Entry {
-    
-    var monthAndYear: String {
-        return "\(month)년 \(year)"
-    }
-    
-    func updateDate(date: Date) {
-        self.date = date
-        let dateComponents = Calendar.current.dateComponents(in: TimeZone.current, from: date)
-        if let month = dateComponents.month as NSNumber? {
-            self.month = month
-        }
-        if let day = dateComponents.day as NSNumber? {
-            self.day = day
-        }
-        if let year = dateComponents.year as NSNumber? {
-            self.year = year
-        }
         
     }
     
