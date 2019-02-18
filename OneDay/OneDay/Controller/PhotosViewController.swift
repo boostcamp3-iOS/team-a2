@@ -12,43 +12,29 @@ import CoreData
 class PhotosViewController: UIViewController {
     
     @IBOutlet weak var photoCollectionView: UICollectionView!
-    // MARK :- FIXME
-    var coreDataStack: CoreDataStack = CoreDataStack(modelName: "OneDay")
-    var entries: [Entry] = []
-    
-    lazy var fetchedResultsController: NSFetchedResultsController<Entry> = {
-        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
-        let photoPredicate = NSPredicate(format: "%K != nil", #keyPath(Entry.thumbnail))
-        fetchRequest.predicate = photoPredicate
-        let dateSort = NSSortDescriptor(key: #keyPath(Entry.date), ascending: false)
-        fetchRequest.sortDescriptors = [dateSort]
-        
-        let fetchedResultsController = NSFetchedResultsController (
-            fetchRequest: fetchRequest,
-            managedObjectContext: coreDataStack.managedContext,
-            sectionNameKeyPath: #keyPath(Entry.date),
-            cacheName: "photo_entries")
-        
-        return fetchedResultsController
-    }()
     
     private let reuseIdentifier = "photo_cell"
     fileprivate let itemsPerRow: CGFloat = 3
     fileprivate let sectionInsets = UIEdgeInsets(top: 2.0, left: 4.0, bottom: 2.0, right: 2.0)
+    
+    var entries: [Entry] = []
+    private let defaultFilters : [EntryFilter] = [.currentJournal, .photo]
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setCollectionViewLayout()
-        do {
-            try fetchedResultsController.performFetch()
-            entries = fetchedResultsController.fetchedObjects ?? []
-            photoCollectionView.reloadData()
-        } catch let error as NSError {
-            print("Count not fetch \(error), \(error.userInfo)")
-        }
+        configureCollectionViewLayout()
+        addCoreDataChangedNotificationObserver()
+        addEntriesFiltersChangeNotificationObserver()
+        loadData()
     }
     
-    private func setCollectionViewLayout() {
+    // CoreData에서 Filter 조건을 넘기고 데이터를 받아서 CollectionView Reload
+    private func loadData() {
+        entries = CoreDataManager.shared.filter(by: defaultFilters)
+        photoCollectionView.reloadData()
+    }
+    
+    private func configureCollectionViewLayout() {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         let insets = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
         let itemsPerRow: CGFloat = 3
@@ -59,10 +45,70 @@ class PhotosViewController: UIViewController {
         layout.minimumLineSpacing = 0
         photoCollectionView.collectionViewLayout = layout
     }
-
+    // Notification Observer를 추가
+    func addCoreDataChangedNotificationObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didReceiveCoreDataChangedNotification(_:)),
+            name: CoreDataManager.DidChangedCoredDataNotification,
+            object: nil)
+    }
+    func addEntriesFiltersChangeNotificationObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didReceiveEntriesFilterNotification(_:)),
+            name: CoreDataManager.DidChangedEntriesFilterNotification,
+            object: nil)
+    }
+    
+    // 두 function은 현재 동일합니다. 추후에 달라질 수 있을 것 같아서 2개로 나누었습니다.
+    // Data가 변경되었다는 Notification 을 받았을 때: collectionView reload
+    @objc func didReceiveCoreDataChangedNotification(_: Notification) {
+        DispatchQueue.main.async { [weak self] in
+            self?.loadData()
+        }
+    }
+    // Filter Condition이 변경되었다는 을 받았을 때: collectionView reload
+    @objc func didReceiveEntriesFilterNotification(_: Notification) {
+        DispatchQueue.main.async { [weak self] in
+            self?.loadData()
+        }
+    }
+    
+    // MARK: Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let nextViewController: EntryViewController = segue.destination as? EntryViewController,
+            let cell: PhotosCollectionViewCell = sender as? PhotosCollectionViewCell {
+            guard let indexPath: IndexPath = photoCollectionView.indexPath(for: cell) else { return }
+            nextViewController.entry = entries[indexPath.item]
+        }
+    }
 }
 
-extension PhotosViewController : UICollectionViewDataSource {
+extension PhotosViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    @IBAction func showCreateEntryModalViewController(_ sender: UIBarButtonItem) {
+        switch sender.title {
+        case "camera":
+            guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+                selectImage(from: .photoLibrary)
+                return
+            }
+            selectImage(from: .camera)
+        default:
+            selectImage(from: .photoLibrary)
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
+        ) {
+        picker.dismiss(animated: true, completion: nil)
+        createEntryWithImage(pickingMediaWithInfo: info)
+    }
+}
+
+extension PhotosViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return entries.count
@@ -72,7 +118,19 @@ extension PhotosViewController : UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? PhotosCollectionViewCell else {
             preconditionFailure("No expected cell type casting by PhotosCollectionViewCell")
         }
-        cell.dayLabel.text = "12"
+        let entry = entries[indexPath.item]
+        cell.dayLabel.text = "\(entry.day)"
+        cell.monthAndYearLabel.text = "\(entry.monthAndYear)"
+        
+        guard let fileName = entry.thumbnail else { preconditionFailure("No thumbnail image") }
+        guard let imageURL = fileName.urlForDataStorage else { preconditionFailure("No thumbnail image") }
+        
+        do {
+            let imageData = try Data(contentsOf: imageURL)
+            cell.imageView.image = UIImage(data: imageData)
+        } catch {
+            preconditionFailure("invalid ImageURL")
+        }
         return cell
     }
 }

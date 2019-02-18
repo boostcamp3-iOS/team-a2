@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1IN-uQ-cZV">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Map-->
+        <scene sceneID="EdS-ce-1zq">
+            <objects>
+                <viewController id="1IN-uQ-cZV" customClass="MapViewController" customModule="OneDay" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="StA-Eq-Rjn">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="QUB-S2-7BM">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <connections>
+                                    <outlet property="delegate" destination="1IN-uQ-cZV" id="e46-mG-L7v"/>
+                                </connections>
+                            </mapView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AId-rh-Jrh">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <items>
+                                    <barButtonItem title="Item" image="ic_navigation" id="RyP-Rq-879">
+                                        <connections>
+                                            <action selector="didTaplocationItem:" destination="1IN-uQ-cZV" id="va0-5t-LOH"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="WzJ-Fv-FAb"/>
+                                    <barButtonItem title="일지 목록 보기" id="GUe-7N-5mB">
+                                        <connections>
+                                            <action selector="didTapEntriesItem:" destination="1IN-uQ-cZV" id="tdJ-0a-3uJ"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="anU-L8-7dq"/>
+                                    <barButtonItem title="Item" image="ic_info" id="KKn-cp-XJ8">
+                                        <connections>
+                                            <action selector="didTapInfoItem:" destination="1IN-uQ-cZV" id="UuX-wG-Wgb"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="y0S-wu-Vm6" firstAttribute="trailing" secondItem="QUB-S2-7BM" secondAttribute="trailing" id="2vU-m7-a1e"/>
+                            <constraint firstItem="y0S-wu-Vm6" firstAttribute="bottom" secondItem="QUB-S2-7BM" secondAttribute="bottom" id="9TS-qL-QNz"/>
+                            <constraint firstItem="y0S-wu-Vm6" firstAttribute="bottom" secondItem="AId-rh-Jrh" secondAttribute="bottom" id="EUm-ql-3AW"/>
+                            <constraint firstItem="QUB-S2-7BM" firstAttribute="leading" secondItem="y0S-wu-Vm6" secondAttribute="leading" id="dTW-vZ-Md3"/>
+                            <constraint firstItem="QUB-S2-7BM" firstAttribute="top" secondItem="y0S-wu-Vm6" secondAttribute="top" id="dXy-NG-wmm"/>
+                            <constraint firstItem="AId-rh-Jrh" firstAttribute="leading" secondItem="StA-Eq-Rjn" secondAttribute="leading" id="h5j-LQ-9QY"/>
+                            <constraint firstAttribute="trailing" secondItem="AId-rh-Jrh" secondAttribute="trailing" id="vvz-eM-hAo"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="y0S-wu-Vm6"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Map" id="6DY-ds-dSv"/>
+                    <connections>
+                        <outlet property="currentLocationItem" destination="RyP-Rq-879" id="idD-u1-6fs"/>
+                        <outlet property="mapView" destination="QUB-S2-7BM" id="oiF-g1-Wt2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="y0C-nC-e6X" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="844" y="-159"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="ic_info" width="24" height="24"/>
+        <image name="ic_navigation" width="24" height="24"/>
+    </resources>
+</document>

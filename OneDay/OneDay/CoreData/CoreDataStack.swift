@@ -39,7 +39,6 @@ class CoreDataStack {
     }
     
     // 저장할 file URL
-    // 사실 디스크립션은 옵션이에요 없어도 되요.
     lazy var storeDescription: NSPersistentStoreDescription = {
         let description = NSPersistentStoreDescription(url: self.storeURL)
         description.shouldMigrateStoreAutomatically = true
@@ -65,13 +64,19 @@ class CoreDataStack {
     }
     
     // 변경사항 저장
-    func saveContext () {
-        guard managedContext.hasChanges else { return }
-        
-        do {
-            try managedContext.save()
-        } catch let error as NSError {
-            print("Unresolved error \(error), \(error.userInfo)")
+    func saveContext(successHandler: (() -> Void)? = nil, errorHandler: ((NSError) -> Void)? = nil) {
+        if managedContext.hasChanges {
+            do {
+                try managedContext.save()
+                if let successHandler = successHandler {
+                    successHandler()
+                }
+            } catch let error as NSError {
+                print("Unresolved error \(error), userInfo: \(error.userInfo)")
+                if let errorHandler = errorHandler {
+                    errorHandler(error)
+                }
+            }
         }
     }
 }
