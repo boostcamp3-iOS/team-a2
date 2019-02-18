@@ -180,6 +180,14 @@
                                             <constraint firstAttribute="width" constant="21" id="zLM-8K-HQ3"/>
                                         </constraints>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UCW-Hr-sOE">
+                                        <rect key="frame" x="280" y="6" width="25" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="picture-white"/>
+                                        <connections>
+                                            <action selector="showPhoto:" destination="GAO-3U-mcR" eventType="touchUpInside" id="ga5-mq-XXs"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7R8-GZ-MVs">
                                         <rect key="frame" x="322" y="3.5" width="37" height="30"/>
                                         <state key="normal" title="Done">
@@ -328,6 +336,7 @@
     </scenes>
     <resources>
         <image name="ic_check" width="64" height="64"/>
+        <image name="picture-white" width="32" height="32"/>
         <image name="setting_like" width="32" height="32"/>
         <namedColor name="doBlue">
             <color red="0.41176470588235292" green="0.74509803921568629" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
