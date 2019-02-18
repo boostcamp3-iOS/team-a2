@@ -62,7 +62,7 @@ class TimelineViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? EntryViewController {
-            destination.entry = CoreDataManager.shared.insert()
+            destination.entry = CoreDataManager.shared.insertEntry()
         }
     }
     
@@ -174,12 +174,12 @@ extension TimelineViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         
-        guard let nextVC = UIStoryboard(name: "Coredata", bundle: nil)
+        guard let entryViewController = UIStoryboard(name: "Coredata", bundle: nil)
             .instantiateViewController(withIdentifier: "entry_detail")
             as? EntryViewController
             else { return }
-        nextVC.entry = fetchedResultsController.object(at: indexPath)
-        self.present(nextVC, animated: true)
+        entryViewController.entry = fetchedResultsController.object(at: indexPath)
+        self.present(entryViewController, animated: true)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

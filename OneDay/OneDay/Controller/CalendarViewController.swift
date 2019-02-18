@@ -384,14 +384,14 @@ extension CalendarViewController {
                     month: month,
                     day: day)
                 
-                guard let nextVC = UIStoryboard(name: "Coredata", bundle: nil)
+                guard let entryViewController = UIStoryboard(name: "Coredata", bundle: nil)
                     .instantiateViewController(withIdentifier: "entry_detail")
                     as? EntryViewController
                     else { return }
-                nextVC.entry = CoreDataManager.shared.insert()
-                nextVC.entry.date = components.date ?? Date()
-                nextVC.entry.updateDate(date: components.date ?? Date())
-                self.present(nextVC, animated: true)
+                entryViewController.entry = CoreDataManager.shared.insertEntry()
+                entryViewController.entry.date = components.date ?? Date()
+                entryViewController.entry.updateDate(date: components.date ?? Date())
+                self.present(entryViewController, animated: true)
         })
     }
     

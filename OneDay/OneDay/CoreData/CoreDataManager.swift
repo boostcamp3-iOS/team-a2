@@ -186,7 +186,7 @@ extension CoreDataManager: CoreDataEntryService {
             cacheName: "timelineResultsController")
     }
     
-    func insert() -> Entry {
+    func insertEntry() -> Entry {
         let entry = Entry(context: managedContext)
         entry.entryId = UUID()
         entry.title = "새로운 엔트리"
