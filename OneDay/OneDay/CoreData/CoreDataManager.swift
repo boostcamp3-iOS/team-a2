@@ -186,7 +186,6 @@ extension CoreDataManager: CoreDataEntryService {
         entry.title = "새로운 엔트리"
         entry.journal = currentJournal
         entry.updateDate(date: Date())
-        entry.month = 1
         save()
         return entry
     }

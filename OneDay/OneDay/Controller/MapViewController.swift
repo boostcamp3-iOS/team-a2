@@ -36,7 +36,6 @@ class MapViewController: UIViewController {
         fetchResultController = CoreDataManager.shared.locationResultController()
         do {
             try fetchResultController.performFetch()
-//            mapView.removeAnnotations(annotations)
             
             fetchResultController.fetchedObjects?.forEach({ entry in
                 guard let location = entry.location else {
@@ -46,9 +45,6 @@ class MapViewController: UIViewController {
                 let annotation = EntryAnnotation(entry: entry)
                 mapView.addAnnotation(annotation)
             })
-            print(fetchResultController.fetchedObjects?.count)
-            print(mapView.annotations.count)
-//            }
         } catch {
             fatalError()
         }
