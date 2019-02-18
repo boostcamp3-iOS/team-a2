@@ -139,7 +139,7 @@ class EntryInformationViewController: UIViewController {
     func setUpDate() {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko-KR")
-        dateFormatter.dateFormat = "a h:mm, YYYY년 MM월 dd일"
+        dateFormatter.dateFormat = "YYYY년 MM월 dd일, a h:mm"
         let fullDate = dateFormatter.string(from: entryViewController.entry.date)
         settingTableData[0][3].detail = fullDate
     }
@@ -321,9 +321,10 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
             case 2:
                 print("일기장")
             case 3:
-                print("날짜")
+                changeDate(indexPath: indexPath)
             case 4:
                 toggleFavorite()
+                tableView.reloadRows(at: [indexPath], with: .none)
             default:
                 return
             }
@@ -332,7 +333,7 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
         case .ect:
             ()
         }
-        tableView.reloadRows(at: [indexPath], with: .none)
+        
     }
     
     // MARK: ScrollView
@@ -360,9 +361,23 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
     }
 }
 
-// MARK : - Cell select actions
+// MARK: - Cell select actions
 
 extension EntryInformationViewController {
+    func changeDate(indexPath: IndexPath) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        let datePickerViewController = DatePickerViewController()
+        datePickerViewController.date = self.entryViewController.entry.date
+        let okAction = UIAlertAction(title: "확인", style: .cancel) { _ in
+            self.entryViewController.entry.date = datePickerViewController.datePicker.date
+            self.setUpDate()
+            self.tableView.reloadRows(at: [indexPath], with: .none)
+        }
+        alert.addAction(okAction)
+        alert.setValue(datePickerViewController, forKey: "contentViewController")
+        self.present(alert, animated: false)
+    }
+    
     func toggleFavorite() {
         entryViewController.entry.favorite.toggle()
         if entryViewController.entry.favorite {

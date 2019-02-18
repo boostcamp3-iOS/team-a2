@@ -87,6 +87,7 @@
 		EC0CFB0922030C1D001293B1 /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0822030C1D001293B1 /* NetworkProvider.swift */; };
 		EC51AD0422193DA900049686 /* CoreDataDeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC51AD0322193DA900049686 /* CoreDataDeviceService.swift */; };
 		EC51AD0622193E3700049686 /* CoreDataLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC51AD0522193E3700049686 /* CoreDataLocationService.swift */; };
+		EC578578221A55690001CECC /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC578577221A55690001CECC /* DatePickerViewController.swift */; };
 		EC5E21AB220425390073D90E /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5E21AA220425390073D90E /* LocationService.swift */; };
 /* End PBXBuildFile section */
 
@@ -187,6 +188,7 @@
 		EC0CFB0822030C1D001293B1 /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
 		EC51AD0322193DA900049686 /* CoreDataDeviceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataDeviceService.swift; sourceTree = "<group>"; };
 		EC51AD0522193E3700049686 /* CoreDataLocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataLocationService.swift; sourceTree = "<group>"; };
+		EC578577221A55690001CECC /* DatePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerViewController.swift; sourceTree = "<group>"; };
 		EC5E21AA220425390073D90E /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -402,6 +404,7 @@
 				D5CCA135221698000055D264 /* AddActionViewController.swift */,
 				D50276E92202C7EE00A0DB5E /* EntryViewController.swift */,
 				EC0BB233221699F500E2BB6F /* EntryInformationViewController.swift */,
+				EC578577221A55690001CECC /* DatePickerViewController.swift */,
 				D50276E72202C79300A0DB5E /* TimeLineViewController.swift */,
 				E936659322110DF900DC660A /* BaseSlidingViewController.swift */,
 				E992EC6F21FAEE5B00917116 /* FilterViewController.swift */,
@@ -692,6 +695,7 @@
 				E992EC6321FAEDFD00917116 /* MatchingEntriesCell.swift in Sources */,
 				D5CCA138221698140055D264 /* UIViewController+UIImagePickerControllerDelegate.swift in Sources */,
 				D516C8BF2213C2F600A4BDAC /* NSAttributedString+UIImage.swift in Sources */,
+				EC578578221A55690001CECC /* DatePickerViewController.swift in Sources */,
 				E992EC7C21FB1E5500917116 /* CalendarHeaderView.swift in Sources */,
 				D5CCA12D2216775F0055D264 /* AppDelegate.swift in Sources */,
 				E9DA39AC2203FCD30026381E /* FilterSection.swift in Sources */,
