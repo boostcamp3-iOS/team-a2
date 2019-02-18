@@ -111,15 +111,11 @@ class TimelineTableViewCell: UITableViewCell {
         bindDate(from: entry)
 
         //FIXME: 날씨 아이콘 이름, 지도 기능 추가되면 수정
-        adressLabel.text = "가나다라마바사아자차카타파하가나다라"
-        
-        if let address = entry.location?.address {
-            adressLabel.text = address
-        }
-        
-        // if let weatherIcon = entry.weather.?? {
+        adressLabel.text = "강남구, 서울특별시, 테헤란로21길 14, 대한민국"
+//        if let address = entry.location?.address {
+//            adressLabel.text = address
+//        }
         weatherIconImageView.image = UIImage(named: "clear-night")
-        // }
         
         if let temperature = entry.weather?.tempature, let type = entry.weather?.type {
             weatherLabel.text = "\(temperature)°C \(type)"

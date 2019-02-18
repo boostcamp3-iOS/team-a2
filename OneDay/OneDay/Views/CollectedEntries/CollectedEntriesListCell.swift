@@ -33,7 +33,6 @@ class CollectedEntriesListCell: UITableViewCell {
         backgroundColor = .doLight
         selectionStyle = .none
         setupCellView()
-    
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -72,4 +71,27 @@ extension CollectedEntriesListCell {
             constant: -1).isActive = true
     }
     
+}
+
+class AAAttachment : NSTextAttachment {
+
+    override func attachmentBounds(for textContainer: NSTextContainer?, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGRect {
+
+        guard let image = self.image else {
+            return CGRect.zero
+        }
+
+        let height = lineFrag.size.height
+
+        var scalingFactor = CGFloat(20)
+        print(lineFrag)
+        let imageSize = image.size
+        if height < imageSize.height {
+            scalingFactor *= height / imageSize.height
+        }
+        let rect = CGRect(x: 0, y: 0, width: imageSize.width * scalingFactor, height: imageSize.height * scalingFactor)
+
+        return rect
+    }
+
 }

@@ -10,7 +10,7 @@ import UIKit
 
 class SideMenuViewController: UIViewController {
     
-    var sideMenuWidth: CGFloat = UIScreen.main.bounds.width * 0.8
+    var sideMenuWidth: CGFloat = UIScreen.main.bounds.width * 0.75
     
     // 테이블 섹션 헤더
     let headerView: UIView = {
@@ -84,11 +84,12 @@ extension SideMenuViewController: UITableViewDelegate, UITableViewDataSource {
         
         switch indexPath.section {
         case 0:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "mainCellId", for: indexPath) as? SideMenuMainCell else {
-                preconditionFailure("Error")
-            }
-            cell.mainIcon.image = UIImage(named: mainCells[indexPath.row].icon) ?? UIImage()
-            cell.mainLabel.text = mainCells[indexPath.row].name
+            let cell = UITableViewCell()
+//            guard let cell = tableView.dequeueReusableCell(withIdentifier: "mainCellId", for: indexPath) as? SideMenuMainCell else {
+//                preconditionFailure("Error")
+//            }
+//            cell.mainIcon.image = UIImage(named: mainCells[indexPath.row].icon) ?? UIImage()
+//            cell.mainLabel.text = mainCells[indexPath.row].name
             return cell
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "listCellId", for: indexPath) as? SideMenuJournalListCell else {
@@ -163,7 +164,7 @@ extension SideMenuViewController {
         
         sideMenuTableView.delegate = self
         sideMenuTableView.dataSource = self
-        sideMenuTableView.register(SideMenuMainCell.self, forCellReuseIdentifier: "mainCellId")
+//        sideMenuTableView.register(SideMenuMainCell.self, forCellReuseIdentifier: "mainCellId")
         sideMenuTableView.register(SideMenuJournalListCell.self, forCellReuseIdentifier: "listCellId")
         sideMenuTableView.register(SideMenuJournalAddCell.self, forCellReuseIdentifier: "addCellId")
         sideMenuTableView.register(SideMenuEditCell.self, forCellReuseIdentifier: "editCellId")

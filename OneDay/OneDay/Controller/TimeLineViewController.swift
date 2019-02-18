@@ -10,7 +10,7 @@ import CoreData
 import CoreLocation
 import UIKit
 
-class TimelineViewController: UIViewController {
+class TimelineViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: - Properties
     
@@ -18,19 +18,21 @@ class TimelineViewController: UIViewController {
 
     let fetchedResultsController: NSFetchedResultsController<Entry> =
         CoreDataManager.shared.timelineResultsController
-
-    var shouldDayLabelVisibleIndexPath = Set<IndexPath>()
-    var shouldDayLabelVisibleDateComponents = Set<[Int]>()
+    
+    fileprivate var shouldShowDayLabelAtIndexPath = Set<IndexPath>()
+    fileprivate var entriesDateComponentsStore = Set<[Int]>()
     
     // MARK: - Life cycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        registerCellId()
-        setupFetchedResultsController()
         setupTopView()
+
+        registerTableviewCell()
+        setupFetchedResultsController()
+        addCoreDataChangedNotificationObserver()
     }
-    
+
     // MARK: - Setup
     
     func setupTopView() {
@@ -38,12 +40,10 @@ class TimelineViewController: UIViewController {
 //        let backgroundView = UIView(
 //            frame: CGRect(
 //            x: 0,
-//            y: -600,
+//            y: -350,
 //            width: UIScreen.main.bounds.size.width,
-//            height: 800)
+//            height: 400)
 //        )
-//        timelineTableView.addSubview(backgroundView)
-        
         //navigationBar 경계선 제거
         if let navigationBar = self.navigationController?.navigationBar {
             navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
@@ -51,7 +51,7 @@ class TimelineViewController: UIViewController {
         }
     }
     
-    fileprivate func registerCellId() {
+    fileprivate func registerTableviewCell() {
         timelineTableView.register(
             TimelineTableViewCell.self,
             forCellReuseIdentifier: "timelineCellId")
@@ -61,18 +61,7 @@ class TimelineViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("세구")
-        if sender is UITableViewCell {
-            if let cell = sender as? UITableViewCell,
-                let indexPath = timelineTableView.indexPath(for: cell) {
-                guard let destination = segue.destination as? EntryViewController
-                else {
-                    return
-                }
-                let entry = fetchedResultsController.object(at: indexPath)
-                destination.entry = entry
-            }
-        } else if let destination = segue.destination as? EntryViewController {
+        if let destination = segue.destination as? EntryViewController {
             destination.entry = CoreDataManager.shared.insert()
         }
     }
@@ -84,6 +73,35 @@ class TimelineViewController: UIViewController {
         } catch let error as NSError {
             print("Fetching error: \(error), \(error.userInfo)")
         }
+    }
+    
+    fileprivate func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer)
+        -> Bool {
+            return true
+    }
+    
+    // MARK: - Notification
+
+    func addCoreDataChangedNotificationObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didReceiveCoreDataChangedNotification(_:)),
+            name: CoreDataManager.DidChangedCoredDataNotification,
+            object: nil)
+    }
+    
+    @objc func didReceiveCoreDataChangedNotification(_: Notification) {
+        DispatchQueue.main.async { [weak self] in
+            self?.reloadData()
+        }
+    }
+    
+    private func reloadData() {
+        shouldShowDayLabelAtIndexPath = []
+        entriesDateComponentsStore = []
+        timelineTableView.reloadData()
     }
 }
 
@@ -103,17 +121,18 @@ extension TimelineViewController: UITableViewDelegate, UITableViewDataSource {
         else {
             preconditionFailure("Error")
         }
+        
         let components = Calendar.current.dateComponents([.month, .day, .year], from: entry.date)
         if let month = components.month, let day = components.day, let year = components.year {
-            let arrCount = shouldDayLabelVisibleDateComponents.count
-            shouldDayLabelVisibleDateComponents.insert([month, day, year])
-            let newArrCount = shouldDayLabelVisibleDateComponents.count
+            let arrCount = entriesDateComponentsStore.count
+            entriesDateComponentsStore.insert([month, day, year])
+            let newArrCount = entriesDateComponentsStore.count
             if arrCount != newArrCount {
-                shouldDayLabelVisibleIndexPath.insert(indexPath)
+                shouldShowDayLabelAtIndexPath.insert(indexPath)
             }
         }
         
-        if shouldDayLabelVisibleIndexPath.contains(indexPath) {
+        if shouldShowDayLabelAtIndexPath.contains(indexPath) {
             cell.dayLabel.isHidden = false
             cell.weekDayLabel.isHidden = false
         }
@@ -154,6 +173,13 @@ extension TimelineViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
+        
+        guard let nextVC = UIStoryboard(name: "Coredata", bundle: nil)
+            .instantiateViewController(withIdentifier: "entry_detail")
+            as? EntryViewController
+            else { return }
+        nextVC.entry = fetchedResultsController.object(at: indexPath)
+        self.present(nextVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -180,11 +206,6 @@ extension TimelineViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30
     }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 2
-    }
-    
 }
 
 extension TimelineViewController: NSFetchedResultsControllerDelegate {
@@ -198,9 +219,7 @@ extension TimelineViewController: NSFetchedResultsControllerDelegate {
         didChange sectionInfo: NSFetchedResultsSectionInfo,
         atSectionIndex sectionIndex: Int,
         for type: NSFetchedResultsChangeType) {
-        shouldDayLabelVisibleIndexPath = []
-        shouldDayLabelVisibleDateComponents = []
-        timelineTableView.reloadData()
+        
         let indexSet = IndexSet(integer: sectionIndex)
         switch type {
         case .insert:
@@ -218,10 +237,7 @@ extension TimelineViewController: NSFetchedResultsControllerDelegate {
         at indexPath: IndexPath?,
         for type: NSFetchedResultsChangeType,
         newIndexPath: IndexPath?) {
-        shouldDayLabelVisibleIndexPath = []
-        shouldDayLabelVisibleDateComponents = []
-        timelineTableView.reloadData()
-
+        
         switch type {
         case .insert:
             timelineTableView.insertRows(at: [newIndexPath!], with: .fade)

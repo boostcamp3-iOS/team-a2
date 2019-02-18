@@ -9,7 +9,7 @@
 import CoreData
 import UIKit
 
-class CalendarViewController: UIViewController {
+class CalendarViewController: UIViewController, UITabBarControllerDelegate {
     let collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.sectionHeadersPinToVisibleBounds = true
@@ -44,18 +44,21 @@ class CalendarViewController: UIViewController {
     fileprivate var isTodayIndex = false
     fileprivate var isPickingDate = false
     fileprivate var computedWeekday = 6
-    
-    var fetchedEntriesDate = [String]()
+    lazy var tappingTabItemCount = 0
+
+    var fetchedEntriesDate = Set<String>()
 
     // MARK: - Life cycle
     
     override func viewDidLoad() {
         setupCalendar()
         setupNavigationItem()
-    }
- 
-    override func viewWillAppear(_ animated: Bool) {
         setupCoreData()
+        
+        addCoreDataChangedNotificationObserver()
+        
+        tabBarController?.delegate = self
+        tappingTabItemCount = 0
     }
     
     // MARK: - CoreData
@@ -71,7 +74,7 @@ class CalendarViewController: UIViewController {
                 let month = components.month,
                 let day = components.day {
                     let date = "\(year)\(month)\(day)"
-                    fetchedEntriesDate.append(date)
+                    fetchedEntriesDate.insert(date)
             }
         }
     }
@@ -131,6 +134,33 @@ class CalendarViewController: UIViewController {
             preconditionFailure("Error")
         }
     }
+    
+    func tabBarController(
+        _ tabBarController: UITabBarController,
+        didSelect viewController: UIViewController) {
+        tappingTabItemCount += 1
+        if tappingTabItemCount == 2 {
+            tappingTabItemCount = 0
+            scrollToDate(date: Date(), animated: false)
+        }
+    }
+    
+    // MARK: - Notification
+    
+    func addCoreDataChangedNotificationObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didReceiveCoreDataChangedNotification(_:)),
+            name: CoreDataManager.DidChangedCoredDataNotification,
+            object: nil)
+    }
+    
+    @objc func didReceiveCoreDataChangedNotification(_: Notification) {
+        DispatchQueue.main.async { [weak self] in
+            self?.setupCoreData()
+            self?.collectionView.reloadData()
+        }
+    }
 }
 
 // MARK: - 콜렉션뷰, CollectionView
@@ -161,6 +191,7 @@ UICollectionViewDelegate {
     func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath) {
+        
         showActionSheet(indexPath.section, indexPath.item)
         datePicker.removeFromSuperview()
         collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
@@ -203,21 +234,6 @@ UICollectionViewDelegate {
         willDisplay cell: UICollectionViewCell,
         forItemAt indexPath: IndexPath) {
         
-        func scrollToDate(date: Date, animated: Bool) {
-            let components = Calendar.current.dateComponents([.year, .month, .day],
-                                                             from: date)
-            if let year = components.year,
-                let month = components.month,
-                let day = components.day {
-                
-                    let index = 12*(year-1)+(month-1)
-                    let day = day
-                    collectionView.scrollToItem(at: [index, day],
-                                            at: .centeredVertically,
-                                            animated: animated)
-            }
-        }
-        
         if !isTodayIndex {     // 오늘의 인덱스에 해당하는 캘린더로 이동
             isTodayIndex = true
             scrollToDate(date: Date(), animated: false)
@@ -226,6 +242,21 @@ UICollectionViewDelegate {
         if isPickingDate {     // 데이트피커에서 선택한 날로 이동
             isPickingDate = false
              scrollToDate(date: datePicker.date, animated: true)
+        }
+    }
+    
+    func scrollToDate(date: Date, animated: Bool) {
+        let components = Calendar.current.dateComponents([.year, .month, .day],
+                                                         from: date)
+        if let year = components.year,
+            let month = components.month,
+            let day = components.day {
+            
+            let index = 12*(year-1)+(month-1)
+            let day = day
+            collectionView.scrollToItem(at: [index, day],
+                                        at: .centeredVertically,
+                                        animated: animated)
         }
     }
     
@@ -301,7 +332,6 @@ extension CalendarViewController {
         let date = convertSectionNumberToDateComponents(sectionNumber, item: day)
         let list = ["일", "월", "화", "수", "목", "금", "토"]
         let weekday = list[date.weekday!-1]
-        
         guard let year = date.year, let month = date.month, let day = date.day else { return }
         
         let entriesAtDay = CoreDataManager.shared.filter(
@@ -311,51 +341,94 @@ extension CalendarViewController {
             by: [.thisDay(month: month, day: day)])
         
         let alertTitle = "\(year)년 \(month)월 \(day)일 \(weekday)요일"
-        let calendarCellAlertController = UIAlertController(
+        let dayAlertController = UIAlertController(
             title: alertTitle,
             message: nil,
             preferredStyle: .actionSheet)
         
-        calendarCellAlertController.addAction(UIAlertAction(
-         title: "새 엔트리 만들기",
-         style: .default) { (_) in
-            self.present(EntryViewController(), animated: true, completion: nil)
-        })
+        addNewEntryAction(date: year, month, day, to: dayAlertController)
         
         if !entriesAtDay.isEmpty {
-            let todayAlertTitle = "\(year). \(month). \(day). (\(entriesAtDay.count) entries)"
-            let todayAlert = UIAlertAction(
-             title: todayAlertTitle,
-             style: .default) { (_) in
+            addTodayEntryAction(date: year, month, day, weekday, about: entriesAtDay, to: dayAlertController)
+            addYearEntryAction(date: month, day, about: entriesOnThisDay, to: dayAlertController)
+        }
+        dayAlertController.addAction(UIAlertAction(title: "취소", style: .cancel))
+        present(dayAlertController, animated: false)
+    }
+    
+    fileprivate func convertSectionNumberToDateComponents(_ section: Int, item: Int) -> DateComponents {
+        let selectedDay = item+1-firstWeekdayInMonth(at: section)
+        let components = DateComponents(year: section/12+1, month: section%12+1, day: selectedDay)
+        let calendar = Calendar.current
+        if let date = calendar.date(from: components) {
+            let componentsWithWeekday = calendar.dateComponents(
+                [.year, .month, .day, .weekday],
+                from: date)
+            return componentsWithWeekday
+        } else {
+            preconditionFailure("Error")
+        }
+    }
+    
+    fileprivate func addNewEntryAction(
+        date year: Int,
+        _ month: Int,
+        _ day: Int,
+        to calendarCellAlertController: UIAlertController) {
+        calendarCellAlertController.addAction(UIAlertAction(
+            title: "새 엔트리 만들기",
+            style: .default) { (_) in
+                let components = DateComponents(
+                    calendar: Calendar.current,
+                    year: year,
+                    month: month,
+                    day: day)
+                
+                guard let nextVC = UIStoryboard(name: "Coredata", bundle: nil)
+                    .instantiateViewController(withIdentifier: "entry_detail")
+                    as? EntryViewController
+                    else { return }
+                nextVC.entry = CoreDataManager.shared.insert()
+                nextVC.entry.date = components.date ?? Date()
+                nextVC.entry.updateDate(date: components.date ?? Date())
+                self.present(nextVC, animated: true)
+        })
+    }
+    
+    fileprivate func addTodayEntryAction(
+        date year: Int,
+        _ month: Int,
+        _ day: Int,
+        _ weekday: String,
+        about entriesAtDay: [Entry],
+        to dayAlertController: UIAlertController) {
+        let todayAlertTitle = "\(year). \(month). \(day). (\(entriesAtDay.count) entries)"
+        let todayAlert = UIAlertAction(
+            title: todayAlertTitle,
+            style: .default) { (_) in
                 let collectedEntriesViewController = CollectedEntriesViewController()
                 collectedEntriesViewController.dateLabel.text =
                 "\(year)년 \(month)월 \(day)일 \(weekday)요일"
                 collectedEntriesViewController.entriesData = entriesAtDay
                 self.present(collectedEntriesViewController, animated: true, completion: nil)
-            }
-            let yearAlertTitle = "\(month)월 \(day)일 (\(entriesOnThisDay.count) entries)"
-            let yearAlert = UIAlertAction(
-             title: yearAlertTitle,
-             style: .default) { (_) in
+        }
+        dayAlertController.addAction(todayAlert)
+    }
+    
+    fileprivate func addYearEntryAction(
+        date month: Int,
+        _ day: Int,
+        about entriesOnThisDay: [Entry],
+        to dayAlertController: UIAlertController) {
+        let yearAlertTitle = "\(month)월 \(day)일 (\(entriesOnThisDay.count) entries)"
+        let yearAlert = UIAlertAction(
+            title: yearAlertTitle,
+            style: .default) { (_) in
                 let collectedEntriesViewController = CollectedEntriesViewController()
                 collectedEntriesViewController.dateLabel.text = "\(month)월 \(day)일"
                 collectedEntriesViewController.entriesData = entriesOnThisDay
                 self.present(collectedEntriesViewController, animated: true, completion: nil)
-            }
-            calendarCellAlertController.addAction(todayAlert)
-            calendarCellAlertController.addAction(yearAlert)
         }
-        calendarCellAlertController.addAction(UIAlertAction(title: "취소", style: .cancel))
-        present(calendarCellAlertController, animated: false)
-    }
-    
-    func convertSectionNumberToDateComponents(_ section: Int, item: Int) -> DateComponents {
-        let selectedDay = item+1-firstWeekdayInMonth(at: section)
-        let components = DateComponents(year: section/12+1, month: section%12+1, day: selectedDay)
-        if let date = Calendar.current.date(from: components) {
-            let components = Calendar.current.dateComponents([.year, .month, .day, .weekday],
-                                                            from: date)
-            return components
-        } else { preconditionFailure("Error") }
+        dayAlertController.addAction(yearAlert)
     }
 }

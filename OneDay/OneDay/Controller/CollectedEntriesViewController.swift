@@ -69,7 +69,7 @@ class CollectedEntriesViewController: UIViewController {
     var coordinates: [MapPinLocation] = []
     var latitude = [CLLocationDegrees]()
     var longitude = [CLLocationDegrees]()
-    
+
     fileprivate func addLocationToMapView() {
         entriesData.forEach { entry in
             if let location = entry.location {
@@ -104,9 +104,9 @@ extension CollectedEntriesViewController: UITableViewDelegate, UITableViewDataSo
         
         let data = entriesData[indexPath.row]
         let attributedText = NSMutableAttributedString()
-
         setupAttributeText(data: data, text: attributedText)
-        
+        resizeImageAttachment(in: attributedText)
+
         cell.contentsListTextView.attributedText = attributedText
         return cell
         }
@@ -165,6 +165,31 @@ extension CollectedEntriesViewController {
             attributedText.append(NSMutableAttributedString(string: "\(temparature) °C  "))
             attributedText.append(NSMutableAttributedString(string: type))
         }
+    }
+    
+    func resizeImageAttachment(in attributedText: NSMutableAttributedString) {
+        attributedText.enumerateAttribute(
+            NSAttributedString.Key.attachment,
+            in: NSRange(location: 0, length: attributedText.length),
+            options: [],
+            using: { value, range, _ -> Void in
+                if value is NSTextAttachment {
+                    guard let attachment: NSTextAttachment = value as? NSTextAttachment
+                        else {return}
+                    
+                    if let oldImage = attachment.image {
+                        var newImage = UIImage()
+                        newImage = oldImage
+                        let imageWidth = UIScreen.main.bounds.width - 124
+                        
+                        let newAttachment: NSTextAttachment = NSTextAttachment()
+                        newAttachment.image = newImage.resizeImageToFit(newWidth: imageWidth)
+                        attributedText.replaceCharacters(
+                            in: range,
+                            with: NSAttributedString(attachment: newAttachment))
+                    }
+                }
+        })
     }
     
     func appendDot(at attributedString: NSMutableAttributedString) {
@@ -234,5 +259,21 @@ extension CollectedEntriesViewController {
             preconditionFailure("Error")
         }
         return mapPresentingRange*scale
+    }
+}
+
+extension UIImage {
+    func resizeImageToFit(newWidth: CGFloat) -> UIImage {
+        let size = self.size
+        let ratio = size.height/size.width
+        let newHeight = newWidth*ratio
+        
+        let newSize = CGSize(width: newWidth, height: newHeight)
+        let rect = CGRect(x: 0, y: 0, width: newWidth, height: newHeight)
+        
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1)
+        self.draw(in: rect)
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        return scaledImage!
     }
 }

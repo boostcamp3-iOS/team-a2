@@ -22,33 +22,49 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8rm-cg-MDR">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="MEL-XZ-niL">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="238"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="36" translatesAutoresizingMaskIntoConstraints="NO" id="sgz-oG-uVD">
-                                            <rect key="frame" x="36" y="71" width="303" height="96"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="80" translatesAutoresizingMaskIntoConstraints="NO" id="sgz-oG-uVD">
+                                            <rect key="frame" x="67.5" y="79" width="240" height="80"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FMw-1s-nCv">
-                                                    <rect key="frame" x="0.0" y="0.0" width="133.5" height="96"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="80" id="2ff-O0-U62"/>
+                                                        <constraint firstAttribute="width" secondItem="FMw-1s-nCv" secondAttribute="height" id="cyn-mG-m82"/>
+                                                    </constraints>
                                                     <state key="normal" image="timelineCamera"/>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hrq-ji-RmT">
-                                                    <rect key="frame" x="169.5" y="0.0" width="133.5" height="96"/>
+                                                    <rect key="frame" x="160" y="0.0" width="80" height="80"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="80" id="HYp-5S-voa"/>
+                                                        <constraint firstAttribute="width" secondItem="hrq-ji-RmT" secondAttribute="height" id="QK5-NE-64P"/>
+                                                    </constraints>
                                                     <state key="normal" image="timelineEdit"/>
                                                     <connections>
-                                                        <segue destination="GAO-3U-mcR" kind="presentation" id="1Rx-Ve-1Bc"/>
+                                                        <segue destination="GAO-3U-mcR" kind="presentation" id="TUh-EV-Fnd"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="hrq-ji-RmT" firstAttribute="top" secondItem="sgz-oG-uVD" secondAttribute="top" id="IMV-zW-CPv"/>
+                                            </constraints>
                                         </stackView>
                                     </subviews>
                                     <color key="backgroundColor" name="doBlue"/>
                                     <constraints>
-                                        <constraint firstItem="sgz-oG-uVD" firstAttribute="leading" secondItem="MEL-XZ-niL" secondAttribute="leading" constant="36" id="2Wk-0v-T3O"/>
-                                        <constraint firstAttribute="trailing" secondItem="sgz-oG-uVD" secondAttribute="trailing" constant="36" id="GxP-5B-Gab"/>
                                         <constraint firstItem="sgz-oG-uVD" firstAttribute="centerY" secondItem="MEL-XZ-niL" secondAttribute="centerY" id="TsF-Kw-YaD"/>
+                                        <constraint firstItem="sgz-oG-uVD" firstAttribute="centerX" secondItem="MEL-XZ-niL" secondAttribute="centerX" id="kuz-TZ-AVk"/>
                                     </constraints>
+                                </view>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="fSP-a6-1Vo">
+                                    <rect key="frame" x="0.0" y="310" width="375" height="1"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="timelineCellId" id="TjK-1m-Jlj" customClass="TimelineTableViewCell" customModule="OneDay" customModuleProvider="target">
@@ -58,9 +74,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="GAO-3U-mcR" kind="presentation" id="kGq-GZ-HmX"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -69,7 +82,8 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" name="doBlue"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Uem-sK-ygE" firstAttribute="trailing" secondItem="8rm-cg-MDR" secondAttribute="trailing" id="19t-Z2-cbL"/>
                             <constraint firstItem="8rm-cg-MDR" firstAttribute="top" secondItem="Uem-sK-ygE" secondAttribute="top" id="NMJ-bd-Qmw"/>
@@ -94,7 +108,7 @@
         <!--Entry View Controller-->
         <scene sceneID="VjH-1b-I7y">
             <objects>
-                <viewController id="GAO-3U-mcR" customClass="EntryViewController" customModule="OneDay" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="entry_detail" id="GAO-3U-mcR" customClass="EntryViewController" customModule="OneDay" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="luO-4J-UVg">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -230,7 +244,4 @@
             <color red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="1Rx-Ve-1Bc"/>
-    </inferredMetricsTieBreakers>
 </document>

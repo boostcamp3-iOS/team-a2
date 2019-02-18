@@ -182,7 +182,7 @@ extension CoreDataManager: CoreDataEntryService {
         return NSFetchedResultsController(
             fetchRequest: currentJournalEntriesRequest,
             managedObjectContext: coreDataStack.managedContext,
-            sectionNameKeyPath: #keyPath(Entry.month),
+            sectionNameKeyPath: #keyPath(Entry.monthAndYear),
             cacheName: "timelineResultsController")
     }
     
