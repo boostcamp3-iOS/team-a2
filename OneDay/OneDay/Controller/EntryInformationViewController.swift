@@ -316,11 +316,11 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
         case .base:
             switch indexPath.row {
             case 0:
-                print("위치")
+                ()
             case 1:
-                print("태그")
+                ()
             case 2:
-                print("일기장")
+                ()
             case 3:
                 changeDate(indexPath: indexPath)
             case 4:

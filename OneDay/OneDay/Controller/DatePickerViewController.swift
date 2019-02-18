@@ -26,7 +26,6 @@ class DatePickerViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        view.frame = CGRect(x: 50, y: 100, width: 275, height: 275)
         view.backgroundColor = UIColor.white
         
         dateLabel.text = dateFormatter.string(from: date)
@@ -84,8 +83,6 @@ class DatePickerViewController: UIViewController {
     
     @objc func changeDatePockerMode(sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
-        case 0:
-            datePicker.datePickerMode = .date
         case 1:
             datePicker.datePickerMode = .time
         default:
