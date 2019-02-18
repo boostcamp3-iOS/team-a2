@@ -279,7 +279,7 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
         switch section {
         case .base:
             return 5
-        case .day, .ect:
+        case .day, .etc:
             return 2
         }
     }
@@ -289,7 +289,7 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
         switch section {
         case .base:
             return 0
-        case .day, .ect:
+        case .day, .etc:
             return 20
         }
     }
@@ -331,7 +331,7 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
             }
         case .day:
             ()
-        case .ect:
+        case .etc:
             ()
         }
         
@@ -427,5 +427,5 @@ extension EntryInformationViewController: StateChangeDelegate {
 private enum Section: Int {
     case base
     case day
-    case ect
+    case etc
 }

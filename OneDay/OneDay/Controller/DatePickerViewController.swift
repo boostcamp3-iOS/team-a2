@@ -13,7 +13,7 @@ class DatePickerViewController: UIViewController {
     var date: Date!
     let dateLabel = UILabel()
     let datePicker = UIDatePicker()
-    let customSC = UISegmentedControl(items: ["Date", "Time"])
+    let customSegmentedControl = UISegmentedControl(items: ["Date", "Time"])
     let currentDateButton = UIButton(type: UIButton.ButtonType.system)
     
     let dateFormatter: DateFormatter = {
@@ -46,19 +46,19 @@ class DatePickerViewController: UIViewController {
     }
     
     func setUpSegmentControl() {
-        customSC.selectedSegmentIndex = 0
-        customSC.tintColor = UIColor.doBlue
-        customSC.addTarget(
+        customSegmentedControl.selectedSegmentIndex = 0
+        customSegmentedControl.tintColor = UIColor.doBlue
+        customSegmentedControl.addTarget(
             self,
             action: #selector(changeDatePockerMode(sender:)),
             for: .valueChanged
         )
-        view.addSubview(customSC)
-        customSC.translatesAutoresizingMaskIntoConstraints = false
-        customSC.topAnchor.constraint(equalTo: dateLabel.bottomAnchor).isActive = true
-        customSC.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
-        customSC.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
-        customSC.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        view.addSubview(customSegmentedControl)
+        customSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        customSegmentedControl.topAnchor.constraint(equalTo: dateLabel.bottomAnchor).isActive = true
+        customSegmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
+        customSegmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
+        customSegmentedControl.heightAnchor.constraint(equalToConstant: 25).isActive = true
     }
     
     func setUpDatePicker() {
@@ -69,7 +69,7 @@ class DatePickerViewController: UIViewController {
         datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
         view.addSubview(datePicker)
         datePicker.translatesAutoresizingMaskIntoConstraints = false
-        datePicker.topAnchor.constraint(equalTo: customSC.bottomAnchor, constant: 8).isActive = true
+        datePicker.topAnchor.constraint(equalTo: customSegmentedControl.bottomAnchor, constant: 8).isActive = true
         datePicker.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
         datePicker.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
         datePicker.heightAnchor.constraint(equalToConstant: 200).isActive = true
