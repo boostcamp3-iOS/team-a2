@@ -173,6 +173,21 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="setting_like" translatesAutoresizingMaskIntoConstraints="NO" id="Xe4-2M-DRX">
+                                        <rect key="frame" x="194" y="8" width="21" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="VJ0-3s-P6A"/>
+                                            <constraint firstAttribute="width" constant="21" id="zLM-8K-HQ3"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UCW-Hr-sOE">
+                                        <rect key="frame" x="280" y="6" width="25" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="picture-white"/>
+                                        <connections>
+                                            <action selector="showPhoto:" destination="GAO-3U-mcR" eventType="touchUpInside" id="ga5-mq-XXs"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7R8-GZ-MVs">
                                         <rect key="frame" x="322" y="3.5" width="37" height="30"/>
                                         <state key="normal" title="Done">
@@ -188,8 +203,10 @@
                                     <constraint firstItem="7R8-GZ-MVs" firstAttribute="centerY" secondItem="uUP-an-P7R" secondAttribute="centerY" id="EjH-IJ-UKF"/>
                                     <constraint firstItem="o3E-uk-gsi" firstAttribute="top" secondItem="uUP-an-P7R" secondAttribute="top" constant="8" id="LMf-N9-2y6"/>
                                     <constraint firstItem="7R8-GZ-MVs" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="o3E-uk-gsi" secondAttribute="trailing" constant="8" symbolic="YES" id="OpC-ks-GXi"/>
+                                    <constraint firstItem="Xe4-2M-DRX" firstAttribute="leading" secondItem="o3E-uk-gsi" secondAttribute="trailing" constant="8" symbolic="YES" id="Pnf-AE-WHS"/>
                                     <constraint firstAttribute="trailing" secondItem="7R8-GZ-MVs" secondAttribute="trailing" constant="16" id="XAd-le-czR"/>
                                     <constraint firstAttribute="bottom" secondItem="o3E-uk-gsi" secondAttribute="bottom" constant="8" id="g1N-DW-xcJ"/>
+                                    <constraint firstItem="Xe4-2M-DRX" firstAttribute="centerY" secondItem="o3E-uk-gsi" secondAttribute="centerY" id="gxI-oe-x8O"/>
                                     <constraint firstItem="o3E-uk-gsi" firstAttribute="leading" secondItem="uUP-an-P7R" secondAttribute="leading" constant="16" id="h6b-YG-RdI"/>
                                 </constraints>
                             </view>
@@ -268,13 +285,14 @@
                         <outlet property="bottomContainerView" destination="R2l-FQ-25q" id="AfH-cB-97D"/>
                         <outlet property="checkImageView" destination="INv-gC-a9o" id="XyP-aa-vgN"/>
                         <outlet property="dateLabel" destination="o3E-uk-gsi" id="Lo4-xf-Jdh"/>
+                        <outlet property="favoriteImage" destination="Xe4-2M-DRX" id="k4Y-Jz-LvE"/>
                         <outlet property="textView" destination="JMn-5r-ZV0" id="EKQ-2r-FQO"/>
                         <outlet property="topView" destination="uUP-an-P7R" id="yJp-bB-mDD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HO4-b1-kGk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3852" y="27"/>
+            <point key="canvasLocation" x="3852" y="26.53673163418291"/>
         </scene>
         <!--Entry Information View Controller-->
         <scene sceneID="CTM-9G-ohm">
@@ -318,6 +336,8 @@
     </scenes>
     <resources>
         <image name="ic_check" width="64" height="64"/>
+        <image name="picture-white" width="32" height="32"/>
+        <image name="setting_like" width="32" height="32"/>
         <namedColor name="doBlue">
             <color red="0.41176470588235292" green="0.74509803921568629" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

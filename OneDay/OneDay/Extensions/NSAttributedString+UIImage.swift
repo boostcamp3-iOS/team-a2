@@ -34,7 +34,9 @@ extension UIImage {
         let textAttachment = NSTextAttachment()
         textAttachment.image = self
         let attrStringWithImage = NSAttributedString(attachment: textAttachment)
-        return attrStringWithImage
+        let mutable = NSMutableAttributedString(attributedString: attrStringWithImage)
+        mutable.append(NSAttributedString(string: "\n\n"))
+        return mutable
     }
     
     func saveToFile(fileName: String) -> String? {
