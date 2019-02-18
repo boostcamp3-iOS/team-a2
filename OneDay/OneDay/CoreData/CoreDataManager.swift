@@ -12,21 +12,30 @@ import CoreData
 final class CoreDataManager {
     // MARK: - Properties
     static let shared = CoreDataManager()
+    static let DidChangedEntriesFilterNotification: Notification.Name = Notification.Name("didChangedEntriesFilterNotification")
+    static let DidChangedCoredDataNotification: Notification.Name = Notification.Name("didChangedCoreDataNotification")
     
     private var defaultJournalUUID: UUID!
     private var coreDataStack: CoreDataStack = CoreDataStack(modelName: "OneDay")
     private lazy var managedContext: NSManagedObjectContext = coreDataStack.managedContext
     
-    private var sortDescriptors: [NSSortDescriptor] = []
-    private var predicates: [NSPredicate] = []
+    private var entrySortDescriptors: [NSSortDescriptor] = [] {
+        didSet {
+            NotificationCenter.default.post(name: CoreDataManager.DidChangedEntriesFilterNotification, object: nil)
+        }
+    }
+    private var entryPredicates: [NSPredicate] = [] {
+        didSet {
+            NotificationCenter.default.post(name: CoreDataManager.DidChangedEntriesFilterNotification, object: nil)
+        }
+    }
     
-    final let dateSort = NSSortDescriptor(key: #keyPath(Entry.date), ascending: false)
+    // 최근 저널인 애들만 불러오는 거
     var currentJournalPredicate: NSPredicate {
         return NSPredicate(format: "%K == %@", argumentArray: [#keyPath(Entry.journal), currentJournal])
     }
     
     // INITIAL
-    // defaultJo
     private init() {
         if OneDayDefaults.defaultJournalUUID == nil {
             let defaultJournal = insert("모든 항목", index: 0)
@@ -47,11 +56,27 @@ final class CoreDataManager {
         return uuid == defaultJournalUUID
     }
 
-    func save() {
-        coreDataStack.saveContext()
+    func save(successHandler: (() -> Void)? = nil, errorHandler: ((NSError) -> Void)? = nil) {
+        
+        coreDataStack.saveContext(successHandler: {
+            NotificationCenter.default.post(name: CoreDataManager.DidChangedCoredDataNotification, object: nil)
+            if let successHandler = successHandler {
+                successHandler()
+            }
+        }, errorHandler: errorHandler)
+    }
+}
+
+// MARK: Entry Journal
+extension CoreDataManager {
+    
+    func addEntryFilter(filter: EntryFilter) {
+        entryPredicates.append(contentsOf: filter.predicates)
     }
     
-    // TODO : filter 조건 계속 추가하기
+    func clearEntryFilter() {
+        entryPredicates = []
+    }
 }
 
 // MARK: Journal
@@ -72,7 +97,6 @@ extension CoreDataManager : CoreDataJournalService {
             fatalError("Couldn't get journals")
         }
     }
-    
     // 최근 저널
     var currentJournal: Journal {
         guard let uuidString = OneDayDefaults.currentJournalUUID else {
@@ -111,15 +135,19 @@ extension CoreDataManager : CoreDataJournalService {
     
     func remove(journal: Journal) {
         managedContext.delete(journal)
-        coreDataStack.saveContext()
+        save()
     }
 }
 
 // Entries
 extension CoreDataManager: CoreDataEntryService {
+    // 모든 저널에 포함된 Entries의 개수
+    var numberOfEntries: Int {
+        return journals.reduce(0, { $0 + ($1.entries?.count ?? 0) })
+    }
     
     // 최근 저널에 포함된 Entries의 개수
-    var numberOfEntries: Int {
+    var numberOfCurrentJournalEntries: Int {
         return currentJournalEntries.count
     }
     
@@ -135,6 +163,8 @@ extension CoreDataManager: CoreDataEntryService {
     var currentJournalEntriesRequest: NSFetchRequest<Entry> {
         let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
         fetchRequest.predicate = currentJournalPredicate
+        // 데이트 최신인 순으로 정렬하기
+        let dateSort = NSSortDescriptor(key: #keyPath(Entry.date), ascending: false)
         fetchRequest.sortDescriptors = [dateSort]
         
         return fetchRequest
@@ -152,23 +182,29 @@ extension CoreDataManager: CoreDataEntryService {
     
     func insert() -> Entry {
         let entry = Entry(context: managedContext)
-        let today: Date = Date()
-        entry.updatedDate = today
-        entry.date = today
         entry.entryId = UUID()
         entry.title = "새로운 엔트리"
         entry.journal = currentJournal
-        coreDataStack.saveContext()
+        entry.updateDate(date: Date())
+    
+        save()
         return entry
     }
     
-    func filter(type filter: EntryFilter = .all) -> [Entry] {
-        let fetchRequest: NSFetchRequest<Entry> = filter.filterFetchRequest(currentJournal: currentJournal)
-        
+    func filter(by filters: [EntryFilter]) -> [Entry] {
+        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
+        var predicate: [NSPredicate] = []
+        predicate.append(contentsOf: entryPredicates)
+        filters.forEach { filter in
+            predicate.append(contentsOf: filter.predicates)
+        }
+        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicate)
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Entry.journal.index), ascending: true),
+                                        NSSortDescriptor(key: #keyPath(Entry.date), ascending: false)]
         do {
-            return try coreDataStack.managedContext.fetch(fetchRequest)
+            return try managedContext.fetch(fetchRequest)
         } catch {
-            fatalError("Couldn't get entries")
+            fatalError("Failed get EntryData")
         }
     }
     
@@ -189,14 +225,42 @@ extension CoreDataManager: CoreDataEntryService {
         }
     }
     
+    func updateContents(entry: Entry, contents: NSAttributedString, completion: (() -> Void), error: ((Error) -> Void)?) {
+        DispatchQueue.global().async {
+            // 부하가 될 법한 부분 Background 에서 처리 : 이미지 파일 변환 및 파일로 저장, CoreData 저장
+            entry.contents = contents
+            entry.updatedDate = Date()
+            
+            // title로 사용할 string 추출
+            let stringContent = contents.string
+            if stringContent.count > 1 {
+                let start = stringContent.startIndex
+                let end = stringContent.index(start, offsetBy: min(stringContent.count - 1, Constants.maximumNumberOfEntryTitle))
+                entry.title = String(stringContent[start...end])
+            }
+            
+            // thumbnail image 추출
+            if let thumbnailImage = contents.firstImage {
+                entry.thumbnail = thumbnailImage.saveToFile(fileName: entry.thmbnailFileName)
+            } else {
+                entry.thumbnail = nil
+            }
+            CoreDataManager.shared.save()
+        }
+    }
+    
     func remove(entry: Entry) {
         managedContext.delete(entry)
-        coreDataStack.saveContext()
+        save()
     }
     
     // filter type 별로 검색된 FetchedResultController
     func filterdResultsController(type filter: EntryFilter, sectionNameKeyPath: String?) -> NSFetchedResultsController<Entry> {
-        let fetchRequest: NSFetchRequest<Entry> = filter.filterFetchRequest(currentJournal: currentJournal)
+        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Entry.journal.index), ascending: true)]
+        var predicateArray: [NSPredicate] = filter.predicates
+        predicateArray.append(contentsOf: EntryFilter.currentJournal.predicates)
+        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicateArray)
         
         return NSFetchedResultsController (
             fetchRequest: fetchRequest,
@@ -211,5 +275,21 @@ extension CoreDataManager: CoreDataWeatherService {
         let weather = Weather(context: managedContext)
         weather.weatherId = UUID.init()
         return weather
+    }
+}
+
+extension CoreDataManager: CoreDataDeviceService {
+    func device() -> Device {
+        let device = Device(context: managedContext)
+        device.deviceId = UUID.init()
+        return device
+    }
+}
+
+extension CoreDataManager: CoreDataLocationService {
+    func location() -> Location {
+        let location = Location(context: managedContext)
+        location.locId = UUID.init()
+        return location
     }
 }
