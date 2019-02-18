@@ -9,5 +9,5 @@
 import Foundation
 
 protocol CoreDataLocationService {
-    func location() -> Location
+    func insertLocation() -> Location
 }

@@ -23,7 +23,7 @@ protocol CoreDataJournalService {
     // 날짜로 section이 구분됩니다.
     var currentJournalEntriesResultsController: NSFetchedResultsController<Entry> { get }
     
-    func insert(_ title: String, index: Int) -> Journal
+    func insertJournal(_ title: String, index: Int) -> Journal
     func journal(id: UUID) -> Journal
     func remove(journal: Journal)
 }

@@ -64,7 +64,7 @@ class TimeLineViewController: UIViewController {
                 destination.entry = entry
             }
         } else if let destination = segue.destination as? EntryViewController {
-            destination.entry = CoreDataManager.shared.insert()
+            destination.entry = CoreDataManager.shared.insertEntry()
         }
     }
     

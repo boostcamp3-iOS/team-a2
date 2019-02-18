@@ -154,7 +154,7 @@ class EntryInformationViewController: UIViewController {
                 settingTableData[2][0].detail = "\(weather.tempature)℃"
             }
         } else {
-            let weather = CoreDataManager.shared.weather()
+            let weather = CoreDataManager.shared.insertWeather()
             entryViewController.entry.weather = weather
             
             WeatherService.service.weather(
@@ -188,11 +188,19 @@ class EntryInformationViewController: UIViewController {
         if let location = entryViewController.entry.location {
             settingTableData[0][0].detail = location.address
         } else {
-            let location = CoreDataManager.shared.location()
-            location.latitude = LocationService.service.latitude
-            location.longitude = LocationService.service.longitude
-            entryViewController.entry.location = location
-            
+             var location: Location!
+             if let findLocation: Location = CoreDataManager.shared.location(
+                longitude: LocationService.service.latitude,
+                latitude: LocationService.service.longitude
+                ) {
+                location = findLocation
+             } else {
+                location = CoreDataManager.shared.insertLocation()
+                 location.latitude = LocationService.service.latitude
+                 location.longitude = LocationService.service.longitude
+             }
+             entryViewController.entry.location = location
+
             LocationService.service.currentAddress(
                 success: {[weak self] data in
                     if data.results.isEmpty {
@@ -217,7 +225,7 @@ class EntryInformationViewController: UIViewController {
                 settingTableData[2][1].detail = "\(entryDeviceName), \(entryDeviceModel)"
             }
         } else {
-            let device = CoreDataManager.shared.device()
+            let device = CoreDataManager.shared.insertDevice()
             entryViewController.entry.device = device
             device.name = UIDevice.current.name
             device.model = UIDevice.current.model

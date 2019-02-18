@@ -36,7 +36,7 @@ extension UIImagePickerControllerDelegate where Self: UIViewController, Self: UI
         
         guard let nextVC = UIStoryboard(name: "Coredata", bundle: nil)
             .instantiateViewController(withIdentifier: "entry_detail") as? EntryViewController else { return }
-        let newEntry: Entry = CoreDataManager.shared.insert()
+        let newEntry: Entry = CoreDataManager.shared.insertEntry()
         newEntry.contents = scaledImage.attributedString
         nextVC.entry = newEntry
         present(nextVC, animated: true)
