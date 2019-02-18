@@ -92,6 +92,7 @@ class EntryInformationViewController: UIViewController {
                 image: UIImage(named: "setting_like")
             )
             settingTableData[0].append(favorite)
+            entryViewController.favoriteImage.isHidden = false
         } else {
             let favorite = EntrySetting(
                 title: "즐겨찾기",
@@ -99,6 +100,7 @@ class EntryInformationViewController: UIViewController {
                 image: UIImage(named: "setting_dislike")
             )
             settingTableData[0].append(favorite)
+            entryViewController.favoriteImage.isHidden = true
         }
     }
     
@@ -261,7 +263,6 @@ class EntryInformationViewController: UIViewController {
         )
         mapView.setRegion(coordinateRegion, animated: true)
     }
-
 }
 
 extension EntryInformationViewController: UITableViewDataSource, UITableViewDelegate {
@@ -304,7 +305,34 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
                 preconditionFailure("EditorSettingTableViewCell reuse error!")
         }
         cell.setting = settingTableData[indexPath.section][indexPath.row]
+        cell.selectionStyle = .none
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let section = Section(rawValue: indexPath.section) else { return }
+        switch section {
+        case .base:
+            switch indexPath.row {
+            case 0:
+                print("위치")
+            case 1:
+                print("태그")
+            case 2:
+                print("일기장")
+            case 3:
+                print("날짜")
+            case 4:
+                toggleFavorite()
+            default:
+                return
+            }
+        case .day:
+            ()
+        case .ect:
+            ()
+        }
+        tableView.reloadRows(at: [indexPath], with: .none)
     }
     
     // MARK: ScrollView
@@ -328,6 +356,23 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
             tableView.isScrollEnabled = false
             willPositionChange = false
             statusChangeDelegate?.changeState()
+        }
+    }
+}
+
+// MARK : - Cell select actions
+
+extension EntryInformationViewController {
+    func toggleFavorite() {
+        entryViewController.entry.favorite.toggle()
+        if entryViewController.entry.favorite {
+            settingTableData[0][4].detail = "즐겨찾기 해제"
+            settingTableData[0][4].image = UIImage(named: "setting_like")
+            entryViewController.favoriteImage.isHidden = false
+        } else {
+            settingTableData[0][4].detail = "즐겨찾기 설정"
+            settingTableData[0][4].image = UIImage(named: "setting_dislike")
+            entryViewController.favoriteImage.isHidden = true
         }
     }
 }
