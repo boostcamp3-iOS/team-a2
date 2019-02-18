@@ -26,7 +26,7 @@ public enum WeatherType: String {
         case .clearNight: return "맑은 저녁"
         case .rain: return "비"
         case .snow: return "눈"
-        case .sleet: return "진눈꺠비"
+        case .sleet: return "진눈깨비"
         case .wind: return "강풍"
         case .fog: return "안개"
         case .cloudy: return "흐림"

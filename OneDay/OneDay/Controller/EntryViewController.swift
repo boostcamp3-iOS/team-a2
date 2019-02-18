@@ -13,12 +13,12 @@ import UIKit
 class EntryViewController: UIViewController {
     
     // MARK: - Properties
+    
+    @IBOutlet weak var topView: UIView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var temperatureLabel: UILabel!
-    @IBOutlet weak var weatherImageView: UIImageView!
-    @IBOutlet weak var weatherLabel: UILabel!
+    @IBOutlet weak var bottomContainerView: UIView!
+  
     @IBOutlet weak var blockView: UIView!
     @IBOutlet weak var checkImageView: UIImageView!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
@@ -33,11 +33,30 @@ class EntryViewController: UIViewController {
     lazy var isImageSelected = false
     private var shouldSaveEntry = false
     
+    ///하단 뷰 드래그시 사용되는 프로퍼티
+    var topConstant: CGFloat = 0            /// 하단 뷰 최상단
+    var bottomConstant: CGFloat = 520       /// 하단 뷰 최하단
+    var dragUpChangePoint: CGFloat = 400    ///하단 뷰 위로 드래그시 위로 붙는 기준
+    var isBottom = true                     ///하단 뷰가 아래에 있는지 여부
+    var willPositionChange = false          ///드래그 종료시 변경되야하는지 여부
+    
+    let generator = UIImpactFeedbackGenerator(style: UIImpactFeedbackGenerator.FeedbackStyle.heavy)
+    
+    fileprivate var bottomViewTopConstraint: NSLayoutConstraint!
+    fileprivate var bottomViewBottomConstraint: NSLayoutConstraint!
+    
+    var bottomViewController: EntryInformationViewController!
+    weak var statusChangeDelegate: StateChangeDelegate?
+    
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpPreview()
+
         bind()
+        setUpDate()
+        setUpPreview()
+        setUpBottomView()
+        setUpPreview()
     }
     
     // MARK: - Bind Data to View
@@ -45,17 +64,11 @@ class EntryViewController: UIViewController {
         textView.attributedText = entry.contents
         textView.textDragDelegate = self
         textView.delegate = self
-        
-        if entry != nil {
-            setUpDate()
-            setUpWeather()
-        }
     }
     
     func setUpDate() {
         let dateSet: DateStringSet = DateStringSet(date: entry.date)
         dateLabel.text = dateSet.full
-        timeLabel.text = dateSet.time
     }
     
     func setUpPreview() {
@@ -89,35 +102,27 @@ class EntryViewController: UIViewController {
         ).isActive = true
     }
     
-    func setUpWeather() {
-        if let weather = entry.weather {
-            temperatureLabel.text = "\(weather.tempature)℃"
-            guard let type = weather.type else { return }
-            weatherImageView.image = UIImage(named: type)
-            weatherLabel.text = WeatherType(rawValue: type)?.summary
-        } else {
-            let weather = CoreDataManager.shared.weather()
-            WeatherService.service.weather(
-                latitude: LocationService.service.latitude,
-                longitude: LocationService.service.longitude,
-                success: {[weak self] data in
-                    let degree: Int = Int((data.currently.temperature - 32) * (5/9)) /// ℉를 ℃로 변경
-                    weather.tempature = Int16(degree)
-                    weather.type = data.currently.icon
-                    weather.weatherId = UUID.init()
-                    DispatchQueue.main.sync {
-                        self?.temperatureLabel.text = "\(weather.tempature)℃"
-                        guard let type = weather.type else { return }
-                        self?.weatherImageView.image = UIImage(named: type)
-                        self?.weatherLabel.text = WeatherType(rawValue: type)?.summary
-                    }
-                },
-                errorHandler: { [weak self] in
-                    self?.showAlert(title: "Error", message: "날씨 정보를 불러올 수 없습니다.")
-            })
-            entry.weather = weather
-            CoreDataManager.shared.save()
-        }
+    func setUpBottomView() {
+        bottomContainerView.translatesAutoresizingMaskIntoConstraints = false
+        bottomContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        bottomContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        bottomViewTopConstraint = bottomContainerView.topAnchor.constraint(
+            equalTo: topView.bottomAnchor,
+            constant: bottomConstant
+        )
+        bottomViewTopConstraint.isActive = true
+        bottomViewBottomConstraint = bottomContainerView.bottomAnchor.constraint(
+            equalTo: view.bottomAnchor,
+            constant: bottomConstant
+        )
+        bottomViewBottomConstraint.isActive = true
+        
+        let gesture = UIPanGestureRecognizer(
+            target: self,
+            action: #selector(didDrag(gestureRecognizer:))
+        )
+        bottomContainerView.addGestureRecognizer(gesture)
+        bottomContainerView.isUserInteractionEnabled = true
     }
     
     func showAlert(title: String = "", message: String = "") {
@@ -194,6 +199,71 @@ extension EntryViewController {
             
         } else {
             self.dismiss(animated: true, completion: nil)
+        }
+        
+        CoreDataManager.shared.save()
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    // MARK: - Gesture
+    
+    @objc func didDrag(gestureRecognizer: UIPanGestureRecognizer) {
+        if gestureRecognizer.state == .changed {
+            let translation = gestureRecognizer.translation(in: view)
+            var distance = translation.y + bottomConstant
+            distance = min(bottomConstant, distance)
+            distance = max(topConstant, distance)
+        
+            bottomViewTopConstraint.constant = distance
+            bottomViewBottomConstraint.constant = distance
+            
+            if !willPositionChange && distance <= dragUpChangePoint {
+                willPositionChange = true
+                generator.impactOccurred()
+            } else if willPositionChange && distance > dragUpChangePoint {
+                willPositionChange = false
+                generator.impactOccurred()
+            }
+        } else if gestureRecognizer.state == .ended {
+            changeBottomTableViewConstraints()
+        }
+    }
+    
+    func changeBottomTableViewConstraints() {
+        if isBottom, willPositionChange {
+            isBottom = false
+            statusChangeDelegate?.changeState()
+            bottomContainerView.gestureRecognizers?.removeLast()
+            self.bottomViewTopConstraint.constant = self.topConstant
+            self.bottomViewBottomConstraint.constant = self.topConstant
+        } else {
+            isBottom = true
+            self.bottomViewTopConstraint.constant = self.bottomConstant
+            self.bottomViewBottomConstraint.constant = self.bottomConstant
+        }
+        UIView.animate(
+            withDuration: 0.5,
+            delay: 0,
+            usingSpringWithDamping: 1,
+            initialSpringVelocity: 1,
+            options: .curveEaseOut,
+            animations: {
+                self.view.layoutIfNeeded()
+        },
+            completion: nil
+        )
+        willPositionChange = false
+    }
+    
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "bottomViewSegue" {
+            if let bottomViewController = segue.destination as? EntryInformationViewController {
+                bottomViewController.entryViewController = self
+                statusChangeDelegate = bottomViewController
+                bottomViewController.statusChangeDelegate = self
+            }
         }
     }
     
@@ -312,5 +382,16 @@ extension EntryViewController: UITextDragDelegate {
         } else {
             return []
         }
+    }
+}
+
+extension EntryViewController: StateChangeDelegate {
+    func changeState() {
+        let gesture = UIPanGestureRecognizer(
+            target: self,
+            action: #selector(didDrag(gestureRecognizer:))
+        )
+        bottomContainerView.addGestureRecognizer(gesture)
+        changeBottomTableViewConstraints()
     }
 }

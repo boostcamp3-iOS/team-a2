@@ -277,3 +277,19 @@ extension CoreDataManager: CoreDataWeatherService {
         return weather
     }
 }
+
+extension CoreDataManager: CoreDataDeviceService {
+    func device() -> Device {
+        let device = Device(context: managedContext)
+        device.deviceId = UUID.init()
+        return device
+    }
+}
+
+extension CoreDataManager: CoreDataLocationService {
+    func location() -> Location {
+        let location = Location(context: managedContext)
+        location.locId = UUID.init()
+        return location
+    }
+}
