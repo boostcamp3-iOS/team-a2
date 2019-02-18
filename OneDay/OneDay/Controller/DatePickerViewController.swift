@@ -57,6 +57,7 @@ class DatePickerViewController: UIViewController {
         datePicker.timeZone = NSTimeZone.local
         datePicker.backgroundColor = UIColor.white
         datePicker.datePickerMode = .date
+        datePicker.locale = Locale(identifier: "ko-KR")
         datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
         view.addSubview(datePicker)
         datePicker.translatesAutoresizingMaskIntoConstraints = false
