@@ -79,7 +79,6 @@ extension SideMenuViewController: UITableViewDelegate, UITableViewDataSource {
         
         switch indexPath.section {
         case 0:
-
             let cell = tableView.dequeueReusableCell(withIdentifier: "mainCellId", for: indexPath) as UITableViewCell
 
             cell.imageView?.image = UIImage(named: mainCells[indexPath.row].icon) ?? UIImage()

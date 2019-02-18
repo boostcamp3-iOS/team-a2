@@ -19,8 +19,8 @@ class WeatherService {
     // MARK: - Methods
     
     func weather(
-        latitude: String,
-        longitude: String,
+        latitude: Double,
+        longitude: Double,
         success: @escaping (APIWeather) -> Void,
         errorHandler: @escaping () -> Void
     ) {

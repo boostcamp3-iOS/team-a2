@@ -13,7 +13,6 @@ import UIKit
 class TimelineViewController: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: - Properties
-    
     @IBOutlet weak var timelineTableView: UITableView!
 
     let fetchedResultsController: NSFetchedResultsController<Entry> =
@@ -81,7 +80,7 @@ class TimelineViewController: UIViewController, UIGestureRecognizerDelegate {
         -> Bool {
             return true
     }
-    
+  
     // MARK: - Notification
 
     func addCoreDataChangedNotificationObserver() {

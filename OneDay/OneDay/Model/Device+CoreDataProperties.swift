@@ -1,13 +1,14 @@
 //
 //  Device+CoreDataProperties.swift
-//  OneDay
+//  
 //
-//  Created by juhee on 28/01/2019.
-//  Copyright © 2019 teamA2. All rights reserved.
+//  Created by Wongeun Song on 2019. 2. 14..
 //
 //
 
+import Foundation
 import CoreData
+
 
 extension Device {
 
@@ -17,7 +18,7 @@ extension Device {
 
     @NSManaged public var deviceId: UUID?
     @NSManaged public var name: String?
-    @NSManaged public var uuid: UUID?
+    @NSManaged public var model: String?
     @NSManaged public var entries: NSSet?
 
 }

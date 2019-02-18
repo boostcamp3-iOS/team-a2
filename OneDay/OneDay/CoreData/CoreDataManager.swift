@@ -38,10 +38,11 @@ final class CoreDataManager {
     // INITIAL
     private init() {
         if OneDayDefaults.defaultJournalUUID == nil {
-            let defaultJournal = insert("모든 항목", index: 0)
+            let defaultJournal = insertJournal("모든 항목", index: 0)
             OneDayDefaults.defaultJournalUUID = defaultJournal.journalId.uuidString
             
-            let currentJournal = insert("저널", index: 1)
+            let currentJournal = insertJournal("저널", index: 1)
+
             OneDayDefaults.currentJournalUUID = currentJournal.journalId.uuidString
         } else {
             defaultJournalUUID = UUID(uuidString: OneDayDefaults.defaultJournalUUID!)!
@@ -56,11 +57,14 @@ final class CoreDataManager {
         return uuid == defaultJournalUUID
     }
 
-    func save() {
-        if coreDataStack.managedContext.hasChanges {
-            coreDataStack.saveContext()
+    func save(successHandler: (() -> Void)? = nil, errorHandler: ((NSError) -> Void)? = nil) {
+        
+        coreDataStack.saveContext(successHandler: {
             NotificationCenter.default.post(name: CoreDataManager.DidChangedCoredDataNotification, object: nil)
-        }
+            if let successHandler = successHandler {
+                successHandler()
+            }
+        }, errorHandler: errorHandler)
     }
 }
 
@@ -104,8 +108,8 @@ extension CoreDataManager : CoreDataJournalService {
         }
         return journal(id: uuid)
     }
-    
-    public func insert(_ title: String, index: Int) -> Journal {
+
+    public func insertJournal(_ title: String, index: Int) -> Journal {
         let journal = Journal(context: managedContext)
         journal.title = title
         journal.color = UIColor.doBlue
@@ -132,13 +136,13 @@ extension CoreDataManager : CoreDataJournalService {
     
     func remove(journal: Journal) {
         managedContext.delete(journal)
-        coreDataStack.saveContext()
+        save()
     }
 }
 
 // Entries
 extension CoreDataManager: CoreDataEntryService {
-    
+
     // 모든 저널에 포함된 Entries의 개수
     var numberOfEntries: Int {
         return journals.reduce(0, { $0 + ($1.entries?.count ?? 0) })
@@ -185,14 +189,13 @@ extension CoreDataManager: CoreDataEntryService {
             sectionNameKeyPath: #keyPath(Entry.monthAndYear),
             cacheName: "timelineResultsController")
     }
-    
+  
     func insertEntry() -> Entry {
         let entry = Entry(context: managedContext)
         entry.entryId = UUID()
         entry.title = "새로운 엔트리"
         entry.journal = currentJournal
         entry.updateDate(date: Date())
-    
         save()
         return entry
     }
@@ -245,12 +248,34 @@ extension CoreDataManager: CoreDataEntryService {
             return dateCount
         } catch {
             fatalError("Failed get EntryData")
+
+    func updateContents(entry: Entry, contents: NSAttributedString, completion: (() -> Void), error: ((Error) -> Void)?) {
+        DispatchQueue.global().async {
+            // 부하가 될 법한 부분 Background 에서 처리 : 이미지 파일 변환 및 파일로 저장, CoreData 저장
+            entry.contents = contents
+            entry.updatedDate = Date()
+            
+            // title로 사용할 string 추출
+            let stringContent = contents.string
+            if stringContent.count > 1 {
+                let start = stringContent.startIndex
+                let end = stringContent.index(start, offsetBy: min(stringContent.count - 1, Constants.maximumNumberOfEntryTitle))
+                entry.title = String(stringContent[start...end])
+            }
+            
+            // thumbnail image 추출
+            if let thumbnailImage = contents.firstImage {
+                entry.thumbnail = thumbnailImage.saveToFile(fileName: entry.thmbnailFileName)
+            } else {
+                entry.thumbnail = nil
+            }
+            CoreDataManager.shared.save()
         }
     }
     
     func remove(entry: Entry) {
         managedContext.delete(entry)
-        coreDataStack.saveContext()
+        save()
     }
     
     // filter type 별로 검색된 FetchedResultController
@@ -270,9 +295,58 @@ extension CoreDataManager: CoreDataEntryService {
 }
 
 extension CoreDataManager: CoreDataWeatherService {
-    func weather() -> Weather {
+    func insertWeather() -> Weather {
         let weather = Weather(context: managedContext)
         weather.weatherId = UUID.init()
+        coreDataStack.saveContext()
         return weather
+    }
+}
+
+extension CoreDataManager: CoreDataDeviceService {
+    func insertDevice() -> Device {
+        let device = Device(context: managedContext)
+        device.deviceId = UUID.init()
+        coreDataStack.saveContext()
+        return device
+    }
+}
+
+extension CoreDataManager: CoreDataLocationService {
+    
+    func insertLocation() -> Location {
+        let location = Location(context: managedContext)
+        location.locId = UUID.init()
+        coreDataStack.saveContext()
+        return location
+    }
+    
+    func location(longitude: Double, latitude: Double, epsilon: Double = 0.000001) -> Location? {
+        let fetchRequest: NSFetchRequest<Location> = Location.fetchRequest()
+        var predicateArray: [NSPredicate] = []
+        predicateArray.append(NSPredicate(format: "longitude > %f AND longitude < %f", longitude - epsilon, longitude + epsilon))
+        predicateArray.append(NSPredicate(format: "latitude > %f AND latitude < %f", latitude - epsilon, latitude + epsilon))
+        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicateArray)
+        let results: [Location]?
+        do {
+            results = try coreDataStack.managedContext.fetch(fetchRequest)
+            return results?.first
+        } catch {
+            fatalError("Couldn't get entries")
+        }
+    }
+    
+    // location을 가지는 entries 를 불러온다. 이때 location으로 그룹핑
+    func locationResultController() -> NSFetchedResultsController<Entry> {
+        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
+        let locationPredicate = NSPredicate(format: "location != nil")
+        let journalPredicate = NSPredicate(format: "%K == %@", argumentArray: [#keyPath(Entry.journal), currentJournal])
+        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [locationPredicate, journalPredicate])
+
+        return NSFetchedResultsController(
+            fetchRequest: currentJournalEntriesRequest,
+            managedObjectContext: coreDataStack.managedContext,
+            sectionNameKeyPath: #keyPath(Entry.location),
+            cacheName: "currentJournalEntriesResultsController")
     }
 }
