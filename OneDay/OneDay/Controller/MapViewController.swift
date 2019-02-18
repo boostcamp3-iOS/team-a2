@@ -38,8 +38,7 @@ class MapViewController: UIViewController {
             try fetchResultController.performFetch()
             
             fetchResultController.fetchedObjects?.forEach({ entry in
-                guard let location = entry.location else {
-                    print(entry)
+                guard entry.location != nil else {
                     return
                 }
                 let annotation = EntryAnnotation(entry: entry)
@@ -50,18 +49,20 @@ class MapViewController: UIViewController {
         }
     }
     
-    func edgePoints() {
-        let nePoint = CGPoint(x: (mapView.bounds.origin.x + mapView.bounds.size.width), y: mapView.bounds.origin.y)
-        let swPoint = CGPoint(x: mapView.bounds.origin.x, y: (mapView.bounds.origin.y + mapView.bounds.size.height))
+    func edgePoints() -> (northEastCoord: CLLocationCoordinate2D, southWestCoord: CLLocationCoordinate2D) {
+        let northEastPoint = CGPoint(x: (mapView.bounds.origin.x + mapView.bounds.size.width), y: mapView.bounds.origin.y)
+        let southWestPoint = CGPoint(x: mapView.bounds.origin.x, y: (mapView.bounds.origin.y + mapView.bounds.size.height))
         
-        let neCoord: CLLocationCoordinate2D = mapView.convert(nePoint, toCoordinateFrom: mapView)
-        let swCoord: CLLocationCoordinate2D = mapView.convert(swPoint, toCoordinateFrom: mapView)
+        let northEastCoord: CLLocationCoordinate2D = mapView.convert(northEastPoint, toCoordinateFrom: mapView)
+        let southWestCoord: CLLocationCoordinate2D = mapView.convert(southWestPoint, toCoordinateFrom: mapView)
+        return (northEastCoord, southWestCoord)
     }
     
     func centerMapOnLocation(location: CLLocation) {
         let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
         mapView.setRegion(coordinateRegion, animated: true)
     }
+    
     // Notification Observer를 추가
     func addCoreDataChangedNotificationObserver() {
         NotificationCenter.default.addObserver(
@@ -70,6 +71,7 @@ class MapViewController: UIViewController {
             name: CoreDataManager.DidChangedCoredDataNotification,
             object: nil)
     }
+    
     func addEntriesFiltersChangeNotificationObserver() {
         NotificationCenter.default.addObserver(
             self,
@@ -77,11 +79,13 @@ class MapViewController: UIViewController {
             name: CoreDataManager.DidChangedEntriesFilterNotification,
             object: nil)
     }
+    
     @objc func didReceiveCoreDataChangedNotification(_: Notification) {
         DispatchQueue.main.async { [weak self] in
             self?.loadData()
         }
     }
+    
     @objc func didReceiveEntriesFilterNotification(_: Notification) {
         DispatchQueue.main.async { [weak self] in
             self?.loadData()

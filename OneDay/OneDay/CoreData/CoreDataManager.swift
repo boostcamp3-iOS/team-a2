@@ -307,19 +307,6 @@ extension CoreDataManager: CoreDataLocationService {
         }
     }
     
-//    func location() -> Location? {
-//        let fetchRequest: NSFetchRequest<Location> = Location.fetchRequest()
-//        var predicateArray: [NSPredicate] = []
-//        predicateArray.append(NSPredicate(format: "%K == %@", argumentArray: [#keyPath(Location.entry.journal), currentJournal])
-//        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicateArray)
-//        let results: [Location]?
-//        do {
-//            results = try coreDataStack.managedContext.fetch(fetchRequest)
-//            return results?.first
-//        } catch {
-//            fatalError("Couldn't get entries")
-//        }
-//    }
     // location을 가지는 entries 를 불러온다. 이때 location으로 그룹핑
     func locationResultController() -> NSFetchedResultsController<Entry> {
         let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()

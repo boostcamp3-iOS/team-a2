@@ -187,7 +187,10 @@ class EntryInformationViewController: UIViewController {
             settingTableData[0][0].detail = location.address
         } else {
              var location: Location!
-             if let findLocation: Location = CoreDataManager.shared.location(longitude: LocationService.service.latitude, latitude: LocationService.service.longitude) {
+             if let findLocation: Location = CoreDataManager.shared.location(
+                longitude: LocationService.service.latitude,
+                latitude: LocationService.service.longitude
+                ) {
                 location = findLocation
              } else {
                 location = CoreDataManager.shared.insert()
