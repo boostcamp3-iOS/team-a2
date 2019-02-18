@@ -17,7 +17,7 @@ protocol CoreDataEntryService {
         get
     }
     
-    func insert() -> Entry
+    func insertEntry() -> Entry
     // 키워드를 가지는 entry 검색하기
     func search(with keyword: String) -> [Entry]
     func filter(by filters: [EntryFilter]) -> [Entry]

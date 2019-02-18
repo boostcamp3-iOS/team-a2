@@ -9,5 +9,5 @@
 import Foundation
 
 protocol CoreDataDeviceService {
-    func device() -> Device
+    func insertDevice() -> Device
 }

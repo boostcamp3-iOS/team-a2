@@ -38,10 +38,10 @@ final class CoreDataManager {
     // INITIAL
     private init() {
         if OneDayDefaults.defaultJournalUUID == nil {
-            let defaultJournal = insert("모든 항목", index: 0)
+            let defaultJournal = insertJournal("모든 항목", index: 0)
             OneDayDefaults.defaultJournalUUID = defaultJournal.journalId.uuidString
             
-            let currentJournal = insert("저널", index: 1)
+            let currentJournal = insertJournal("저널", index: 1)
             OneDayDefaults.currentJournalUUID = currentJournal.journalId.uuidString
         } else {
             defaultJournalUUID = UUID(uuidString: OneDayDefaults.defaultJournalUUID!)!
@@ -108,7 +108,7 @@ extension CoreDataManager : CoreDataJournalService {
         return journal(id: uuid)
     }
     
-    public func insert(_ title: String, index: Int) -> Journal {
+    public func insertJournal(_ title: String, index: Int) -> Journal {
         let journal = Journal(context: managedContext)
         journal.title = title
         journal.color = UIColor.doBlue
@@ -180,7 +180,7 @@ extension CoreDataManager: CoreDataEntryService {
             cacheName: "currentJournalEntriesResultsController")
     }
     
-    func insert() -> Entry {
+    func insertEntry() -> Entry {
         let entry = Entry(context: managedContext)
         entry.entryId = UUID()
         entry.title = "새로운 엔트리"
@@ -270,25 +270,29 @@ extension CoreDataManager: CoreDataEntryService {
 }
 
 extension CoreDataManager: CoreDataWeatherService {
-    func weather() -> Weather {
+    func insertWeather() -> Weather {
         let weather = Weather(context: managedContext)
         weather.weatherId = UUID.init()
+        coreDataStack.saveContext()
         return weather
     }
 }
 
 extension CoreDataManager: CoreDataDeviceService {
-    func device() -> Device {
+    func insertDevice() -> Device {
         let device = Device(context: managedContext)
         device.deviceId = UUID.init()
+        coreDataStack.saveContext()
         return device
     }
 }
 
 extension CoreDataManager: CoreDataLocationService {
-    func insert() -> Location {
+    
+    func insertLocation() -> Location {
         let location = Location(context: managedContext)
         location.locId = UUID.init()
+        coreDataStack.saveContext()
         return location
     }
     

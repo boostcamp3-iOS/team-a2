@@ -152,7 +152,7 @@ class EntryInformationViewController: UIViewController {
                 settingTableData[2][0].detail = "\(weather.tempature)℃"
             }
         } else {
-            let weather = CoreDataManager.shared.weather()
+            let weather = CoreDataManager.shared.insertWeather()
             entryViewController.entry.weather = weather
             
             WeatherService.service.weather(
@@ -193,7 +193,7 @@ class EntryInformationViewController: UIViewController {
                 ) {
                 location = findLocation
              } else {
-                location = CoreDataManager.shared.insert()
+                location = CoreDataManager.shared.insertLocation()
                  location.latitude = LocationService.service.latitude
                  location.longitude = LocationService.service.longitude
              }
@@ -223,7 +223,7 @@ class EntryInformationViewController: UIViewController {
                 settingTableData[2][1].detail = "\(entryDeviceName), \(entryDeviceModel)"
             }
         } else {
-            let device = CoreDataManager.shared.device()
+            let device = CoreDataManager.shared.insertDevice()
             entryViewController.entry.device = device
             device.name = UIDevice.current.name
             device.model = UIDevice.current.model
