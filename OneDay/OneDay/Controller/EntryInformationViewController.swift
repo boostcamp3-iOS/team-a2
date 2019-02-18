@@ -383,6 +383,7 @@ extension EntryInformationViewController {
         if entryViewController.entry.favorite {
             settingTableData[0][4].detail = "즐겨찾기 해제"
             settingTableData[0][4].image = UIImage(named: "setting_like")
+            settingTableData[0][4].hasDisclouserIndicator = false
             entryViewController.favoriteImage.isHidden = false
         } else {
             settingTableData[0][4].detail = "즐겨찾기 설정"
