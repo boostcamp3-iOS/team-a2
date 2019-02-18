@@ -97,7 +97,7 @@ class DatePickerViewController: UIViewController {
         self.dateLabel.text = selectedDate
     }
     
-    @objc func setDateToCurrentDate(sender: UIButton) {s
+    @objc func setDateToCurrentDate(sender: UIButton) {
         date = Date()
         let selectedDate: String = dateFormatter.string(from: date)
         self.dateLabel.text = selectedDate
