@@ -33,7 +33,7 @@ A2 Members
 * **Core Location**   : 사용자의 현재 위치를 불러옵니다.
 * **[DarkSky API](https://github.com/boostcamp3-iOS/team-a2/wiki/%EB%82%A0%EC%94%A8-API-%EC%A0%95%EB%A6%AC)**   : 사용자 위치에 따른 현재 날씨 정보를 불러옵니다.
 * **MapKit**   : 사용자의 현재 위치 및 일기가 작성된 위치들을 보여줍니다.
-* **CloubKit**   : iCloud를 통해 데이터를 동기화하고 백업합니다.
+* **CloudKit**   : iCloud를 통해 데이터를 동기화하고 백업합니다.
 * **AutoLayout**
 
 ## 주차별 목표
