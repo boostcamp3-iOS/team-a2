@@ -20,18 +20,30 @@ class CalendarCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-   
+    
+    lazy var shouldBeDoBlue: Bool = false
+    
     override var isSelected: Bool {
         didSet {
-            if isSelected && dayLabel.text != "" {
+            if dayLabel.backgroundColor == .doBlue {
+                shouldBeDoBlue = true
+            }
+            
+            if isSelected {
                 dayLabel.backgroundColor = .black
                 dayLabel.textColor = .white
             } else {
-                dayLabel.backgroundColor = .doLight
-                dayLabel.textColor = .black
+                if shouldBeDoBlue {
+                    dayLabel.backgroundColor = .doBlue
+                } else {
+                    dayLabel.backgroundColor = .doLight
+                    dayLabel.textColor = .black
+                }
+                
             }
         }
     }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .calendarBackgroundColor

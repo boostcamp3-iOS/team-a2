@@ -25,10 +25,10 @@
 		D50276D221FEFCE900A0DB5E /* JournalServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276D121FEFCE900A0DB5E /* JournalServiceTest.swift */; };
 		D50276D521FEFD4500A0DB5E /* TestCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276D421FEFD4500A0DB5E /* TestCoreDataStack.swift */; };
 		D50276DA21FF09E100A0DB5E /* EntryServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276D921FF09E100A0DB5E /* EntryServiceTest.swift */; };
-		D50276E82202C79300A0DB5E /* TimeLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276E72202C79300A0DB5E /* TimeLineViewController.swift */; };
+		D50276E82202C79300A0DB5E /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276E72202C79300A0DB5E /* TimelineViewController.swift */; };
 		D50276EA2202C7EE00A0DB5E /* EntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276E92202C7EE00A0DB5E /* EntryViewController.swift */; };
 		D50276EC2202C82900A0DB5E /* DataStringSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276EB2202C82900A0DB5E /* DataStringSet.swift */; };
-		D50276EE2202D3C700A0DB5E /* SampleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276ED2202D3C700A0DB5E /* SampleTableViewCell.swift */; };
+		D50276EE2202D3C700A0DB5E /* TimelineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276ED2202D3C700A0DB5E /* TimelineTableViewCell.swift */; };
 		D50276F222041DB100A0DB5E /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276F122041DB100A0DB5E /* PhotosViewController.swift */; };
 		D50276F422041DBA00A0DB5E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276F322041DBA00A0DB5E /* MapViewController.swift */; };
 		D512A742221A451200EF43C6 /* EntriesMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A741221A451200EF43C6 /* EntriesMarker.swift */; };
@@ -72,11 +72,11 @@
 		E992EC6E21FAEE4D00917116 /* SideMenuEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6D21FAEE4D00917116 /* SideMenuEditCell.swift */; };
 		E992EC7021FAEE5B00917116 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6F21FAEE5B00917116 /* FilterViewController.swift */; };
 		E992EC7221FAEE6700917116 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7121FAEE6700917116 /* SideMenuViewController.swift */; };
-		E992EC7421FAEE7100917116 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7321FAEE7100917116 /* TestViewController.swift */; };
 		E992EC7821FAF4C200917116 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7721FAF4C200917116 /* CalendarViewController.swift */; };
 		E992EC7A21FAFBC500917116 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7921FAFBC500917116 /* CalendarCell.swift */; };
 		E992EC7C21FB1E5500917116 /* CalendarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7B21FB1E5500917116 /* CalendarHeaderView.swift */; };
 		E992EC7F21FB2CCE00917116 /* CalendarDaysOfWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7E21FB2CCE00917116 /* CalendarDaysOfWeek.swift */; };
+		E9AA2814221875FC00B81E23 /* TimelineHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AA2813221875FC00B81E23 /* TimelineHeaderCell.swift */; };
 		E9DA39AC2203FCD30026381E /* FilterSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DA39AB2203FCD20026381E /* FilterSection.swift */; };
 		EC0BB2252213E26F00E2BB6F /* EditorSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0BB2242213E26F00E2BB6F /* EditorSettingTableViewCell.swift */; };
 		EC0BB2272213FCEA00E2BB6F /* EntrySetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0BB2262213FCEA00E2BB6F /* EntrySetting.swift */; };
@@ -127,10 +127,10 @@
 		D50276D121FEFCE900A0DB5E /* JournalServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalServiceTest.swift; sourceTree = "<group>"; };
 		D50276D421FEFD4500A0DB5E /* TestCoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCoreDataStack.swift; sourceTree = "<group>"; };
 		D50276D921FF09E100A0DB5E /* EntryServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryServiceTest.swift; sourceTree = "<group>"; };
-		D50276E72202C79300A0DB5E /* TimeLineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeLineViewController.swift; sourceTree = "<group>"; };
+		D50276E72202C79300A0DB5E /* TimelineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
 		D50276E92202C7EE00A0DB5E /* EntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewController.swift; sourceTree = "<group>"; };
 		D50276EB2202C82900A0DB5E /* DataStringSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStringSet.swift; sourceTree = "<group>"; };
-		D50276ED2202D3C700A0DB5E /* SampleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTableViewCell.swift; sourceTree = "<group>"; };
+		D50276ED2202D3C700A0DB5E /* TimelineTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineTableViewCell.swift; sourceTree = "<group>"; };
 		D50276F122041DB100A0DB5E /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		D50276F322041DBA00A0DB5E /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		D512A741221A451200EF43C6 /* EntriesMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntriesMarker.swift; sourceTree = "<group>"; };
@@ -175,11 +175,11 @@
 		E992EC6D21FAEE4D00917116 /* SideMenuEditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuEditCell.swift; sourceTree = "<group>"; };
 		E992EC6F21FAEE5B00917116 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		E992EC7121FAEE6700917116 /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
-		E992EC7321FAEE7100917116 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		E992EC7721FAF4C200917116 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		E992EC7921FAFBC500917116 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		E992EC7B21FB1E5500917116 /* CalendarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHeaderView.swift; sourceTree = "<group>"; };
 		E992EC7E21FB2CCE00917116 /* CalendarDaysOfWeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDaysOfWeek.swift; sourceTree = "<group>"; };
+		E9AA2813221875FC00B81E23 /* TimelineHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineHeaderCell.swift; sourceTree = "<group>"; };
 		E9DA39AB2203FCD20026381E /* FilterSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSection.swift; sourceTree = "<group>"; };
 		EC0BB2242213E26F00E2BB6F /* EditorSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorSettingTableViewCell.swift; sourceTree = "<group>"; };
 		EC0BB2262213FCEA00E2BB6F /* EntrySetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntrySetting.swift; sourceTree = "<group>"; };
@@ -378,9 +378,19 @@
 			path = CollectedEntries;
 			sourceTree = "<group>";
 		};
+		E9483C3B221921460028E7D9 /* Timeline */ = {
+			isa = PBXGroup;
+			children = (
+				D50276ED2202D3C700A0DB5E /* TimelineTableViewCell.swift */,
+				E9AA2813221875FC00B81E23 /* TimelineHeaderCell.swift */,
+			);
+			path = Timeline;
+			sourceTree = "<group>";
+		};
 		E96BE83321FAD8DB00266F6D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E9483C3B221921460028E7D9 /* Timeline */,
 				EC0BB22A2215067500E2BB6F /* Annotation */,
 				EC0BB2212213E1E900E2BB6F /* EditorSettingCell */,
 				E934115422168EA8004CF8DF /* CollectedEntries */,
@@ -389,7 +399,6 @@
 				E992EC5E21FAEDD100917116 /* FilterCell */,
 				E992EC5F21FAEDDA00917116 /* SideMenuCell */,
 				E96BE83B21FAD98500266F6D /* Storyboards */,
-				D50276ED2202D3C700A0DB5E /* SampleTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -408,13 +417,12 @@
 				EC5785762219BAA10001CECC /* Protocols */,
 				D5CCA135221698000055D264 /* AddActionViewController.swift */,
 				D50276E92202C7EE00A0DB5E /* EntryViewController.swift */,
+				D50276E72202C79300A0DB5E /* TimelineViewController.swift */,
 				EC0BB233221699F500E2BB6F /* EntryInformationViewController.swift */,
 				EC578577221A55690001CECC /* DatePickerViewController.swift */,
-				D50276E72202C79300A0DB5E /* TimeLineViewController.swift */,
 				E936659322110DF900DC660A /* BaseSlidingViewController.swift */,
 				E992EC6F21FAEE5B00917116 /* FilterViewController.swift */,
 				E992EC7121FAEE6700917116 /* SideMenuViewController.swift */,
-				E992EC7321FAEE7100917116 /* TestViewController.swift */,
 				E992EC7721FAF4C200917116 /* CalendarViewController.swift */,
 				D561692421FAD07000E00FED /* MainTabBarViewController.swift */,
 				D50276F122041DB100A0DB5E /* PhotosViewController.swift */,
@@ -694,7 +702,7 @@
 				E992EC7A21FAFBC500917116 /* CalendarCell.swift in Sources */,
 				E992EC7221FAEE6700917116 /* SideMenuViewController.swift in Sources */,
 				E992EC7821FAF4C200917116 /* CalendarViewController.swift in Sources */,
-				E992EC7421FAEE7100917116 /* TestViewController.swift in Sources */,
+				E9AA2814221875FC00B81E23 /* TimelineHeaderCell.swift in Sources */,
 				EC0BB22E22150EA300E2BB6F /* APILocation.swift in Sources */,
 				D5CCA1302216775F0055D264 /* MainTabBarViewController.swift in Sources */,
 				D516C8B52213B4CD00A4BDAC /* EntryFilter.swift in Sources */,
@@ -712,7 +720,7 @@
 				E992EC7F21FB2CCE00917116 /* CalendarDaysOfWeek.swift in Sources */,
 				D50276B921FED1D200A0DB5E /* OneDay.xcdatamodeld in Sources */,
 				D50276F222041DB100A0DB5E /* PhotosViewController.swift in Sources */,
-				D50276EE2202D3C700A0DB5E /* SampleTableViewCell.swift in Sources */,
+				D50276EE2202D3C700A0DB5E /* TimelineTableViewCell.swift in Sources */,
 				EC0CFB0922030C1D001293B1 /* NetworkProvider.swift in Sources */,
 				D53782C62211447500336646 /* CoreDataManager.swift in Sources */,
 				D502769321FEA18000A0DB5E /* CoreDataStack.swift in Sources */,
@@ -730,7 +738,7 @@
 				D502765321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift in Sources */,
 				EC5E21AB220425390073D90E /* LocationService.swift in Sources */,
 				E9083DF922154370002A0E6F /* CollectedEntriesViewController.swift in Sources */,
-				D50276E82202C79300A0DB5E /* TimeLineViewController.swift in Sources */,
+				D50276E82202C79300A0DB5E /* TimelineViewController.swift in Sources */,
 				D502766221FB0D6000A0DB5E /* WeatherType.swift in Sources */,
 				D5CCA136221698000055D264 /* AddActionViewController.swift in Sources */,
 				D5CCA11B2215309C0055D264 /* String+URL.swift in Sources */,
