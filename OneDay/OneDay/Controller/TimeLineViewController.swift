@@ -24,7 +24,6 @@ class TimeLineViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         do {
             fetchedResultsController.delegate = self
             try fetchedResultsController.performFetch()
@@ -116,7 +115,7 @@ extension TimeLineViewController: UITableViewDelegate, UITableViewDataSource {
         dateFormatter.locale = Locale.init(identifier: "ko")
         dateFormatter.timeZone = TimeZone.current
         dateFormatter.dateFormat = "YYYY-MM-dd"
-        return dateFormatter.string(from: entry.date ?? Date())
+        return dateFormatter.string(from: entry.date)
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

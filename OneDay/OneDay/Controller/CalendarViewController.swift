@@ -6,63 +6,99 @@
 //  Copyright © 2019 teamA2. All rights reserved.
 //
 
+import CoreData
 import UIKit
 
 class CalendarViewController: UIViewController {
-    let datePicker = UIDatePicker()
-    
     let collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.sectionHeadersPinToVisibleBounds = true
-        flowLayout.itemSize = CGSize(width: UIScreen.main.bounds.width/7, height: UIScreen.main.bounds.width/7+10)
+        let screenWidth = UIScreen.main.bounds.width
+        flowLayout.itemSize = CGSize(width: screenWidth/7, height: screenWidth/7+10)
         flowLayout.minimumLineSpacing = 0
         flowLayout.minimumInteritemSpacing = 0
+        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .doLight
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
     
-    var dateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ko_KR")
-        formatter.isLenient = true
-        formatter.dateFormat = "yyyy-MM-dd"
-        return formatter
-    }
+    //  네비게이션 바 아래의 |일 월 화 수 목 금 토| 를 그리는 뷰
+    let daysOfWeekTitleView: CalendarDaysOfWeek = {
+        let view = CalendarDaysOfWeek()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
-    var isTodayIndex = false
-    var isPickingDate = false
-    var computedWeekday = 6
+    let datePicker: UIDatePicker = {
+        let picker = UIDatePicker()
+        picker.backgroundColor = .white
+        picker.datePickerMode = .date
+        picker.locale = Locale(identifier: "ko_KR")
+        picker.maximumDate = Calendar.current.date(byAdding: .year, value: 900, to: Date())
+        return picker
+    }()
+    
+    fileprivate var isTodayIndex = false
+    fileprivate var isPickingDate = false
+    fileprivate var computedWeekday = 6
+    
+    var fetchedEntriesDate = [String]()
+
+    // MARK: - Life cycle
     
     override func viewDidLoad() {
-        view.backgroundColor = .white
         setupCalendar()
         setupNavigationItem()
-        
-        self.view.addGestureRecognizer(UISwipeGestureRecognizer(target: self, action:
-            #selector(dismissFromVC)))
     }
-    func lastDayOfMonth(at section: Int) -> Int {
-        var last = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-        let year = section/12+1
-        let month = section%12+1
-        
-        if month == 2 && ((year%4==0 && (year%100 != 0 || year%400 == 0)) || year%100 == 0 && year < 1600 ) {
-            last[1] = 29 // 윤년
-        }
-        return section != 18981 ? last[month-1] : 21 // 1582년 10월은 5일부터 14일이 존재하지 않음
+ 
+    override func viewWillAppear(_ animated: Bool) {
+        setupCoreData()
     }
     
-    func firstWeekdayOfMonth(at section: Int) -> Int {
-        let whatDay: String = "\(section/12+1)-\(section%12+1)-01"
-        if let weekday = dateFormatter.date(from: whatDay) {
-            return Calendar.current.component(.weekday, from: weekday)-1 // 0:일요일 ~ 6:토요일
-        } else { preconditionFailure("Error") }
+    // MARK: - CoreData
+
+    fileprivate func setupCoreData() {
+        fetchedEntriesDate = []
+        let entriesData = CoreDataManager.shared.currentJournalEntries
+        entriesData.forEach { (entry) in
+            let date = entry.date
+            let calendar = Calendar.current
+            var components = calendar.dateComponents([.year, .month, .day], from: date)
+            if let year = components.year,
+                let month = components.month,
+                let day = components.day {
+                    let date = "\(year)\(month)\(day)"
+                    fetchedEntriesDate.append(date)
+            }
+        }
+    }
+    
+    // MARK: - NavigationItem: DatePicker
+    
+    fileprivate func setupNavigationItem() {
+        let pickerButton = UIButton(type: .custom)
+        let calendarImage = UIImage(named: "navCalendar")?.withRenderingMode(.alwaysTemplate)
+        pickerButton.setImage(calendarImage, for: .normal)
+        pickerButton.tintColor = .white
+        pickerButton.addTarget(self, action: #selector(presentDatePicker), for: .touchUpInside)
+        
+        let barButton = UIBarButtonItem(customView: pickerButton)
+        self.navigationItem.rightBarButtonItem = barButton
     }
     
     @objc func presentDatePicker() {
-        setDatePicker()
+        view.addSubview(datePicker)
+        datePicker.translatesAutoresizingMaskIntoConstraints = false
+        datePicker.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        datePicker.bottomAnchor.constraint(
+            equalTo: view.bottomAnchor,
+            constant: -49).isActive = true
+        datePicker.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        
+        datePicker.addTarget(self, action: #selector(pickDate), for: .valueChanged)
     }
     
     @objc func pickDate() {
@@ -70,35 +106,49 @@ class CalendarViewController: UIViewController {
         collectionView.reloadData()
     }
     
-    fileprivate func setupNavigationItem() {
-        let pickerButton = UIButton(type: .custom)
-        let image = UIImage(named: "navCalendar")?.withRenderingMode(.alwaysTemplate)
-        pickerButton.setImage(image, for: .normal)
-        pickerButton.addTarget(self, action: #selector(presentDatePicker), for: .touchUpInside)
-        pickerButton.tintColor = .white
-        let barButton = UIBarButtonItem(customView: pickerButton)
-        self.navigationItem.rightBarButtonItem = barButton  
+    // MARK: - Calendar Function
+    
+    fileprivate func lastDayInMonth(at section: Int) -> Int {
+        var numberOfDaysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        let year = section/12+1
+        let month = section%12+1
+        
+        if month == 2 &&
+            ((year%4 == 0 && (year%100 != 0 || year%400 == 0)) ||
+                year%100 == 0 && year<1600) {
+            numberOfDaysInMonth[1] = 29 // 윤년
+        }
+        return section != 18981 ? numberOfDaysInMonth[month-1] : 21 // 1582년 10월 달력 문제
+    }
+    
+    fileprivate func firstWeekdayInMonth(at section: Int) -> Int {
+        let components = DateComponents(year: section/12+1, month: section%12+1, day: 1)
+        let date = Calendar.current.date(from: components)
+
+        if let date = date {
+            return Calendar.current.component(.weekday, from: date)-1 // 0:일요일 ~ 6:토요일
+        } else {
+            preconditionFailure("Error")
+        }
     }
 }
 
-// MARK: 콜렉션뷰, CollectionVie
-extension CalendarViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        showActionSheet(indexPath.section, indexPath.item)
-        datePicker.removeFromSuperview()
-        collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+// MARK: - 콜렉션뷰, CollectionView
+
+extension CalendarViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource,
+UICollectionViewDelegate {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+        ) -> Int {
         if section == 0 {
             computedWeekday = 6
         }
         
-        let numberOfItemsInSection = computedWeekday+lastDayOfMonth(at: section)
-
-        computedWeekday = numberOfItemsInSection%7
-
-        switch numberOfItemsInSection {
+        let numberOfDaysOfMonth = computedWeekday+lastDayInMonth(at: section)
+        computedWeekday = numberOfDaysOfMonth%7
+        
+        switch numberOfDaysOfMonth {
         case 1...28:
             return 28 // 7*4
         case 29...35:
@@ -108,36 +158,74 @@ extension CalendarViewController: UICollectionViewDelegateFlowLayout, UICollecti
         }
     }
     
-    // 셀 아이템 정보 - 날짜 표시
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as? CalendarCell
-            else { preconditionFailure("Error") }
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath) {
+        showActionSheet(indexPath.section, indexPath.item)
+        datePicker.removeFromSuperview()
+        collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+        ) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: "cellId",
+            for: indexPath
+            ) as? CalendarCell
+        else {
+            preconditionFailure("Error")
+        }
         
-        let day = indexPath.item+1-firstWeekdayOfMonth(at: indexPath.section)
-        let lastDay = lastDayOfMonth(at: indexPath.section)
-        if 0<day && day<=lastDay {
+        let sectionNumber = indexPath.section
+        let dayNumber = indexPath.item+1-firstWeekdayInMonth(at: sectionNumber)
+        
+        let numberOfDaysOfMonth = lastDayInMonth(at: sectionNumber)
+        if (1...numberOfDaysOfMonth).contains(dayNumber) {
             cell.isUserInteractionEnabled = true
-            cell.dayLabel.text = "\(day)"
+            cell.dayLabel.text = "\(dayNumber)"
         } else {
             cell.isUserInteractionEnabled = false
             cell.dayLabel.backgroundColor = .calendarBackgroundColor
         }
         
+        let entryWritingDay = "\(sectionNumber/12+1)\(sectionNumber%12+1)\(dayNumber)"
+        if fetchedEntriesDate.contains(entryWritingDay) {
+            cell.dayLabel.backgroundColor = .doBlue
+            cell.dayLabel.textColor = .white
+        }
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        willDisplay cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath) {
+        
+        func scrollToDate(date: Date, animated: Bool) {
+            let components = Calendar.current.dateComponents([.year, .month, .day],
+                                                             from: date)
+            if let year = components.year,
+                let month = components.month,
+                let day = components.day {
+                
+                    let index = 12*(year-1)+(month-1)
+                    let day = day
+                    collectionView.scrollToItem(at: [index, day],
+                                            at: .centeredVertically,
+                                            animated: animated)
+            }
+        }
+        
         if !isTodayIndex {     // 오늘의 인덱스에 해당하는 캘린더로 이동
             isTodayIndex = true
-            
-            let currentIndex = 12*(Calendar.current.component(.year, from: Date())-1)+(Calendar.current.component(.month, from: Date())-1)
-            collectionView.scrollToItem(at: [currentIndex, 0], at: .centeredVertically, animated: false)
+            scrollToDate(date: Date(), animated: false)
         }
         
         if isPickingDate {     // 데이트피커에서 선택한 날로 이동
             isPickingDate = false
-            let components = dateFormatter.string(from: datePicker.date).split {$0 == "-"}.map {Int($0) ?? -1}
-            collectionView.scrollToItem(at: [(components[0]-1)*12+components[1]-1, components[2]], at: .centeredVertically, animated: true)
+             scrollToDate(date: datePicker.date, animated: true)
         }
     }
     
@@ -145,96 +233,129 @@ extension CalendarViewController: UICollectionViewDelegateFlowLayout, UICollecti
         return 12*3000
     }
     
-    // MARK: Supplementary View
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 35)
+    // MARK: - Supplementary View
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForHeaderInSection section: Int
+        ) -> CGSize {
+        return CGSize(width: view.frame.width, height: 30)
     }
     
-    //Supplementary View-ex: 2019년 01월
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                           withReuseIdentifier: "headerId",
-                                                                           for: indexPath) as? CalendarHeaderView else {
-                                                                            preconditionFailure("Error") }
+    func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+        ) -> UICollectionReusableView {
+        guard let header = collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: "headerId",
+            for: indexPath
+            ) as? CalendarHeaderView
+        else {
+            preconditionFailure("Error")
+        }
         
-        header.headerLabel.text = "\(indexPath.section/12+1)년 \(indexPath.section%12+1)월"
+        let year = indexPath.section/12+1
+        let month = indexPath.section%12+1
+        header.headerLabel.text = "\(year)년 \(month)월"
         return header
     }
 }
 
 extension CalendarViewController {
-    func setupCalendar() {
-        //        캘린더 탭 상단의 |일 월 화 수 목 금 토| 를 그리는 뷰
-        let daysOfWeekView: CalendarDaysOfWeek = {
-            let view = CalendarDaysOfWeek()
-            view.translatesAutoresizingMaskIntoConstraints = false
-            return view
-        }()
+    fileprivate func setupCalendar() {
+        view.backgroundColor = .white
         
-        view.addSubview(daysOfWeekView)
-        daysOfWeekView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        daysOfWeekView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        daysOfWeekView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        daysOfWeekView.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        view.addSubview(daysOfWeekTitleView)
+        daysOfWeekTitleView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        daysOfWeekTitleView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        daysOfWeekTitleView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        daysOfWeekTitleView.heightAnchor.constraint(equalToConstant: 24).isActive = true
         
         view.addSubview(collectionView)
         collectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         collectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        collectionView.topAnchor.constraint(equalTo: daysOfWeekView.bottomAnchor, constant: 0).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
-        collectionView.register(CalendarCell.self,
-                                forCellWithReuseIdentifier: "cellId")
-        collectionView.register(CalendarHeaderView.self,
-                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                withReuseIdentifier: "headerId")
+        collectionView.topAnchor.constraint(
+            equalTo: daysOfWeekTitleView.bottomAnchor).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        collectionView.register(
+            CalendarCell.self,
+            forCellWithReuseIdentifier: "cellId")
+        collectionView.register(
+            CalendarHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: "headerId")
+        
         collectionView.delegate = self
         collectionView.dataSource = self
-    }
-
-    func setDatePicker() {
-        view.addSubview(datePicker)
-        datePicker.translatesAutoresizingMaskIntoConstraints = false
-        datePicker.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        datePicker.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        datePicker.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        datePicker.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        
-        datePicker.addTarget(self, action: #selector(pickDate), for: .valueChanged)
-        datePicker.backgroundColor = .white
-        datePicker.datePickerMode = .date
-        datePicker.locale = Locale(identifier: "ko_KR")
-        datePicker.maximumDate = Calendar.current.date(byAdding: .year, value: 900, to: Date())
     }
 }
 
 // MARK: 액션시트, ActionSheet
+
 extension CalendarViewController {
-    func showActionSheet(_ section: Int, _ day: Int) {
-        let date = dateComponents(section, item: day)
+    func showActionSheet(_ sectionNumber: Int, _ day: Int) {
+        let date = convertSectionNumberToDateComponents(sectionNumber, item: day)
         let list = ["일", "월", "화", "수", "목", "금", "토"]
         let weekday = list[date.weekday!-1]
         
-        let dayAlertController = UIAlertController(title: "\(date.year!)년 \(date.month!)월 \(date.day!)일 \(weekday)요일", message: nil, preferredStyle: .actionSheet)
+        guard let year = date.year, let month = date.month, let day = date.day else { return }
         
-        let new = UIAlertAction(title: "새 엔트리 만들기", style: .default) { (_) in
-            
-        }
-        let today = UIAlertAction(title: "\(date.year!). \(date.month!). \(date.day!). (1111 entries)", style: .default) { (_) in
-
-        }
-        let year = UIAlertAction(title: "\(date.month!)월 \(date.day!)일 (1111 entries)", style: .default) { (_) in
-            
-        }
-        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        let entriesAtDay = CoreDataManager.shared.filter(
+            by:[.thisYear(year: year),
+                .thisDay(month: month, day: day)])
+        let entriesOnThisDay = CoreDataManager.shared.filter(
+            by: [.thisDay(month: month, day: day)])
         
-        for sheet in [new, today, year, cancel] { dayAlertController.addAction(sheet) }
-        present(dayAlertController, animated: false)
+        let alertTitle = "\(year)년 \(month)월 \(day)일 \(weekday)요일"
+        let calendarCellAlertController = UIAlertController(
+            title: alertTitle,
+            message: nil,
+            preferredStyle: .actionSheet)
+        
+        calendarCellAlertController.addAction(UIAlertAction(
+         title: "새 엔트리 만들기",
+         style: .default) { (_) in
+            self.present(EntryViewController(), animated: true, completion: nil)
+        })
+        
+        if !entriesAtDay.isEmpty {
+            let todayAlertTitle = "\(year). \(month). \(day). (\(entriesAtDay.count) entries)"
+            let todayAlert = UIAlertAction(
+             title: todayAlertTitle,
+             style: .default) { (_) in
+                let collectedEntriesViewController = CollectedEntriesViewController()
+                collectedEntriesViewController.dateLabel.text =
+                "\(year)년 \(month)월 \(day)일 \(weekday)요일"
+                collectedEntriesViewController.entriesData = entriesAtDay
+                self.present(collectedEntriesViewController, animated: true, completion: nil)
+            }
+            let yearAlertTitle = "\(month)월 \(day)일 (\(entriesOnThisDay.count) entries)"
+            let yearAlert = UIAlertAction(
+             title: yearAlertTitle,
+             style: .default) { (_) in
+                let collectedEntriesViewController = CollectedEntriesViewController()
+                collectedEntriesViewController.dateLabel.text = "\(month)월 \(day)일"
+                collectedEntriesViewController.entriesData = entriesOnThisDay
+                self.present(collectedEntriesViewController, animated: true, completion: nil)
+            }
+            calendarCellAlertController.addAction(todayAlert)
+            calendarCellAlertController.addAction(yearAlert)
+        }
+        calendarCellAlertController.addAction(UIAlertAction(title: "취소", style: .cancel))
+        present(calendarCellAlertController, animated: false)
     }
     
-    func dateComponents(_ section: Int, item: Int) -> DateComponents {
-        let day = item+1-firstWeekdayOfMonth(at: section)
-        let date = dateFormatter.date(from: "\(section/12+1)-\(section%12+1)-\(day)")
-        let components = Calendar.current.dateComponents([.year, .month, .day, .weekday], from: date ?? Date())
-        return components
+    func convertSectionNumberToDateComponents(_ section: Int, item: Int) -> DateComponents {
+        let selectedDay = item+1-firstWeekdayInMonth(at: section)
+        let components = DateComponents(year: section/12+1, month: section%12+1, day: selectedDay)
+        if let date = Calendar.current.date(from: components) {
+            let components = Calendar.current.dateComponents([.year, .month, .day, .weekday],
+                                                            from: date)
+            return components
+        } else { preconditionFailure("Error") }
     }
 }

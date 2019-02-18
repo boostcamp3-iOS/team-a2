@@ -56,11 +56,14 @@ final class CoreDataManager {
         return uuid == defaultJournalUUID
     }
 
-    func save() {
-        if coreDataStack.managedContext.hasChanges {
-            coreDataStack.saveContext()
+    func save(successHandler: (() -> Void)? = nil, errorHandler: ((NSError) -> Void)? = nil) {
+        
+        coreDataStack.saveContext(successHandler: {
             NotificationCenter.default.post(name: CoreDataManager.DidChangedCoredDataNotification, object: nil)
-        }
+            if let successHandler = successHandler {
+                successHandler()
+            }
+        }, errorHandler: errorHandler)
     }
 }
 
@@ -132,13 +135,12 @@ extension CoreDataManager : CoreDataJournalService {
     
     func remove(journal: Journal) {
         managedContext.delete(journal)
-        coreDataStack.saveContext()
+        save()
     }
 }
 
 // Entries
 extension CoreDataManager: CoreDataEntryService {
-    
     // 모든 저널에 포함된 Entries의 개수
     var numberOfEntries: Int {
         return journals.reduce(0, { $0 + ($1.entries?.count ?? 0) })
@@ -223,9 +225,33 @@ extension CoreDataManager: CoreDataEntryService {
         }
     }
     
+    func updateContents(entry: Entry, contents: NSAttributedString, completion: (() -> Void), error: ((Error) -> Void)?) {
+        DispatchQueue.global().async {
+            // 부하가 될 법한 부분 Background 에서 처리 : 이미지 파일 변환 및 파일로 저장, CoreData 저장
+            entry.contents = contents
+            entry.updatedDate = Date()
+            
+            // title로 사용할 string 추출
+            let stringContent = contents.string
+            if stringContent.count > 1 {
+                let start = stringContent.startIndex
+                let end = stringContent.index(start, offsetBy: min(stringContent.count - 1, Constants.maximumNumberOfEntryTitle))
+                entry.title = String(stringContent[start...end])
+            }
+            
+            // thumbnail image 추출
+            if let thumbnailImage = contents.firstImage {
+                entry.thumbnail = thumbnailImage.saveToFile(fileName: entry.thmbnailFileName)
+            } else {
+                entry.thumbnail = nil
+            }
+            CoreDataManager.shared.save()
+        }
+    }
+    
     func remove(entry: Entry) {
         managedContext.delete(entry)
-        coreDataStack.saveContext()
+        save()
     }
     
     // filter type 별로 검색된 FetchedResultController
@@ -249,5 +275,21 @@ extension CoreDataManager: CoreDataWeatherService {
         let weather = Weather(context: managedContext)
         weather.weatherId = UUID.init()
         return weather
+    }
+}
+
+extension CoreDataManager: CoreDataDeviceService {
+    func device() -> Device {
+        let device = Device(context: managedContext)
+        device.deviceId = UUID.init()
+        return device
+    }
+}
+
+extension CoreDataManager: CoreDataLocationService {
+    func location() -> Location {
+        let location = Location(context: managedContext)
+        location.locId = UUID.init()
+        return location
     }
 }

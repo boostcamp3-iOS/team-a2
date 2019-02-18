@@ -14,49 +14,64 @@ class EntryViewController: UIViewController {
     
     // MARK: - Properties
     
+    @IBOutlet weak var topView: UIView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var temperatureLabel: UILabel!
-    @IBOutlet weak var weatherImageView: UIImageView!
-    @IBOutlet weak var weatherLabel: UILabel!
+    @IBOutlet weak var bottomContainerView: UIView!
+  
+    @IBOutlet weak var blockView: UIView!
+    @IBOutlet weak var checkImageView: UIImageView!
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     
-    var coreDataManager: CoreDataManager = CoreDataManager.shared
     var entry: Entry!
     
     ///드레그시 사용되는 미리보기 뷰
-    let imagePreview = UIImageView()
-    let textPreview = UIView()
-    let previewLabel = UILabel()
+    private let imagePreview = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+    private let textPreview = UIView()
+    private let previewLabel = UILabel()
     
     lazy var isImageSelected = false
+    private var shouldSaveEntry = false
+    
+    ///하단 뷰 드래그시 사용되는 프로퍼티
+    var topConstant: CGFloat = 0            /// 하단 뷰 최상단
+    var bottomConstant: CGFloat = 520       /// 하단 뷰 최하단
+    var dragUpChangePoint: CGFloat = 400    ///하단 뷰 위로 드래그시 위로 붙는 기준
+    var isBottom = true                     ///하단 뷰가 아래에 있는지 여부
+    var willPositionChange = false          ///드래그 종료시 변경되야하는지 여부
+    
+    let generator = UIImpactFeedbackGenerator(style: UIImpactFeedbackGenerator.FeedbackStyle.heavy)
+    
+    fileprivate var bottomViewTopConstraint: NSLayoutConstraint!
+    fileprivate var bottomViewBottomConstraint: NSLayoutConstraint!
+    
+    var bottomViewController: EntryInformationViewController!
+    weak var statusChangeDelegate: StateChangeDelegate?
     
     // MARK: - Life cycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        bind()
         setUpDate()
-        setUpWeather()
+        setUpPreview()
+        setUpBottomView()
         setUpPreview()
     }
     
-    // MARK: - Setup
+    // MARK: - Bind Data to View
+    private func bind() {
+        textView.attributedText = entry.contents
+        textView.textDragDelegate = self
+        textView.delegate = self
+    }
     
     func setUpDate() {
-        var dateSet: DateStringSet = DateStringSet(date: Date())
-        if let entry = entry {
-            dateSet = DateStringSet(date: entry.date)
-            textView.attributedText = entry.contents
-        }
+        let dateSet: DateStringSet = DateStringSet(date: entry.date)
         dateLabel.text = dateSet.full
-        timeLabel.text = dateSet.time
-        textView.textDragDelegate = self
     }
     
     func setUpPreview() {
-        imagePreview.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-        
         textPreview.backgroundColor = UIColor(white: 1, alpha: 0.7)
         textPreview.layer.cornerRadius = 20
         textPreview.translatesAutoresizingMaskIntoConstraints = false
@@ -87,35 +102,27 @@ class EntryViewController: UIViewController {
         ).isActive = true
     }
     
-    func setUpWeather() {
-        if let weather = entry.weather {
-            temperatureLabel.text = "\(weather.tempature)℃"
-            guard let type = weather.type else { return }
-            weatherImageView.image = UIImage(named: type)
-            weatherLabel.text = WeatherType(rawValue: type)?.summary
-        } else {
-            let weather = coreDataManager.weather()
-            WeatherService.service.weather(
-                latitude: LocationService.service.latitude,
-                longitude: LocationService.service.longitude,
-                success: {[weak self] data in
-                    let degree: Int = Int((data.currently.temperature - 32) * (5/9)) /// ℉를 ℃로 변경
-                    weather.tempature = Int16(degree)
-                    weather.type = data.currently.icon
-                    weather.weatherId = UUID.init()
-                    DispatchQueue.main.sync {
-                        self?.temperatureLabel.text = "\(weather.tempature)℃"
-                        guard let type = weather.type else { return }
-                        self?.weatherImageView.image = UIImage(named: type)
-                        self?.weatherLabel.text = WeatherType(rawValue: type)?.summary
-                    }
-                },
-                errorHandler: { [weak self] in
-                    self?.showAlert(title: "Error", message: "날씨 정보를 불러올 수 없습니다.")
-            })
-            entry.weather = weather
-            coreDataManager.save()
-        }
+    func setUpBottomView() {
+        bottomContainerView.translatesAutoresizingMaskIntoConstraints = false
+        bottomContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        bottomContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        bottomViewTopConstraint = bottomContainerView.topAnchor.constraint(
+            equalTo: topView.bottomAnchor,
+            constant: bottomConstant
+        )
+        bottomViewTopConstraint.isActive = true
+        bottomViewBottomConstraint = bottomContainerView.bottomAnchor.constraint(
+            equalTo: view.bottomAnchor,
+            constant: bottomConstant
+        )
+        bottomViewBottomConstraint.isActive = true
+        
+        let gesture = UIPanGestureRecognizer(
+            target: self,
+            action: #selector(didDrag(gestureRecognizer:))
+        )
+        bottomContainerView.addGestureRecognizer(gesture)
+        bottomContainerView.isUserInteractionEnabled = true
     }
     
     func showAlert(title: String = "", message: String = "") {
@@ -130,8 +137,11 @@ class EntryViewController: UIViewController {
         
         self.present(alertController, animated: true, completion: nil)
     }
+}
 
-    // MARK: - Actions
+// MARK: - Extention
+// MARK: IBActions
+extension EntryViewController {
     @IBAction func showPhoto(_ sender: UIButton) {
         let pickerViewController = UIImagePickerController()
         pickerViewController.delegate = self
@@ -140,35 +150,136 @@ class EntryViewController: UIViewController {
         present(pickerViewController, animated: true, completion: nil)
     }
     
-    @IBAction func saveAndDismiss(_ sender: UIButton) {
-        guard let content = textView.attributedText else {
-            return
-        }
-        entry.contents = content
-        
-        let stringContent = content.string
-        if stringContent.count > 1 {
-            let start = stringContent.startIndex
-            let end = stringContent.index(start, offsetBy: min(stringContent.count - 1, 40))
-            entry.title = String(stringContent[start...end])
-        }
-        
-        entry.updatedDate = Date()
-        
-        if let thumbnailImage = content.firstImage {
-            entry.thumbnail = thumbnailImage.saveToFile()
+    @IBAction func didTapDone(_ sender: UIButton) {
+        if shouldSaveEntry {
+            self.blockView.isHidden = false
+            
+            UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [.calculationModeLinear], animations: {
+                UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1, animations: {
+                    self.activityIndicatorView.startAnimating()
+                    self.blockView.alpha = 1
+                })
+            }, completion: { _ in
+                guard let contents = self.textView.attributedText else { return }
+                
+                // 이미지 파일 변환 및 파일로 저장, CoreData 저장
+                self.entry.contents = contents
+                self.entry.updatedDate = Date()
+                
+                // title로 사용할 string 추출
+                let stringContent = contents.string
+                if stringContent.count > 1 {
+                    let start = stringContent.startIndex
+                    let end = stringContent.index(start, offsetBy: min(stringContent.count - 1, Constants.maximumNumberOfEntryTitle))
+                    self.entry.title = String(stringContent[start...end])
+                }
+                
+                // thumbnail image 추출
+                if let thumbnailImage = contents.firstImage {
+                    self.entry.thumbnail = thumbnailImage.saveToFile(fileName: self.entry.thmbnailFileName)
+                } else {
+                    self.entry.thumbnail = nil
+                }
+                CoreDataManager.shared.save(successHandler: {
+                    UIView.animate(withDuration: 0.5, animations: {
+                        self.activityIndicatorView.stopAnimating()
+                        self.checkImageView.isHidden = false
+                        self.checkImageView.alpha = 1
+                    }, completion: { _ in
+                        self.dismiss(animated: true, completion: nil)
+                    })
+                }, errorHandler: { _ in
+                    let alert = UIAlertController(title: "저장 실패", message: "다시 시도해주세요", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: .cancel , handler: { _ in
+                        self.blockView.isHidden = true
+                    }))
+                    self.present(alert, animated: true)
+                })
+            })
+            
         } else {
-            entry.thumbnail = nil
+            self.dismiss(animated: true, completion: nil)
         }
         
-        coreDataManager.save()
+        CoreDataManager.shared.save()
         self.dismiss(animated: true, completion: nil)
     }
     
+    // MARK: - Gesture
+    
+    @objc func didDrag(gestureRecognizer: UIPanGestureRecognizer) {
+        if gestureRecognizer.state == .changed {
+            let translation = gestureRecognizer.translation(in: view)
+            var distance = translation.y + bottomConstant
+            distance = min(bottomConstant, distance)
+            distance = max(topConstant, distance)
+        
+            bottomViewTopConstraint.constant = distance
+            bottomViewBottomConstraint.constant = distance
+            
+            if !willPositionChange && distance <= dragUpChangePoint {
+                willPositionChange = true
+                generator.impactOccurred()
+            } else if willPositionChange && distance > dragUpChangePoint {
+                willPositionChange = false
+                generator.impactOccurred()
+            }
+        } else if gestureRecognizer.state == .ended {
+            changeBottomTableViewConstraints()
+        }
+    }
+    
+    func changeBottomTableViewConstraints() {
+        if isBottom, willPositionChange {
+            isBottom = false
+            statusChangeDelegate?.changeState()
+            bottomContainerView.gestureRecognizers?.removeLast()
+            self.bottomViewTopConstraint.constant = self.topConstant
+            self.bottomViewBottomConstraint.constant = self.topConstant
+        } else {
+            isBottom = true
+            self.bottomViewTopConstraint.constant = self.bottomConstant
+            self.bottomViewBottomConstraint.constant = self.bottomConstant
+        }
+        UIView.animate(
+            withDuration: 0.5,
+            delay: 0,
+            usingSpringWithDamping: 1,
+            initialSpringVelocity: 1,
+            options: .curveEaseOut,
+            animations: {
+                self.view.layoutIfNeeded()
+        },
+            completion: nil
+        )
+        willPositionChange = false
+    }
+    
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "bottomViewSegue" {
+            if let bottomViewController = segue.destination as? EntryInformationViewController {
+                bottomViewController.entryViewController = self
+                statusChangeDelegate = bottomViewController
+                bottomViewController.statusChangeDelegate = self
+            }
+        }
+    }
+    
+    @IBAction func hideKeyboardDidTap(_ sender: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
 }
 
-// MARK: - Extention
+// MARK: UITextViewDelegate
+extension EntryViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        shouldSaveEntry = true
+    }
+}
 
+// MARK: UIImagePickerControllerDelegate, UINavigationControllerDelegate
 extension EntryViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -188,35 +299,27 @@ extension EntryViewController: UIImagePickerControllerDelegate, UINavigationCont
         
         if let pickedImage = pickedImage {
             let originWidth = pickedImage.size.width
-            let scaleFactor = originWidth / (textView.frame.size.width - 10)
+            let scaleFactor = originWidth / (textView.frame.size.width - Constants.imageScaleConstantForTextView)
             let scaledImage =  UIImage(cgImage: pickedImage.cgImage!, scale: scaleFactor, orientation: .up)
             insertAtTextViewCursor(attributedString: scaledImage.attributedString)
         }
         picker.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func hideKeyboardDidTap(_ sender: UITapGestureRecognizer) {
-        view.endEditing(true)
-    }
-    
-    fileprivate func insertAtTextViewCursor(attributedString: NSAttributedString) {
-        guard let selectedRange = textView.selectedTextRange else {
-            return
-        }
-        
+    private func insertAtTextViewCursor(attributedString: NSAttributedString) {
+        guard let selectedRange = textView.selectedTextRange else { return }
         /// attributedString을 cursor위치에 넣는다.
         let cursorIndex = textView.offset(
             from: textView.beginningOfDocument,
             to: selectedRange.start
         )
-        let mutableAttributedText = NSMutableAttributedString(
-            attributedString: textView.attributedText
-        )
+        let mutableAttributedText = NSMutableAttributedString(attributedString: textView.attributedText)
         mutableAttributedText.insert(attributedString, at: cursorIndex)
         textView.attributedText = mutableAttributedText
     }
 }
 
+// MARK: UITextDragDelegate
 extension EntryViewController: UITextDragDelegate {
     
     func textDraggableView(
@@ -232,7 +335,7 @@ extension EntryViewController: UITextDragDelegate {
         )
         
         if isImageSelected {
-            isImageSelected = false
+            isImageSelected.toggle()
             return UITargetedDragPreview(
                 view: imagePreview,
                 parameters: UIDragPreviewParameters(),
@@ -279,5 +382,16 @@ extension EntryViewController: UITextDragDelegate {
         } else {
             return []
         }
+    }
+}
+
+extension EntryViewController: StateChangeDelegate {
+    func changeState() {
+        let gesture = UIPanGestureRecognizer(
+            target: self,
+            action: #selector(didDrag(gestureRecognizer:))
+        )
+        bottomContainerView.addGestureRecognizer(gesture)
+        changeBottomTableViewConstraints()
     }
 }

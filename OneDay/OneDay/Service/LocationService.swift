@@ -15,13 +15,15 @@ class LocationService: NSObject {
     
     static let service = LocationService()
     private let locationManager = CLLocationManager()
-    private var _latitude: String = ""
-    private var _longitude: String = ""
     private var _location: CLLocation? = nil
+    private var _latitude: CLLocationDegrees = 21.282778
+    private var _longitude: CLLocationDegrees = -157.829444
+    private var baseURL = "https://maps.googleapis.com/maps/api/geocode/json"
+    private var APIKey = "AIzaSyCq4lfrP7H9azFsfmPET_rdgIcMA2loHaA"
     
+    var latitude: CLLocationDegrees { return _latitude }
+    var longitude: CLLocationDegrees { return _longitude }
     var location: CLLocation? { return _location }
-    var latitude: String { return _latitude }
-    var longitude: String { return _longitude }
     
     // MARK: - Methods
     
@@ -34,6 +36,12 @@ class LocationService: NSObject {
             locationManager.startUpdatingLocation()
         }
     }
+    
+    func currentAddress(success: @escaping (APILocation) -> Void, errorHandler: @escaping () -> Void ) {
+        let urlString  = "\(baseURL)?latlng=\(_latitude),\(_longitude)&key=\(APIKey)"
+        guard let url: URL = URL(string: urlString) else { return }
+        NetworkProvider.request(url: url, success: success, errorHandler: errorHandler)
+    }
 }
 
 extension LocationService: CLLocationManagerDelegate {
@@ -45,7 +53,7 @@ extension LocationService: CLLocationManagerDelegate {
         guard let location: CLLocation = manager.location else { return }
         _location = location
         let coordinate: CLLocationCoordinate2D = location.coordinate
-        _latitude = "\(coordinate.latitude)"
-        _longitude = "\(coordinate.longitude)"
+        _latitude = coordinate.latitude
+        _longitude = coordinate.longitude
     }
 }
