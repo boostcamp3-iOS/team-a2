@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 class MapViewController: UIViewController {
     
@@ -16,40 +17,49 @@ class MapViewController: UIViewController {
     let regionRadius: CLLocationDistance = 1000
     var isMyLocationMarkerVisible: Bool = false
     var entries: [Entry] = []
+    var locations: [[String:Any]] = [[:]]
     var defaultFilters: [EntryFilter] = [.currentJournal]
-    var annotations: [MKAnnotation] = []
+    var fetchResultController: NSFetchedResultsController<Entry>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapView.register(EntryAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        mapView.register(EntryAnnotationClusterView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
+        let defaultLocation = CLLocation(latitude: 37.497016, longitude: 127.028715)
+        centerMapOnLocation(location: LocationService.service.location ?? defaultLocation)
         loadData()
         addCoreDataChangedNotificationObserver()
         addEntriesFiltersChangeNotificationObserver()
-        let defaultLocation = CLLocation(latitude: 37.497016, longitude: 127.028715)
-        centerMapOnLocation(location: LocationService.service.location ?? defaultLocation)
     }
     
     private func loadData() {
-        entries = CoreDataManager.shared.filter(by: defaultFilters)
-        
-        mapView.removeAnnotations(annotations)
-        print(entries.count)
-
-        guard let location = LocationService.service.location else { return }
-        for index in 0..<entries.count {
-            let entry = entries[index]
+        fetchResultController = CoreDataManager.shared.locationResultController()
+        do {
+            try fetchResultController.performFetch()
+//            mapView.removeAnnotations(annotations)
             
-            let constant = Double(index) * 0.001
-            var coordinate = location.coordinate
-            coordinate.latitude += constant
-            print(coordinate)
-            mapView.addAnnotation(MyLocationMarker(title: "여기에서 찍힌 entris",
-                                                   locationName: entry.title ?? "hi",
-                                                       discipline: "Sculpture",
-                                                       coordinate: coordinate))
-//            centerMapOnLocation(location: location)
-//            center.x = x1 + ((x2 - x1) / 2);
-//            center.y = y1 + ((y2 - y1) / 2);
+            fetchResultController.fetchedObjects?.forEach({ entry in
+                guard let location = entry.location else {
+                    print(entry)
+                    return
+                }
+                let annotation = EntryAnnotation(entry: entry)
+                mapView.addAnnotation(annotation)
+            })
+            print(fetchResultController.fetchedObjects?.count)
+            print(mapView.annotations.count)
+//            }
+        } catch {
+            fatalError()
         }
+    }
+    
+    func edgePoints() {
+        let nePoint = CGPoint(x: (mapView.bounds.origin.x + mapView.bounds.size.width), y: mapView.bounds.origin.y)
+        let swPoint = CGPoint(x: mapView.bounds.origin.x, y: (mapView.bounds.origin.y + mapView.bounds.size.height))
+        
+        let neCoord: CLLocationCoordinate2D = mapView.convert(nePoint, toCoordinateFrom: mapView)
+        let swCoord: CLLocationCoordinate2D = mapView.convert(swPoint, toCoordinateFrom: mapView)
     }
     
     func centerMapOnLocation(location: CLLocation) {
@@ -71,15 +81,11 @@ class MapViewController: UIViewController {
             name: CoreDataManager.DidChangedEntriesFilterNotification,
             object: nil)
     }
-    
-    // 두 function은 현재 동일합니다. 추후에 달라질 수 있을 것 같아서 2개로 나누었습니다.
-    // Data가 변경되었다는 Notification 을 받았을 때: collectionView reload
     @objc func didReceiveCoreDataChangedNotification(_: Notification) {
         DispatchQueue.main.async { [weak self] in
             self?.loadData()
         }
     }
-    // Filter Condition이 변경되었다는 을 받았을 때: collectionView reload
     @objc func didReceiveEntriesFilterNotification(_: Notification) {
         DispatchQueue.main.async { [weak self] in
             self?.loadData()
@@ -121,5 +127,13 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func didTapEntriesItem(_ sender: Any) {
+        let entries: [Entry] = mapView.annotations.reduce(into: [], { array, annotation in
+            guard let data = annotation as? EntryAnnotation else { return }
+            return array.append(data.entry)
+            })
+        print(entries.count)
+        let nextViewController = CollectedEntriesViewController()
+        nextViewController.entriesData = entries
+        present(nextViewController, animated: true, completion: nil)
     }
 }

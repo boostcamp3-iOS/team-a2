@@ -12,7 +12,7 @@ enum EntryFilter {
     case all
     case currentJournal
     case photo
-    case location(location: Location?)
+    case location(logitude: Double?, latitude: Double?)
     case favorite
     case tag(tag: String)
     case today
@@ -53,11 +53,11 @@ enum EntryFilter {
             predicateArray.append(NSPredicate(format: "journal == %@", currentJournal))
         case .photo:
             predicateArray.append(NSPredicate(format: "%K != nil", argumentArray: [#keyPath(Entry.thumbnail)]))
-        case .location(let location):
+        case .location(let longitude, let latitude):
             predicateArray.append(NSPredicate(format: "%K != nil", argumentArray: [#keyPath(Entry.location)]))
-            if let location = location {
-                predicateArray.append(NSPredicate(format: "%K == %@", [#keyPath(Entry.location.longitude)], location.longitude))
-                predicateArray.append(NSPredicate(format: "%K == %@", [#keyPath(Entry.location.latitude)], location.latitude))
+            if let longitude = longitude, let latitude = latitude {
+                predicateArray.append(NSPredicate(format: "%K == %@", [#keyPath(Entry.location.longitude)], longitude))
+                predicateArray.append(NSPredicate(format: "%K == %@", [#keyPath(Entry.location.latitude)], latitude))
             }
         case .favorite:
             predicateArray.append(NSPredicate(format:"%K", argumentArray: [#keyPath(Entry.favorite)]))

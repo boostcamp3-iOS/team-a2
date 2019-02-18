@@ -22,7 +22,7 @@ class CollectedEntriesHeaderMapView: MKMapView, MKMapViewDelegate {
     private var coordinates: [MapPinLocation] = []
     
     private var initialLocation = CLLocation(latitude: 0, longitude: 0)
-    private var regionRadius: CLLocationDistance = 0
+    private var regionRadius: CLLocationDistance = 0 
     
     func bind(coordinates: [MapPinLocation], initialLocation: CLLocation, regionRadius: CLLocationDistance) {
         self.coordinates = coordinates
@@ -48,8 +48,9 @@ class CollectedEntriesHeaderMapView: MKMapView, MKMapViewDelegate {
     fileprivate func setCenterOfMap(on location: CLLocation) {
         let coordinateRegion = MKCoordinateRegion(
             center: location.coordinate,
-            latitudinalMeters: regionRadius,
-            longitudinalMeters: regionRadius)
+            latitudinalMeters: 3000,
+            longitudinalMeters: 3000)
+    
         setRegion(coordinateRegion, animated: false)
     }
     

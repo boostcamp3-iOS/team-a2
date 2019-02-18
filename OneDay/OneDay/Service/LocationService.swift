@@ -36,11 +36,26 @@ class LocationService: NSObject {
             locationManager.startUpdatingLocation()
         }
     }
-    
+
     func currentAddress(success: @escaping (APILocation) -> Void, errorHandler: @escaping () -> Void ) {
         let urlString  = "\(baseURL)?latlng=\(_latitude),\(_longitude)&key=\(APIKey)"
         guard let url: URL = URL(string: urlString) else { return }
         NetworkProvider.request(url: url, success: success, errorHandler: errorHandler)
+    }
+        
+    func address(from location: CLLocation) -> String? {
+        let geocoder = CLGeocoder()
+        var address: String?
+        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+            if let placemark = placemarks?.first,
+                let subThoroughfare = placemark.subThoroughfare,
+                let thoroughfare = placemark.thoroughfare,
+                let locality = placemark.locality,
+                let administrativeArea = placemark.administrativeArea {
+                address = subThoroughfare + " " + thoroughfare + ", " + locality + " " + administrativeArea
+            }
+        }
+        return address
     }
 }
 

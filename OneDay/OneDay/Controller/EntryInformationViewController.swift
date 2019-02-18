@@ -186,11 +186,16 @@ class EntryInformationViewController: UIViewController {
         if let location = entryViewController.entry.location {
             settingTableData[0][0].detail = location.address
         } else {
-            let location = CoreDataManager.shared.location()
-            location.latitude = LocationService.service.latitude
-            location.longitude = LocationService.service.longitude
-            entryViewController.entry.location = location
-            
+             var location: Location!
+             if let findLocation: Location = CoreDataManager.shared.location(longitude: LocationService.service.latitude, latitude: LocationService.service.longitude) {
+                location = findLocation
+             } else {
+                location = CoreDataManager.shared.insert()
+                 location.latitude = LocationService.service.latitude
+                 location.longitude = LocationService.service.longitude
+             }
+             entryViewController.entry.location = location
+
             LocationService.service.currentAddress(
                 success: {[weak self] data in
                     if data.results.isEmpty {
