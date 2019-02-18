@@ -147,9 +147,9 @@ class EntryInformationViewController: UIViewController {
     func setUpWeather() {
         if let weather = entryViewController.entry.weather {
             guard let type = weather.type else { return }
-            
-            if let summary = WeatherType(rawValue: type)?.summary {
-                settingTableData[2][0].detail = "\(weather.tempature)℃ \(summary)"
+            if let weatherType = WeatherType(rawValue: type) {
+                settingTableData[2][0].detail = "\(weather.tempature)℃ \(weatherType.summary)"
+                settingTableData[2][0].image = UIImage(named: "setting-\(weatherType.rawValue)")
             } else {
                 settingTableData[2][0].detail = "\(weather.tempature)℃"
             }
@@ -247,6 +247,7 @@ class EntryInformationViewController: UIViewController {
                 longitude: LocationService.service.longitude
             )
         }
+        
         centerMapOnLocation(location: initialLocation)
         point.imageName = "setting_location"
         mapView.addAnnotation(point)
