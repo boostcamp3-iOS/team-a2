@@ -51,6 +51,7 @@ final class CoreDataManager {
     
     func changeCurrentJournal(to journal: Journal) {
         OneDayDefaults.currentJournalUUID = journal.journalId.uuidString
+        NotificationCenter.default.post(name: CoreDataManager.DidChangedEntriesFilterNotification, object: nil)
     }
     
     func isDefaultJournal(uuid: UUID) -> Bool {
@@ -58,7 +59,6 @@ final class CoreDataManager {
     }
 
     func save(successHandler: (() -> Void)? = nil, errorHandler: ((NSError) -> Void)? = nil) {
-        
         coreDataStack.saveContext(successHandler: {
             NotificationCenter.default.post(name: CoreDataManager.DidChangedCoredDataNotification, object: nil)
             if let successHandler = successHandler {
@@ -91,6 +91,19 @@ extension CoreDataManager : CoreDataJournalService {
     var journals: [Journal] {
         let fetchRequest: NSFetchRequest<Journal> = Journal.fetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Journal.index), ascending: true)]
+        
+        do {
+            return try coreDataStack.managedContext.fetch(fetchRequest)
+        } catch {
+            fatalError("Couldn't get journals")
+        }
+    }
+    
+    // 모든 저널 : 모든 저널 제외
+    var journalsWithoutDefault: [Journal] {
+        let fetchRequest: NSFetchRequest<Journal> = Journal.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Journal.index), ascending: true)]
+        fetchRequest.predicate = NSPredicate(format: "index != 0")
         
         do {
             return try coreDataStack.managedContext.fetch(fetchRequest)

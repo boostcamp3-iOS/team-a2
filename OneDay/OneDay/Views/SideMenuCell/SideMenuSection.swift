@@ -33,7 +33,7 @@ enum SideMenuSection: Int, CaseIterable {
         case .filters: return 2
         case .journals: return 0
         case .addJournal: return 1
-        case .setting: return 2
+        case .setting: return 1
         }
     }
 }

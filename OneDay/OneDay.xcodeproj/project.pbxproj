@@ -34,6 +34,32 @@
 		D50276F022041DA300A0DB5E /* TimeLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276EF22041DA300A0DB5E /* TimeLineViewController.swift */; };
 		D50276F222041DB100A0DB5E /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276F122041DB100A0DB5E /* PhotosViewController.swift */; };
 		D50276F422041DBA00A0DB5E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276F322041DBA00A0DB5E /* MapViewController.swift */; };
+		D512A76B221BBD9600EF43C6 /* AddActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A764221BBD9600EF43C6 /* AddActionViewController.swift */; };
+		D512A76C221BBD9600EF43C6 /* CollectedEntriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A765221BBD9600EF43C6 /* CollectedEntriesViewController.swift */; };
+		D512A76D221BBD9600EF43C6 /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A766221BBD9600EF43C6 /* DatePickerViewController.swift */; };
+		D512A76E221BBD9600EF43C6 /* EntryInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A767221BBD9600EF43C6 /* EntryInformationViewController.swift */; };
+		D512A76F221BBD9600EF43C6 /* StateChangeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A769221BBD9600EF43C6 /* StateChangeProtocol.swift */; };
+		D512A770221BBD9600EF43C6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A76A221BBD9600EF43C6 /* ViewController.swift */; };
+		D512A773221BBDA600EF43C6 /* CoreDataDeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A771221BBDA600EF43C6 /* CoreDataDeviceService.swift */; };
+		D512A774221BBDA600EF43C6 /* CoreDataLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A772221BBDA600EF43C6 /* CoreDataLocationService.swift */; };
+		D512A776221BBDAD00EF43C6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A775221BBDAD00EF43C6 /* Constants.swift */; };
+		D512A77A221BBDBF00EF43C6 /* DateFormatter+Datet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A777221BBDBF00EF43C6 /* DateFormatter+Datet.swift */; };
+		D512A77B221BBDBF00EF43C6 /* UIViewController+UIImagePickerControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A778221BBDBF00EF43C6 /* UIViewController+UIImagePickerControllerDelegate.swift */; };
+		D512A77C221BBDBF00EF43C6 /* String+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A779221BBDBF00EF43C6 /* String+URL.swift */; };
+		D512A78E221BBDF400EF43C6 /* ImageSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A788221BBDF400EF43C6 /* ImageSource.swift */; };
+		D512A78F221BBDF400EF43C6 /* EntriesMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A789221BBDF400EF43C6 /* EntriesMarker.swift */; };
+		D512A790221BBDF400EF43C6 /* Tag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A78A221BBDF400EF43C6 /* Tag+CoreDataClass.swift */; };
+		D512A791221BBDF400EF43C6 /* Tag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A78B221BBDF400EF43C6 /* Tag+CoreDataProperties.swift */; };
+		D512A792221BBDF400EF43C6 /* APILocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A78C221BBDF400EF43C6 /* APILocation.swift */; };
+		D512A793221BBDF400EF43C6 /* EntrySetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A78D221BBDF400EF43C6 /* EntrySetting.swift */; };
+		D512A797221BBE0500EF43C6 /* TimelineHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A795221BBE0400EF43C6 /* TimelineHeaderCell.swift */; };
+		D512A798221BBE0500EF43C6 /* TimelineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A796221BBE0400EF43C6 /* TimelineTableViewCell.swift */; };
+		D512A79A221BBE4700EF43C6 /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D512A799221BBE4700EF43C6 /* Map.storyboard */; };
+		D512A7A2221BBECB00EF43C6 /* CollectedEntriesHeaderMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A79C221BBECB00EF43C6 /* CollectedEntriesHeaderMapView.swift */; };
+		D512A7A3221BBECB00EF43C6 /* CollectedEntriesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A79D221BBECB00EF43C6 /* CollectedEntriesListCell.swift */; };
+		D512A7A4221BBECB00EF43C6 /* EditorSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A79F221BBECB00EF43C6 /* EditorSettingTableViewCell.swift */; };
+		D512A7A5221BBECB00EF43C6 /* CustomPointAnnotaion.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A7A1221BBECB00EF43C6 /* CustomPointAnnotaion.swift */; };
+		D512A7A7221BCE2600EF43C6 /* EditJournalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A7A6221BCE2600EF43C6 /* EditJournalViewController.swift */; };
 		D516C88722126AB900A4BDAC /* SideMenuSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516C88622126AB900A4BDAC /* SideMenuSection.swift */; };
 		D516C88C2212A28100A4BDAC /* OneDayDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516C88B2212A28100A4BDAC /* OneDayDefaults.swift */; };
 		D516C88F2212CB1700A4BDAC /* CoreDataWeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516C88E2212CB1700A4BDAC /* CoreDataWeatherService.swift */; };
@@ -43,8 +69,6 @@
 		D516C8CB2213E87300A4BDAC /* NSAttributedString+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516C8CA2213E87300A4BDAC /* NSAttributedString+UIImage.swift */; };
 		D53782B922110E6800336646 /* Photos.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D53782B822110E6800336646 /* Photos.storyboard */; };
 		D53782BD221113A100336646 /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53782BC221113A100336646 /* PhotosCollectionViewCell.swift */; };
-		D53782C022113B9E00336646 /* CreateEntryPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53782BF22113B9E00336646 /* CreateEntryPhotosViewController.swift */; };
-		D53782C322113BAF00336646 /* CreateEntryCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53782C222113BAF00336646 /* CreateEntryCameraViewController.swift */; };
 		D561692321FAD07000E00FED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D561692221FAD07000E00FED /* AppDelegate.swift */; };
 		D561692521FAD07000E00FED /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D561692421FAD07000E00FED /* MainTabBarViewController.swift */; };
 		D561692821FAD07000E00FED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D561692621FAD07000E00FED /* Main.storyboard */; };
@@ -63,7 +87,6 @@
 		E992EC6E21FAEE4D00917116 /* SideMenuEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6D21FAEE4D00917116 /* SideMenuEditCell.swift */; };
 		E992EC7021FAEE5B00917116 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6F21FAEE5B00917116 /* FilterViewController.swift */; };
 		E992EC7221FAEE6700917116 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7121FAEE6700917116 /* SideMenuViewController.swift */; };
-		E992EC7421FAEE7100917116 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7321FAEE7100917116 /* TestViewController.swift */; };
 		E992EC7821FAF4C200917116 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7721FAF4C200917116 /* CalendarViewController.swift */; };
 		E992EC7A21FAFBC500917116 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7921FAFBC500917116 /* CalendarCell.swift */; };
 		E992EC7C21FB1E5500917116 /* CalendarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7B21FB1E5500917116 /* CalendarHeaderView.swift */; };
@@ -117,7 +140,32 @@
 		D50276F122041DB100A0DB5E /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		D50276F322041DBA00A0DB5E /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		D50276F522041DC600A0DB5E /* CalendarTempViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTempViewController.swift; sourceTree = "<group>"; };
-		D516C87F22125ED900A4BDAC /* EntryFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryFilter.swift; sourceTree = "<group>"; };
+		D512A764221BBD9600EF43C6 /* AddActionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddActionViewController.swift; sourceTree = "<group>"; };
+		D512A765221BBD9600EF43C6 /* CollectedEntriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectedEntriesViewController.swift; sourceTree = "<group>"; };
+		D512A766221BBD9600EF43C6 /* DatePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerViewController.swift; sourceTree = "<group>"; };
+		D512A767221BBD9600EF43C6 /* EntryInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryInformationViewController.swift; sourceTree = "<group>"; };
+		D512A769221BBD9600EF43C6 /* StateChangeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateChangeProtocol.swift; sourceTree = "<group>"; };
+		D512A76A221BBD9600EF43C6 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D512A771221BBDA600EF43C6 /* CoreDataDeviceService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataDeviceService.swift; sourceTree = "<group>"; };
+		D512A772221BBDA600EF43C6 /* CoreDataLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataLocationService.swift; sourceTree = "<group>"; };
+		D512A775221BBDAD00EF43C6 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D512A777221BBDBF00EF43C6 /* DateFormatter+Datet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Datet.swift"; sourceTree = "<group>"; };
+		D512A778221BBDBF00EF43C6 /* UIViewController+UIImagePickerControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+UIImagePickerControllerDelegate.swift"; sourceTree = "<group>"; };
+		D512A779221BBDBF00EF43C6 /* String+URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+URL.swift"; sourceTree = "<group>"; };
+		D512A788221BBDF400EF43C6 /* ImageSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSource.swift; sourceTree = "<group>"; };
+		D512A789221BBDF400EF43C6 /* EntriesMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntriesMarker.swift; sourceTree = "<group>"; };
+		D512A78A221BBDF400EF43C6 /* Tag+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D512A78B221BBDF400EF43C6 /* Tag+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D512A78C221BBDF400EF43C6 /* APILocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APILocation.swift; sourceTree = "<group>"; };
+		D512A78D221BBDF400EF43C6 /* EntrySetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntrySetting.swift; sourceTree = "<group>"; };
+		D512A795221BBE0400EF43C6 /* TimelineHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineHeaderCell.swift; sourceTree = "<group>"; };
+		D512A796221BBE0400EF43C6 /* TimelineTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineTableViewCell.swift; sourceTree = "<group>"; };
+		D512A799221BBE4700EF43C6 /* Map.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Map.storyboard; sourceTree = "<group>"; };
+		D512A79C221BBECB00EF43C6 /* CollectedEntriesHeaderMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectedEntriesHeaderMapView.swift; sourceTree = "<group>"; };
+		D512A79D221BBECB00EF43C6 /* CollectedEntriesListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectedEntriesListCell.swift; sourceTree = "<group>"; };
+		D512A79F221BBECB00EF43C6 /* EditorSettingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorSettingTableViewCell.swift; sourceTree = "<group>"; };
+		D512A7A1221BBECB00EF43C6 /* CustomPointAnnotaion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPointAnnotaion.swift; sourceTree = "<group>"; };
+		D512A7A6221BCE2600EF43C6 /* EditJournalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditJournalViewController.swift; sourceTree = "<group>"; };
 		D516C88622126AB900A4BDAC /* SideMenuSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuSection.swift; sourceTree = "<group>"; };
 		D516C88B2212A28100A4BDAC /* OneDayDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneDayDefaults.swift; sourceTree = "<group>"; };
 		D516C88E2212CB1700A4BDAC /* CoreDataWeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataWeatherService.swift; sourceTree = "<group>"; };
@@ -127,8 +175,6 @@
 		D516C8CA2213E87300A4BDAC /* NSAttributedString+UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+UIImage.swift"; sourceTree = "<group>"; };
 		D53782B822110E6800336646 /* Photos.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Photos.storyboard; sourceTree = "<group>"; };
 		D53782BC221113A100336646 /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
-		D53782BF22113B9E00336646 /* CreateEntryPhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEntryPhotosViewController.swift; sourceTree = "<group>"; };
-		D53782C222113BAF00336646 /* CreateEntryCameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEntryCameraViewController.swift; sourceTree = "<group>"; };
 		D53782C52211447500336646 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		D561691F21FAD07000E00FED /* OneDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D561692221FAD07000E00FED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -151,7 +197,6 @@
 		E992EC6D21FAEE4D00917116 /* SideMenuEditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuEditCell.swift; sourceTree = "<group>"; };
 		E992EC6F21FAEE5B00917116 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		E992EC7121FAEE6700917116 /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
-		E992EC7321FAEE7100917116 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		E992EC7721FAF4C200917116 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		E992EC7921FAFBC500917116 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		E992EC7B21FB1E5500917116 /* CalendarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHeaderView.swift; sourceTree = "<group>"; };
@@ -193,6 +238,12 @@
 		D502763F21FB0B5E00A0DB5E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D512A78C221BBDF400EF43C6 /* APILocation.swift */,
+				D512A789221BBDF400EF43C6 /* EntriesMarker.swift */,
+				D512A78D221BBDF400EF43C6 /* EntrySetting.swift */,
+				D512A788221BBDF400EF43C6 /* ImageSource.swift */,
+				D512A78A221BBDF400EF43C6 /* Tag+CoreDataClass.swift */,
+				D512A78B221BBDF400EF43C6 /* Tag+CoreDataProperties.swift */,
 				D502764221FB0B8400A0DB5E /* Journal+CoreDataClass.swift */,
 				D502764321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift */,
 				D502764421FB0B8400A0DB5E /* Weather+CoreDataClass.swift */,
@@ -234,6 +285,9 @@
 		D502769421FEA1AA00A0DB5E /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				D512A777221BBDBF00EF43C6 /* DateFormatter+Datet.swift */,
+				D512A779221BBDBF00EF43C6 /* String+URL.swift */,
+				D512A778221BBDBF00EF43C6 /* UIViewController+UIImagePickerControllerDelegate.swift */,
 				D516C8CA2213E87300A4BDAC /* NSAttributedString+UIImage.swift */,
 				D502769521FEA1CD00A0DB5E /* UIColor+NamedColor.swift */,
 			);
@@ -260,9 +314,53 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
+		D512A768221BBD9600EF43C6 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				D512A769221BBD9600EF43C6 /* StateChangeProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		D512A794221BBE0400EF43C6 /* Timeline */ = {
+			isa = PBXGroup;
+			children = (
+				D512A795221BBE0400EF43C6 /* TimelineHeaderCell.swift */,
+				D512A796221BBE0400EF43C6 /* TimelineTableViewCell.swift */,
+			);
+			path = Timeline;
+			sourceTree = "<group>";
+		};
+		D512A79B221BBECB00EF43C6 /* CollectedEntries */ = {
+			isa = PBXGroup;
+			children = (
+				D512A79C221BBECB00EF43C6 /* CollectedEntriesHeaderMapView.swift */,
+				D512A79D221BBECB00EF43C6 /* CollectedEntriesListCell.swift */,
+			);
+			path = CollectedEntries;
+			sourceTree = "<group>";
+		};
+		D512A79E221BBECB00EF43C6 /* EditorSettingCell */ = {
+			isa = PBXGroup;
+			children = (
+				D512A79F221BBECB00EF43C6 /* EditorSettingTableViewCell.swift */,
+			);
+			path = EditorSettingCell;
+			sourceTree = "<group>";
+		};
+		D512A7A0221BBECB00EF43C6 /* Annotation */ = {
+			isa = PBXGroup;
+			children = (
+				D512A7A1221BBECB00EF43C6 /* CustomPointAnnotaion.swift */,
+			);
+			path = Annotation;
+			sourceTree = "<group>";
+		};
 		D516C87E22125E1900A4BDAC /* protocol */ = {
 			isa = PBXGroup;
 			children = (
+				D512A771221BBDA600EF43C6 /* CoreDataDeviceService.swift */,
+				D512A772221BBDA600EF43C6 /* CoreDataLocationService.swift */,
 				D516C8902212CB3000A4BDAC /* CoreDataEntryService.swift */,
 				D502766621FB139300A0DB5E /* CoreDataJournalService.swift */,
 				D516C88E2212CB1700A4BDAC /* CoreDataWeatherService.swift */,
@@ -273,6 +371,7 @@
 		D516C88A2212A27500A4BDAC /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				D512A775221BBDAD00EF43C6 /* Constants.swift */,
 				D516C88B2212A28100A4BDAC /* OneDayDefaults.swift */,
 			);
 			path = Utils;
@@ -293,15 +392,6 @@
 				D53782BC221113A100336646 /* PhotosCollectionViewCell.swift */,
 			);
 			path = Photos;
-			sourceTree = "<group>";
-		};
-		D53782BE22113B7600336646 /* Entry */ = {
-			isa = PBXGroup;
-			children = (
-				D53782BF22113B9E00336646 /* CreateEntryPhotosViewController.swift */,
-				D53782C222113BAF00336646 /* CreateEntryCameraViewController.swift */,
-			);
-			path = Entry;
 			sourceTree = "<group>";
 		};
 		D561691621FAD07000E00FED = {
@@ -346,6 +436,10 @@
 		E96BE83321FAD8DB00266F6D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D512A7A0221BBECB00EF43C6 /* Annotation */,
+				D512A79B221BBECB00EF43C6 /* CollectedEntries */,
+				D512A79E221BBECB00EF43C6 /* EditorSettingCell */,
+				D512A794221BBE0400EF43C6 /* Timeline */,
 				D53782BB2211138900336646 /* Photos */,
 				E992EC7D21FB2CAD00917116 /* Calendar */,
 				E992EC5E21FAEDD100917116 /* FilterCell */,
@@ -367,17 +461,22 @@
 		E96BE83721FAD90A00266F6D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				D53782BE22113B7600336646 /* Entry */,
+				D512A764221BBD9600EF43C6 /* AddActionViewController.swift */,
+				D512A765221BBD9600EF43C6 /* CollectedEntriesViewController.swift */,
+				D512A766221BBD9600EF43C6 /* DatePickerViewController.swift */,
+				D512A767221BBD9600EF43C6 /* EntryInformationViewController.swift */,
+				D512A768221BBD9600EF43C6 /* Protocols */,
+				D512A76A221BBD9600EF43C6 /* ViewController.swift */,
 				D50276E92202C7EE00A0DB5E /* EntryViewController.swift */,
 				E936659322110DF900DC660A /* BaseSlidingViewController.swift */,
 				E992EC6F21FAEE5B00917116 /* FilterViewController.swift */,
 				E992EC7121FAEE6700917116 /* SideMenuViewController.swift */,
-				E992EC7321FAEE7100917116 /* TestViewController.swift */,
 				E992EC7721FAF4C200917116 /* CalendarViewController.swift */,
 				D561692421FAD07000E00FED /* MainTabBarViewController.swift */,
 				D50276EF22041DA300A0DB5E /* TimeLineViewController.swift */,
 				D50276F122041DB100A0DB5E /* PhotosViewController.swift */,
 				D50276F322041DBA00A0DB5E /* MapViewController.swift */,
+				D512A7A6221BCE2600EF43C6 /* EditJournalViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -395,6 +494,7 @@
 		E96BE83B21FAD98500266F6D /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				D512A799221BBE4700EF43C6 /* Map.storyboard */,
 				D561692E21FAD07200E00FED /* LaunchScreen.storyboard */,
 				D561692621FAD07000E00FED /* Main.storyboard */,
 				E96BE84021FADAAA00266F6D /* Setting.storyboard */,
@@ -408,7 +508,6 @@
 		E992EC5E21FAEDD100917116 /* FilterCell */ = {
 			isa = PBXGroup;
 			children = (
-				D516C87F22125ED900A4BDAC /* EntryFilter.swift */,
 				E992EC6021FAEDF500917116 /* SearchedKeywordCell.swift */,
 				E992EC6221FAEDFD00917116 /* MatchingEntriesCell.swift */,
 				E992EC6421FAEE0600917116 /* FilterTableCell.swift */,
@@ -547,6 +646,7 @@
 			files = (
 				E96BE83F21FADA9600266F6D /* SideMenu.storyboard in Resources */,
 				D561693021FAD07200E00FED /* LaunchScreen.storyboard in Resources */,
+				D512A79A221BBE4700EF43C6 /* Map.storyboard in Resources */,
 				E96BE84121FADAAA00266F6D /* Setting.storyboard in Resources */,
 				D50276BD21FEF0DC00A0DB5E /* Coredata.storyboard in Resources */,
 				D561692D21FAD07200E00FED /* Assets.xcassets in Resources */,
@@ -620,60 +720,82 @@
 				E992EC6521FAEE0600917116 /* FilterTableCell.swift in Sources */,
 				E992EC6E21FAEE4D00917116 /* SideMenuEditCell.swift in Sources */,
 				E992EC6A21FAEE3C00917116 /* SideMenuJournalListCell.swift in Sources */,
+				D512A77A221BBDBF00EF43C6 /* DateFormatter+Datet.swift in Sources */,
 				E992EC6121FAEDF500917116 /* SearchedKeywordCell.swift in Sources */,
 				E992EC7A21FAFBC500917116 /* CalendarCell.swift in Sources */,
+				D512A76D221BBD9600EF43C6 /* DatePickerViewController.swift in Sources */,
+				D512A77B221BBDBF00EF43C6 /* UIViewController+UIImagePickerControllerDelegate.swift in Sources */,
 				E992EC7221FAEE6700917116 /* SideMenuViewController.swift in Sources */,
 				E992EC7821FAF4C200917116 /* CalendarViewController.swift in Sources */,
-				E992EC7421FAEE7100917116 /* TestViewController.swift in Sources */,
 				D561692521FAD07000E00FED /* MainTabBarViewController.swift in Sources */,
 				E992EC7021FAEE5B00917116 /* FilterViewController.swift in Sources */,
+				D512A797221BBE0500EF43C6 /* TimelineHeaderCell.swift in Sources */,
 				E992EC6321FAEDFD00917116 /* MatchingEntriesCell.swift in Sources */,
+				D512A7A3221BBECB00EF43C6 /* CollectedEntriesListCell.swift in Sources */,
+				D512A790221BBDF400EF43C6 /* Tag+CoreDataClass.swift in Sources */,
 				E992EC7C21FB1E5500917116 /* CalendarHeaderView.swift in Sources */,
 				D561692321FAD07000E00FED /* AppDelegate.swift in Sources */,
 				E992EC6821FAEE3300917116 /* SideMenuFilterCell.swift in Sources */,
 				E9DA39AC2203FCD30026381E /* FilterSection.swift in Sources */,
+				D512A773221BBDA600EF43C6 /* CoreDataDeviceService.swift in Sources */,
 				E992EC6C21FAEE4500917116 /* SideMenuJournalAddCell.swift in Sources */,
 				E992EC7F21FB2CCE00917116 /* CalendarDaysOfWeek.swift in Sources */,
 				D50276B921FED1D200A0DB5E /* OneDay.xcdatamodeld in Sources */,
+				D512A78E221BBDF400EF43C6 /* ImageSource.swift in Sources */,
 				D516C8C82213E70200A4BDAC /* CoreDataManager.swift in Sources */,
 				D50276F222041DB100A0DB5E /* PhotosViewController.swift in Sources */,
 				D50276EE2202D3C700A0DB5E /* SampleTableViewCell.swift in Sources */,
+				D512A7A2221BBECB00EF43C6 /* CollectedEntriesHeaderMapView.swift in Sources */,
 				EC0CFB0922030C1D001293B1 /* NetworkProvider.swift in Sources */,
 				D516C88722126AB900A4BDAC /* SideMenuSection.swift in Sources */,
+				D512A77C221BBDBF00EF43C6 /* String+URL.swift in Sources */,
 				D502769321FEA18000A0DB5E /* CoreDataStack.swift in Sources */,
+				D512A774221BBDA600EF43C6 /* CoreDataLocationService.swift in Sources */,
+				D512A78F221BBDF400EF43C6 /* EntriesMarker.swift in Sources */,
 				D502765421FB0B8400A0DB5E /* Weather+CoreDataClass.swift in Sources */,
 				D561692521FAD07000E00FED /* MainTabBarViewController.swift in Sources */,
+				D512A7A7221BCE2600EF43C6 /* EditJournalViewController.swift in Sources */,
 				D502765521FB0B8400A0DB5E /* Weather+CoreDataProperties.swift in Sources */,
 				D516C88F2212CB1700A4BDAC /* CoreDataWeatherService.swift in Sources */,
+				D512A7A4221BBECB00EF43C6 /* EditorSettingTableViewCell.swift in Sources */,
 				D502769621FEA1CE00A0DB5E /* UIColor+NamedColor.swift in Sources */,
 				D502765C21FB0B8400A0DB5E /* Location+CoreDataClass.swift in Sources */,
+				D512A770221BBD9600EF43C6 /* ViewController.swift in Sources */,
 				D502765B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift in Sources */,
 				EC0CFB0622030A53001293B1 /* APIWeather.swift in Sources */,
 				D50276F022041DA300A0DB5E /* TimeLineViewController.swift in Sources */,
 				D502765C21FB0B8400A0DB5E /* Location+CoreDataClass.swift in Sources */,
 				D502765B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift in Sources */,
 				E936659422110DF900DC660A /* BaseSlidingViewController.swift in Sources */,
+				D512A793221BBDF400EF43C6 /* EntrySetting.swift in Sources */,
 				D53782BD221113A100336646 /* PhotosCollectionViewCell.swift in Sources */,
+				D512A791221BBDF400EF43C6 /* Tag+CoreDataProperties.swift in Sources */,
 				D502765321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift in Sources */,
 				D516C88C2212A28100A4BDAC /* OneDayDefaults.swift in Sources */,
 				D502766721FB139300A0DB5E /* CoreDataJournalService.swift in Sources */,
 				EC5E21AB220425390073D90E /* LocationService.swift in Sources */,
 				D561692321FAD07000E00FED /* AppDelegate.swift in Sources */,
+				D512A7A5221BBECB00EF43C6 /* CustomPointAnnotaion.swift in Sources */,
 				D502766221FB0D6000A0DB5E /* WeatherType.swift in Sources */,
+				D512A76B221BBD9600EF43C6 /* AddActionViewController.swift in Sources */,
+				D512A798221BBE0500EF43C6 /* TimelineTableViewCell.swift in Sources */,
+				D512A76E221BBD9600EF43C6 /* EntryInformationViewController.swift in Sources */,
 				D502765921FB0B8400A0DB5E /* Entry+CoreDataProperties.swift in Sources */,
-				D53782C322113BAF00336646 /* CreateEntryCameraViewController.swift in Sources */,
 				D502765A21FB0B8400A0DB5E /* Device+CoreDataClass.swift in Sources */,
 				D50276EA2202C7EE00A0DB5E /* EntryViewController.swift in Sources */,
 				D516C8C92213E70200A4BDAC /* EntryFilter.swift in Sources */,
 				D516C8CB2213E87300A4BDAC /* NSAttributedString+UIImage.swift in Sources */,
+				D512A776221BBDAD00EF43C6 /* Constants.swift in Sources */,
 				D50276EC2202C82900A0DB5E /* DataStringSet.swift in Sources */,
+				D512A792221BBDF400EF43C6 /* APILocation.swift in Sources */,
+				D512A76F221BBD9600EF43C6 /* StateChangeProtocol.swift in Sources */,
 				EC0CFB0422030A29001293B1 /* WeatherService.swift in Sources */,
 				D516C8912212CB3000A4BDAC /* CoreDataEntryService.swift in Sources */,
 				D50276F422041DBA00A0DB5E /* MapViewController.swift in Sources */,
 				D502765D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift in Sources */,
 				D502765821FB0B8400A0DB5E /* Entry+CoreDataClass.swift in Sources */,
 				D502765221FB0B8400A0DB5E /* Journal+CoreDataClass.swift in Sources */,
-				D53782C022113B9E00336646 /* CreateEntryPhotosViewController.swift in Sources */,
+				D512A76C221BBD9600EF43C6 /* CollectedEntriesViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
