@@ -71,9 +71,12 @@ class EntryInformationViewController: UIViewController {
         
         let journal = EntrySetting(
             title: "일기장",
-            detail: "일기장",
+            detail: "",
             image: UIImage(named: "setting_journal")
         )
+        if let journalTitle = entryViewController.entry.journal?.title {
+            journal.detail = journalTitle
+        }
         journal.hasDisclouserIndicator = true
         settingTableData[0].append(journal)
         
@@ -328,7 +331,7 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
             case 1:
                 ()
             case 2:
-                ()
+                changeJournal()
             case 3:
                 changeDate(indexPath: indexPath)
             case 4:
@@ -373,6 +376,16 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
 // MARK: - Cell select actions
 
 extension EntryInformationViewController {
+    
+    func changeJournal() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        let journalChangeViewController = JournalChangeViewController()
+        journalChangeViewController.alertController = alert
+        journalChangeViewController.journalChangeDelegate = self
+        alert.setValue(journalChangeViewController, forKey: "contentViewController")
+        self.present(alert, animated: false)
+    }
+    
     func changeDate(indexPath: IndexPath) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
         let datePickerViewController = DatePickerViewController()
@@ -429,6 +442,19 @@ extension EntryInformationViewController: StateChangeDelegate {
     func changeState() {
         tableView.isScrollEnabled = true
         canScroll = true
+    }
+}
+
+extension EntryInformationViewController: JournalChangeDelegate {
+    func changeJournal(to journal: Journal) {
+        entryViewController.entry.journal = journal
+        if let title = journal.title {
+            settingTableData[0][2].detail = title
+            tableView.reloadRows(
+                at: [IndexPath(row: 2, section: 0)],
+                with: UITableView.RowAnimation.none
+            )
+        }
     }
 }
 
