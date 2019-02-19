@@ -45,6 +45,7 @@ class CalendarViewController: UIViewController, UITabBarControllerDelegate {
     fileprivate var isPickingDate = false
     fileprivate var computedWeekday = 6
     lazy var tappingTabItemCount = 0
+    lazy var isDatePikcerPresented = false
 
     var fetchedEntriesDate = Set<String>()
 
@@ -93,6 +94,8 @@ class CalendarViewController: UIViewController, UITabBarControllerDelegate {
     }
     
     @objc func presentDatePicker() {
+        isDatePikcerPresented = true
+
         view.addSubview(datePicker)
         datePicker.translatesAutoresizingMaskIntoConstraints = false
         datePicker.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -100,7 +103,6 @@ class CalendarViewController: UIViewController, UITabBarControllerDelegate {
             equalTo: view.bottomAnchor,
             constant: -49).isActive = true
         datePicker.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        
         datePicker.addTarget(self, action: #selector(pickDate), for: .valueChanged)
     }
     
@@ -194,6 +196,7 @@ UICollectionViewDelegate {
         
         showActionSheet(indexPath.section, indexPath.item)
         datePicker.removeFromSuperview()
+        isDatePikcerPresented = false
         collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
     }
     
@@ -230,7 +233,10 @@ UICollectionViewDelegate {
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        datePicker.removeFromSuperview()
+        if isDatePikcerPresented {
+            datePicker.removeFromSuperview()
+            isDatePikcerPresented = false
+        }
     }
     
     func collectionView(
@@ -245,7 +251,7 @@ UICollectionViewDelegate {
         
         if isPickingDate {     // 데이트피커에서 선택한 날로 이동
             isPickingDate = false
-             scrollToDate(date: datePicker.date, animated: true)
+            scrollToDate(date: datePicker.date, animated: true)
         }
     }
     
