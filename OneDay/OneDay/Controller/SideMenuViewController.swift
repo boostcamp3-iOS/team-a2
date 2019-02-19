@@ -13,10 +13,8 @@ class SideMenuViewController: UIViewController {
     // Constants
     let sectionHeaderHeight: CGFloat = 2
     private let defaultInsets: UIEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: -4)
-    
     // 테이블 뷰
     private let sideMenuTableView = UITableView()
-    
     // 검색 바
     private let searchBar: UISearchBar = {
         let bar = UISearchBar()
@@ -26,14 +24,12 @@ class SideMenuViewController: UIViewController {
         bar.translatesAutoresizingMaskIntoConstraints = false
         return bar
     }()
-    
-    var journals: [Journal] {
+    private var journals: [Journal] {
         return CoreDataManager.shared.journals
     }
-    var currentJournal: Journal {
+    private var currentJournal: Journal {
         return CoreDataManager.shared.currentJournal
     }
-    let editCells = ["Edit Journals", "설정"]
     
     override var prefersStatusBarHidden: Bool { return true }
 
@@ -50,6 +46,7 @@ class SideMenuViewController: UIViewController {
             name: CoreDataManager.DidChangedCoredDataNotification,
             object: nil)
     }
+    
     @objc func didReceiveCoreDataChangedNotification(_: Notification) {
         DispatchQueue.main.async { [weak self] in
             self?.sideMenuTableView.reloadData()
@@ -99,10 +96,8 @@ extension SideMenuViewController: UITableViewDataSource {
             }
             return cell
         case .setting:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: menuSection.identifier, for: indexPath) as? SideMenuEditCell else {
-                preconditionFailure("Error")
-            }
-            cell.editTitleLabel.text = editCells[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: menuSection.identifier, for: indexPath)
+            cell.textLabel?.text = "Edit Journals"
             return cell
         }
     }

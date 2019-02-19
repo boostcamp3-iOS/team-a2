@@ -12,9 +12,7 @@ extension String {
     
     var urlForDataStorage: URL? {
         let fileManager = FileManager.default
-        
         guard let folder = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else { return nil }
-        
         let appFolder = folder.appendingPathComponent("OneDay")
         var isDirectory: ObjCBool = false
         let folderExists = fileManager.fileExists(atPath: appFolder.path, isDirectory: &isDirectory)
@@ -25,7 +23,6 @@ extension String {
                 return nil
             }
         }
-        
         return appFolder.appendingPathComponent(self).appendingPathExtension("jpeg")
     }
 
