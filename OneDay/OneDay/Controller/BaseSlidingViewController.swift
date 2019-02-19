@@ -217,7 +217,7 @@ class BaseSlidingViewController: UIViewController {
         
         baseMainView.addSubview(blurCoverView)
         blurCoverView.leftAnchor.constraint(equalTo: baseMainView.leftAnchor).isActive = true
-        blurCoverView.topAnchor.constraint(equalTo: baseMainView.topAnchor).isActive = true
+        blurCoverView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         blurCoverView.rightAnchor.constraint(equalTo: baseMainView.rightAnchor).isActive = true
         blurCoverView.bottomAnchor.constraint(equalTo: baseMainView.bottomAnchor).isActive = true
         
@@ -231,9 +231,7 @@ class BaseSlidingViewController: UIViewController {
 
         baseSideView.addSubview(sideView)
         sideView.leftAnchor.constraint(equalTo: baseSideView.leftAnchor).isActive = true
-        sideView.topAnchor.constraint(
-            equalTo: baseSideView.topAnchor,
-            constant: 20).isActive = true
+        sideView.topAnchor.constraint(equalTo: baseSideView.topAnchor).isActive = true
         sideView.rightAnchor.constraint(equalTo: baseSideView.rightAnchor).isActive = true
         sideView.bottomAnchor.constraint(equalTo: baseSideView.bottomAnchor).isActive = true
         

@@ -11,30 +11,14 @@ import UIKit
 class SideMenuViewController: UIViewController {
     
     // Constants
-    let sideMenuWidth: CGFloat = UIScreen.main.bounds.width * 0.8
-    let sectionHeaderHeight: CGFloat = 5
-//    private let defaultInsets: UIEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: -4)
-    
-    // 테이블 섹션 헤더
-    lazy var sectionHeaderView: UIView = {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: sideMenuWidth, height: sectionHeaderHeight))
-        view.backgroundColor = .doLight
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    let sideMenuView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    let sectionHeaderHeight: CGFloat = 2
+    private let defaultInsets: UIEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: -4)
     
     // 테이블 뷰
-    let sideMenuTableView = UITableView()
+    private let sideMenuTableView = UITableView()
     
     // 검색 바
-    let searchBar: UISearchBar = {
+    private let searchBar: UISearchBar = {
         let bar = UISearchBar()
         bar.searchBarStyle = UISearchBar.Style.minimal
         bar.placeholder = " Search"
@@ -53,9 +37,7 @@ class SideMenuViewController: UIViewController {
     
     override var prefersStatusBarHidden: Bool { return true }
 
-    override func viewDidLoad() {
-        view.backgroundColor = .clear
-        setupSideMenuView()
+    override func viewDidLoad() { 
         setupSearchBar()
         setupTableView()
         addCoreDataChangedNotificationObserver()
@@ -89,13 +71,12 @@ extension SideMenuViewController: UITableViewDataSource {
         guard let menuSection = SideMenuSection(rawValue: indexPath.section) else {
             preconditionFailure("Inavlid Section")
         }
-        
         switch menuSection {
         case .filters:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: menuSection.identifier, for: indexPath) as? SideMenuFilterCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: menuSection.identifier, for: indexPath) as? SideMenuFilterCell,
+                let cellType = SideFilterCellType(rawValue: indexPath.row) else {
                 preconditionFailure("Error")
             }
-            guard let cellType = SideFilterCellType(rawValue: indexPath.row) else { preconditionFailure("Error") }
             cell.bind(type: cellType)
             return cell
         case .journals:
@@ -103,7 +84,9 @@ extension SideMenuViewController: UITableViewDataSource {
                 preconditionFailure("Error")
             }
             let journal = journals[indexPath.row]
+            let isDefaultJournal = journal == currentJournal
             cell.journalTitleLabel.text = journal.title
+            cell.cellView.backgroundColor = isDefaultJournal ? .doBlue : .white
             if CoreDataManager.shared.isDefaultJournal(uuid: journal.journalId) {
                 cell.journalCountLabel.text = "\(CoreDataManager.shared.journals.reduce(0, {$0 + ($1.entries?.count ?? 0)}))"
             } else {
@@ -123,43 +106,21 @@ extension SideMenuViewController: UITableViewDataSource {
             return cell
         }
     }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let menuSection = SideMenuSection(rawValue: indexPath.section) else {
-            return
-        }
-
-        if menuSection == .journals {
-            guard let cell = cell as? SideMenuJournalListCell else {
-                return
-            }
-            let journal = journals[indexPath.row]
-            if CoreDataManager.shared.currentJournal.journalId == journal.journalId {
-                cell.setSelected(true, animated: false)
-            }
-       }
-    }
 }
 
 extension SideMenuViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return " "
+        return 54
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return sectionHeaderView
+        guard let menuSection = SideMenuSection(rawValue: section) else { return nil }
+        return menuSection.viewForHeaderInSection
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
-            return 0
-        } else {
-            return 5
-        }
+        guard let menuSection = SideMenuSection(rawValue: section) else { return 0 }
+        return menuSection.heightForHeaderInSection
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -177,6 +138,7 @@ extension SideMenuViewController: UITableViewDelegate {
         case .journals:
             let journal = journals[indexPath.row]
             CoreDataManager.shared.changeCurrentJournal(to: journal)
+            tableView.reloadData()
         case .addJournal:
             let alertController = UIAlertController(title: "저널 추가", message: nil, preferredStyle: .alert)
             alertController.addTextField { textField in
@@ -184,7 +146,7 @@ extension SideMenuViewController: UITableViewDelegate {
             }
             let confirmAction = UIAlertAction(title: "저널 추가", style: .default) { [weak self, weak alertController] _ in
                 guard let alertController = alertController, let journalTitle = alertController.textFields?.first?.text else { return }
-                CoreDataManager.shared.insertJournal(journalTitle, index: -1)
+                _ = CoreDataManager.shared.insertJournal(journalTitle, index: -1)
                 self?.sideMenuTableView.reloadData()
             }
             let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
@@ -200,28 +162,23 @@ extension SideMenuViewController: UITableViewDelegate {
 }
 
 extension SideMenuViewController {
-    func setupSideMenuView() {
-        view.addSubview(sideMenuView)
-        sideMenuView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        sideMenuView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        sideMenuView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        sideMenuView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-    }
     
     func setupSearchBar() {
-        sideMenuView.addSubview(searchBar)
-        searchBar.leftAnchor.constraint(equalTo: sideMenuView.leftAnchor, constant: 4).isActive = true
-        searchBar.topAnchor.constraint(equalTo: sideMenuView.topAnchor, constant: 24).isActive = true
-        searchBar.rightAnchor.constraint(equalTo: sideMenuView.rightAnchor).isActive = true
-        searchBar.isUserInteractionEnabled = false
+        view.addSubview(searchBar)
+        view.backgroundColor = .white
+        searchBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        searchBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        searchBar.isUserInteractionEnabled = true
+        searchBar.delegate = self
     }
     
     func setupTableView() {
-        sideMenuView.addSubview(sideMenuTableView)
-        sideMenuTableView.leftAnchor.constraint(equalTo: sideMenuView.leftAnchor).isActive = true
-        sideMenuTableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 16).isActive = true
-        sideMenuTableView.rightAnchor.constraint(equalTo: sideMenuView.rightAnchor).isActive = true
-        sideMenuTableView.bottomAnchor.constraint(equalTo: sideMenuView.bottomAnchor).isActive = true
+        view.addSubview(sideMenuTableView)
+        sideMenuTableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        sideMenuTableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 0).isActive = true
+        sideMenuTableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        sideMenuTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         sideMenuTableView.translatesAutoresizingMaskIntoConstraints = false
         sideMenuTableView.separatorStyle = .none
         
@@ -232,5 +189,12 @@ extension SideMenuViewController {
         sideMenuTableView.register(SideMenuJournalListCell.self, forCellReuseIdentifier: SideMenuSection.journals.identifier)
         sideMenuTableView.register(SideMenuJournalAddCell.self, forCellReuseIdentifier: SideMenuSection.addJournal.identifier)
         sideMenuTableView.register(SideMenuEditCell.self, forCellReuseIdentifier: SideMenuSection.setting.identifier)
+    }
+}
+
+extension SideMenuViewController: UISearchBarDelegate {
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        self.present(FilterViewController(), animated: false, completion: nil)
+        return false
     }
 }

@@ -37,10 +37,6 @@ class SideMenuJournalListCell: UITableViewCell {
         setupCellView()
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        cellView.backgroundColor = selected ? .doBlue : .white
-    }
-    
     func setupCellView() {
         addSubview(cellView)
         cellView.leftAnchor.constraint(equalTo: leftAnchor, constant: 8).isActive = true

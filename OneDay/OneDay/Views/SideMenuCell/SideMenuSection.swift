@@ -6,7 +6,7 @@
 //  Copyright © 2019 teamA2. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 enum SideMenuSection: Int, CaseIterable {
     
@@ -34,6 +34,35 @@ enum SideMenuSection: Int, CaseIterable {
         case .journals: return 0
         case .addJournal: return 1
         case .setting: return 1
+        }
+    }
+    
+    var heightForCell: CGFloat {
+        switch self {
+        case .filters:
+            return 40
+        default:
+            return 60
+        }
+    }
+    
+    var heightForHeaderInSection: CGFloat {
+        switch self {
+        case .filters, .addJournal:
+            return 0
+        default:
+            return 2
+        }
+    }
+    
+    var viewForHeaderInSection: UIView? {
+        switch self {
+        case .filters, .addJournal:
+            return nil
+        default:
+            let headerView = UIView(frame: CGRect(x: 0, y: 0, width: Constants.sideMenuWidth, height: heightForHeaderInSection))
+            headerView.backgroundColor = .doLight
+            return headerView
         }
     }
 }

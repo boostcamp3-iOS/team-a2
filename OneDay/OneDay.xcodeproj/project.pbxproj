@@ -39,7 +39,6 @@
 		D512A76D221BBD9600EF43C6 /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A766221BBD9600EF43C6 /* DatePickerViewController.swift */; };
 		D512A76E221BBD9600EF43C6 /* EntryInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A767221BBD9600EF43C6 /* EntryInformationViewController.swift */; };
 		D512A76F221BBD9600EF43C6 /* StateChangeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A769221BBD9600EF43C6 /* StateChangeProtocol.swift */; };
-		D512A770221BBD9600EF43C6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A76A221BBD9600EF43C6 /* ViewController.swift */; };
 		D512A773221BBDA600EF43C6 /* CoreDataDeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A771221BBDA600EF43C6 /* CoreDataDeviceService.swift */; };
 		D512A774221BBDA600EF43C6 /* CoreDataLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A772221BBDA600EF43C6 /* CoreDataLocationService.swift */; };
 		D512A776221BBDAD00EF43C6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A775221BBDAD00EF43C6 /* Constants.swift */; };
@@ -145,7 +144,6 @@
 		D512A766221BBD9600EF43C6 /* DatePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerViewController.swift; sourceTree = "<group>"; };
 		D512A767221BBD9600EF43C6 /* EntryInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryInformationViewController.swift; sourceTree = "<group>"; };
 		D512A769221BBD9600EF43C6 /* StateChangeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateChangeProtocol.swift; sourceTree = "<group>"; };
-		D512A76A221BBD9600EF43C6 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D512A771221BBDA600EF43C6 /* CoreDataDeviceService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataDeviceService.swift; sourceTree = "<group>"; };
 		D512A772221BBDA600EF43C6 /* CoreDataLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataLocationService.swift; sourceTree = "<group>"; };
 		D512A775221BBDAD00EF43C6 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -466,7 +464,6 @@
 				D512A766221BBD9600EF43C6 /* DatePickerViewController.swift */,
 				D512A767221BBD9600EF43C6 /* EntryInformationViewController.swift */,
 				D512A768221BBD9600EF43C6 /* Protocols */,
-				D512A76A221BBD9600EF43C6 /* ViewController.swift */,
 				D50276E92202C7EE00A0DB5E /* EntryViewController.swift */,
 				E936659322110DF900DC660A /* BaseSlidingViewController.swift */,
 				E992EC6F21FAEE5B00917116 /* FilterViewController.swift */,
@@ -760,7 +757,6 @@
 				D512A7A4221BBECB00EF43C6 /* EditorSettingTableViewCell.swift in Sources */,
 				D502769621FEA1CE00A0DB5E /* UIColor+NamedColor.swift in Sources */,
 				D502765C21FB0B8400A0DB5E /* Location+CoreDataClass.swift in Sources */,
-				D512A770221BBD9600EF43C6 /* ViewController.swift in Sources */,
 				D502765B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift in Sources */,
 				EC0CFB0622030A53001293B1 /* APIWeather.swift in Sources */,
 				D50276F022041DA300A0DB5E /* TimeLineViewController.swift in Sources */,
