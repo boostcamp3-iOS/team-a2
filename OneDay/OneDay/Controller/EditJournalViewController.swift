@@ -14,8 +14,8 @@ class EditJournalViewController: UIViewController {
     
     var journals: [Journal] = CoreDataManager.shared.journalsWithoutDefault
     
-    var cellSnapShot: UIView?
-    var initialIndexPath: IndexPath?
+    var cellSnapShot: UIView!
+    var initialIndexPath: IndexPath!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,90 +24,89 @@ class EditJournalViewController: UIViewController {
     }
     
     @objc func longPressGestureRecognized(gestureRecognizer: UIGestureRecognizer) {
-        let longpress = gestureRecognizer as! UILongPressGestureRecognizer
+        guard let longpress = gestureRecognizer as? UILongPressGestureRecognizer else { return }
         let locationInView = longpress.location(in: journalsTableView)
-        let indexPath = journalsTableView.indexPathForRow(at: locationInView)
         switch longpress.state {
         case .began:
+            guard let indexPath = journalsTableView.indexPathForRow(at: locationInView),
+                let cell = journalsTableView.cellForRow(at: indexPath) else { return }
             initialIndexPath = indexPath
-            guard let indexPath = indexPath, let cell = journalsTableView.cellForRow(at: indexPath) else { return }
             cellSnapShot = snapshopOfCell(inputView: cell)
-            var center = cell.center
-            cellSnapShot?.center = center
-            cellSnapShot?.alpha = 0.0
+            cellSnapShot.center = cell.center
+            cellSnapShot.alpha = 0
             journalsTableView.addSubview(cellSnapShot!)
             UIView.animate(withDuration: 0.25, animations: {
-                center.y = locationInView.y
-                self.cellSnapShot?.center = center
-                self.cellSnapShot?.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
-                self.cellSnapShot?.alpha = 0.98
-                cell.alpha = 0.0
+                self.cellSnapShot.center.y = locationInView.y
+                self.cellSnapShot.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
+                self.cellSnapShot.alpha = 0.98
+                cell.alpha = 0
             }, completion: { (finished) -> Void in
-                if finished {
-                    cell.isHidden = true
-                }
+                cell.isHidden = finished
             })
         case .changed:
-            var center = cellSnapShot?.center
-            center?.y = locationInView.y
-            cellSnapShot?.center = center!
-            guard let indexPath = indexPath, let initialIndexPath = initialIndexPath, indexPath != initialIndexPath else { return }
+            cellSnapShot?.center.y = locationInView.y
+            guard let indexPath = journalsTableView.indexPathForRow(at: locationInView),
+                let initialIndexPath = initialIndexPath, indexPath != initialIndexPath else { return }
             if indexPath.section == initialIndexPath.section {
-                journals.swapAt(indexPath.row + 1, initialIndexPath.row + 1)
+                journals.swapAt(indexPath.row, initialIndexPath.row)
                 journalsTableView.moveRow(at: initialIndexPath, to: indexPath)
                 self.initialIndexPath = indexPath
             }
+        case .ended:
+            didLongPressEnded(indexPath: journalsTableView.indexPathForRow(at: locationInView))
         default:
-            var cell: UITableViewCell
-            if indexPath == nil, initialIndexPath != nil {
-                cell = journalsTableView.cellForRow(at: initialIndexPath!)!
-            } else {
-                cell = journalsTableView.cellForRow(at: indexPath!)!
-            }
-            cell.isHidden = false
-            cell.alpha = 0.0
-            UIView.animate(withDuration: 0.25, animations: {
-                self.cellSnapShot?.center = cell.center
-                self.cellSnapShot?.transform = .identity
-                self.cellSnapShot?.alpha = 0.0
-                cell.alpha = 1.0
-            }, completion: { (finished) -> Void in
-                if finished {
-                    self.initialIndexPath = nil
-                    self.cellSnapShot?.removeFromSuperview()
-                    self.cellSnapShot = nil
-                }
-            })
+            ()
         }
     }
     
+    // Long Press 가 끝나면 snapshot 을 없애주고 cell을 다시 보여줍니다.
+    func didLongPressEnded(indexPath: IndexPath?) {
+        var cell: UITableViewCell!
+        if let indexPath = indexPath {
+            cell = journalsTableView.cellForRow(at: indexPath)
+        } else {
+            cell = journalsTableView.cellForRow(at: initialIndexPath)
+        }
+        guard cell != nil else { preconditionFailure() }
+        cell.isHidden = false
+        cell.alpha = 0
+        UIView.animate(withDuration: 0.25, animations: {
+            self.cellSnapShot?.center = cell.center
+            self.cellSnapShot?.transform = .identity
+            self.cellSnapShot?.alpha = 0
+            cell.alpha = 1
+        }, completion: { (finished) -> Void in
+            if finished {
+                self.initialIndexPath = nil
+                self.cellSnapShot?.removeFromSuperview()
+                self.cellSnapShot = nil
+            }
+        })
+    }
+    
     func snapshopOfCell(inputView: UIView) -> UIView {
-        
-        UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, false, 0.0)
+        UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, false, 0)
         inputView.layer.render(in: UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         let cellSnapshot : UIView = UIImageView(image: image)
         cellSnapshot.layer.masksToBounds = false
-        cellSnapshot.layer.cornerRadius = 0.0
-        cellSnapshot.layer.shadowOffset = CGSize(width: -5.0, height: 0.0)
-        cellSnapshot.layer.shadowRadius = 5.0
+        cellSnapshot.layer.cornerRadius = 0
+        cellSnapshot.layer.shadowOffset = CGSize(width: -5.0, height: 0)
+        cellSnapshot.layer.shadowRadius = 5
         cellSnapshot.layer.shadowOpacity = 0.4
         return cellSnapshot
     }
     
     @IBAction func didTapSave(_ sender: UIBarButtonItem) {
-        
-        for index in 1..<journals.count {
+        for index in 0..<journals.count {
             let journal = journals[index]
-            let newIndex = NSNumber(integerLiteral: index)
-            journal.index = newIndex
+            journal.index = (index + 1) as NSNumber
         }
         
         CoreDataManager.shared.save()
         self.navigationController?.dismiss(animated: true, completion: nil)
     }
-    
 }
 
 extension EditJournalViewController: UITableViewDataSource {
@@ -220,5 +219,4 @@ extension EditJournalViewController: UITableViewDelegate {
             present(alert, animated: true, completion: nil)
         }
     }
-    
 }

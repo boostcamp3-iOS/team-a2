@@ -71,7 +71,7 @@ extension SideMenuViewController: UITableViewDataSource {
         switch menuSection {
         case .filters:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: menuSection.identifier, for: indexPath) as? SideMenuFilterCell,
-                let cellType = SideFilterCellType(rawValue: indexPath.row) else {
+                let cellType = SideMenuFilterCellType(rawValue: indexPath.row) else {
                 preconditionFailure("Error")
             }
             cell.bind(type: cellType)
