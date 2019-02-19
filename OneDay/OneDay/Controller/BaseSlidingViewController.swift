@@ -9,19 +9,18 @@
 import UIKit
 
 class BaseSlidingViewController: UIViewController {
-    
     fileprivate var isMenuOpened = false
     fileprivate var isStatusBarHidden = false
     
     fileprivate var baseMainViewLeftConstraint: NSLayoutConstraint!
     fileprivate var baseMainViewRightConstraint: NSLayoutConstraint!
-    fileprivate let sideWidth = min(UIScreen.main.bounds.width, UIScreen.main.bounds.height)*0.75
-    fileprivate let containerLayoutOffset: CGFloat = 24
+    fileprivate let sideWidth = UIScreen.main.bounds.width*0.75
 
     var statusBarAnimator = UIViewPropertyAnimator()
     
     let baseMainView: UIView = {
         let view = UIView()
+        view.backgroundColor = .doBlue
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -51,6 +50,7 @@ class BaseSlidingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .doBlue
         setupViews()
         setupViewControllers()
         setupGesture()
@@ -91,10 +91,12 @@ class BaseSlidingViewController: UIViewController {
         
         switch gesture.state {
         case .began:
-            
             isStatusBarHidden = !isStatusBarHidden
             
-            statusBarAnimator = UIViewPropertyAnimator(duration: 0.1, curve: .easeOut, animations: {
+            statusBarAnimator = UIViewPropertyAnimator(
+                duration: 0.1,
+                curve: .easeOut,
+                animations: {
                 self.setNeedsStatusBarAppearanceUpdate()
             })
             statusBarAnimator.startAnimation()
@@ -138,7 +140,7 @@ class BaseSlidingViewController: UIViewController {
         self.setNeedsStatusBarAppearanceUpdate()
         
         isMenuOpened = true
-        baseMainViewLeftConstraint.constant = sideWidth + containerLayoutOffset
+        baseMainViewLeftConstraint.constant = sideWidth
         baseMainViewRightConstraint.constant = sideWidth
         performAnimation()
         
@@ -149,6 +151,7 @@ class BaseSlidingViewController: UIViewController {
         self.setNeedsStatusBarAppearanceUpdate()
         isStatusBarHidden = false
         self.setNeedsStatusBarAppearanceUpdate()
+        
         isMenuOpened = false
         baseMainViewLeftConstraint.constant = 0
         baseMainViewRightConstraint.constant = 0
@@ -156,18 +159,24 @@ class BaseSlidingViewController: UIViewController {
     }
     
     fileprivate func performAnimation() {
-        UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.blurCoverView.alpha = self.isMenuOpened ? 1 : 0
-            self.view.layoutIfNeeded()
-        }, completion: nil)
+        UIView.animate(
+            withDuration: 0.3,
+            delay: 0,
+            usingSpringWithDamping: 1,
+            initialSpringVelocity: 1,
+            options: .curveEaseOut,
+            animations: {
+                self.blurCoverView.alpha = self.isMenuOpened ? 1 : 0
+                self.view.layoutIfNeeded() },
+            completion: nil)
     }
     
     fileprivate func setupViews() {
         view.addSubview(baseMainView)
-        baseMainView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        baseMainView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         baseMainView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        
-        baseMainViewRightConstraint = baseMainView.rightAnchor.constraint(equalTo: view.rightAnchor)
+        baseMainViewRightConstraint = baseMainView.rightAnchor.constraint(
+            equalTo: view.rightAnchor)
         baseMainViewRightConstraint.isActive = true
         
         baseMainViewLeftConstraint = baseMainView.leftAnchor.constraint(equalTo: view.leftAnchor)
@@ -175,26 +184,34 @@ class BaseSlidingViewController: UIViewController {
         
         view.addSubview(baseSideView)
         baseSideView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        baseSideView.rightAnchor.constraint(equalTo: baseMainView.safeAreaLayoutGuide.leftAnchor, constant: -containerLayoutOffset).isActive = true
+        baseSideView.rightAnchor.constraint(
+            equalTo: baseMainView.safeAreaLayoutGuide.leftAnchor).isActive = true
         baseSideView.bottomAnchor.constraint(equalTo: baseMainView.bottomAnchor).isActive = true
         baseSideView.widthAnchor.constraint(equalToConstant: sideWidth).isActive = true
     }
     
     fileprivate func setupViewControllers() {
-        guard let mainViewController: MainTabBarViewController = storyboard?.instantiateViewController(withIdentifier: "tabMain") as? MainTabBarViewController else {
+        guard let mainViewController: MainTabBarViewController =
+            storyboard?.instantiateViewController(
+                withIdentifier: "tabMain") as? MainTabBarViewController
+        else {
             return
         }
+        
         let sideViewController = SideMenuViewController()
         
         let mainView = mainViewController.view!
         let sideView = sideViewController.view!
         
+        mainView.backgroundColor = .white
         mainView.translatesAutoresizingMaskIntoConstraints = false
         sideView.translatesAutoresizingMaskIntoConstraints = false
         
         baseMainView.addSubview(mainView)
         mainView.leftAnchor.constraint(equalTo: baseMainView.leftAnchor).isActive = true
-        mainView.topAnchor.constraint(equalTo: baseMainView.topAnchor).isActive = true
+        mainView.topAnchor.constraint(
+            equalTo: baseMainView.topAnchor,
+            constant: 0).isActive = true
         mainView.rightAnchor.constraint(equalTo: baseMainView.rightAnchor).isActive = true
         mainView.bottomAnchor.constraint(equalTo: baseMainView.bottomAnchor).isActive = true
         
@@ -214,7 +231,9 @@ class BaseSlidingViewController: UIViewController {
 
         baseSideView.addSubview(sideView)
         sideView.leftAnchor.constraint(equalTo: baseSideView.leftAnchor).isActive = true
-        sideView.topAnchor.constraint(equalTo: baseSideView.topAnchor).isActive = true
+        sideView.topAnchor.constraint(
+            equalTo: baseSideView.topAnchor,
+            constant: 20).isActive = true
         sideView.rightAnchor.constraint(equalTo: baseSideView.rightAnchor).isActive = true
         sideView.bottomAnchor.constraint(equalTo: baseSideView.bottomAnchor).isActive = true
         

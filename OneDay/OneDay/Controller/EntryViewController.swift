@@ -16,6 +16,7 @@ class EntryViewController: UIViewController {
     
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var favoriteImage: UIImageView!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var bottomContainerView: UIView!
   

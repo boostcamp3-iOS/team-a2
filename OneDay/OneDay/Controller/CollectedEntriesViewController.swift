@@ -69,7 +69,7 @@ class CollectedEntriesViewController: UIViewController {
     var coordinates: [MapPinLocation] = []
     var latitude = [CLLocationDegrees]()
     var longitude = [CLLocationDegrees]()
-    
+
     fileprivate func addLocationToMapView() {
         entriesData.forEach { entry in
             if let location = entry.location {
@@ -104,9 +104,9 @@ extension CollectedEntriesViewController: UITableViewDelegate, UITableViewDataSo
         
         let data = entriesData[indexPath.row]
         let attributedText = NSMutableAttributedString()
-
         setupAttributeText(data: data, text: attributedText)
-        
+        resizeImageAttachment(in: attributedText)
+
         cell.contentsListTextView.attributedText = attributedText
         return cell
         }
@@ -122,7 +122,7 @@ extension CollectedEntriesViewController: UITableViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let initialLocation = averageLocationOfCoordinates()
-        var regionRadiusOnMap = mapViewPresentingRange(from: initialLocation, scale: 3)
+        var regionRadiusOnMap = mapViewPresentingRange(from: initialLocation, scale: 0.5)
         if regionRadiusOnMap < 5000 {
             regionRadiusOnMap = 5000 // 최소 5km 반경까지 지도가 그려짐
         }
@@ -167,6 +167,31 @@ extension CollectedEntriesViewController {
         }
     }
     
+    func resizeImageAttachment(in attributedText: NSMutableAttributedString) {
+        attributedText.enumerateAttribute(
+            NSAttributedString.Key.attachment,
+            in: NSRange(location: 0, length: attributedText.length),
+            options: [],
+            using: { value, range, _ -> Void in
+                if value is NSTextAttachment {
+                    guard let attachment: NSTextAttachment = value as? NSTextAttachment
+                        else {return}
+                    
+                    if let oldImage = attachment.image {
+                        var newImage = UIImage()
+                        newImage = oldImage
+                        let imageWidth = UIScreen.main.bounds.width - 124
+                        
+                        let newAttachment: NSTextAttachment = NSTextAttachment()
+                        newAttachment.image = newImage.resizeImageToFit(newWidth: imageWidth)
+                        attributedText.replaceCharacters(
+                            in: range,
+                            with: NSAttributedString(attachment: newAttachment))
+                    }
+                }
+        })
+    }
+    
     func appendDot(at attributedString: NSMutableAttributedString) {
         attributedString.append(
             NSMutableAttributedString(
@@ -206,17 +231,19 @@ extension CollectedEntriesViewController {
     }
 }
 
+//FIXME: 함수 다시 확인하기
 extension CollectedEntriesViewController {
     func averageLocationOfCoordinates() -> CLLocation {
         coordinates.forEach { coordinates in
             latitude.append(coordinates.coordinate.latitude)
             longitude.append(coordinates.coordinate.longitude)
         }
-        
+
         let averageLatitude = latitude.reduce(0, +) / Double(latitude.count)
         let averagelongitude = longitude.reduce(0, +) / Double(longitude.count)
-        
-        let averageLocation = CLLocation(latitude: averageLatitude, longitude: averagelongitude)
+//        let averageLocation = CLLocation(latitude: averageLatitude, longitude: averagelongitude)
+
+        let averageLocation = CLLocation(latitude: latitude.first ?? 0, longitude: longitude.first ?? 0)
         return averageLocation
     }
     
@@ -234,5 +261,21 @@ extension CollectedEntriesViewController {
             preconditionFailure("Error")
         }
         return mapPresentingRange*scale
+    }
+}
+
+extension UIImage {
+    func resizeImageToFit(newWidth: CGFloat) -> UIImage {
+        let size = self.size
+        let ratio = size.height/size.width
+        let newHeight = newWidth*ratio
+        
+        let newSize = CGSize(width: newWidth, height: newHeight)
+        let rect = CGRect(x: 0, y: 0, width: newWidth, height: newHeight)
+        
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1)
+        self.draw(in: rect)
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        return scaledImage!
     }
 }

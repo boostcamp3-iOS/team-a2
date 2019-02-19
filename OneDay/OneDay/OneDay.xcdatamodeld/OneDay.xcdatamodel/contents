@@ -13,19 +13,19 @@
     </entity>
     <entity name="Entry" representedClassName="Entry" syncable="YES">
         <attribute name="contents" optional="YES" attributeType="Transformable" customClassName="NSAttributedString" syncable="YES"/>
-        <attribute name="date" attributeType="Date" usesScalarValueType="NO" customClassName="Date" syncable="YES"/>
+        <attribute name="date" attributeType="Transformable" customClassName="Date" syncable="YES"/>
         <attribute name="day" attributeType="Transformable" customClassName="NSNumber" syncable="YES"/>
         <attribute name="entryId" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="favorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="month" attributeType="Transformable" customClassName="NSNumber" syncable="YES"/>
+        <attribute name="monthAndYear" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="thumbnail" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="time" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" customClassName="Date" syncable="YES"/>
         <attribute name="updatedDate" optional="YES" attributeType="Transformable" customClassName="Date" syncable="YES"/>
         <attribute name="year" attributeType="Transformable" customClassName="NSNumber" syncable="YES"/>
         <relationship name="device" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Device" inverseName="entries" inverseEntity="Device" syncable="YES"/>
-        <relationship name="journal" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Journal" inverseName="entries" inverseEntity="Journal" syncable="YES"/>
-        <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="entry" inverseEntity="Location" syncable="YES"/>
+        <relationship name="journal" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Journal" inverseName="entries" inverseEntity="Journal" syncable="YES"/>
+        <relationship name="location" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Location" inverseName="entry" inverseEntity="Location" syncable="YES"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="entry" inverseEntity="Tag" syncable="YES"/>
         <relationship name="weather" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Weather" inverseName="entry" inverseEntity="Weather" syncable="YES"/>
         <uniquenessConstraints>
@@ -39,7 +39,7 @@
         <attribute name="index" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="journalId" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="entries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Entry" inverseName="journal" inverseEntity="Entry" syncable="YES"/>
+        <relationship name="entries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Entry" inverseName="journal" inverseEntity="Entry" syncable="YES"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="journalId"/>

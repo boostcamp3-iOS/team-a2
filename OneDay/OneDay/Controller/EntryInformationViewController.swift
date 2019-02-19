@@ -92,6 +92,7 @@ class EntryInformationViewController: UIViewController {
                 image: UIImage(named: "setting_like")
             )
             settingTableData[0].append(favorite)
+            entryViewController.favoriteImage.isHidden = false
         } else {
             let favorite = EntrySetting(
                 title: "즐겨찾기",
@@ -99,6 +100,7 @@ class EntryInformationViewController: UIViewController {
                 image: UIImage(named: "setting_dislike")
             )
             settingTableData[0].append(favorite)
+            entryViewController.favoriteImage.isHidden = true
         }
     }
     
@@ -137,7 +139,7 @@ class EntryInformationViewController: UIViewController {
     func setUpDate() {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko-KR")
-        dateFormatter.dateFormat = "a h:mm, YYYY년 MM월 dd일"
+        dateFormatter.dateFormat = "YYYY년 MM월 dd일, a h:mm"
         let fullDate = dateFormatter.string(from: entryViewController.entry.date)
         settingTableData[0][3].detail = fullDate
     }
@@ -145,14 +147,14 @@ class EntryInformationViewController: UIViewController {
     func setUpWeather() {
         if let weather = entryViewController.entry.weather {
             guard let type = weather.type else { return }
-            
-            if let summary = WeatherType(rawValue: type)?.summary {
-                settingTableData[2][0].detail = "\(weather.tempature)℃ \(summary)"
+            if let weatherType = WeatherType(rawValue: type) {
+                settingTableData[2][0].detail = "\(weather.tempature)℃ \(weatherType.summary)"
+                settingTableData[2][0].image = UIImage(named: "setting-\(weatherType.rawValue)")
             } else {
                 settingTableData[2][0].detail = "\(weather.tempature)℃"
             }
         } else {
-            let weather = CoreDataManager.shared.weather()
+            let weather = CoreDataManager.shared.insertWeather()
             entryViewController.entry.weather = weather
             
             WeatherService.service.weather(
@@ -186,11 +188,19 @@ class EntryInformationViewController: UIViewController {
         if let location = entryViewController.entry.location {
             settingTableData[0][0].detail = location.address
         } else {
-            let location = CoreDataManager.shared.location()
-            location.latitude = LocationService.service.latitude
-            location.longitude = LocationService.service.longitude
-            entryViewController.entry.location = location
-            
+             var location: Location!
+             if let findLocation: Location = CoreDataManager.shared.location(
+                longitude: LocationService.service.latitude,
+                latitude: LocationService.service.longitude
+                ) {
+                location = findLocation
+             } else {
+                location = CoreDataManager.shared.insertLocation()
+                 location.latitude = LocationService.service.latitude
+                 location.longitude = LocationService.service.longitude
+             }
+             entryViewController.entry.location = location
+
             LocationService.service.currentAddress(
                 success: {[weak self] data in
                     if data.results.isEmpty {
@@ -215,7 +225,7 @@ class EntryInformationViewController: UIViewController {
                 settingTableData[2][1].detail = "\(entryDeviceName), \(entryDeviceModel)"
             }
         } else {
-            let device = CoreDataManager.shared.device()
+            let device = CoreDataManager.shared.insertDevice()
             entryViewController.entry.device = device
             device.name = UIDevice.current.name
             device.model = UIDevice.current.model
@@ -245,6 +255,7 @@ class EntryInformationViewController: UIViewController {
                 longitude: LocationService.service.longitude
             )
         }
+        
         centerMapOnLocation(location: initialLocation)
         point.imageName = "setting_location"
         mapView.addAnnotation(point)
@@ -261,7 +272,6 @@ class EntryInformationViewController: UIViewController {
         )
         mapView.setRegion(coordinateRegion, animated: true)
     }
-
 }
 
 extension EntryInformationViewController: UITableViewDataSource, UITableViewDelegate {
@@ -277,7 +287,7 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
         switch section {
         case .base:
             return 5
-        case .day, .ect:
+        case .day, .etc:
             return 2
         }
     }
@@ -287,7 +297,7 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
         switch section {
         case .base:
             return 0
-        case .day, .ect:
+        case .day, .etc:
             return 20
         }
     }
@@ -304,7 +314,35 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
                 preconditionFailure("EditorSettingTableViewCell reuse error!")
         }
         cell.setting = settingTableData[indexPath.section][indexPath.row]
+        cell.selectionStyle = .none
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let section = Section(rawValue: indexPath.section) else { return }
+        switch section {
+        case .base:
+            switch indexPath.row {
+            case 0:
+                ()
+            case 1:
+                ()
+            case 2:
+                ()
+            case 3:
+                changeDate(indexPath: indexPath)
+            case 4:
+                toggleFavorite()
+                tableView.reloadRows(at: [indexPath], with: .none)
+            default:
+                return
+            }
+        case .day:
+            ()
+        case .etc:
+            ()
+        }
+        
     }
     
     // MARK: ScrollView
@@ -328,6 +366,40 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
             tableView.isScrollEnabled = false
             willPositionChange = false
             statusChangeDelegate?.changeState()
+        }
+    }
+}
+
+// MARK: - Cell select actions
+
+extension EntryInformationViewController {
+    func changeDate(indexPath: IndexPath) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        let datePickerViewController = DatePickerViewController()
+        datePickerViewController.date = self.entryViewController.entry.date
+        let okAction = UIAlertAction(title: "확인", style: .cancel) { _ in
+            let date = datePickerViewController.datePicker.date
+            self.entryViewController.entry.date = datePickerViewController.datePicker.date
+            self.entryViewController.entry.updateDate(date: date)
+            self.setUpDate()
+            self.tableView.reloadRows(at: [indexPath], with: .none)
+        }
+        alert.addAction(okAction)
+        alert.setValue(datePickerViewController, forKey: "contentViewController")
+        self.present(alert, animated: false)
+    }
+    
+    func toggleFavorite() {
+        entryViewController.entry.favorite.toggle()
+        if entryViewController.entry.favorite {
+            settingTableData[0][4].detail = "즐겨찾기 해제"
+            settingTableData[0][4].image = UIImage(named: "setting_like")
+            settingTableData[0][4].hasDisclouserIndicator = false
+            entryViewController.favoriteImage.isHidden = false
+        } else {
+            settingTableData[0][4].detail = "즐겨찾기 설정"
+            settingTableData[0][4].image = UIImage(named: "setting_dislike")
+            entryViewController.favoriteImage.isHidden = true
         }
     }
 }
@@ -365,5 +437,5 @@ extension EntryInformationViewController: StateChangeDelegate {
 private enum Section: Int {
     case base
     case day
-    case ect
+    case etc
 }

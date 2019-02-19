@@ -9,5 +9,5 @@
 import Foundation
 
 protocol CoreDataWeatherService {
-    func weather() -> Weather
+    func insertWeather() -> Weather
 }

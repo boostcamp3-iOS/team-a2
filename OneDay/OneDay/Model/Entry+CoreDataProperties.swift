@@ -2,7 +2,7 @@
 //  Entry+CoreDataProperties.swift
 //  OneDay
 //
-//  Created by juhee on 14/02/2019.
+//  Created by 정화 on 18/02/2019.
 //  Copyright © 2019 teamA2. All rights reserved.
 //
 //
@@ -27,20 +27,17 @@ extension Entry {
     @NSManaged public var title: String?
     @NSManaged public var updatedDate: Date?
     @NSManaged public var year: NSNumber
+    @NSManaged public var monthAndYear: String
     @NSManaged public var device: Device?
     @NSManaged public var journal: Journal?
     @NSManaged public var location: Location?
     @NSManaged public var tags: NSSet?
     @NSManaged public var weather: Weather?
-
+    
 }
 
 // MARK: Generated accessors for tags
 extension Entry {
-    
-    var monthAndYear: String {
-        return "\(month)년 \(year)"
-    }
     
     func updateDate(date: Date) {
         self.date = date
@@ -54,7 +51,7 @@ extension Entry {
         if let year = dateComponents.year as NSNumber? {
             self.year = year
         }
-        
+        self.monthAndYear = "\(year) \(month)"
     }
     
     var thmbnailFileName: String {
