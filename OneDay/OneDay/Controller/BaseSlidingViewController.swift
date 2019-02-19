@@ -9,6 +9,11 @@
 import UIKit
 
 class BaseSlidingViewController: UIViewController {
+
+    private struct ViewTag {
+        static let snapshot = 1
+    }
+
     let baseMainView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -35,11 +40,8 @@ class BaseSlidingViewController: UIViewController {
     
     fileprivate var baseMainViewLeftConstraint: NSLayoutConstraint!
     fileprivate var baseMainViewRightConstraint: NSLayoutConstraint!
-    fileprivate let sideViewWidth = UIScreen.main.bounds.width*0.75
-    
-    fileprivate let snapshotTag = 1
-    fileprivate let blurCoverViewTag = 2
-    
+    fileprivate let sideViewWidth = Constants.sideWidth
+
     fileprivate var statusBarAnimator = UIViewPropertyAnimator()
     
     override var prefersStatusBarHidden: Bool {
@@ -114,7 +116,7 @@ class BaseSlidingViewController: UIViewController {
     fileprivate func addMainViewSnapshotView() {
         guard let snapshotView = baseMainView.snapshotView(afterScreenUpdates: false)
             else { return }
-        snapshotView.tag = snapshotTag
+        snapshotView.tag = ViewTag.snapshot
         baseMainView.addSubview(snapshotView)
         snapshotView.topAnchor.constraint(equalTo: baseMainView.topAnchor).isActive = true
         snapshotView.leftAnchor.constraint(equalTo: baseMainView.leftAnchor).isActive = true
@@ -178,20 +180,13 @@ class BaseSlidingViewController: UIViewController {
         isMenuOpened = false
         baseMainViewLeftConstraint.constant = 0
         baseMainViewRightConstraint.constant = 0
-        
-        removeBlurCoverView()
+
         removeSnapShotView()
         performTransitionAnimation()
     }
-    
-    fileprivate func removeBlurCoverView() {
-        if let viewWithBlurCoverViewTag = self.view.viewWithTag(self.blurCoverViewTag) {
-            viewWithBlurCoverViewTag.removeFromSuperview()
-        }
-    }
-    
+
     fileprivate func removeSnapShotView() {
-        if let viewWithSnapshotTag = self.view.viewWithTag(self.snapshotTag) {
+        if let viewWithSnapshotTag = self.view.viewWithTag(ViewTag.snapshot) {
             viewWithSnapshotTag.removeFromSuperview()
         }
     }

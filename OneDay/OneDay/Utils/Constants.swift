@@ -12,4 +12,5 @@ struct Constants {
     // EntryViewController
     static let maximumNumberOfEntryTitle: Int = 200
     static let imageScaleConstantForTextView: CGFloat = 20
+    static let sideWidth = UIScreen.main.bounds.width*0.75
 }
