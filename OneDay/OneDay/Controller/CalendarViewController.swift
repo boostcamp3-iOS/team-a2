@@ -229,6 +229,10 @@ UICollectionViewDelegate {
         return cell
     }
     
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        datePicker.removeFromSuperview()
+    }
+    
     func collectionView(
         _ collectionView: UICollectionView,
         willDisplay cell: UICollectionViewCell,
