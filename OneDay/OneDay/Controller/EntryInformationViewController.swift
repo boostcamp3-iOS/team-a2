@@ -26,6 +26,7 @@ class EntryInformationViewController: UIViewController {
     var canScroll = false
     
     var entry: Entry!
+    var topViewDateLabel: UILabel!
     var topViewFavoriteImage: UIImageView!
     weak var statusChangeDelegate: StateChangeDelegate?
 
@@ -405,12 +406,14 @@ extension EntryInformationViewController {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
         let datePickerViewController = DatePickerViewController()
         datePickerViewController.date = self.entry.date
-        let okAction = UIAlertAction(title: "확인", style: .cancel) { _ in
+        let okAction = UIAlertAction(title: "확인", style: .cancel) { [weak self]_ in
             let date = datePickerViewController.datePicker.date
-            self.entry.date = datePickerViewController.datePicker.date
-            self.entry.updateDate(date: date)
-            self.setUpDate()
-            self.tableView.reloadRows(at: [indexPath], with: .none)
+            self?.entry.date = datePickerViewController.datePicker.date
+            self?.entry.updateDate(date: date)
+            let dateSet: DateStringSet = DateStringSet(date: self?.entry.date)
+            self?.topViewDateLabel.text = dateSet.full
+            self?.setUpDate()
+            self?.tableView.reloadRows(at: [indexPath], with: .none)
         }
         alert.addAction(okAction)
         alert.setValue(datePickerViewController, forKey: "contentViewController")

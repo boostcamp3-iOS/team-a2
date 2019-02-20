@@ -260,8 +260,9 @@ extension EntryViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "bottomViewSegue" {
             if let bottomViewController = segue.destination as? EntryInformationViewController {
-                bottomViewController.topViewFavoriteImage = favoriteImage
                 bottomViewController.entry = entry
+                bottomViewController.topViewDateLabel = dateLabel
+                bottomViewController.topViewFavoriteImage = favoriteImage
                 statusChangeDelegate = bottomViewController
                 bottomViewController.statusChangeDelegate = self
             }
