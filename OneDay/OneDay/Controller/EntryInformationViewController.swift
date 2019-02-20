@@ -206,7 +206,7 @@ class EntryInformationViewController: UIViewController {
                     }
                     DispatchQueue.main.sync {
                         self?.settingTableData[0][0].detail = location.address
-                        self?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: UITableView.RowAnimation .none)
+                        self?.tableView.reloadData()
                     }
                 },
                 errorHandler: { [weak self] in
@@ -531,10 +531,7 @@ extension EntryInformationViewController: JournalChangeDelegate {
         entry.journal = journal
         if let title = journal.title {
             settingTableData[0][2].detail = title
-            tableView.reloadRows(
-                at: [IndexPath(row: 2, section: 0)],
-                with: UITableView.RowAnimation.none
-            )
+            tableView.reloadData()
         }
     }
 }
