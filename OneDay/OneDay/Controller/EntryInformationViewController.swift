@@ -37,8 +37,8 @@ class EntryInformationViewController: UIViewController {
         setUpSettingTableDaySectionData()
         setUpSettingTableEctSectionData()
         setUpDate()
-        setUpWeather()
         setUpLocation()
+        setUpWeather()
         setUpDevice()
         setUpMap()
     }
@@ -176,31 +176,7 @@ class EntryInformationViewController: UIViewController {
         } else {
             let weather = CoreDataManager.shared.insertWeather()
             entry.weather = weather
-            
-            WeatherService.service.weather(
-                latitude: LocationService.service.latitude,
-                longitude: LocationService.service.longitude,
-                success: {[weak self] data in
-                    let degree: Int = Int((data.currently.temperature - 32) * (5/9)) /// ℉를 ℃로 변경
-                    weather.tempature = Int16(degree)
-                    weather.type = data.currently.icon
-                    weather.weatherId = UUID.init()
-                    DispatchQueue.main.sync {
-                        guard let type = weather.type else { return }
-                        if let weatherType = WeatherType(rawValue: type) {
-                            self?.settingTableData[2][0].detail =
-                                "\(weather.tempature)℃ \(weatherType.summary)"
-                            self?.settingTableData[2][0].image =
-                                UIImage(named: "setting-\(weatherType.rawValue)")
-                        } else {
-                            self?.settingTableData[2][0].detail = "\(weather.tempature)℃"
-                        }
-                        self?.tableView.reloadData()
-                    }
-                },
-                errorHandler: { [weak self] in
-                    self?.showAlert(title: "Error", message: "날씨 정보를 불러올 수 없습니다.")
-            })
+            updateWeather()
         }
     }
     
@@ -230,7 +206,7 @@ class EntryInformationViewController: UIViewController {
                     }
                     DispatchQueue.main.sync {
                         self?.settingTableData[0][0].detail = location.address
-                        self?.tableView.reloadData()
+                        self?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: UITableView.RowAnimation .none)
                     }
                 },
                 errorHandler: { [weak self] in
@@ -281,6 +257,42 @@ class EntryInformationViewController: UIViewController {
         mapView.addAnnotation(point)
         mapView.delegate = self
         mapView.isUserInteractionEnabled = false
+    }
+    
+    func updateWeather() {
+        guard let weather = entry.weather, let location = entry.location else { return }
+        WeatherService.service.weather(
+            latitude: location.latitude,
+            longitude: location.longitude,
+            date: entry.date,
+            success: {[weak self] data in
+                let degree: Int = Int((data.currently.temperature - 32) * (5/9)) /// ℉를 ℃로 변경
+                weather.tempature = Int16(degree)
+                weather.type = data.currently.icon
+                weather.weatherId = UUID.init()
+                DispatchQueue.main.sync {
+                    guard let type = weather.type else { return }
+                    if let weatherType = WeatherType(rawValue: type) {
+                        self?.settingTableData[2][0].detail =
+                        "\(weather.tempature)℃ \(weatherType.summary)"
+                        self?.settingTableData[2][0].image =
+                            UIImage(named: "setting-\(weatherType.rawValue)")
+                    } else {
+                        self?.settingTableData[2][0].detail = "\(weather.tempature)℃"
+                    }
+                    
+                    self?.tableView.reloadData()
+                }
+            },
+            errorHandler: { [weak self] in
+                self?.showAlert(title: "Error", message: "날씨 정보를 불러올 수 없습니다.")
+                DispatchQueue.main.sync {
+                    self?.entry.weather?.type = "unKnown"
+                    self?.settingTableData[2][0].image = UIImage(named: "setting_weather")
+                    self?.settingTableData[2][0].detail = ""
+                    self?.tableView.reloadData()
+                }
+        })
     }
     
     // MARK: - MAP
@@ -367,7 +379,7 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
                 changeDate()
             case 4:
                 toggleFavorite()
-                tableView.reloadRows(at: [indexPath], with: .none)
+                tableView.reloadData()
             default:
                 return
             }
@@ -435,12 +447,8 @@ extension EntryInformationViewController {
             let dateSet: DateStringSet = DateStringSet(date: self?.entry.date)
             self?.topViewDateLabel.text = dateSet.full
             self?.setUpDate()
-            let indexPaths: [IndexPath] = [
-                IndexPath(row: 3, section: 0),
-                IndexPath(row: 0, section: 1),
-                IndexPath(row: 1, section: 1)
-            ]
-            self?.tableView.reloadRows(at: indexPaths, with: .none)
+            self?.updateWeather()
+            self?.tableView.reloadData()
         }
         alert.addAction(okAction)
         alert.setValue(datePickerViewController, forKey: "contentViewController")
@@ -497,19 +505,16 @@ extension EntryInformationViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseIdentifier = "pin"
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
-        
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
             annotationView?.canShowCallout = true
         } else {
             annotationView?.annotation = annotation
         }
-        
         guard let customPointAnnotation = annotation as? CustomPointAnnotation else {
             return annotationView
         }
         annotationView?.image = UIImage(named: customPointAnnotation.imageName)
-        
         return annotationView
     }
 }
