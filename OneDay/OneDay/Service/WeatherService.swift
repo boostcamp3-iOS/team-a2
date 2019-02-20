@@ -27,7 +27,6 @@ class WeatherService {
         ) {
         let unixTimeStamp = Int(date.timeIntervalSince1970)
         let urlString  = "\(baseURL)/\(APIKey)/\(latitude),\(longitude),\(unixTimeStamp)"
-        print(urlString)
         guard let url: URL = URL(string: urlString) else { return }
         NetworkProvider.request(url: url, success: success, errorHandler: errorHandler)
     }
