@@ -25,12 +25,12 @@ class EntryInformationViewController: UIViewController {
     var willPositionChange = false          ///드래그 종료시 변경되야하는지 여부
     var canScroll = false
     
-    var entryViewController: EntryViewController!
+    var entry: Entry!
+    var topViewFavoriteImage: UIImageView!
     weak var statusChangeDelegate: StateChangeDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setUpTable()
         setUpSettingTableBaseSectionData()
         setUpSettingTableDaySectionData()
@@ -74,7 +74,7 @@ class EntryInformationViewController: UIViewController {
             detail: "",
             image: UIImage(named: "setting_journal")
         )
-        if let journalTitle = entryViewController.entry.journal?.title {
+        if let journalTitle = entry.journal?.title {
             journal.detail = journalTitle
         }
         journal.hasDisclouserIndicator = true
@@ -88,14 +88,14 @@ class EntryInformationViewController: UIViewController {
         date.hasDisclouserIndicator = true
         settingTableData[0].append(date)
         
-        if entryViewController.entry.favorite {
+        if entry.favorite {
             let favorite = EntrySetting(
                 title: "즐겨찾기",
                 detail: "즐겨찾기 해제",
                 image: UIImage(named: "setting_like")
             )
             settingTableData[0].append(favorite)
-            entryViewController.favoriteImage.isHidden = false
+            topViewFavoriteImage.isHidden = false
         } else {
             let favorite = EntrySetting(
                 title: "즐겨찾기",
@@ -103,7 +103,7 @@ class EntryInformationViewController: UIViewController {
                 image: UIImage(named: "setting_dislike")
             )
             settingTableData[0].append(favorite)
-            entryViewController.favoriteImage.isHidden = true
+            topViewFavoriteImage.isHidden = true
         }
     }
     
@@ -143,12 +143,12 @@ class EntryInformationViewController: UIViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko-KR")
         dateFormatter.dateFormat = "YYYY년 MM월 dd일, a h:mm"
-        let fullDate = dateFormatter.string(from: entryViewController.entry.date)
+        let fullDate = dateFormatter.string(from: entry.date)
         settingTableData[0][3].detail = fullDate
     }
     
     func setUpWeather() {
-        if let weather = entryViewController.entry.weather {
+        if let weather = entry.weather {
             guard let type = weather.type else { return }
             if let weatherType = WeatherType(rawValue: type) {
                 settingTableData[2][0].detail = "\(weather.tempature)℃ \(weatherType.summary)"
@@ -158,7 +158,7 @@ class EntryInformationViewController: UIViewController {
             }
         } else {
             let weather = CoreDataManager.shared.insertWeather()
-            entryViewController.entry.weather = weather
+            entry.weather = weather
             
             WeatherService.service.weather(
                 latitude: LocationService.service.latitude,
@@ -182,27 +182,27 @@ class EntryInformationViewController: UIViewController {
                     }
                 },
                 errorHandler: { [weak self] in
-                    self?.entryViewController.showAlert(title: "Error", message: "날씨 정보를 불러올 수 없습니다.")
+                    self?.showAlert(title: "Error", message: "날씨 정보를 불러올 수 없습니다.")
             })
         }
     }
     
     func setUpLocation() {
-        if let location = entryViewController.entry.location {
+        if let location = entry.location {
             settingTableData[0][0].detail = location.address
         } else {
-             var location: Location!
-             if let findLocation: Location = CoreDataManager.shared.location(
+            var location: Location!
+            if let findLocation: Location = CoreDataManager.shared.location(
                 longitude: LocationService.service.latitude,
                 latitude: LocationService.service.longitude
                 ) {
                 location = findLocation
-             } else {
+            } else {
                 location = CoreDataManager.shared.insertLocation()
-                 location.latitude = LocationService.service.latitude
-                 location.longitude = LocationService.service.longitude
-             }
-             entryViewController.entry.location = location
+                location.latitude = LocationService.service.latitude
+                location.longitude = LocationService.service.longitude
+            }
+            entry.location = location
 
             LocationService.service.currentAddress(
                 success: {[weak self] data in
@@ -217,19 +217,19 @@ class EntryInformationViewController: UIViewController {
                     }
                 },
                 errorHandler: { [weak self] in
-                    self?.entryViewController.showAlert(title: "Error", message: "위치 정보를 불러올 수 없습니다.")
+                    self?.showAlert(title: "Error", message: "위치 정보를 불러올 수 없습니다.")
             })
         }
     }
     
     func setUpDevice() {
-        if let entryDevice = entryViewController.entry.device {
+        if let entryDevice = entry.device {
             if let entryDeviceName = entryDevice.name, let entryDeviceModel = entryDevice.model {
                 settingTableData[2][1].detail = "\(entryDeviceName), \(entryDeviceModel)"
             }
         } else {
             let device = CoreDataManager.shared.insertDevice()
-            entryViewController.entry.device = device
+            entry.device = device
             device.name = UIDevice.current.name
             device.model = UIDevice.current.model
             settingTableData[2][1].detail = "\(UIDevice.current.name), \(UIDevice.current.model)"
@@ -239,7 +239,7 @@ class EntryInformationViewController: UIViewController {
     func setUpMap() {
         var initialLocation = CLLocation()
         let point = CustomPointAnnotation()
-        if let location = entryViewController.entry.location {
+        if let location = entry.location {
             initialLocation = CLLocation(
                 latitude: location.latitude,
                 longitude: location.longitude
@@ -274,6 +274,21 @@ class EntryInformationViewController: UIViewController {
             longitudinalMeters: regionRadius
         )
         mapView.setRegion(coordinateRegion, animated: true)
+    }
+    
+    // MARK: - Alert
+    
+    func showAlert(title: String = "", message: String = "") {
+        let alertController = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(
+            title: "확인",
+            style: .default,
+            handler: nil))
+        
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 
@@ -389,11 +404,11 @@ extension EntryInformationViewController {
     func changeDate(indexPath: IndexPath) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
         let datePickerViewController = DatePickerViewController()
-        datePickerViewController.date = self.entryViewController.entry.date
+        datePickerViewController.date = self.entry.date
         let okAction = UIAlertAction(title: "확인", style: .cancel) { _ in
             let date = datePickerViewController.datePicker.date
-            self.entryViewController.entry.date = datePickerViewController.datePicker.date
-            self.entryViewController.entry.updateDate(date: date)
+            self.entry.date = datePickerViewController.datePicker.date
+            self.entry.updateDate(date: date)
             self.setUpDate()
             self.tableView.reloadRows(at: [indexPath], with: .none)
         }
@@ -403,16 +418,16 @@ extension EntryInformationViewController {
     }
     
     func toggleFavorite() {
-        entryViewController.entry.favorite.toggle()
-        if entryViewController.entry.favorite {
+        entry.favorite.toggle()
+        if entry.favorite {
             settingTableData[0][4].detail = "즐겨찾기 해제"
             settingTableData[0][4].image = UIImage(named: "setting_like")
             settingTableData[0][4].hasDisclouserIndicator = false
-            entryViewController.favoriteImage.isHidden = false
+            topViewFavoriteImage.isHidden = false
         } else {
             settingTableData[0][4].detail = "즐겨찾기 설정"
             settingTableData[0][4].image = UIImage(named: "setting_dislike")
-            entryViewController.favoriteImage.isHidden = true
+            topViewFavoriteImage.isHidden = true
         }
     }
 }
@@ -447,7 +462,7 @@ extension EntryInformationViewController: StateChangeDelegate {
 
 extension EntryInformationViewController: JournalChangeDelegate {
     func changeJournal(to journal: Journal) {
-        entryViewController.entry.journal = journal
+        entry.journal = journal
         if let title = journal.title {
             settingTableData[0][2].detail = title
             tableView.reloadRows(

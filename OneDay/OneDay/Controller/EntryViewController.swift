@@ -46,7 +46,6 @@ class EntryViewController: UIViewController {
     fileprivate var bottomViewTopConstraint: NSLayoutConstraint!
     fileprivate var bottomViewBottomConstraint: NSLayoutConstraint!
     
-    var bottomViewController: EntryInformationViewController!
     weak var statusChangeDelegate: StateChangeDelegate?
     
     // MARK: - Life cycle
@@ -261,7 +260,8 @@ extension EntryViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "bottomViewSegue" {
             if let bottomViewController = segue.destination as? EntryInformationViewController {
-                bottomViewController.entryViewController = self
+                bottomViewController.topViewFavoriteImage = favoriteImage
+                bottomViewController.entry = entry
                 statusChangeDelegate = bottomViewController
                 bottomViewController.statusChangeDelegate = self
             }
