@@ -110,15 +110,15 @@ class EntryInformationViewController: UIViewController {
     
     func setUpSettingTableDaySectionData() {
         let thisDay = EntrySetting(
-            title: "이 날에",
-            detail: "thisday",
+            title: "이날에:",
+            detail: "",
             image: UIImage(named: "setting_thisday")
         )
         thisDay.hasDisclouserIndicator = true
         settingTableData[1].append(thisDay)
         let today = EntrySetting(
-            title: "이 날",
-            detail: "today",
+            title: "이 날:",
+            detail: "",
             image: UIImage(named: "setting_today")
         )
         today.hasDisclouserIndicator = true
@@ -146,6 +146,22 @@ class EntryInformationViewController: UIViewController {
         dateFormatter.dateFormat = "YYYY년 MM월 dd일, a h:mm"
         let fullDate = dateFormatter.string(from: entry.date)
         settingTableData[0][3].detail = fullDate
+        
+        let date = entry.date
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: date)
+        let month = calendar.component(.month, from: date)
+        let day = calendar.component(.day, from: date)
+        let entriesOnThisDay = CoreDataManager.shared.filter(
+            by: [.thisDay(month: month, day: day)])
+        let entriesAtDay = CoreDataManager.shared.filter(
+            by:[.thisYear(year: year),
+                .thisDay(month: month, day: day)])
+        
+        settingTableData[1][0].title = "이날에: \(month)월 \(day)일"
+        settingTableData[1][0].detail = "\(entriesOnThisDay.count) Entries"
+        settingTableData[1][1].title = "이 날: \(year)년 \(month)월 \(day)일"
+        settingTableData[1][1].detail = "\(entriesAtDay.count) Entries"
     }
     
     func setUpWeather() {
@@ -328,8 +344,7 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: settingIdentifier,
-            for: indexPath
-            ) as? EditorSettingTableViewCell else {
+            for: indexPath ) as? EditorSettingTableViewCell else {
                 preconditionFailure("EditorSettingTableViewCell reuse error!")
         }
         cell.setting = settingTableData[indexPath.section][indexPath.row]
@@ -349,7 +364,7 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
             case 2:
                 changeJournal()
             case 3:
-                changeDate(indexPath: indexPath)
+                changeDate()
             case 4:
                 toggleFavorite()
                 tableView.reloadRows(at: [indexPath], with: .none)
@@ -357,7 +372,14 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
                 return
             }
         case .day:
-            ()
+            switch indexPath.row {
+            case 0:
+                presentThisDayEntries()
+            case 1:
+                presentAtDayEntries()
+            default:
+                return
+            }
         case .etc:
             ()
         }
@@ -402,7 +424,7 @@ extension EntryInformationViewController {
         self.present(alert, animated: false)
     }
     
-    func changeDate(indexPath: IndexPath) {
+    func changeDate() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
         let datePickerViewController = DatePickerViewController()
         datePickerViewController.date = self.entry.date
@@ -413,7 +435,12 @@ extension EntryInformationViewController {
             let dateSet: DateStringSet = DateStringSet(date: self?.entry.date)
             self?.topViewDateLabel.text = dateSet.full
             self?.setUpDate()
-            self?.tableView.reloadRows(at: [indexPath], with: .none)
+            let indexPaths: [IndexPath] = [
+                IndexPath(row: 3, section: 0),
+                IndexPath(row: 0, section: 1),
+                IndexPath(row: 1, section: 1)
+            ]
+            self?.tableView.reloadRows(at: indexPaths, with: .none)
         }
         alert.addAction(okAction)
         alert.setValue(datePickerViewController, forKey: "contentViewController")
@@ -432,6 +459,37 @@ extension EntryInformationViewController {
             settingTableData[0][4].image = UIImage(named: "setting_dislike")
             topViewFavoriteImage.isHidden = true
         }
+    }
+    
+    func presentThisDayEntries() {
+        let date = entry.date
+        let calendar = Calendar.current
+        let month = calendar.component(.month, from: date)
+        let day = calendar.component(.day, from: date)
+        
+        let entriesOnThisDay = CoreDataManager.shared.filter(
+            by: [.thisDay(month: month, day: day)])
+        
+        let collectedEntriesViewController = CollectedEntriesViewController()
+        collectedEntriesViewController.dateLabel.text = "\(month)월 \(day)일"
+        collectedEntriesViewController.entriesData = entriesOnThisDay
+        self.present(collectedEntriesViewController, animated: true, completion: nil)
+    }
+    
+    func presentAtDayEntries() {
+        let date = entry.date
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: date)
+        let month = calendar.component(.month, from: date)
+        let day = calendar.component(.day, from: date)
+        let entriesAtDay = CoreDataManager.shared.filter(
+            by:[.thisYear(year: year),
+                .thisDay(month: month, day: day)])
+        
+        let collectedEntriesViewController = CollectedEntriesViewController()
+        collectedEntriesViewController.dateLabel.text = "\(month)월 \(day)일"
+        collectedEntriesViewController.entriesData = entriesAtDay
+        self.present(collectedEntriesViewController, animated: true, completion: nil)
     }
 }
 
