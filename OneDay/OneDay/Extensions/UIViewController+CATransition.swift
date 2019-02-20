@@ -11,11 +11,12 @@ import UIKit
 extension UIViewController {
     
     func addFadeTransition(duration: CFTimeInterval = 0.2) {
-        
         let transition = CATransition()
         transition.duration = duration
         transition.type = CATransitionType.fade
         transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-        view.window!.layer.add(transition, forKey: kCATransition)
+        
+        guard let window = view.window else { return }
+        window.layer.add(transition, forKey: kCATransition)
     }
 }

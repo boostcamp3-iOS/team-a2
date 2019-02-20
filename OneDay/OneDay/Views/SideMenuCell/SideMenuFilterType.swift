@@ -22,17 +22,13 @@ enum SideMenuFilterType: Int, CaseIterable {
         }
     }
     
-    var icon: String {
+    var iconImageName: String {
         switch self {
         case .filter:
             return "sideMenuFilter"
         case .onThisDay:
             return "sideMenuCalendar"
         }
-    }
-    
-    var rowForCell: Int {
-        return self.rawValue
     }
     
     var selectedHandler: (UIViewController) -> Void {

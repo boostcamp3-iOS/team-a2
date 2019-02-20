@@ -9,12 +9,9 @@
 import UIKit
 
 class SideMenuFilterCell: UITableViewCell {
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupCellView()
-    }
-    
-    let mainIcon: UIImageView = {
+    // MARK: Properties
+    // Layout Components
+    private let iconImageView: UIImageView = {
         var imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -22,7 +19,7 @@ class SideMenuFilterCell: UITableViewCell {
         return imageView
     }()
     
-    let mainLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
         label.adjustsFontSizeToFitWidth = true
@@ -34,28 +31,33 @@ class SideMenuFilterCell: UITableViewCell {
     private let imageSize = CGSize(width: 22, height: 22)
     private let insets = UIEdgeInsets(top: 2, left: 24, bottom: 2, right: -16)
     
+    // MARK: Methods
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupCellView()
+    }
+    
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+    }
+    
+    func bind(type: SideMenuFilterType) {
+        iconImageView.image = UIImage(named: type.iconImageName)
+        titleLabel.text = type.title
     }
 }
 
 extension SideMenuFilterCell {
-    func setupCellView() {
-        addSubview(mainIcon)
-        mainIcon.leftAnchor.constraint(equalTo: leftAnchor, constant: insets.left).isActive = true
-        mainIcon.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        mainIcon.widthAnchor.constraint(equalToConstant: imageSize.width).isActive = true
-        mainIcon.heightAnchor.constraint(equalToConstant: imageSize.height).isActive = true
+    private func setupCellView() {
+        addSubview(iconImageView)
+        iconImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: insets.left).isActive = true
+        iconImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        iconImageView.widthAnchor.constraint(equalToConstant: imageSize.width).isActive = true
+        iconImageView.heightAnchor.constraint(equalToConstant: imageSize.height).isActive = true
         
-        addSubview(mainLabel)
-        mainLabel.leftAnchor.constraint(equalTo: mainIcon.rightAnchor, constant: insets.left).isActive = true
-        mainLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: insets.right).isActive = true
-        mainLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        
-        }
-    
-    func bind(type: SideMenuFilterType) {
-        mainIcon.image = UIImage(named: type.icon)
-        mainLabel.text = type.title
+        addSubview(titleLabel)
+        titleLabel.leftAnchor.constraint(equalTo: iconImageView.rightAnchor, constant: insets.left).isActive = true
+        titleLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: insets.right).isActive = true
+        titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
 }

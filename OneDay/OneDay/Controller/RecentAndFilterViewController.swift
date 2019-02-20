@@ -11,16 +11,17 @@ import UIKit
 import CoreData
 
 class RecentAndFilterViewController: UIViewController {
-
+    // MARK: Properties
+    // IBOutlet
     @IBOutlet weak var recentFilterTable: UITableView!
-    
-    weak var delegator: FilterViewControllerDelegate?
+    // delegate Properties
+    private weak var delegator: FilterViewControllerDelegate?
     
     private var entries: [Entry]!
     private var recentKeywords: [(keyword: String, entries: [Entry])] = []
-    private var filtersArray: [(type: FilterTableCellType, data: [NSManagedObject])] = {
-        var array: [(type: FilterTableCellType, data: [NSManagedObject])] = []
-        FilterTableCellType.allCases.forEach { cellType in
+    private var filtersArray: [(type: FilterType, data: [NSManagedObject])] = {
+        var array: [(type: FilterType, data: [NSManagedObject])] = []
+        FilterType.allCases.forEach { cellType in
             array.append((type: cellType, data: cellType.data))
         }
         return array
@@ -47,11 +48,11 @@ class RecentAndFilterViewController: UIViewController {
             object: nil)
     }
     
-    @objc func didReceiveRecentKeywordsChangedNotification(_: Notification) {
+    @objc private func didReceiveRecentKeywordsChangedNotification(_: Notification) {
         loadRecentKeywordsData()
     }
     
-    func loadRecentKeywordsData() {
+    private func loadRecentKeywordsData() {
         var array = [(String, [Entry])]()
         let originKeywords = OneDayDefaults.currentKeywords
         let maximumCount: Int = min(Constants.minimumRecentKeywordsCount, originKeywords.count)
@@ -63,10 +64,11 @@ class RecentAndFilterViewController: UIViewController {
         recentKeywords = array
         recentFilterTable.reloadData()
     }
-    
 }
+
+// MARK: - Extensions
+// MARK: UITableView에서 사용할 Section enum
 extension RecentAndFilterViewController {
-    
     enum Section: Int {
         case recent = 0
         case filter = 1
@@ -95,6 +97,7 @@ extension RecentAndFilterViewController {
     }
 }
 
+// MARK: UITableView Data Source
 extension RecentAndFilterViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -116,7 +119,6 @@ extension RecentAndFilterViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let sectionType = Section(rawValue: indexPath.section) else { preconditionFailure() }
-
         switch sectionType {
         case .recent:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: sectionType.identifier, for: indexPath) as? SearchedKeywordCell else { preconditionFailure("Cell Error") }
@@ -132,11 +134,10 @@ extension RecentAndFilterViewController: UITableViewDataSource {
             return cell
         }
     }
-    
 }
 
+// MARK: UITableView Delegate
 extension RecentAndFilterViewController: UITableViewDelegate {
-
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let sectionType = Section(rawValue: indexPath.section) else { preconditionFailure() }
         switch sectionType {
@@ -159,6 +160,9 @@ extension RecentAndFilterViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - DelegateProtocol
+// SearchFilterviewController 에 container view에 포함되어 있는 RecentAndFilterviewController 와 FilterResultViewController 에서 사용하는 Delegate Protocol 입니다.
 protocol FilterViewControllerDelegate: class {
+    // 검색된 Entries data 를 가지고 CollectedEntriesViewController 를 띄워주게 됩니다.
     func presentCollectedEntries(for: [Entry], title: String)
 }

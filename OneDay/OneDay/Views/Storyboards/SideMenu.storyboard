@@ -120,6 +120,7 @@
                         <subviews>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="dCd-sV-ha0">
                                 <rect key="frame" x="0.0" y="20" width="315" height="56"/>
+                                <color key="tintColor" name="doBlue"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="jF2-yD-qPe" id="NKJ-R4-YMq"/>

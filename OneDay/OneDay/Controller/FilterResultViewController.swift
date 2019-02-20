@@ -10,9 +10,12 @@ import UIKit
 import CoreData
 
 class FilterResultViewController: UIViewController {
+    // MARK: Properties
+    // delegate Properties
+    private weak var delegator: FilterViewControllerDelegate?
     
-    private var filterType: FilterTableCellType!
     private let reusableIdentifier: String = "filter_result_cell"
+    private var filterType: FilterType!
     private var filtersArray: [(filter: NSManagedObject, entries: [Entry])] = []
     
     private func filterDataTitle(data: NSManagedObject) -> String {
@@ -37,9 +40,7 @@ class FilterResultViewController: UIViewController {
         return title ?? filterType.title
     }
 
-    weak var delegator: FilterViewControllerDelegate?
-
-    func bind(type: FilterTableCellType, data: [NSManagedObject], delegator: FilterViewControllerDelegate?) {
+    func bind(type: FilterType, data: [NSManagedObject], delegator: FilterViewControllerDelegate?) {
         self.filterType = type
         self.delegator = delegator
         
@@ -68,7 +69,6 @@ class FilterResultViewController: UIViewController {
                 filtersArray.append((filter: device, entries: data))
             }
         }
-        print(filtersArray.count)
     }
     
     @IBAction func didTapBackButton(_ sender: UIButton) {
@@ -89,11 +89,9 @@ extension FilterResultViewController: UITableViewDataSource {
         cell.bind(type: filterType, data: filterData.filter, count: filterData.entries.count)
         return cell
     }
-    
 }
 
 extension FilterResultViewController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         let filterData = filtersArray[indexPath.row]

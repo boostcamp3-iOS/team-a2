@@ -114,7 +114,11 @@ extension CoreDataManager : CoreDataJournalService {
         let journal = Journal(context: managedContext)
         journal.title = title
         journal.color = UIColor.doBlue
-        journal.index = (index < 0 ? numberOfJounals : index) as NSNumber
+        if index == Constants.automaticNextJournalIndex {
+            journal.index = numberOfJounals as NSNumber
+        } else {
+            journal.index = index as NSNumber
+        }
         journal.journalId = UUID()
         coreDataStack.saveContext()
         return journal

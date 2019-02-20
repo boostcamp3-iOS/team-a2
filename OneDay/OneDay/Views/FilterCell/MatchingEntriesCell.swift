@@ -7,28 +7,30 @@
 //
 
 import UIKit
+
 //Matching Entries - SearchBar.text와 일치하는 문자열이 있는 엔트리를 보여주는 셀
 class MatchingEntriesCell: UITableViewCell {
-    
-    let matchingTextLabel: UILabel = {
+    // MARK: Properties
+    // Layout Components
+    private let matchingTextLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
         label.numberOfLines = 3
         label.backgroundColor = .white
+        label.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.subheadline)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let matchingWeatherLabel: UILabel = {
+    private let matchingWeatherLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
         label.backgroundColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.callout)
+        label.textColor = .gray
         return label
     }()
     
-    //FIXME: 엔트리에 이미지가 있으면 보이도록 추가해야 함
-    let matchingImageView: UIImageView = {
+    private let matchingImageView: UIImageView = {
         var imageView = UIImageView()
         imageView.image = UIImage()
         imageView.contentMode = .scaleAspectFit
@@ -37,24 +39,40 @@ class MatchingEntriesCell: UITableViewCell {
         return imageView
     }()
     
+    private lazy var imageWidthConstraint: NSLayoutConstraint =  matchingImageView.widthAnchor.constraint(equalToConstant: 36)
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupCell()
     }
     
-    func setupCell() {
-        addSubview(matchingTextLabel)
-        matchingTextLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 8).isActive = true
-        matchingTextLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8).isActive = true
-        matchingTextLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -8).isActive = true
-        
-        addSubview(matchingWeatherLabel)
-        matchingWeatherLabel.leftAnchor.constraint(equalTo: matchingTextLabel.leftAnchor, constant: 0).isActive = true
-        matchingWeatherLabel.topAnchor.constraint(equalTo: matchingTextLabel.bottomAnchor, constant: 8).isActive = true
-        matchingWeatherLabel.rightAnchor.constraint(equalTo: matchingTextLabel.rightAnchor, constant: 0).isActive = true
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func bind(keyword: String, entry: Entry) {
+        guard let content = entry.contents?.string else { return }
+        let range = (content as NSString).range(of: keyword)
+        let attributedText = NSMutableAttributedString(string: content)
+        attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.doBlue, range: range)
+        matchingTextLabel.attributedText = attributedText
+        matchingWeatherLabel.text = entry.weather?.type
+    }
+}
+
+extension MatchingEntriesCell {
+    private func setupCell() {
+        addSubview(matchingTextLabel)
+        addSubview(matchingWeatherLabel)
+        NSLayoutConstraint.activate([
+            matchingTextLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            matchingTextLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            matchingTextLabel.bottomAnchor.constraint(equalTo: matchingWeatherLabel.topAnchor, constant: -2),
+            matchingTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -28),
+            
+            matchingWeatherLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            matchingWeatherLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4),
+            matchingWeatherLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -28)
+        ])
     }
 }

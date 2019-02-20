@@ -15,4 +15,5 @@ struct Constants {
     static let screenSize: CGFloat = UIScreen.main.bounds.width
     static let sideMenuWidth: CGFloat = screenSize * 0.8
     static let minimumRecentKeywordsCount: Int = 3
+    static let automaticNextJournalIndex: Int = -1
 }

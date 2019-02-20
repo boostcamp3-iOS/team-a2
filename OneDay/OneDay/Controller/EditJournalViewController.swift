@@ -12,10 +12,9 @@ class EditJournalViewController: UIViewController {
 
     @IBOutlet var journalsTableView: UITableView!
     
-    var journals: [Journal] = CoreDataManager.shared.journalsWithoutDefault
-    
-    var cellSnapShot: UIView!
-    var initialIndexPath: IndexPath!
+    private var journals: [Journal] = CoreDataManager.shared.journalsWithoutDefault
+    private var cellSnapshot: UIView!
+    private var initialIndexPath: IndexPath!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +22,7 @@ class EditJournalViewController: UIViewController {
         journalsTableView.addGestureRecognizer(longpress)
     }
     
-    @objc func longPressGestureRecognized(gestureRecognizer: UIGestureRecognizer) {
+    @objc private func longPressGestureRecognized(gestureRecognizer: UIGestureRecognizer) {
         guard let longpress = gestureRecognizer as? UILongPressGestureRecognizer else { return }
         let locationInView = longpress.location(in: journalsTableView)
         switch longpress.state {
@@ -31,20 +30,20 @@ class EditJournalViewController: UIViewController {
             guard let indexPath = journalsTableView.indexPathForRow(at: locationInView),
                 let cell = journalsTableView.cellForRow(at: indexPath) else { return }
             initialIndexPath = indexPath
-            cellSnapShot = snapshopOfCell(inputView: cell)
-            cellSnapShot.center = cell.center
-            cellSnapShot.alpha = 0
-            journalsTableView.addSubview(cellSnapShot!)
+            cellSnapshot = snapshotOfCell(inputView: cell)
+            cellSnapshot.center = cell.center
+            cellSnapshot.alpha = 0
+            journalsTableView.addSubview(cellSnapshot!)
             UIView.animate(withDuration: 0.25, animations: {
-                self.cellSnapShot.center.y = locationInView.y
-                self.cellSnapShot.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
-                self.cellSnapShot.alpha = 0.98
+                self.cellSnapshot.center.y = locationInView.y
+                self.cellSnapshot.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
+                self.cellSnapshot.alpha = 0.98
                 cell.alpha = 0
             }, completion: { (finished) -> Void in
                 cell.isHidden = finished
             })
         case .changed:
-            cellSnapShot?.center.y = locationInView.y
+            cellSnapshot?.center.y = locationInView.y
             guard let indexPath = journalsTableView.indexPathForRow(at: locationInView),
                 let initialIndexPath = initialIndexPath, indexPath != initialIndexPath else { return }
             if indexPath.section == initialIndexPath.section {
@@ -60,7 +59,7 @@ class EditJournalViewController: UIViewController {
     }
     
     // Long Press 가 끝나면 snapshot 을 없애주고 cell을 다시 보여줍니다.
-    func didLongPressEnded(indexPath: IndexPath?) {
+    private func didLongPressEnded(indexPath: IndexPath?) {
         var cell: UITableViewCell!
         if let indexPath = indexPath {
             cell = journalsTableView.cellForRow(at: indexPath)
@@ -71,31 +70,31 @@ class EditJournalViewController: UIViewController {
         cell.isHidden = false
         cell.alpha = 0
         UIView.animate(withDuration: 0.25, animations: {
-            self.cellSnapShot?.center = cell.center
-            self.cellSnapShot?.transform = .identity
-            self.cellSnapShot?.alpha = 0
+            self.cellSnapshot?.center = cell.center
+            self.cellSnapshot?.transform = .identity
+            self.cellSnapshot?.alpha = 0
             cell.alpha = 1
         }, completion: { (finished) -> Void in
             if finished {
                 self.initialIndexPath = nil
-                self.cellSnapShot?.removeFromSuperview()
-                self.cellSnapShot = nil
+                self.cellSnapshot?.removeFromSuperview()
+                self.cellSnapshot = nil
             }
         })
     }
     
-    func snapshopOfCell(inputView: UIView) -> UIView {
+    private func snapshotOfCell(inputView: UIView) -> UIView {
         UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, false, 0)
         inputView.layer.render(in: UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
-        let cellSnapshot : UIView = UIImageView(image: image)
-        cellSnapshot.layer.masksToBounds = false
-        cellSnapshot.layer.cornerRadius = 0
-        cellSnapshot.layer.shadowOffset = CGSize(width: -5.0, height: 0)
-        cellSnapshot.layer.shadowRadius = 5
-        cellSnapshot.layer.shadowOpacity = 0.4
-        return cellSnapshot
+        let sanpshotView : UIView = UIImageView(image: image)
+        sanpshotView.layer.masksToBounds = false
+        sanpshotView.layer.cornerRadius = 0
+        sanpshotView.layer.shadowOffset = CGSize(width: -5.0, height: 0)
+        sanpshotView.layer.shadowRadius = 5
+        sanpshotView.layer.shadowOpacity = 0.4
+        return sanpshotView
     }
     
     @IBAction func didTapSave(_ sender: UIBarButtonItem) {
@@ -109,28 +108,53 @@ class EditJournalViewController: UIViewController {
     }
 }
 
+// MARK: - Extensions
+// MARK: UITableView Section Enum
+extension EditJournalViewController {
+    enum Section: Int {
+        case journalList = 0
+        case addJournal = 1
+        
+        var editingStyle: UITableViewCell.EditingStyle {
+            switch self {
+            case .journalList: return .delete
+            case .addJournal: return .none
+            }
+        }
+        
+        var isEditable: Bool {
+            switch self {
+            case .journalList: return true
+            case .addJournal: return false
+            }
+        }
+    }
+}
+
+// MARK: UITableView Data Source
 extension EditJournalViewController: UITableViewDataSource {
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return journals.count
-        } else {
-            return 1
+        guard let section = Section(rawValue: section) else { preconditionFailure() }
+        switch section {
+        case .journalList: return journals.count
+        case .addJournal: return 1
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
+        guard let section = Section(rawValue: indexPath.section) else { preconditionFailure() }
+        switch section {
+        case .journalList:
             let cell = tableView.dequeueReusableCell(withIdentifier: "editable_journal", for: indexPath)
             let journal = journals[indexPath.row]
             cell.textLabel?.text = journal.title
             cell.detailTextLabel?.text = "\(journal.entries?.count ?? 0)"
             return cell
-        } else {
+        case .addJournal:
             let cell = tableView.dequeueReusableCell(withIdentifier: "add_new_journal", for: indexPath)
             cell.textLabel?.text = "새 저널 추가"
             cell.textLabel?.textAlignment = .center
@@ -139,12 +163,32 @@ extension EditJournalViewController: UITableViewDataSource {
     }
 }
 
+// MARK: UITableView Delegate
 extension EditJournalViewController: UITableViewDelegate {
- 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         var alertController: UIAlertController!
-        if indexPath.section == 1 {
+        guard let section = Section(rawValue: indexPath.section) else { preconditionFailure() }
+        switch section {
+        case .journalList:
+            let journal = journals[indexPath.row]
+            alertController = UIAlertController(title: "저널 이름 변경", message: nil, preferredStyle: .alert)
+            alertController.addTextField { textField in
+                textField.placeholder = "새로운 저널 이름"
+                textField.text = journal.title
+            }
+            let confirmAction = UIAlertAction(title: "저장", style: .default) { [weak self, weak alertController] _ in
+                guard let alertController = alertController,
+                    let journalTitle = alertController.textFields?.first?.text else { return }
+                guard let self = self else { return }
+                let journal = CoreDataManager.shared.journal(id: journal.journalId)
+                journal.title = journalTitle
+                CoreDataManager.shared.save()
+                self.journals[indexPath.row] = journal
+                tableView.reloadData()
+            }
+            alertController.addAction(confirmAction)
+        case .addJournal:
             alertController = UIAlertController(title: "저널 추가", message: nil, preferredStyle: .alert)
             alertController.addTextField { textField in
                 textField.placeholder = "저널 이름"
@@ -161,42 +205,18 @@ extension EditJournalViewController: UITableViewDelegate {
             let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
             alertController.addAction(confirmAction)
             alertController.addAction(cancelAction)
-        } else {
-            let journal = journals[indexPath.row]
-            alertController = UIAlertController(title: "저널 이름 변경", message: nil, preferredStyle: .alert)
-            alertController.addTextField { textField in
-                textField.placeholder = journal.title ?? "새로운 저널 이름"
-            }
-            let confirmAction = UIAlertAction(title: "저장", style: .default) { [weak self, weak alertController] _ in
-                guard let alertController = alertController,
-                    let journalTitle = alertController.textFields?.first?.text else { return }
-                guard let self = self else { return }
-                let journal = CoreDataManager.shared.journal(id: journal.journalId)
-                journal.title = journalTitle
-                CoreDataManager.shared.save()
-                self.journals[indexPath.row] = journal
-                tableView.reloadData()
-            }
-            alertController.addAction(confirmAction)
         }
         present(alertController, animated: true)
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        
-        if indexPath.section == 0 {
-            return .delete
-        } else {
-            return .none
-        }
+        guard let section = Section(rawValue: indexPath.section) else { preconditionFailure() }
+        return section.editingStyle
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.section == 0 {
-            return true
-        } else {
-            return false
-        }
+        guard let section = Section(rawValue: indexPath.section) else { preconditionFailure() }
+        return section.isEditable
     }
     
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
