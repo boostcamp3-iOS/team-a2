@@ -54,7 +54,7 @@ extension SideMenuFilterCell {
         
         }
     
-    func bind(type: SideMenuFilterCellType) {
+    func bind(type: SideMenuFilterType) {
         mainIcon.image = UIImage(named: type.icon)
         mainLabel.text = type.title
     }

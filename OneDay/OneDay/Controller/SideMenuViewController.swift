@@ -72,7 +72,7 @@ extension SideMenuViewController: UITableViewDataSource {
         switch menuSection {
         case .filters:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: menuSection.identifier, for: indexPath) as? SideMenuFilterCell,
-                let cellType = SideMenuFilterCellType(rawValue: indexPath.row) else {
+                let cellType = SideMenuFilterType(rawValue: indexPath.row) else {
                 preconditionFailure("Error")
             }
             cell.bind(type: cellType)
@@ -131,7 +131,7 @@ extension SideMenuViewController: UITableViewDelegate {
         
         switch menuSection {
         case .filters:
-            guard let cellType = SideMenuFilterCellType(rawValue: indexPath.row) else { preconditionFailure() }
+            guard let cellType = SideMenuFilterType(rawValue: indexPath.row) else { preconditionFailure() }
             cellType.selectedHandler(self)
         case .journals:
             let journal = journals[indexPath.row]

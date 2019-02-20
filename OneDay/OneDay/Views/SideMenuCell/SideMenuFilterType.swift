@@ -1,5 +1,5 @@
 //
-//  SideMenuFilterCellType.swift
+//  SideMenuFilterType.swift
 //  OneDay
 //
 //  Created by juhee on 19/02/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum SideMenuFilterCellType: Int {
+enum SideMenuFilterType: Int, CaseIterable {
     
     case filter = 0
     case onThisDay = 1

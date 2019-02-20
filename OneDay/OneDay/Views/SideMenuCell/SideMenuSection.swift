@@ -30,7 +30,7 @@ enum SideMenuSection: Int, CaseIterable {
     
     var numberOfRows: Int {
         switch self {
-        case .filters: return 2
+        case .filters: return SideMenuFilterType.allCases.count
         case .journals: return 0
         case .addJournal: return 1
         case .setting: return 1
