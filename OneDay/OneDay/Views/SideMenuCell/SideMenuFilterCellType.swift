@@ -6,7 +6,7 @@
 //  Copyright © 2019 teamA2. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 enum SideMenuFilterCellType: Int {
     
@@ -33,5 +33,23 @@ enum SideMenuFilterCellType: Int {
     
     var rowForCell: Int {
         return self.rawValue
+    }
+    
+    var selectedHandler: (UIViewController) -> Void {
+        switch self {
+        case .filter:
+            return { controller in
+                let filterViewController = FilterViewController()
+                controller.addFadeTransition()
+                controller.present(filterViewController, animated: false, completion: nil)
+            }
+        case .onThisDay:
+            return { controller in
+                let collectedEntiresViewController = CollectedEntriesViewController()
+                let dateComponent = Calendar.current.dateComponents(in: TimeZone.current, from: Date())
+                collectedEntiresViewController.entriesData = CoreDataManager.shared.filter(by: [.currentJournal, .thisDay(month: dateComponent.month, day: dateComponent.day)])
+                controller.present(collectedEntiresViewController, animated: true, completion: nil)
+            }
+        }
     }
 }

@@ -129,7 +129,8 @@ extension SideMenuViewController: UITableViewDelegate {
         
         switch menuSection {
         case .filters:
-            self.present(FilterViewController(), animated: false, completion: nil)
+            guard let cellType = SideMenuFilterCellType(rawValue: indexPath.row) else { preconditionFailure() }
+            cellType.selectedHandler(self)
         case .journals:
             let journal = journals[indexPath.row]
             CoreDataManager.shared.changeCurrentJournal(to: journal)
@@ -189,7 +190,10 @@ extension SideMenuViewController {
 
 extension SideMenuViewController: UISearchBarDelegate {
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        self.present(FilterViewController(), animated: false, completion: nil)
+        self.addFadeTransition()
+        let filterViewController = FilterViewController()
+        filterViewController.tellKeyboardShouldShow()
+        present(filterViewController, animated: false, completion: nil)
         return false
     }
 }

@@ -1,5 +1,5 @@
 //
-//  FilterTableCell.swift
+//  FilterCell.swift
 //  OneDay
 //
 //  Created by 정화 on 23/01/2019.
@@ -9,7 +9,7 @@
 import UIKit
 
 //Filter - Favorite, 체크리스트, 태그...를 위한 셀
-class FilterTableCell: UITableViewCell {
+class FilterCell: UITableViewCell {
 
     let filterIcon: UIImageView = {
         var imageView = UIImageView()
@@ -41,11 +41,11 @@ class FilterTableCell: UITableViewCell {
         setupCell()
     }
     
-    func bind(filter filterItem: (name: String, image: String, count: Int)) {
+    func bind(filter type: FilterTableCellType, count: Int) {
         selectionStyle = .none
-        filterIcon.image = UIImage(named: filterItem.image)
-        filterLabel.text = filterItem.name
-        contentsCountLabel.text = "\(filterItem.count)"
+        filterIcon.image = type.icon
+        filterLabel.text = type.title
+        contentsCountLabel.text = "\(count)"
     }
     
     func setupCell() {
@@ -65,5 +65,49 @@ class FilterTableCell: UITableViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+enum FilterTableCellType: Hashable, CaseIterable {
+    
+    case favorite
+    case tag
+    case location
+    case year
+    case weather
+    case device
+    
+    var title: String {
+        switch self {
+        case .favorite:
+            return "즐겨찾기"
+        case .tag:
+            return "태그"
+        case .location:
+            return "장소"
+        case .year:
+            return "연도"
+        case .weather:
+            return "날씨"
+        case .device:
+            return "작성 디바이스"
+        }
+    }
+    
+    var icon: UIImage? {
+        switch self {
+        case .favorite:
+            return UIImage(named: "filterHeart")
+        case .tag:
+            return UIImage(named: "filterTag")
+        case .location:
+            return UIImage(named: "filterPlace")
+        case .year:
+            return UIImage(named: "filterHeart")
+        case .weather:
+            return UIImage(named: "filterWeather")
+        case .device:
+            return UIImage(named: "filterDevice")
+        }
     }
 }

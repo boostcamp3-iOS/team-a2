@@ -43,9 +43,11 @@ enum FilterSection {
         }
     }
     
-    func numberOfRows(_ isSearching: Bool) -> Int {
+    func numberOfRows(_ isSearching: Bool = false) -> Int {
         switch self {
-        case .recent, .entries:
+        case .recent:
+            return 3
+        case .entries:
             return 0
         case .filter:
             return !isSearching ? 6 : 0

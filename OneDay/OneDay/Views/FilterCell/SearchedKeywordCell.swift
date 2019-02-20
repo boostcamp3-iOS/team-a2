@@ -12,7 +12,7 @@ class SearchedKeywordCell: UITableViewCell {
     
     let searchIcon: UIImageView = {
         var imageView = UIImageView()
-        imageView.image = UIImage(named: "keywordsSearch") ?? UIImage()
+        imageView.image = UIImage(named: "ic_search") ?? UIImage()
         imageView.contentMode = .scaleAspectFit
         imageView.contentMode = .center
         imageView.translatesAutoresizingMaskIntoConstraints = false
