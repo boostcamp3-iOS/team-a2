@@ -17,6 +17,8 @@ class EditorSettingTableViewCell: UITableViewCell {
             imageView?.image = setting.image
             if setting.hasDisclouserIndicator {
                 self.accessoryType = .disclosureIndicator
+            } else {
+                self.accessoryType = .none
             }
         }
     }
