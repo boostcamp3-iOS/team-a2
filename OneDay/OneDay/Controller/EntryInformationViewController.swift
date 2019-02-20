@@ -433,7 +433,10 @@ extension EntryInformationViewController {
         journalChangeViewController.alertController = alert
         journalChangeViewController.journalChangeDelegate = self
         alert.setValue(journalChangeViewController, forKey: "contentViewController")
-        self.present(alert, animated: false)
+        self.present(alert, animated: false) {
+            alert.view.superview?.isUserInteractionEnabled = true
+            alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alertControllerBackgroundTapped)))
+        }
     }
     
     func changeDate() {
@@ -452,7 +455,10 @@ extension EntryInformationViewController {
         }
         alert.addAction(okAction)
         alert.setValue(datePickerViewController, forKey: "contentViewController")
-        self.present(alert, animated: false)
+        self.present(alert, animated: false) {
+            alert.view.superview?.isUserInteractionEnabled = true
+            alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alertControllerBackgroundTapped)))
+        }
     }
     
     func toggleFavorite() {
@@ -498,6 +504,10 @@ extension EntryInformationViewController {
         collectedEntriesViewController.dateLabel.text = "\(month)월 \(day)일"
         collectedEntriesViewController.entriesData = entriesAtDay
         self.present(collectedEntriesViewController, animated: true, completion: nil)
+    }
+    
+    @objc func alertControllerBackgroundTapped() {
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
