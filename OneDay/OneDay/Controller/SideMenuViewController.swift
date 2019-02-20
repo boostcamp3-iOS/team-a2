@@ -9,13 +9,11 @@
 import UIKit
 
 class SideMenuViewController: UIViewController {
-    
+    // MARK: Properties
     // Constants
-    let sectionHeaderHeight: CGFloat = 2
     private let defaultInsets: UIEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: -4)
-    // 테이블 뷰
+    // View Lyaout Components
     private let sideMenuTableView = UITableView()
-    // 검색 바
     private let searchBar: UISearchBar = {
         let bar = UISearchBar()
         bar.searchBarStyle = UISearchBar.Style.minimal
@@ -33,13 +31,14 @@ class SideMenuViewController: UIViewController {
     
     override var prefersStatusBarHidden: Bool { return true }
 
+    // MARK: Methods
     override func viewDidLoad() { 
-        setupSearchBar()
-        setupTableView()
+        setUpSearchBar()
+        setUpTableView()
         addCoreDataChangedNotificationObserver()
     }
     
-    func addCoreDataChangedNotificationObserver() {
+    private func addCoreDataChangedNotificationObserver() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(didReceiveCoreDataChangedNotification(_:)),
@@ -54,6 +53,8 @@ class SideMenuViewController: UIViewController {
     }
 }
 
+// MARK: - Extensions
+// MARK: UITableView Data Source
 extension SideMenuViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return SideMenuSection.allCases.count
@@ -103,6 +104,7 @@ extension SideMenuViewController: UITableViewDataSource {
     }
 }
 
+// MARK: UITableView Delegate
 extension SideMenuViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 54
@@ -157,9 +159,10 @@ extension SideMenuViewController: UITableViewDelegate {
     }
 }
 
+// MARK: set up view component constraints
 extension SideMenuViewController {
     
-    func setupSearchBar() {
+    func setUpSearchBar() {
         view.addSubview(searchBar)
         view.backgroundColor = .white
         searchBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -169,7 +172,7 @@ extension SideMenuViewController {
         searchBar.delegate = self
     }
     
-    func setupTableView() {
+    func setUpTableView() {
         view.addSubview(sideMenuTableView)
         sideMenuTableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         sideMenuTableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 0).isActive = true
@@ -188,6 +191,7 @@ extension SideMenuViewController {
     }
 }
 
+// MARK: UISearchBarDelegate
 extension SideMenuViewController: UISearchBarDelegate {
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         self.addFadeTransition()

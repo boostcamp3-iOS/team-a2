@@ -10,7 +10,7 @@ import UIKit
 
 extension UIViewController {
     
-    func addFadeTransition(duration: CFTimeInterval = 0.4) {
+    func addFadeTransition(duration: CFTimeInterval = 0.2) {
         
         let transition = CATransition()
         transition.duration = duration
