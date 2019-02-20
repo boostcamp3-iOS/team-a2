@@ -161,7 +161,6 @@ extension EditJournalViewController: UITableViewDelegate {
             let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
             alertController.addAction(confirmAction)
             alertController.addAction(cancelAction)
-            present(alertController, animated: true)
         } else {
             let journal = journals[indexPath.row]
             alertController = UIAlertController(title: "저널 이름 변경", message: nil, preferredStyle: .alert)
