@@ -39,9 +39,13 @@ enum SideMenuFilterType: Int, CaseIterable {
         switch self {
         case .filter:
             return { controller in
-                let filterViewController = FilterViewController()
+                let storyboard = UIStoryboard(name: "SideMenu", bundle: nil)
+                guard let searchFilterViewController = storyboard.instantiateViewController(withIdentifier: "search_filter_view") as? SearchFilterViewController
+                    else {
+                        preconditionFailure()
+                }
                 controller.addFadeTransition()
-                controller.present(filterViewController, animated: false, completion: nil)
+                controller.present(searchFilterViewController, animated: false, completion: nil)
             }
         case .onThisDay:
             return { controller in

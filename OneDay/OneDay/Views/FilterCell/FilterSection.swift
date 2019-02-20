@@ -43,6 +43,13 @@ enum FilterSection {
         }
     }
     
+    var heightForSection: CGFloat {
+        switch self {
+        case .entries: return 70
+        default: return 50
+        }
+    }
+    
     func numberOfRows(_ isSearching: Bool = false) -> Int {
         switch self {
         case .recent:

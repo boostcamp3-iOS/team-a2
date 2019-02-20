@@ -137,3 +137,9 @@ class MapViewController: UIViewController {
         present(nextViewController, animated: true, completion: nil)
     }
 }
+
+//extension MapViewController: MKMapViewDelegate {
+//    func mapView(_ mapView: MKMapView, clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]) -> MKClusterAnnotation {
+//        
+//    }
+//}

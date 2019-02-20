@@ -195,9 +195,13 @@ extension SideMenuViewController {
 extension SideMenuViewController: UISearchBarDelegate {
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         self.addFadeTransition()
-        let filterViewController = FilterViewController()
-        filterViewController.tellKeyboardShouldShow()
-        present(filterViewController, animated: false, completion: nil)
+        let storyboard = UIStoryboard(name: "SideMenu", bundle: nil)
+        guard let searchFilterViewController = storyboard.instantiateViewController(withIdentifier: "search_filter_view") as? SearchFilterViewController
+            else {
+                preconditionFailure()
+        }
+//        searchFilterViewController.tellKeyboardShouldShow()
+        present(searchFilterViewController, animated: false, completion: nil)
         return false
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 //Filter - Favorite, 체크리스트, 태그...를 위한 셀
 class FilterCell: UITableViewCell {
@@ -71,9 +72,7 @@ class FilterCell: UITableViewCell {
 enum FilterTableCellType: Hashable, CaseIterable {
     
     case favorite
-    case tag
     case location
-    case year
     case weather
     case device
     
@@ -81,16 +80,12 @@ enum FilterTableCellType: Hashable, CaseIterable {
         switch self {
         case .favorite:
             return "즐겨찾기"
-        case .tag:
-            return "태그"
         case .location:
             return "장소"
-        case .year:
-            return "연도"
         case .weather:
             return "날씨"
         case .device:
-            return "작성 디바이스"
+            return "기기"
         }
     }
     
@@ -98,16 +93,34 @@ enum FilterTableCellType: Hashable, CaseIterable {
         switch self {
         case .favorite:
             return UIImage(named: "filterHeart")
-        case .tag:
-            return UIImage(named: "filterTag")
         case .location:
             return UIImage(named: "filterPlace")
-        case .year:
-            return UIImage(named: "filterHeart")
         case .weather:
             return UIImage(named: "filterWeather")
         case .device:
             return UIImage(named: "filterDevice")
+        }
+    }
+    
+    var isOneDepth: Bool {
+        switch self {
+        case .favorite:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    var data: [NSManagedObject] {
+        switch self {
+        case .favorite:
+            return CoreDataManager.shared.filter(by: [.currentJournal, .favorite])
+        case .location:
+            return CoreDataManager.shared.locations
+        case .weather:
+            return CoreDataManager.shared.weathers
+        case .device:
+            return CoreDataManager.shared.devices
         }
     }
 }

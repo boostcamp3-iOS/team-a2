@@ -15,6 +15,8 @@ class OneDayDefaults {
     private static let keyCurrentJournal = "current_journal_uuidString"
     private static let keyRecentKeyword = "current_keywords"
     
+    static let DidChangedRecentKeywordsNotification: Notification.Name = Notification.Name("didChangedRecentKeywordsNotification")
+    
     static var defaultJournalUUID: String? = defaults.string(forKey: keyDefaultJournal) {
         willSet(newValue) {
             defaults.set(newValue, forKey: keyDefaultJournal)
@@ -27,13 +29,23 @@ class OneDayDefaults {
         }
     }
     
-    static var currentKeywords: [String] = defaults.stringArray(forKey: keyRecentKeyword) ?? [] {
+    private static var _currentKeywords: [String] = defaults.stringArray(forKey: keyRecentKeyword) ?? [] {
         willSet(newValue) {
             defaults.set(newValue, forKey: keyRecentKeyword)
         }
+        didSet {
+            NotificationCenter.default.post(name: OneDayDefaults.DidChangedRecentKeywordsNotification, object: nil)
+        }
     }
     
-    static func addNewKeyword(keyword: String) {
-        currentKeywords.append(keyword)
+    static func addCurrentKeywords(keyword: String) {
+        let oldKeyowrds = _currentKeywords
+        if !oldKeyowrds.contains(keyword) {
+            _currentKeywords.append(keyword)
+        }
+    }
+    
+    static var currentKeywords: [String] {
+        return _currentKeywords
     }
 }

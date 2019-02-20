@@ -9,5 +9,7 @@
 import Foundation
 
 protocol CoreDataDeviceService {
+    var numbersOfDevices: Int { get }
+    var devices: [Device] { get }
     func insertDevice() -> Device
 }

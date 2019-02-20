@@ -70,6 +70,9 @@
 		D53782BD221113A100336646 /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53782BC221113A100336646 /* PhotosCollectionViewCell.swift */; };
 		D54A70C0221CE7A600F37C5D /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54A70BF221CE7A600F37C5D /* FilterCell.swift */; };
 		D54A70C2221D10B700F37C5D /* UIViewController+CATransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54A70C1221D10B700F37C5D /* UIViewController+CATransition.swift */; };
+		D54A70C4221D35C300F37C5D /* RecentAndFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54A70C3221D35C300F37C5D /* RecentAndFilterViewController.swift */; };
+		D54A70C6221D35DA00F37C5D /* FilterResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54A70C5221D35DA00F37C5D /* FilterResultViewController.swift */; };
+		D54A70C8221D74C400F37C5D /* FilterResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54A70C7221D74C400F37C5D /* FilterResultTableViewCell.swift */; };
 		D561692321FAD07000E00FED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D561692221FAD07000E00FED /* AppDelegate.swift */; };
 		D561692521FAD07000E00FED /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D561692421FAD07000E00FED /* MainTabBarViewController.swift */; };
 		D561692821FAD07000E00FED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D561692621FAD07000E00FED /* Main.storyboard */; };
@@ -86,7 +89,7 @@
 		E992EC6A21FAEE3C00917116 /* SideMenuJournalListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6921FAEE3C00917116 /* SideMenuJournalListCell.swift */; };
 		E992EC6C21FAEE4500917116 /* SideMenuJournalAddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6B21FAEE4500917116 /* SideMenuJournalAddCell.swift */; };
 		E992EC6E21FAEE4D00917116 /* SideMenuEditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6D21FAEE4D00917116 /* SideMenuEditCell.swift */; };
-		E992EC7021FAEE5B00917116 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6F21FAEE5B00917116 /* FilterViewController.swift */; };
+		E992EC7021FAEE5B00917116 /* SearchFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6F21FAEE5B00917116 /* SearchFilterViewController.swift */; };
 		E992EC7221FAEE6700917116 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7121FAEE6700917116 /* SideMenuViewController.swift */; };
 		E992EC7821FAF4C200917116 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7721FAF4C200917116 /* CalendarViewController.swift */; };
 		E992EC7A21FAFBC500917116 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7921FAFBC500917116 /* CalendarCell.swift */; };
@@ -178,6 +181,9 @@
 		D53782C52211447500336646 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		D54A70BF221CE7A600F37C5D /* FilterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
 		D54A70C1221D10B700F37C5D /* UIViewController+CATransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+CATransition.swift"; sourceTree = "<group>"; };
+		D54A70C3221D35C300F37C5D /* RecentAndFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentAndFilterViewController.swift; sourceTree = "<group>"; };
+		D54A70C5221D35DA00F37C5D /* FilterResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterResultViewController.swift; sourceTree = "<group>"; };
+		D54A70C7221D74C400F37C5D /* FilterResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterResultTableViewCell.swift; sourceTree = "<group>"; };
 		D561691F21FAD07000E00FED /* OneDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D561692221FAD07000E00FED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D561692421FAD07000E00FED /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
@@ -197,7 +203,7 @@
 		E992EC6921FAEE3C00917116 /* SideMenuJournalListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuJournalListCell.swift; sourceTree = "<group>"; };
 		E992EC6B21FAEE4500917116 /* SideMenuJournalAddCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuJournalAddCell.swift; sourceTree = "<group>"; };
 		E992EC6D21FAEE4D00917116 /* SideMenuEditCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuEditCell.swift; sourceTree = "<group>"; };
-		E992EC6F21FAEE5B00917116 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
+		E992EC6F21FAEE5B00917116 /* SearchFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterViewController.swift; sourceTree = "<group>"; };
 		E992EC7121FAEE6700917116 /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		E992EC7721FAF4C200917116 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		E992EC7921FAFBC500917116 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
@@ -469,15 +475,17 @@
 				D512A767221BBD9600EF43C6 /* EntryInformationViewController.swift */,
 				D512A768221BBD9600EF43C6 /* Protocols */,
 				D50276E92202C7EE00A0DB5E /* EntryViewController.swift */,
-				E936659322110DF900DC660A /* BaseSlidingViewController.swift */,
-				E992EC6F21FAEE5B00917116 /* FilterViewController.swift */,
-				E992EC7121FAEE6700917116 /* SideMenuViewController.swift */,
 				E992EC7721FAF4C200917116 /* CalendarViewController.swift */,
 				D561692421FAD07000E00FED /* MainTabBarViewController.swift */,
 				D50276EF22041DA300A0DB5E /* TimeLineViewController.swift */,
 				D50276F122041DB100A0DB5E /* PhotosViewController.swift */,
 				D50276F322041DBA00A0DB5E /* MapViewController.swift */,
 				D512A7A6221BCE2600EF43C6 /* EditJournalViewController.swift */,
+				E936659322110DF900DC660A /* BaseSlidingViewController.swift */,
+				E992EC7121FAEE6700917116 /* SideMenuViewController.swift */,
+				E992EC6F21FAEE5B00917116 /* SearchFilterViewController.swift */,
+				D54A70C3221D35C300F37C5D /* RecentAndFilterViewController.swift */,
+				D54A70C5221D35DA00F37C5D /* FilterResultViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -513,6 +521,7 @@
 				E9DA39AB2203FCD20026381E /* FilterSection.swift */,
 				E992EC6021FAEDF500917116 /* SearchedKeywordCell.swift */,
 				E992EC6221FAEDFD00917116 /* MatchingEntriesCell.swift */,
+				D54A70C7221D74C400F37C5D /* FilterResultTableViewCell.swift */,
 			);
 			path = FilterCell;
 			sourceTree = "<group>";
@@ -730,7 +739,7 @@
 				E992EC7221FAEE6700917116 /* SideMenuViewController.swift in Sources */,
 				E992EC7821FAF4C200917116 /* CalendarViewController.swift in Sources */,
 				D561692521FAD07000E00FED /* MainTabBarViewController.swift in Sources */,
-				E992EC7021FAEE5B00917116 /* FilterViewController.swift in Sources */,
+				E992EC7021FAEE5B00917116 /* SearchFilterViewController.swift in Sources */,
 				D512A797221BBE0500EF43C6 /* TimelineHeaderCell.swift in Sources */,
 				E992EC6321FAEDFD00917116 /* MatchingEntriesCell.swift in Sources */,
 				D512A7A3221BBECB00EF43C6 /* CollectedEntriesListCell.swift in Sources */,
@@ -742,6 +751,7 @@
 				D512A773221BBDA600EF43C6 /* CoreDataDeviceService.swift in Sources */,
 				E992EC6C21FAEE4500917116 /* SideMenuJournalAddCell.swift in Sources */,
 				E992EC7F21FB2CCE00917116 /* CalendarDaysOfWeek.swift in Sources */,
+				D54A70C4221D35C300F37C5D /* RecentAndFilterViewController.swift in Sources */,
 				D50276B921FED1D200A0DB5E /* OneDay.xcdatamodeld in Sources */,
 				D512A78E221BBDF400EF43C6 /* ImageSource.swift in Sources */,
 				D516C8C82213E70200A4BDAC /* CoreDataManager.swift in Sources */,
@@ -757,6 +767,7 @@
 				D502765421FB0B8400A0DB5E /* Weather+CoreDataClass.swift in Sources */,
 				D561692521FAD07000E00FED /* MainTabBarViewController.swift in Sources */,
 				D512A7A7221BCE2600EF43C6 /* EditJournalViewController.swift in Sources */,
+				D54A70C6221D35DA00F37C5D /* FilterResultViewController.swift in Sources */,
 				D502765521FB0B8400A0DB5E /* Weather+CoreDataProperties.swift in Sources */,
 				D516C88F2212CB1700A4BDAC /* CoreDataWeatherService.swift in Sources */,
 				D512A7A4221BBECB00EF43C6 /* EditorSettingTableViewCell.swift in Sources */,
@@ -768,6 +779,7 @@
 				D54A70C2221D10B700F37C5D /* UIViewController+CATransition.swift in Sources */,
 				D502765C21FB0B8400A0DB5E /* Location+CoreDataClass.swift in Sources */,
 				D502765B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift in Sources */,
+				D54A70C8221D74C400F37C5D /* FilterResultTableViewCell.swift in Sources */,
 				E936659422110DF900DC660A /* BaseSlidingViewController.swift in Sources */,
 				D512A793221BBDF400EF43C6 /* EntrySetting.swift in Sources */,
 				D53782BD221113A100336646 /* PhotosCollectionViewCell.swift in Sources */,
