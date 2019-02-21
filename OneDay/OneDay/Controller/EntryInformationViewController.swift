@@ -14,16 +14,17 @@ class EntryInformationViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var mapView: MKMapView!
     
-    let settingIdentifier = "settingCellIdentifier"
-    var settingTableData: [[EntrySetting]] = [[],[],[]]  /// [section][row]
+    private let settingIdentifier = "settingCellIdentifier"
+    private var settingTableData: [[EntrySetting]] = [[],[],[]]  /// [section][row]
     
-    let regionRadius: CLLocationDegrees = 1000
+    private let regionRadius: CLLocationDegrees = 1000
     
-    let generator = UIImpactFeedbackGenerator(style: UIImpactFeedbackGenerator.FeedbackStyle.heavy)
+    private  let generator = UIImpactFeedbackGenerator(
+        style: UIImpactFeedbackGenerator.FeedbackStyle.heavy)
     
-    var dragDownChangePoint: CGFloat = 100  ///하단 뷰 아래로 드래그시 아래로 붙는 기준
-    var willPositionChange = false          ///드래그 종료시 변경되야하는지 여부
-    var canScroll = false
+    private var dragDownChangePoint: CGFloat = 100  ///하단 뷰 아래로 드래그시 아래로 붙는 기준
+    private var willPositionChange = false          ///드래그 종료시 변경되야하는지 여부
+    private var canScroll = false
     
     var entry: Entry!
     var topViewDateLabel: UILabel!
@@ -45,7 +46,7 @@ class EntryInformationViewController: UIViewController {
     
     // MARK: - Set up
     
-    func setUpTable() {
+    private func setUpTable() {
         tableView.register(
             EditorSettingTableViewCell.self,
             forCellReuseIdentifier: settingIdentifier
@@ -53,7 +54,7 @@ class EntryInformationViewController: UIViewController {
         tableView.isScrollEnabled = false
     }
     
-    func setUpSettingTableBaseSectionData() {
+    private func setUpSettingTableBaseSectionData() {
         let location = EntrySetting(
             title: "위치",
             detail: "",
@@ -108,7 +109,7 @@ class EntryInformationViewController: UIViewController {
         }
     }
     
-    func setUpSettingTableDaySectionData() {
+    private func setUpSettingTableDaySectionData() {
         let thisDay = EntrySetting(
             title: "이날에:",
             detail: "",
@@ -125,7 +126,7 @@ class EntryInformationViewController: UIViewController {
         settingTableData[1].append(today)
     }
     
-    func setUpSettingTableEctSectionData() {
+    private func setUpSettingTableEctSectionData() {
         let weather = EntrySetting(
             title: "날씨",
             detail: "",
@@ -140,7 +141,7 @@ class EntryInformationViewController: UIViewController {
         settingTableData[2].append(device)
     }
     
-    func setUpDate() {
+    private func setUpDate() {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko-KR")
         dateFormatter.dateFormat = "YYYY년 MM월 dd일, a h:mm"
@@ -164,7 +165,7 @@ class EntryInformationViewController: UIViewController {
         settingTableData[1][1].detail = "\(entriesAtDay.count) Entries"
     }
     
-    func setUpWeather() {
+    private func setUpWeather() {
         if let weather = entry.weather {
             guard let type = weather.type else { return }
             if let weatherType = WeatherType(rawValue: type) {
@@ -180,7 +181,7 @@ class EntryInformationViewController: UIViewController {
         }
     }
     
-    func setUpLocation() {
+    private func setUpLocation() {
         if let location = entry.location {
             settingTableData[0][0].detail = location.address
         } else {
@@ -215,7 +216,7 @@ class EntryInformationViewController: UIViewController {
         }
     }
     
-    func setUpDevice() {
+    private func setUpDevice() {
         if let entryDevice = entry.device {
             if let entryDeviceName = entryDevice.name, let entryDeviceModel = entryDevice.model {
                 settingTableData[2][1].detail = "\(entryDeviceName), \(entryDeviceModel)"
@@ -229,7 +230,7 @@ class EntryInformationViewController: UIViewController {
         }
     }
     
-    func setUpMap() {
+    private func setUpMap() {
         var initialLocation = CLLocation()
         let point = CustomPointAnnotation()
         if let location = entry.location {
@@ -259,7 +260,7 @@ class EntryInformationViewController: UIViewController {
         mapView.isUserInteractionEnabled = false
     }
     
-    func updateWeather() {
+    private func updateWeather() {
         guard let weather = entry.weather, let location = entry.location else { return }
         WeatherService.service.weather(
             latitude: location.latitude,
@@ -296,7 +297,7 @@ class EntryInformationViewController: UIViewController {
     }
     
     // MARK: - MAP
-    func centerMapOnLocation(location: CLLocation) {
+    private func centerMapOnLocation(location: CLLocation) {
         let coordinateRegion = MKCoordinateRegion(
             center: location.coordinate,
             latitudinalMeters: regionRadius,
@@ -307,7 +308,7 @@ class EntryInformationViewController: UIViewController {
     
     // MARK: - Alert
     
-    func showAlert(title: String = "", message: String = "") {
+    private func showAlert(title: String = "", message: String = "") {
         let alertController = UIAlertController(
             title: title,
             message: message,
@@ -427,7 +428,7 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
 
 extension EntryInformationViewController {
     
-    func changeJournal() {
+    private func changeJournal() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
         let journalChangeViewController = JournalChangeViewController()
         journalChangeViewController.alertController = alert
@@ -439,7 +440,7 @@ extension EntryInformationViewController {
         }
     }
     
-    func changeDate() {
+    private func changeDate() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
         let datePickerViewController = DatePickerViewController()
         datePickerViewController.date = self.entry.date
@@ -461,7 +462,7 @@ extension EntryInformationViewController {
         }
     }
     
-    func toggleFavorite() {
+    private func toggleFavorite() {
         entry.favorite.toggle()
         if entry.favorite {
             settingTableData[0][4].detail = "즐겨찾기 해제"
@@ -475,7 +476,7 @@ extension EntryInformationViewController {
         }
     }
     
-    func presentThisDayEntries() {
+    private func presentThisDayEntries() {
         let date = entry.date
         let calendar = Calendar.current
         let month = calendar.component(.month, from: date)
@@ -490,7 +491,7 @@ extension EntryInformationViewController {
         self.present(collectedEntriesViewController, animated: true, completion: nil)
     }
     
-    func presentAtDayEntries() {
+    private func presentAtDayEntries() {
         let date = entry.date
         let calendar = Calendar.current
         let year = calendar.component(.year, from: date)

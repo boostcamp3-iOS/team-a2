@@ -10,14 +10,14 @@ import UIKit
 
 class JournalChangeViewController: UIViewController {
     
-    var tableView: UITableView!
-    var newJournalButton: UIButton!
+    private var tableView: UITableView!
+    private var newJournalButton: UIButton!
     
-    let cellHeight: CGFloat = 40
-    var numberOfJournal: Int!
-    var heightConstant: CGFloat = 40
+    private let cellHeight: CGFloat = 40
+    private var numberOfJournal: Int!
+    private var heightConstant: CGFloat = 40
     
-    var journals: [Journal] = []
+    private var journals: [Journal] = []
     
     var alertController: UIAlertController!
     weak var journalChangeDelegate: JournalChangeDelegate?
@@ -30,13 +30,13 @@ class JournalChangeViewController: UIViewController {
         setUpButton()
     }
     
-    func loadJournals() {
+    private func loadJournals() {
         journals = CoreDataManager.shared.journals
         numberOfJournal = journals.count
         heightConstant = min(CGFloat(numberOfJournal) * cellHeight, 200)
     }
     
-    func setUpTableView() {
+    private func setUpTableView() {
         tableView = UITableView()
         tableView.backgroundColor = UIColor.white
         view.addSubview(tableView)
@@ -53,7 +53,7 @@ class JournalChangeViewController: UIViewController {
         tableView.dataSource = self
     }
     
-    func setUpButton() {
+    private func setUpButton() {
         newJournalButton = UIButton(type: UIButton.ButtonType.system)
         newJournalButton.setTitle("New Journal", for: UIControl.State.normal)
         
@@ -69,9 +69,6 @@ class JournalChangeViewController: UIViewController {
         newJournalButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         newJournalButton.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         newJournalButton.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-    }
-    
-    func createNewJournal() {
     }
 }
 
