@@ -46,6 +46,8 @@ class EntryViewController: UIViewController {
     fileprivate var bottomViewTopConstraint: NSLayoutConstraint!
     fileprivate var bottomViewBottomConstraint: NSLayoutConstraint!
     
+    private var keyboadrdToolbar: UIToolbar?
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -281,8 +283,27 @@ extension EntryViewController {
 
 // MARK: UITextViewDelegate
 extension EntryViewController: UITextViewDelegate {
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
         shouldSaveEntry = true
+    }
+    
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        if keyboadrdToolbar == nil {
+            keyboadrdToolbar = UIToolbar.init(frame:
+                CGRect.init(x: 0, y: 0, width: self.view.frame.size.width, height: 40))
+            let bbiSubmit = UIBarButtonItem.init(
+                title: "Submit",
+                style: .plain,
+                target: self,
+                action: #selector(hideKeyboard))
+            bbiSubmit.image = UIImage(named: "ic_down")
+            keyboadrdToolbar?.tintColor = UIColor.doGray
+            keyboadrdToolbar?.backgroundColor = UIColor.white
+            keyboadrdToolbar?.items = [bbiSubmit]
+            textView.inputAccessoryView = keyboadrdToolbar
+        }
+        return true
     }
 }
 
@@ -400,5 +421,17 @@ extension EntryViewController: StateChangeDelegate {
         )
         bottomContainerView.addGestureRecognizer(gesture)
         changeBottomTableViewConstraints()
+    }
+}
+
+// MARK: Keyboard
+
+extension EntryViewController {
+        }
+        return true
+    }
+    
+    @objc private func doBtnSubmit() {
+        textView.endEditing(false)
     }
 }
