@@ -24,7 +24,11 @@ class EntryViewController: UIViewController {
     @IBOutlet weak var checkImageView: UIImageView!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     
-    var entry: Entry!
+    var entry: Entry! {
+        didSet {
+            shouldSaveEntry = true
+        }
+    }
     
     ///드레그시 사용되는 미리보기 뷰
     private let imagePreview = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
@@ -166,7 +170,7 @@ extension EntryViewController {
                 // 이미지 파일 변환 및 파일로 저장, CoreData 저장
                 self.entry.contents = contents
                 self.entry.updatedDate = Date()
-                
+//                self.entry.monthAndYear =
                 // title로 사용할 string 추출
                 let stringContent = contents.string
                 if stringContent.count > 1 {
@@ -291,6 +295,7 @@ extension EntryViewController: UIImagePickerControllerDelegate, UINavigationCont
         _ picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]
     ) {
+        shouldSaveEntry = true
         var pickedImage: UIImage?
         if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
             pickedImage = editedImage
