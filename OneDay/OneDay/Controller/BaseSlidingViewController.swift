@@ -8,12 +8,12 @@
 
 import UIKit
 
-class BaseSlidingViewController: UIViewController {
-
+class BaseSlidingViewController: UIViewController,UIGestureRecognizerDelegate {
+    
     private struct ViewTag {
         static let snapshot = 1
     }
-
+    
     let baseMainView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -40,8 +40,9 @@ class BaseSlidingViewController: UIViewController {
     
     fileprivate var baseMainViewLeftConstraint: NSLayoutConstraint!
     fileprivate var baseMainViewRightConstraint: NSLayoutConstraint!
+   
     fileprivate let sideViewWidth = Constants.sideWidth
-
+    
     fileprivate var statusBarAnimator = UIViewPropertyAnimator()
     
     override var prefersStatusBarHidden: Bool {
@@ -64,10 +65,24 @@ class BaseSlidingViewController: UIViewController {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         view.addGestureRecognizer(panGesture)
         
+        panGesture.delegate = self
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapDismiss))
         blurCoverView.addGestureRecognizer(tapGesture)
     }
-    
+
+    func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldReceive touch: UITouch)
+        -> Bool {
+        if touch.view?.superview is UITableViewCell {
+            return false
+        }
+        if touch.view?.superview?.superview is UITableViewCell {
+            return false
+        }
+        return true
+    }
+
     @objc fileprivate func handleTapDismiss() {
         closeMenu()
     }
@@ -117,6 +132,7 @@ class BaseSlidingViewController: UIViewController {
         guard let snapshotView = baseMainView.snapshotView(afterScreenUpdates: false)
             else { return }
         snapshotView.tag = ViewTag.snapshot
+        
         baseMainView.addSubview(snapshotView)
         snapshotView.topAnchor.constraint(equalTo: baseMainView.topAnchor).isActive = true
         snapshotView.leftAnchor.constraint(equalTo: baseMainView.leftAnchor).isActive = true
@@ -184,7 +200,7 @@ class BaseSlidingViewController: UIViewController {
         removeSnapShotView()
         performTransitionAnimation()
     }
-
+    
     fileprivate func removeSnapShotView() {
         if let viewWithSnapshotTag = self.view.viewWithTag(ViewTag.snapshot) {
             viewWithSnapshotTag.removeFromSuperview()
