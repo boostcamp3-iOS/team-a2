@@ -46,6 +46,9 @@ class EntryViewController: UIViewController {
     fileprivate var bottomViewTopConstraint: NSLayoutConstraint!
     fileprivate var bottomViewBottomConstraint: NSLayoutConstraint!
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     var bottomViewController: EntryInformationViewController!
     weak var statusChangeDelegate: StateChangeDelegate?
     
