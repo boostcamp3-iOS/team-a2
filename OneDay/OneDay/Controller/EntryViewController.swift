@@ -165,6 +165,7 @@ extension EntryViewController {
     }
     
     @IBAction func didTapDone(_ sender: UIButton) {
+        textView.endEditing(false)
         if shouldSaveEntry {
             self.blockView.isHidden = false
             
