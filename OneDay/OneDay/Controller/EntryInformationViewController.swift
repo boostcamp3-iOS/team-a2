@@ -60,7 +60,7 @@ class EntryInformationViewController: UIViewController {
             detail: "",
             image: UIImage(named: "setting_location")
         )
-        location.hasDisclouserIndicator = true
+        location.accessoryType = .disclosureIndicator
         settingTableData[0].append(location)
         
         let tag = EntrySetting(
@@ -68,7 +68,7 @@ class EntryInformationViewController: UIViewController {
             detail: "추가...",
             image: UIImage(named: "setting_tag")
         )
-        tag.hasDisclouserIndicator = true
+        tag.accessoryType = .disclosureIndicator
         settingTableData[0].append(tag)
         
         let journal = EntrySetting(
@@ -79,7 +79,7 @@ class EntryInformationViewController: UIViewController {
         if let journalTitle = entry.journal?.title {
             journal.detail = journalTitle
         }
-        journal.hasDisclouserIndicator = true
+        journal.accessoryType = .disclosureIndicator
         settingTableData[0].append(journal)
         
         let date = EntrySetting(
@@ -87,7 +87,7 @@ class EntryInformationViewController: UIViewController {
             detail: "",
             image: UIImage(named: "setting_date")
         )
-        date.hasDisclouserIndicator = true
+        date.accessoryType = .disclosureIndicator
         settingTableData[0].append(date)
         
         if entry.favorite {
@@ -115,14 +115,14 @@ class EntryInformationViewController: UIViewController {
             detail: "",
             image: UIImage(named: "setting_thisday")
         )
-        thisDay.hasDisclouserIndicator = true
+        thisDay.accessoryType = .disclosureIndicator
         settingTableData[1].append(thisDay)
         let today = EntrySetting(
             title: "이 날:",
             detail: "",
             image: UIImage(named: "setting_today")
         )
-        today.hasDisclouserIndicator = true
+        today.accessoryType = .disclosureIndicator
         settingTableData[1].append(today)
     }
     
@@ -467,7 +467,6 @@ extension EntryInformationViewController {
         if entry.favorite {
             settingTableData[0][4].detail = "즐겨찾기 해제"
             settingTableData[0][4].image = UIImage(named: "setting_like")
-            settingTableData[0][4].hasDisclouserIndicator = false
             topViewFavoriteImage.isHidden = false
         } else {
             settingTableData[0][4].detail = "즐겨찾기 설정"
