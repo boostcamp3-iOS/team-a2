@@ -23,6 +23,7 @@ class EntryViewController: UIViewController {
     @IBOutlet weak var blockView: UIView!
     @IBOutlet weak var checkImageView: UIImageView!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+    @IBOutlet weak var textViewBottomConstraint: NSLayoutConstraint!
     
     var entry: Entry!
     
@@ -46,12 +47,13 @@ class EntryViewController: UIViewController {
     fileprivate var bottomViewTopConstraint: NSLayoutConstraint!
     fileprivate var bottomViewBottomConstraint: NSLayoutConstraint!
     
-    private var keyboadrdToolbar: UIToolbar?
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     private weak var statusChangeDelegate: StateChangeDelegate?
+    
+    private var keyboadrdToolbar: UIToolbar?
+    var viewHeightWithoutTopView: CGFloat = 0
     
     // MARK: - Life cycle
     override func viewDidLoad() {
@@ -110,7 +112,9 @@ class EntryViewController: UIViewController {
     }
     
     private func setUpBottomView() {
-        bottomConstant = (UIScreen.main.bounds.height - topView.bounds.height) * 0.8
+        viewHeightWithoutTopView = view.bounds.height - topView.frame.maxY
+        bottomConstant = viewHeightWithoutTopView * 0.82
+        textViewBottomConstraint.constant = bottomConstant
         bottomContainerView.translatesAutoresizingMaskIntoConstraints = false
         bottomContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         bottomContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
@@ -283,10 +287,6 @@ extension EntryViewController {
             }
         }
     }
-    
-    @IBAction func hideKeyboardDidTap(_ sender: UITapGestureRecognizer) {
-        view.endEditing(true)
-    }
 }
 
 // MARK: UITextViewDelegate
@@ -300,15 +300,15 @@ extension EntryViewController: UITextViewDelegate {
         if keyboadrdToolbar == nil {
             keyboadrdToolbar = UIToolbar.init(frame:
                 CGRect.init(x: 0, y: 0, width: self.view.frame.size.width, height: 40))
-            let bbiSubmit = UIBarButtonItem.init(
+            let hideKeyboardButton = UIBarButtonItem.init(
                 title: "Submit",
                 style: .plain,
                 target: self,
                 action: #selector(hideKeyboard))
-            bbiSubmit.image = UIImage(named: "ic_down")
+            hideKeyboardButton.image = UIImage(named: "ic_down")
             keyboadrdToolbar?.tintColor = UIColor.doGray
             keyboadrdToolbar?.backgroundColor = UIColor.white
-            keyboadrdToolbar?.items = [bbiSubmit]
+            keyboadrdToolbar?.items = [hideKeyboardButton]
             textView.inputAccessoryView = keyboadrdToolbar
         }
         return true
@@ -445,12 +445,12 @@ extension EntryViewController {
             let keyboardRectangle = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRectangle.height
             
-            let contentInsets: UIEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardHeight + 5, right: 0.0)
+            let contentInsets: UIEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardHeight - (viewHeightWithoutTopView * 0.14), right: 0.0)
             textView.contentInset = contentInsets
             textView.scrollIndicatorInsets = contentInsets
             
             var viewFrame: CGRect = view.frame
-            viewFrame.size.height -= keyboardHeight
+            viewFrame.size.height -= keyboardHeight - (viewHeightWithoutTopView * 0.14)
             if !viewFrame.contains(textView.frame.origin) {
                 textView.scrollRectToVisible(textView.frame, animated: true)
             }
