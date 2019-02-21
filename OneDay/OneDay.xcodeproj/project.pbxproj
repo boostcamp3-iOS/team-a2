@@ -87,6 +87,8 @@
 		EC0CFB0422030A29001293B1 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0322030A29001293B1 /* WeatherService.swift */; };
 		EC0CFB0622030A53001293B1 /* APIWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0522030A53001293B1 /* APIWeather.swift */; };
 		EC0CFB0922030C1D001293B1 /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0822030C1D001293B1 /* NetworkProvider.swift */; };
+		EC4D58DF221B90970051A4F8 /* JournalChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC4D58DE221B90970051A4F8 /* JournalChangeViewController.swift */; };
+		EC512FAD221BB98E002B758D /* JournalChangeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC512FAC221BB98E002B758D /* JournalChangeProtocol.swift */; };
 		EC51AD0422193DA900049686 /* CoreDataDeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC51AD0322193DA900049686 /* CoreDataDeviceService.swift */; };
 		EC51AD0622193E3700049686 /* CoreDataLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC51AD0522193E3700049686 /* CoreDataLocationService.swift */; };
 		EC578578221A55690001CECC /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC578577221A55690001CECC /* DatePickerViewController.swift */; };
@@ -190,6 +192,8 @@
 		EC0CFB0322030A29001293B1 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		EC0CFB0522030A53001293B1 /* APIWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIWeather.swift; sourceTree = "<group>"; };
 		EC0CFB0822030C1D001293B1 /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
+		EC4D58DE221B90970051A4F8 /* JournalChangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalChangeViewController.swift; sourceTree = "<group>"; };
+		EC512FAC221BB98E002B758D /* JournalChangeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalChangeProtocol.swift; sourceTree = "<group>"; };
 		EC51AD0322193DA900049686 /* CoreDataDeviceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataDeviceService.swift; sourceTree = "<group>"; };
 		EC51AD0522193E3700049686 /* CoreDataLocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataLocationService.swift; sourceTree = "<group>"; };
 		EC578577221A55690001CECC /* DatePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerViewController.swift; sourceTree = "<group>"; };
@@ -419,6 +423,7 @@
 				D50276E92202C7EE00A0DB5E /* EntryViewController.swift */,
 				D50276E72202C79300A0DB5E /* TimelineViewController.swift */,
 				EC0BB233221699F500E2BB6F /* EntryInformationViewController.swift */,
+				EC4D58DE221B90970051A4F8 /* JournalChangeViewController.swift */,
 				EC578577221A55690001CECC /* DatePickerViewController.swift */,
 				E936659322110DF900DC660A /* BaseSlidingViewController.swift */,
 				E992EC6F21FAEE5B00917116 /* FilterViewController.swift */,
@@ -523,6 +528,7 @@
 			isa = PBXGroup;
 			children = (
 				EC0BB2352216A34700E2BB6F /* StateChangeProtocol.swift */,
+				EC512FAC221BB98E002B758D /* JournalChangeProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -699,6 +705,7 @@
 				D516C8BC2213B7D900A4BDAC /* OneDayDefaults.swift in Sources */,
 				E992EC6A21FAEE3C00917116 /* SideMenuJournalListCell.swift in Sources */,
 				E992EC6121FAEDF500917116 /* SearchedKeywordCell.swift in Sources */,
+				EC512FAD221BB98E002B758D /* JournalChangeProtocol.swift in Sources */,
 				E992EC7A21FAFBC500917116 /* CalendarCell.swift in Sources */,
 				E992EC7221FAEE6700917116 /* SideMenuViewController.swift in Sources */,
 				E992EC7821FAF4C200917116 /* CalendarViewController.swift in Sources */,
@@ -739,6 +746,7 @@
 				EC5E21AB220425390073D90E /* LocationService.swift in Sources */,
 				E9083DF922154370002A0E6F /* CollectedEntriesViewController.swift in Sources */,
 				D50276E82202C79300A0DB5E /* TimelineViewController.swift in Sources */,
+				EC4D58DF221B90970051A4F8 /* JournalChangeViewController.swift in Sources */,
 				D502766221FB0D6000A0DB5E /* WeatherType.swift in Sources */,
 				D5CCA136221698000055D264 /* AddActionViewController.swift in Sources */,
 				D5CCA11B2215309C0055D264 /* String+URL.swift in Sources */,
