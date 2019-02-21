@@ -10,7 +10,7 @@ import CoreData
 import UIKit
 
 class CalendarViewController: UIViewController {
-    let collectionView: UICollectionView = {
+    fileprivate let collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.sectionHeadersPinToVisibleBounds = true
         let screenWidth = UIScreen.main.bounds.width
@@ -26,13 +26,13 @@ class CalendarViewController: UIViewController {
     }()
     
     //  네비게이션 바 아래의 |일 월 화 수 목 금 토| 를 그리는 뷰
-    let daysOfWeekTitleView: CalendarDaysOfWeek = {
+    fileprivate let daysOfWeekTitleView: CalendarDaysOfWeek = {
         let view = CalendarDaysOfWeek()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    let datePicker: UIDatePicker = {
+    fileprivate let datePicker: UIDatePicker = {
         let picker = UIDatePicker()
         picker.backgroundColor = .white
         picker.datePickerMode = .date
@@ -45,8 +45,9 @@ class CalendarViewController: UIViewController {
     fileprivate var isPickingDate = false
     fileprivate var computedWeekday = 6
     fileprivate lazy var tabBarItemTouchCount = 0
-    
-    var fetchedEntriesDate = Set<String>()
+    fileprivate lazy var isDatePikcerPresented = false
+
+    fileprivate var fetchedEntriesDate = Set<String>()
     
     // MARK: - Life cycle
     
@@ -90,7 +91,9 @@ class CalendarViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = barButton
     }
     
-    @objc func presentDatePicker() {
+    @objc fileprivate func presentDatePicker() {
+        isDatePikcerPresented = true
+        
         view.addSubview(datePicker)
         datePicker.translatesAutoresizingMaskIntoConstraints = false
         datePicker.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -102,9 +105,16 @@ class CalendarViewController: UIViewController {
         datePicker.addTarget(self, action: #selector(pickDate), for: .valueChanged)
     }
     
-    @objc func pickDate() {
+    @objc fileprivate func pickDate() {
         isPickingDate = true
         collectionView.reloadData()
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        if isDatePikcerPresented {
+            datePicker.removeFromSuperview()
+            isDatePikcerPresented = false
+        }
     }
     
     // MARK: - Calendar Function
@@ -135,7 +145,7 @@ class CalendarViewController: UIViewController {
     
     // MARK: - Notification
     
-    func addCoreDataChangedNotificationObserver() {
+    fileprivate func addCoreDataChangedNotificationObserver() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(didReceiveCoreDataChangedNotification(_:)),
@@ -143,7 +153,7 @@ class CalendarViewController: UIViewController {
             object: nil)
     }
     
-    @objc func didReceiveCoreDataChangedNotification(_: Notification) {
+    @objc fileprivate func didReceiveCoreDataChangedNotification(_: Notification) {
         DispatchQueue.main.async { [weak self] in
             self?.setupCoreData()
             self?.collectionView.reloadData()
@@ -201,6 +211,7 @@ UICollectionViewDelegate {
         
         showActionSheet(indexPath.section, indexPath.item)
         datePicker.removeFromSuperview()
+        isDatePikcerPresented = false
         collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
     }
     
