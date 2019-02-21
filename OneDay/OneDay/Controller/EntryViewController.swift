@@ -31,7 +31,7 @@ class EntryViewController: UIViewController {
     private let textPreview = UIView()
     private let previewLabel = UILabel()
     
-    private lazy var isImageSelected = false
+    private var isImageSelected = false
     private var shouldSaveEntry = false
     
     ///하단 뷰 드래그시 사용되는 프로퍼티
