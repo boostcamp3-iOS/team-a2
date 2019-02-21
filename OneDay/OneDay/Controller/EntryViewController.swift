@@ -72,7 +72,7 @@ class EntryViewController: UIViewController {
         textView.attributedText = entry.contents
         textView.textDragDelegate = self
         textView.delegate = self
-        textView.font = UIFont.systemFont(ofSize: 20)
+        textView.font = UIFont.preferredFont(forTextStyle: .body)
     }
     
     private func setUpDate() {
