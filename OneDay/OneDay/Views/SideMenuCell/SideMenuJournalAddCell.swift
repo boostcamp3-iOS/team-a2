@@ -9,8 +9,9 @@
 import UIKit
 
 class SideMenuJournalAddCell: UITableViewCell {
-    
-    let borderView: UIView = {
+    // MARK: Properties
+    // Layout Components
+    private let borderView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.layer.borderWidth = 1
@@ -20,7 +21,7 @@ class SideMenuJournalAddCell: UITableViewCell {
         return view
     }()
     
-    let addLabel: UILabel = {
+    private let addLabel: UILabel = {
         let label = UILabel()
         label.text = "Start a New Journal!"
         label.backgroundColor = .white
@@ -29,12 +30,13 @@ class SideMenuJournalAddCell: UITableViewCell {
         return label
     }()
     
+    // MARK: Methods
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupCellView()
     }
     
-    func setupCellView() {
+    private func setupCellView() {
         addSubview(borderView)
         borderView.leftAnchor.constraint(equalTo: leftAnchor, constant: 8).isActive = true
         borderView.topAnchor.constraint(equalTo: topAnchor, constant: 8).isActive = true

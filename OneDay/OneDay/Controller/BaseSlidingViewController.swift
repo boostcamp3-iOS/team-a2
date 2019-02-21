@@ -9,18 +9,13 @@
 import UIKit
 
 class BaseSlidingViewController: UIViewController {
-    fileprivate var isMenuOpened = false
-    fileprivate var isStatusBarHidden = false
-    
-    fileprivate var baseMainViewLeftConstraint: NSLayoutConstraint!
-    fileprivate var baseMainViewRightConstraint: NSLayoutConstraint!
-    fileprivate let sideWidth = UIScreen.main.bounds.width*0.75
 
-    var statusBarAnimator = UIViewPropertyAnimator()
-    
+    private struct ViewTag {
+        static let snapshot = 1
+    }
+
     let baseMainView: UIView = {
         let view = UIView()
-        view.backgroundColor = .doBlue
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -40,12 +35,25 @@ class BaseSlidingViewController: UIViewController {
         return blur
     }()
     
+    fileprivate var isMenuOpened = false
+    fileprivate var isStatusBarHidden = false
+    
+    fileprivate var baseMainViewLeftConstraint: NSLayoutConstraint!
+    fileprivate var baseMainViewRightConstraint: NSLayoutConstraint!
+    fileprivate let sideViewWidth = Constants.sideWidth
+
+    fileprivate var statusBarAnimator = UIViewPropertyAnimator()
+    
     override var prefersStatusBarHidden: Bool {
         return self.isStatusBarHidden
     }
     
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return .slide
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     override func viewDidLoad() {
@@ -65,26 +73,18 @@ class BaseSlidingViewController: UIViewController {
     }
     
     @objc fileprivate func handleTapDismiss() {
-        isMenuOpened = false
-        baseMainViewLeftConstraint.constant = 0
-        baseMainViewRightConstraint.constant = 0
-        performAnimation()
-        
-        isStatusBarHidden = false
-        UIView.animate(withDuration: 0.2) {
-            self.setNeedsStatusBarAppearanceUpdate()
-        }
+        closeMenu()
     }
     
     @objc func handlePan(gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: view)
         var distance = translation.x
         
-        distance = isMenuOpened ? distance+sideWidth : distance
-        distance = min(sideWidth, distance)
+        distance = isMenuOpened ? distance+sideViewWidth : distance
+        distance = min(sideViewWidth, distance)
         distance = max(0, distance)
         
-        let progress = distance/sideWidth // 0.0 ~ 1
+        let progress = distance/sideViewWidth // 0.0 ~ 1
         baseMainViewLeftConstraint.constant = distance
         baseMainViewRightConstraint.constant = distance
         blurCoverView.alpha = progress
@@ -97,10 +97,14 @@ class BaseSlidingViewController: UIViewController {
                 duration: 0.1,
                 curve: .easeOut,
                 animations: {
-                self.setNeedsStatusBarAppearanceUpdate()
+                    self.setNeedsStatusBarAppearanceUpdate()
             })
             statusBarAnimator.startAnimation()
             statusBarAnimator.pauseAnimation()
+            
+            if !isMenuOpened {
+                addMainViewSnapshotView()
+            }
             
         case .changed:
             statusBarAnimator.fractionComplete = isStatusBarHidden ? progress : 1-progress
@@ -113,19 +117,44 @@ class BaseSlidingViewController: UIViewController {
         }
     }
     
+    fileprivate func addMainViewSnapshotView() {
+        guard let snapshotView = baseMainView.snapshotView(afterScreenUpdates: false)
+            else { return }
+        snapshotView.tag = ViewTag.snapshot
+        baseMainView.addSubview(snapshotView)
+        snapshotView.topAnchor.constraint(equalTo: baseMainView.topAnchor).isActive = true
+        snapshotView.leftAnchor.constraint(equalTo: baseMainView.leftAnchor).isActive = true
+        snapshotView.rightAnchor.constraint(equalTo: baseMainView.rightAnchor).isActive = true
+        snapshotView.bottomAnchor.constraint(equalTo: baseMainView.bottomAnchor).isActive = true
+        
+        snapshotView.addSubview(blurCoverView)
+        blurCoverView.leftAnchor.constraint(equalTo: baseMainView.leftAnchor).isActive = true
+        blurCoverView.topAnchor.constraint(equalTo: baseMainView.topAnchor).isActive = true
+        blurCoverView.rightAnchor.constraint(equalTo: baseMainView.rightAnchor).isActive = true
+        blurCoverView.bottomAnchor.constraint(equalTo: baseMainView.bottomAnchor).isActive = true
+        
+        let height = UIScreen.main.bounds.height
+        let shadowPath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 6, height: height))
+        blurCoverView.layer.shadowColor = UIColor.black.cgColor
+        blurCoverView.layer.shadowOpacity = 1
+        blurCoverView.layer.shadowOffset = CGSize.zero
+        blurCoverView.layer.shadowPath = shadowPath.cgPath
+        blurCoverView.layer.masksToBounds = true
+    }
+    
     fileprivate func handleEnded(gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: view)
         let velocity = gesture.velocity(in: view)
         let threshold: CGFloat = 500
         
         if isMenuOpened {
-            if abs(velocity.x) > threshold || abs(translation.x) > sideWidth/2 {
+            if abs(velocity.x) > threshold || abs(translation.x) > sideViewWidth/2 {
                 closeMenu()
             } else {
                 openMenu()
             }
         } else {
-            if velocity.x > threshold || translation.x > sideWidth/2 {
+            if velocity.x > threshold || translation.x > sideViewWidth/2 {
                 openMenu()
             } else {
                 closeMenu()
@@ -140,10 +169,10 @@ class BaseSlidingViewController: UIViewController {
         self.setNeedsStatusBarAppearanceUpdate()
         
         isMenuOpened = true
-        baseMainViewLeftConstraint.constant = sideWidth
-        baseMainViewRightConstraint.constant = sideWidth
-        performAnimation()
         
+        baseMainViewLeftConstraint.constant = sideViewWidth
+        baseMainViewRightConstraint.constant = sideViewWidth
+        performTransitionAnimation()
     }
     
     fileprivate func closeMenu() {
@@ -155,10 +184,18 @@ class BaseSlidingViewController: UIViewController {
         isMenuOpened = false
         baseMainViewLeftConstraint.constant = 0
         baseMainViewRightConstraint.constant = 0
-        performAnimation()
+
+        removeSnapShotView()
+        performTransitionAnimation()
+    }
+
+    fileprivate func removeSnapShotView() {
+        if let viewWithSnapshotTag = self.view.viewWithTag(ViewTag.snapshot) {
+            viewWithSnapshotTag.removeFromSuperview()
+        }
     }
     
-    fileprivate func performAnimation() {
+    fileprivate func performTransitionAnimation() {
         UIView.animate(
             withDuration: 0.3,
             delay: 0,
@@ -167,19 +204,22 @@ class BaseSlidingViewController: UIViewController {
             options: .curveEaseOut,
             animations: {
                 self.blurCoverView.alpha = self.isMenuOpened ? 1 : 0
-                self.view.layoutIfNeeded() },
+                self.view.layoutIfNeeded()
+        },
             completion: nil)
     }
     
     fileprivate func setupViews() {
         view.addSubview(baseMainView)
-        baseMainView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        baseMainView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         baseMainView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
         baseMainViewRightConstraint = baseMainView.rightAnchor.constraint(
             equalTo: view.rightAnchor)
         baseMainViewRightConstraint.isActive = true
         
-        baseMainViewLeftConstraint = baseMainView.leftAnchor.constraint(equalTo: view.leftAnchor)
+        baseMainViewLeftConstraint = baseMainView.leftAnchor.constraint(
+            equalTo: view.leftAnchor)
         baseMainViewLeftConstraint.isActive = true
         
         view.addSubview(baseSideView)
@@ -187,15 +227,15 @@ class BaseSlidingViewController: UIViewController {
         baseSideView.rightAnchor.constraint(
             equalTo: baseMainView.safeAreaLayoutGuide.leftAnchor).isActive = true
         baseSideView.bottomAnchor.constraint(equalTo: baseMainView.bottomAnchor).isActive = true
-        baseSideView.widthAnchor.constraint(equalToConstant: sideWidth).isActive = true
+        baseSideView.widthAnchor.constraint(equalToConstant: sideViewWidth).isActive = true
     }
     
     fileprivate func setupViewControllers() {
         guard let mainViewController: MainTabBarViewController =
             storyboard?.instantiateViewController(
                 withIdentifier: "tabMain") as? MainTabBarViewController
-        else {
-            return
+            else {
+                return
         }
         
         let sideViewController = SideMenuViewController()
@@ -203,37 +243,20 @@ class BaseSlidingViewController: UIViewController {
         let mainView = mainViewController.view!
         let sideView = sideViewController.view!
         
-        mainView.backgroundColor = .white
+        mainView.backgroundColor = .doBlue
+        
         mainView.translatesAutoresizingMaskIntoConstraints = false
         sideView.translatesAutoresizingMaskIntoConstraints = false
         
         baseMainView.addSubview(mainView)
         mainView.leftAnchor.constraint(equalTo: baseMainView.leftAnchor).isActive = true
-        mainView.topAnchor.constraint(
-            equalTo: baseMainView.topAnchor,
-            constant: 20).isActive = true
         mainView.rightAnchor.constraint(equalTo: baseMainView.rightAnchor).isActive = true
         mainView.bottomAnchor.constraint(equalTo: baseMainView.bottomAnchor).isActive = true
+        mainView.topAnchor.constraint(equalTo: baseMainView.topAnchor).isActive = true
         
-        baseMainView.addSubview(blurCoverView)
-        blurCoverView.leftAnchor.constraint(equalTo: baseMainView.leftAnchor).isActive = true
-        blurCoverView.topAnchor.constraint(equalTo: baseMainView.topAnchor).isActive = true
-        blurCoverView.rightAnchor.constraint(equalTo: baseMainView.rightAnchor).isActive = true
-        blurCoverView.bottomAnchor.constraint(equalTo: baseMainView.bottomAnchor).isActive = true
-        
-        let height = UIScreen.main.bounds.height
-        let shadowPath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 6, height: height))
-        blurCoverView.layer.shadowColor = UIColor.black.cgColor
-        blurCoverView.layer.shadowOpacity = 1
-        blurCoverView.layer.shadowOffset = CGSize.zero
-        blurCoverView.layer.shadowPath = shadowPath.cgPath
-        blurCoverView.layer.masksToBounds = true
-
         baseSideView.addSubview(sideView)
         sideView.leftAnchor.constraint(equalTo: baseSideView.leftAnchor).isActive = true
-        sideView.topAnchor.constraint(
-            equalTo: baseSideView.topAnchor,
-            constant: 20).isActive = true
+        sideView.topAnchor.constraint(equalTo: baseSideView.topAnchor).isActive = true
         sideView.rightAnchor.constraint(equalTo: baseSideView.rightAnchor).isActive = true
         sideView.bottomAnchor.constraint(equalTo: baseSideView.bottomAnchor).isActive = true
         

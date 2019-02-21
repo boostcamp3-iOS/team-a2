@@ -61,6 +61,11 @@
     <entity name="Tag" representedClassName="Tag" syncable="YES">
         <attribute name="title" attributeType="String" syncable="YES"/>
         <relationship name="entry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Entry" inverseName="tags" inverseEntity="Entry" syncable="YES"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="title"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <entity name="Weather" representedClassName="Weather" syncable="YES">
         <attribute name="tempature" optional="YES" attributeType="Integer 16" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>

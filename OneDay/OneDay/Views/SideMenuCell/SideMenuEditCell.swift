@@ -9,8 +9,9 @@
 import UIKit
 
 class SideMenuEditCell: UITableViewCell {
-    
-    let editTitleLabel: UILabel = {
+    // MARK: Properties
+    // Layout Components
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = ""
         label.backgroundColor = .white
@@ -19,19 +20,24 @@ class SideMenuEditCell: UITableViewCell {
         return label
     }()
     
+    // MARK: Methods
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupCellView()
     }
     
-    func setupCellView() {
-        addSubview(editTitleLabel)
-        editTitleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
-        editTitleLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+    private func setupCellView() {
+        addSubview(titleLabel)
+        titleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
+        titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+    }
+    
+    func bind(title: String) {
+        titleLabel.text = title
     }
 }

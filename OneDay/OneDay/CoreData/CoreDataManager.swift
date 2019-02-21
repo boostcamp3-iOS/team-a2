@@ -19,11 +19,6 @@ final class CoreDataManager {
     private var coreDataStack: CoreDataStack = CoreDataStack(modelName: "OneDay")
     private lazy var managedContext: NSManagedObjectContext = coreDataStack.managedContext
     
-    private var entrySortDescriptors: [NSSortDescriptor] = [] {
-        didSet {
-            NotificationCenter.default.post(name: CoreDataManager.DidChangedEntriesFilterNotification, object: nil)
-        }
-    }
     private var entryPredicates: [NSPredicate] = [] {
         didSet {
             NotificationCenter.default.post(name: CoreDataManager.DidChangedEntriesFilterNotification, object: nil)
@@ -32,7 +27,11 @@ final class CoreDataManager {
     
     // 최근 저널인 애들만 불러오는 거
     var currentJournalPredicate: NSPredicate {
-        return NSPredicate(format: "%K == %@", argumentArray: [#keyPath(Entry.journal), currentJournal])
+        if isDefaultJournal(uuid: currentJournal.journalId) {
+            return NSPredicate(format: "journal != nil")
+        } else {
+            return NSPredicate(format: "%K == %@", argumentArray: [#keyPath(Entry.journal), currentJournal])
+        }
     }
     
     // INITIAL
@@ -51,6 +50,7 @@ final class CoreDataManager {
     
     func changeCurrentJournal(to journal: Journal) {
         OneDayDefaults.currentJournalUUID = journal.journalId.uuidString
+        NotificationCenter.default.post(name: CoreDataManager.DidChangedEntriesFilterNotification, object: nil)
     }
     
     func isDefaultJournal(uuid: UUID) -> Bool {
@@ -58,7 +58,6 @@ final class CoreDataManager {
     }
 
     func save(successHandler: (() -> Void)? = nil, errorHandler: ((NSError) -> Void)? = nil) {
-        
         coreDataStack.saveContext(successHandler: {
             NotificationCenter.default.post(name: CoreDataManager.DidChangedCoredDataNotification, object: nil)
             if let successHandler = successHandler {
@@ -66,18 +65,7 @@ final class CoreDataManager {
             }
         }, errorHandler: errorHandler)
     }
-}
 
-// MARK: Entry Journal
-extension CoreDataManager {
-    
-    func addEntryFilter(filter: EntryFilter) {
-        entryPredicates.append(contentsOf: filter.predicates)
-    }
-    
-    func clearEntryFilter() {
-        entryPredicates = []
-    }
 }
 
 // MARK: Journal
@@ -91,6 +79,19 @@ extension CoreDataManager : CoreDataJournalService {
     var journals: [Journal] {
         let fetchRequest: NSFetchRequest<Journal> = Journal.fetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Journal.index), ascending: true)]
+        
+        do {
+            return try coreDataStack.managedContext.fetch(fetchRequest)
+        } catch {
+            fatalError("Couldn't get journals")
+        }
+    }
+    
+    // 모든 저널 : 모든 저널 제외
+    var journalsWithoutDefault: [Journal] {
+        let fetchRequest: NSFetchRequest<Journal> = Journal.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Journal.index), ascending: true)]
+        fetchRequest.predicate = NSPredicate(format: "index != 0")
         
         do {
             return try coreDataStack.managedContext.fetch(fetchRequest)
@@ -113,7 +114,11 @@ extension CoreDataManager : CoreDataJournalService {
         let journal = Journal(context: managedContext)
         journal.title = title
         journal.color = UIColor.doBlue
-        journal.index = index as NSNumber
+        if index == Constants.automaticNextJournalIndex {
+            journal.index = numberOfJounals as NSNumber
+        } else {
+            journal.index = index as NSNumber
+        }
         journal.journalId = UUID()
         coreDataStack.saveContext()
         return journal
@@ -294,9 +299,23 @@ extension CoreDataManager: CoreDataEntryService {
             sectionNameKeyPath: sectionNameKeyPath,
             cacheName: filter.cacheName)
     }
+    
 }
 
 extension CoreDataManager: CoreDataWeatherService {
+    var numbersOfWeathers: Int {
+        return weathers.count
+    }
+    
+    var weathers: [Weather] {
+        let fetchRequest: NSFetchRequest<Weather> = Weather.fetchRequest()
+        do {
+            return try coreDataStack.managedContext.fetch(fetchRequest)
+        } catch {
+            fatalError("Couldn't get weathers")
+        }
+    }
+    
     func insertWeather() -> Weather {
         let weather = Weather(context: managedContext)
         weather.weatherId = UUID.init()
@@ -306,6 +325,19 @@ extension CoreDataManager: CoreDataWeatherService {
 }
 
 extension CoreDataManager: CoreDataDeviceService {
+    var devices: [Device] {
+        let fetchRequest: NSFetchRequest<Device> = Device.fetchRequest()
+        do {
+            return try coreDataStack.managedContext.fetch(fetchRequest)
+        } catch {
+            fatalError("Couldn't get entries")
+        }
+    }
+    
+    var numbersOfDevices: Int {
+        return devices.count
+    }
+    
     func insertDevice() -> Device {
         let device = Device(context: managedContext)
         device.deviceId = UUID.init()
@@ -315,6 +347,18 @@ extension CoreDataManager: CoreDataDeviceService {
 }
 
 extension CoreDataManager: CoreDataLocationService {
+    var locations: [Location] {
+        let fetchRequest: NSFetchRequest<Location> = Location.fetchRequest()
+        do {
+            return try coreDataStack.managedContext.fetch(fetchRequest)
+        } catch {
+            fatalError("Couldn't get entries")
+        }
+    }
+    
+    var numbersOfLocations: Int {
+        return locations.count
+    }
     
     func insertLocation() -> Location {
         let location = Location(context: managedContext)

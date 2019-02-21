@@ -27,7 +27,7 @@ extension Entry {
     @NSManaged public var title: String?
     @NSManaged public var updatedDate: Date?
     @NSManaged public var year: NSNumber
-    @NSManaged public var monthAndYear: String?
+    @NSManaged public var monthAndYear: String
     @NSManaged public var device: Device?
     @NSManaged public var journal: Journal?
     @NSManaged public var location: Location?
@@ -51,7 +51,7 @@ extension Entry {
         if let year = dateComponents.year as NSNumber? {
             self.year = year
         }
-        monthAndYear = "\(year)년 \(month)"
+        self.monthAndYear = "\(year) \(month)"
     }
     
     var thmbnailFileName: String {

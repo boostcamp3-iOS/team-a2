@@ -9,5 +9,7 @@
 import Foundation
 
 protocol CoreDataLocationService {
+    var numbersOfLocations: Int { get }
+    var locations: [Location] { get }
     func insertLocation() -> Location
 }

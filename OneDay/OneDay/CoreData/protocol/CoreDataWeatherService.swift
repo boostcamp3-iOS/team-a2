@@ -9,5 +9,7 @@
 import Foundation
 
 protocol CoreDataWeatherService {
+    var numbersOfWeathers: Int { get }
+    var weathers: [Weather] { get }
     func insertWeather() -> Weather
 }
