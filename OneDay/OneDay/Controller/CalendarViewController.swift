@@ -9,7 +9,7 @@
 import CoreData
 import UIKit
 
-class CalendarViewController: UIViewController, UITabBarControllerDelegate {
+class CalendarViewController: UIViewController {
     let collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.sectionHeadersPinToVisibleBounds = true
@@ -44,10 +44,10 @@ class CalendarViewController: UIViewController, UITabBarControllerDelegate {
     fileprivate var isTodayIndex = false
     fileprivate var isPickingDate = false
     fileprivate var computedWeekday = 6
-    lazy var tappingTabItemCount = 0
-
+    fileprivate lazy var tabBarItemTouchCount = 0
+    
     var fetchedEntriesDate = Set<String>()
-
+    
     // MARK: - Life cycle
     
     override func viewDidLoad() {
@@ -56,13 +56,11 @@ class CalendarViewController: UIViewController, UITabBarControllerDelegate {
         setupCoreData()
         
         addCoreDataChangedNotificationObserver()
-        
-        tabBarController?.delegate = self
-        tappingTabItemCount = 0
+        addTabBarItemTouchingNotificationObserver()
     }
     
     // MARK: - CoreData
-
+    
     fileprivate func setupCoreData() {
         fetchedEntriesDate = []
         let entriesData = CoreDataManager.shared.currentJournalEntries
@@ -73,8 +71,8 @@ class CalendarViewController: UIViewController, UITabBarControllerDelegate {
             if let year = components.year,
                 let month = components.month,
                 let day = components.day {
-                    let date = "\(year)\(month)\(day)"
-                    fetchedEntriesDate.insert(date)
+                let date = "\(year)\(month)\(day)"
+                fetchedEntriesDate.insert(date)
             }
         }
     }
@@ -127,21 +125,11 @@ class CalendarViewController: UIViewController, UITabBarControllerDelegate {
     fileprivate func firstWeekdayInMonth(at section: Int) -> Int {
         let components = DateComponents(year: section/12+1, month: section%12+1, day: 1)
         let date = Calendar.current.date(from: components)
-
+        
         if let date = date {
             return Calendar.current.component(.weekday, from: date)-1 // 0:일요일 ~ 6:토요일
         } else {
             preconditionFailure("Error")
-        }
-    }
-    
-    func tabBarController(
-        _ tabBarController: UITabBarController,
-        didSelect viewController: UIViewController) {
-        tappingTabItemCount += 1
-        if tappingTabItemCount == 2 {
-            tappingTabItemCount = 0
-            scrollToDate(date: Date(), animated: false)
         }
     }
     
@@ -161,6 +149,26 @@ class CalendarViewController: UIViewController, UITabBarControllerDelegate {
             self?.collectionView.reloadData()
         }
     }
+    
+    fileprivate func addTabBarItemTouchingNotificationObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(touchTabBarItem),
+            name: NSNotification.Name(rawValue: "scrollToTodayCalendar"),
+            object: nil)
+    }
+    
+    @objc fileprivate func touchTabBarItem() {
+        tabBarItemTouchCount += 1
+        if tabBarItemTouchCount == 2 {
+            tabBarItemTouchCount = 0
+            scrollToDate(date: Date(), animated: false)
+        }
+    }
+    
+    fileprivate func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        tabBarItemTouchCount = 0
+    }
 }
 
 // MARK: - 콜렉션뷰, CollectionView
@@ -177,7 +185,6 @@ UICollectionViewDelegate {
         
         let numberOfDaysOfMonth = computedWeekday+lastDayInMonth(at: section)
         computedWeekday = numberOfDaysOfMonth%7
-        
         switch numberOfDaysOfMonth {
         case 1...28:
             return 28 // 7*4
@@ -205,8 +212,8 @@ UICollectionViewDelegate {
             withReuseIdentifier: "cellId",
             for: indexPath
             ) as? CalendarCell
-        else {
-            preconditionFailure("Error")
+            else {
+                preconditionFailure("Error")
         }
         
         let sectionNumber = indexPath.section
@@ -241,7 +248,7 @@ UICollectionViewDelegate {
         
         if isPickingDate {     // 데이트피커에서 선택한 날로 이동
             isPickingDate = false
-             scrollToDate(date: datePicker.date, animated: true)
+            scrollToDate(date: datePicker.date, animated: true)
         }
     }
     
@@ -284,8 +291,8 @@ UICollectionViewDelegate {
             withReuseIdentifier: "headerId",
             for: indexPath
             ) as? CalendarHeaderView
-        else {
-            preconditionFailure("Error")
+            else {
+                preconditionFailure("Error")
         }
         
         let year = indexPath.section/12+1
