@@ -63,7 +63,6 @@ class EntryViewController: UIViewController {
         setUpDate()
         setUpPreview()
         setUpBottomView()
-        setUpPreview()
         registerForKeyboardNotifications()
     }
     
