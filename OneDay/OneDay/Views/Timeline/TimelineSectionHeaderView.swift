@@ -27,7 +27,7 @@ class TimelineSectionHeaderView: UIView {
         setupView()
     }
     
-    func setupView() {
+     fileprivate func setupView() {
         addSubview(headerLabel)
         headerLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 8).isActive = true
         headerLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true

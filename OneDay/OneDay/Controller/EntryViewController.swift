@@ -173,7 +173,7 @@ extension EntryViewController {
                 // 이미지 파일 변환 및 파일로 저장, CoreData 저장
                 self.entry.contents = contents
                 self.entry.updatedDate = Date()
-//                self.entry.monthAndYear =
+
                 // title로 사용할 string 추출
                 let stringContent = contents.string
                 if stringContent.count > 1 {

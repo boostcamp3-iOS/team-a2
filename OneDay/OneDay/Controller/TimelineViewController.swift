@@ -10,8 +10,7 @@ import CoreData
 import CoreLocation
 import UIKit
 
-class TimelineViewController: UIViewController, UIGestureRecognizerDelegate,
-UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class TimelineViewController: UIViewController {
     
     // MARK: - Properties
     
@@ -70,21 +69,6 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
         })
     }
     
-    @IBAction func cameraButton(_ sender: UIButton) {
-        guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
-            selectImage(from: .photoLibrary)
-            return
-        }
-        selectImage(from: .camera)
-    }
-    
-    fileprivate func imagePickerController(
-        _ picker: UIImagePickerController,
-        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        picker.dismiss(animated: true, completion: nil)
-        createEntryWithImage(pickingMediaWithInfo: info)
-    }
-    
     // MARK: - Layout
 
     fileprivate func removeNavigatinBarBorderLine() {
@@ -123,6 +107,23 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
         )
         cameraButton.alpha = scrollingProgress
         editorButton.alpha = scrollingProgress
+    }
+}
+
+extension TimelineViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    @IBAction func cameraButton(_ sender: UIButton) {
+        guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+            selectImage(from: .photoLibrary)
+            return
+        }
+        selectImage(from: .camera)
+    }
+    
+    fileprivate func imagePickerController(
+        _ picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        createEntryWithImage(pickingMediaWithInfo: info)
     }
 }
 
