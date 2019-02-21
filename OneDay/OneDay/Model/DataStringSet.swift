@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+    
 struct DateStringSet {
     let weekDay: String
     let time: String
@@ -25,7 +25,7 @@ struct DateStringSet {
         dateFormatter.timeStyle = .none
         full = dateFormatter.string(from: date)
         
-        dateFormatter.dateFormat = "a HH:MM"
+        dateFormatter.dateFormat = "a HH:mm"
         time = dateFormatter.string(from: date)
         
         dateFormatter.dateFormat = "d"

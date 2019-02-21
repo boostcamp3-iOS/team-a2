@@ -51,7 +51,7 @@ extension Entry {
         if let year = dateComponents.year as NSNumber? {
             self.year = year
         }
-        
+        monthAndYear = "\(year)년 \(month)"
     }
     
     var thmbnailFileName: String {

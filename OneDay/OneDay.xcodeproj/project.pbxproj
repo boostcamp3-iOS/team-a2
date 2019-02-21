@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		788DDD3D0837F8506B1F924C /* Pods_OneDay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F23636A5909B46DE93DFD2 /* Pods_OneDay.framework */; };
 		D502765221FB0B8400A0DB5E /* Journal+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764221FB0B8400A0DB5E /* Journal+CoreDataClass.swift */; };
 		D502765321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift */; };
 		D502765421FB0B8400A0DB5E /* Weather+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764421FB0B8400A0DB5E /* Weather+CoreDataClass.swift */; };
@@ -64,6 +63,7 @@
 		E96BE83A21FAD96700266F6D /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E96BE83921FAD96700266F6D /* Colors.xcassets */; };
 		E96BE83F21FADA9600266F6D /* SideMenu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E96BE83E21FADA9600266F6D /* SideMenu.storyboard */; };
 		E96BE84121FADAAA00266F6D /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E96BE84021FADAAA00266F6D /* Setting.storyboard */; };
+		E97BB828221DAC280026FD10 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97BB827221DAC280026FD10 /* Foundation.framework */; };
 		E992EC6121FAEDF500917116 /* SearchedKeywordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6021FAEDF500917116 /* SearchedKeywordCell.swift */; };
 		E992EC6321FAEDFD00917116 /* MatchingEntriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6221FAEDFD00917116 /* MatchingEntriesCell.swift */; };
 		E992EC6521FAEE0600917116 /* FilterTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC6421FAEE0600917116 /* FilterTableCell.swift */; };
@@ -76,7 +76,7 @@
 		E992EC7A21FAFBC500917116 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7921FAFBC500917116 /* CalendarCell.swift */; };
 		E992EC7C21FB1E5500917116 /* CalendarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7B21FB1E5500917116 /* CalendarHeaderView.swift */; };
 		E992EC7F21FB2CCE00917116 /* CalendarDaysOfWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7E21FB2CCE00917116 /* CalendarDaysOfWeek.swift */; };
-		E9AA2814221875FC00B81E23 /* TimelineHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AA2813221875FC00B81E23 /* TimelineHeaderCell.swift */; };
+		E9AA2814221875FC00B81E23 /* TimelineSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AA2813221875FC00B81E23 /* TimelineSectionHeaderView.swift */; };
 		E9DA39AC2203FCD30026381E /* FilterSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DA39AB2203FCD20026381E /* FilterSection.swift */; };
 		EC0BB2252213E26F00E2BB6F /* EditorSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0BB2242213E26F00E2BB6F /* EditorSettingTableViewCell.swift */; };
 		EC0BB2272213FCEA00E2BB6F /* EntrySetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0BB2262213FCEA00E2BB6F /* EntrySetting.swift */; };
@@ -167,6 +167,7 @@
 		E96BE83921FAD96700266F6D /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		E96BE83E21FADA9600266F6D /* SideMenu.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SideMenu.storyboard; sourceTree = "<group>"; };
 		E96BE84021FADAAA00266F6D /* Setting.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
+		E97BB827221DAC280026FD10 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E992EC6021FAEDF500917116 /* SearchedKeywordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedKeywordCell.swift; sourceTree = "<group>"; };
 		E992EC6221FAEDFD00917116 /* MatchingEntriesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchingEntriesCell.swift; sourceTree = "<group>"; };
 		E992EC6421FAEE0600917116 /* FilterTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTableCell.swift; sourceTree = "<group>"; };
@@ -179,7 +180,7 @@
 		E992EC7921FAFBC500917116 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		E992EC7B21FB1E5500917116 /* CalendarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHeaderView.swift; sourceTree = "<group>"; };
 		E992EC7E21FB2CCE00917116 /* CalendarDaysOfWeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDaysOfWeek.swift; sourceTree = "<group>"; };
-		E9AA2813221875FC00B81E23 /* TimelineHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineHeaderCell.swift; sourceTree = "<group>"; };
+		E9AA2813221875FC00B81E23 /* TimelineSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineSectionHeaderView.swift; sourceTree = "<group>"; };
 		E9DA39AB2203FCD20026381E /* FilterSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSection.swift; sourceTree = "<group>"; };
 		EC0BB2242213E26F00E2BB6F /* EditorSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorSettingTableViewCell.swift; sourceTree = "<group>"; };
 		EC0BB2262213FCEA00E2BB6F /* EntrySetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntrySetting.swift; sourceTree = "<group>"; };
@@ -208,7 +209,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				788DDD3D0837F8506B1F924C /* Pods_OneDay.framework in Frameworks */,
+				E97BB828221DAC280026FD10 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,6 +219,7 @@
 		0E97F36932421EACCDFBF197 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E97BB827221DAC280026FD10 /* Foundation.framework */,
 				B2F23636A5909B46DE93DFD2 /* Pods_OneDay.framework */,
 			);
 			name = Frameworks;
@@ -382,7 +384,7 @@
 			isa = PBXGroup;
 			children = (
 				D50276ED2202D3C700A0DB5E /* TimelineTableViewCell.swift */,
-				E9AA2813221875FC00B81E23 /* TimelineHeaderCell.swift */,
+				E9AA2813221875FC00B81E23 /* TimelineSectionHeaderView.swift */,
 			);
 			path = Timeline;
 			sourceTree = "<group>";
@@ -702,7 +704,7 @@
 				E992EC7A21FAFBC500917116 /* CalendarCell.swift in Sources */,
 				E992EC7221FAEE6700917116 /* SideMenuViewController.swift in Sources */,
 				E992EC7821FAF4C200917116 /* CalendarViewController.swift in Sources */,
-				E9AA2814221875FC00B81E23 /* TimelineHeaderCell.swift in Sources */,
+				E9AA2814221875FC00B81E23 /* TimelineSectionHeaderView.swift in Sources */,
 				EC0BB22E22150EA300E2BB6F /* APILocation.swift in Sources */,
 				D5CCA1302216775F0055D264 /* MainTabBarViewController.swift in Sources */,
 				D516C8B52213B4CD00A4BDAC /* EntryFilter.swift in Sources */,
@@ -797,7 +799,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = OneDayTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -806,6 +810,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.boostcamp3.OneDayTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OneDay.app/OneDay";
@@ -816,7 +821,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = OneDayTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -825,6 +831,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.boostcamp3.OneDayTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OneDay.app/OneDay";
@@ -952,16 +959,17 @@
 			baseConfigurationReference = 0334D603A8EB8137C93DB4D1 /* Pods-OneDay.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 5BKN5926VM;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DJFQKX9L7C;
 				INFOPLIST_FILE = "$(SRCROOT)/OneDay/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.boostcamp3.OneDay;
+				PRODUCT_BUNDLE_IDENTIFIER = cjhjjkom.boostcamp3.OneDay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = OneDay;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -972,14 +980,15 @@
 			baseConfigurationReference = 3469E7E8A80EBF3C6908DBCC /* Pods-OneDay.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DJFQKX9L7C;
 				INFOPLIST_FILE = "$(SRCROOT)/OneDay/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.boostcamp3.OneDay;
+				PRODUCT_BUNDLE_IDENTIFIER = cjhjjkom.boostcamp3.OneDay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
