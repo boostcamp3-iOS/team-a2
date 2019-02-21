@@ -14,19 +14,19 @@ class BaseSlidingViewController: UIViewController,UIGestureRecognizerDelegate {
         static let snapshot = 1
     }
     
-    let baseMainView: UIView = {
+    fileprivate let baseMainView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    let baseSideView: UIView = {
+    fileprivate let baseSideView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    let blurCoverView: UIView = {
+    fileprivate let blurCoverView: UIView = {
         let blur = UIVisualEffectView()
         blur.backgroundColor = UIColor(white: 0, alpha: 0.2)
         blur.alpha = 0
@@ -72,8 +72,8 @@ class BaseSlidingViewController: UIViewController,UIGestureRecognizerDelegate {
 
     func gestureRecognizer(
         _ gestureRecognizer: UIGestureRecognizer,
-        shouldReceive touch: UITouch)
-        -> Bool {
+        shouldReceive touch: UITouch
+        ) -> Bool {
         if touch.view?.superview is UITableViewCell {
             return false
         }
@@ -87,7 +87,7 @@ class BaseSlidingViewController: UIViewController,UIGestureRecognizerDelegate {
         closeMenu()
     }
     
-    @objc func handlePan(gesture: UIPanGestureRecognizer) {
+    @objc fileprivate func handlePan(gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: view)
         var distance = translation.x
         
