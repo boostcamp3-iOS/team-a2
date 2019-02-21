@@ -24,6 +24,7 @@ class LocationService: NSObject {
     var latitude: CLLocationDegrees { return _latitude }
     var longitude: CLLocationDegrees { return _longitude }
     var location: CLLocation? { return _location }
+    var address: String = ""
     
     // MARK: - Methods
     
@@ -43,19 +44,23 @@ class LocationService: NSObject {
         NetworkProvider.request(url: url, success: success, errorHandler: errorHandler)
     }
         
-    func address(from location: CLLocation) -> String? {
-        let geocoder = CLGeocoder()
-        var address: String?
-        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+    func updateAddress(from location: CLLocation) {
+        CLGeocoder().reverseGeocodeLocation(location) { (placemarks, error) in
             if let placemark = placemarks?.first,
                 let subThoroughfare = placemark.subThoroughfare,
                 let thoroughfare = placemark.thoroughfare,
                 let locality = placemark.locality,
                 let administrativeArea = placemark.administrativeArea {
-                address = subThoroughfare + " " + thoroughfare + ", " + locality + " " + administrativeArea
+                self.address = subThoroughfare + " " + thoroughfare + ", " + locality + " " + administrativeArea
+            } else if error != nil {
+                self.currentAddress(success: { location in
+                    if let address = location.results.first?.fullAddress {
+                        self.address = address
+                    }
+                }, errorHandler: {
+                })
             }
         }
-        return address
     }
 }
 
@@ -70,5 +75,6 @@ extension LocationService: CLLocationManagerDelegate {
         let coordinate: CLLocationCoordinate2D = location.coordinate
         _latitude = coordinate.latitude
         _longitude = coordinate.longitude
+        updateAddress(from: location)
     }
 }

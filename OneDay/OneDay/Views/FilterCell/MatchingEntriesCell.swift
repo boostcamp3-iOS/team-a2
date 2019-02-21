@@ -7,54 +7,99 @@
 //
 
 import UIKit
+
 //Matching Entries - SearchBar.text와 일치하는 문자열이 있는 엔트리를 보여주는 셀
 class MatchingEntriesCell: UITableViewCell {
-    
-    let matchingTextLabel: UILabel = {
+    // MARK: Properties
+    // Layout Components
+    private let contentsLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
         label.numberOfLines = 3
         label.backgroundColor = .white
+        label.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.subheadline)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let matchingWeatherLabel: UILabel = {
+    private let weatherLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
         label.backgroundColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.caption1)
+        label.textColor = .gray
         return label
     }()
     
-    //FIXME: 엔트리에 이미지가 있으면 보이도록 추가해야 함
-    let matchingImageView: UIImageView = {
+    private let thumbnailImageView: UIImageView = {
         var imageView = UIImageView()
         imageView.image = UIImage()
         imageView.contentMode = .scaleAspectFit
-        imageView.contentMode = .center
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
+    
+    private lazy var contentLableTrailingConstaint: NSLayoutConstraint = contentsLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: minTrailingConstant)
+    
+    private let marginSize: UIEdgeInsets = UIEdgeInsets(top: 8, left: 16, bottom: -8, right: -16)
+    private let imageSize: CGSize = CGSize(width: 48, height: 48)
+    private lazy var maxTrailingConstant: CGFloat = (self.imageSize.width * -1) + (self.marginSize.right * 2)
+    private lazy var minTrailingConstant: CGFloat = self.marginSize.right
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupCell()
     }
     
-    func setupCell() {
-        addSubview(matchingTextLabel)
-        matchingTextLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 8).isActive = true
-        matchingTextLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8).isActive = true
-        matchingTextLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -8).isActive = true
-        
-        addSubview(matchingWeatherLabel)
-        matchingWeatherLabel.leftAnchor.constraint(equalTo: matchingTextLabel.leftAnchor, constant: 0).isActive = true
-        matchingWeatherLabel.topAnchor.constraint(equalTo: matchingTextLabel.bottomAnchor, constant: 8).isActive = true
-        matchingWeatherLabel.rightAnchor.constraint(equalTo: matchingTextLabel.rightAnchor, constant: 0).isActive = true
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func bind(keyword: String, entry: Entry) {
+        guard let content = entry.contents?.string else { return }
+        let range = (content as NSString).range(of: keyword)
+        let attributedText = NSMutableAttributedString(string: content)
+        attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.doBlue, range: range)
+        contentsLabel.attributedText = attributedText
+        weatherLabel.text = entry.weather?.type
+        
+        if let fileName = entry.thumbnail {
+            guard let imageURL = fileName.urlForDataStorage else { preconditionFailure("No thumbnail image") }
+            
+            do {
+                let imageData = try Data(contentsOf: imageURL)
+                thumbnailImageView.image = UIImage(data: imageData)
+                contentLableTrailingConstaint.constant = maxTrailingConstant
+            } catch {
+                preconditionFailure("invalid ImageURL")
+            }
+        } else {
+            thumbnailImageView.image = nil
+            contentLableTrailingConstaint.constant = minTrailingConstant
+        }
+    }
+}
+
+extension MatchingEntriesCell {
+    private func setupCell() {
+        addSubview(contentsLabel)
+        addSubview(weatherLabel)
+        addSubview(thumbnailImageView)
+        NSLayoutConstraint.activate([
+            contentsLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: marginSize.left),
+            contentsLabel.topAnchor.constraint(equalTo: topAnchor, constant: marginSize.top),
+            contentsLabel.bottomAnchor.constraint(equalTo: weatherLabel.topAnchor, constant: -2),
+            contentLableTrailingConstaint,
+            
+            weatherLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: marginSize.left),
+            weatherLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: marginSize.bottom),
+            weatherLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: maxTrailingConstant),
+            
+            thumbnailImageView.widthAnchor.constraint(equalToConstant: imageSize.width),
+            thumbnailImageView.heightAnchor.constraint(equalToConstant: imageSize.height),
+            thumbnailImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: marginSize.right),
+            thumbnailImageView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: marginSize.top),
+            thumbnailImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            thumbnailImageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: marginSize.bottom)
+        ])
     }
 }

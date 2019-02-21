@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="OneDay">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18A391" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="OneDay">
     <entity name="Device" representedClassName="Device" syncable="YES">
         <attribute name="deviceId" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="model" optional="YES" attributeType="String" syncable="YES"/>
@@ -24,8 +24,8 @@
         <attribute name="updatedDate" optional="YES" attributeType="Transformable" customClassName="Date" syncable="YES"/>
         <attribute name="year" attributeType="Transformable" customClassName="NSNumber" syncable="YES"/>
         <relationship name="device" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Device" inverseName="entries" inverseEntity="Device" syncable="YES"/>
-        <relationship name="journal" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Journal" inverseName="entries" inverseEntity="Journal" syncable="YES"/>
-        <relationship name="location" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Location" inverseName="entry" inverseEntity="Location" syncable="YES"/>
+        <relationship name="journal" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="Journal" inverseName="entries" inverseEntity="Journal" syncable="YES"/>
+        <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="entry" inverseEntity="Location" syncable="YES"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="entry" inverseEntity="Tag" syncable="YES"/>
         <relationship name="weather" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Weather" inverseName="entry" inverseEntity="Weather" syncable="YES"/>
         <uniquenessConstraints>
@@ -61,6 +61,11 @@
     <entity name="Tag" representedClassName="Tag" syncable="YES">
         <attribute name="title" attributeType="String" syncable="YES"/>
         <relationship name="entry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Entry" inverseName="tags" inverseEntity="Entry" syncable="YES"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="title"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <entity name="Weather" representedClassName="Weather" syncable="YES">
         <attribute name="tempature" optional="YES" attributeType="Integer 16" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>

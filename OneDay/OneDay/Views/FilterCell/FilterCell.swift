@@ -1,5 +1,5 @@
 //
-//  FilterTableCell.swift
+//  FilterCell.swift
 //  OneDay
 //
 //  Created by 정화 on 23/01/2019.
@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import CoreData
 
-//Filter - Favorite, 체크리스트, 태그...를 위한 셀
-class FilterTableCell: UITableViewCell {
-
-    let filterIcon: UIImageView = {
+class FilterCell: UITableViewCell {
+    // MARK: Properties
+    // Layout Components
+    private let filterIcon: UIImageView = {
         var imageView = UIImageView()
         imageView.image = UIImage(named: "sideMenuFilter") ?? UIImage()
         imageView.contentMode = .scaleAspectFit
@@ -20,7 +21,7 @@ class FilterTableCell: UITableViewCell {
         return imageView
     }()
     
-    let filterLabel: UILabel = {
+    private let filterLabel: UILabel = {
         let label = UILabel()
         label.text = "Filter"
         label.backgroundColor = .white
@@ -28,7 +29,7 @@ class FilterTableCell: UITableViewCell {
         return label
     }()
     
-    let contentsCountLabel: UILabel = {
+    private let contentsCountLabel: UILabel = {
         let label = UILabel()
         label.text = "0"
         label.backgroundColor = .white
@@ -36,19 +37,26 @@ class FilterTableCell: UITableViewCell {
         return label
     }()
     
+    // MARK: Methods
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupCell()
     }
     
-    func bind(filter filterItem: (name: String, image: String, count: Int)) {
-        selectionStyle = .none
-        filterIcon.image = UIImage(named: filterItem.image)
-        filterLabel.text = filterItem.name
-        contentsCountLabel.text = "\(filterItem.count)"
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
     
-    func setupCell() {
+    func bind(filter type: FilterType, count: Int) {
+        selectionStyle = .none
+        filterIcon.image = type.icon
+        filterLabel.text = type.title
+        contentsCountLabel.text = "\(count)"
+    }
+}
+
+extension FilterCell {
+    private func setupCell() {
         addSubview(filterIcon)
         filterIcon.leftAnchor.constraint(equalTo: leftAnchor, constant: 24).isActive = true
         filterIcon.widthAnchor.constraint(equalToConstant: 24)
@@ -61,9 +69,5 @@ class FilterTableCell: UITableViewCell {
         addSubview(contentsCountLabel)
         contentsCountLabel.leftAnchor.constraint(equalTo: rightAnchor, constant: -40).isActive = true
         contentsCountLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
