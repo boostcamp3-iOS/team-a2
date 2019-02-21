@@ -15,7 +15,7 @@ class MatchingEntriesCell: UITableViewCell {
     private let contentsLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 3
-        label.backgroundColor = .white
+        label.textAlignment = .left
         label.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.subheadline)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -56,9 +56,13 @@ class MatchingEntriesCell: UITableViewCell {
     
     func bind(keyword: String, entry: Entry) {
         guard let content = entry.contents?.string else { return }
-        let range = (content as NSString).range(of: keyword)
-        let attributedText = NSMutableAttributedString(string: content)
-        attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.doBlue, range: range)
+        let matchedRange = (content as NSString).range(of: keyword)
+        let paragraphRange = (content as NSString).paragraphRange(for: matchedRange)
+        let contentForView: String = (content as NSString).substring(with: paragraphRange)
+        let colorRange = (contentForView as NSString).range(of: keyword)
+        
+        let attributedText = NSMutableAttributedString(string: contentForView)
+        attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.doBlue, range: colorRange)
         contentsLabel.attributedText = attributedText
         weatherLabel.text = entry.weather?.type
         
