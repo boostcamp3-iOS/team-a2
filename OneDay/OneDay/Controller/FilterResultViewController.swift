@@ -12,7 +12,7 @@ import CoreData
 class FilterResultViewController: UIViewController {
     // MARK: Properties
     // delegate Properties
-    private weak var delegator: FilterViewControllerDelegate?
+    private weak var delegate: FilterViewControllerDelegate?
     
     private let reusableIdentifier: String = "filter_result_cell"
     private var filterType: FilterType!
@@ -42,7 +42,7 @@ class FilterResultViewController: UIViewController {
 
     func bind(type: FilterType, data: [NSManagedObject], delegator: FilterViewControllerDelegate?) {
         self.filterType = type
-        self.delegator = delegator
+        self.delegate = delegator
         
         switch type {
         case .favorite:
@@ -95,7 +95,7 @@ extension FilterResultViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         let filterData = filtersArray[indexPath.row]
-        delegator?.presentCollectedEntries(for: filterData.entries, title: filterDataTitle(data: filterData.filter))
+        delegate?.presentCollectedEntries(for: filterData.entries, title: filterDataTitle(data: filterData.filter))
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

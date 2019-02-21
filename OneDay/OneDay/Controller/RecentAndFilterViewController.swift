@@ -15,7 +15,7 @@ class RecentAndFilterViewController: UIViewController {
     // IBOutlet
     @IBOutlet weak var recentFilterTable: UITableView!
     // delegate Properties
-    private weak var delegator: FilterViewControllerDelegate?
+    private weak var delegate: FilterViewControllerDelegate?
     
     private var entries: [Entry]!
     private var recentKeywords: [(keyword: String, entries: [Entry])] = []
@@ -37,7 +37,7 @@ class RecentAndFilterViewController: UIViewController {
     
     func bind(entries: [Entry], delegator: FilterViewControllerDelegate) {
         self.entries = entries
-        self.delegator = delegator
+        self.delegate = delegator
     }
     
     private func addRecentKeywordsChangedNotificationObserver() {
@@ -144,16 +144,16 @@ extension RecentAndFilterViewController: UITableViewDelegate {
         case .recent:
             let recentKeyword = recentKeywords[indexPath.row]
             if !recentKeyword.entries.isEmpty {
-                delegator?.presentCollectedEntries(for: recentKeyword.entries, title: recentKeyword.keyword)
+                delegate?.presentCollectedEntries(for: recentKeyword.entries, title: recentKeyword.keyword)
             }
         case .filter:
             let filterData = filtersArray[indexPath.row]
             if filterData.type.isOneDepth {
                 guard let entries = filterData.data as? [Entry] else { preconditionFailure() }
-                delegator?.presentCollectedEntries(for: entries, title: filterData.type.title)
+                delegate?.presentCollectedEntries(for: entries, title: filterData.type.title)
             } else {
                 guard let filterResultViewController = storyboard?.instantiateViewController(withIdentifier: "filter_result") as? FilterResultViewController else { preconditionFailure() }
-                filterResultViewController.bind(type: filterData.type, data: filterData.data, delegator: delegator)
+                filterResultViewController.bind(type: filterData.type, data: filterData.data, delegator: delegate)
                 navigationController?.pushViewController(filterResultViewController, animated: true)
             }
         }

@@ -45,8 +45,10 @@ class SearchFilterViewController: UIViewController {
     
     // MARK: Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "filter_navi", let navigationViewController = segue.destination as? UINavigationController {
-            guard let filterContainerViewController = navigationViewController.topViewController as? RecentAndFilterViewController else { return }
+        if segue.identifier == "filter_navi",
+            let navigationViewController = segue.destination as? UINavigationController,
+            let filterContainerViewController = navigationViewController.topViewController as? RecentAndFilterViewController
+            {
             filterContainerViewController.bind(entries: entries, delegator: self)
         }
     }
@@ -62,7 +64,7 @@ class SearchFilterViewController: UIViewController {
 // MARK: 검색, SearchBar
 extension SearchFilterViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if let text = searchBar.text, text != "" {
+        if let text = searchBar.text, !text.isEmpty {
             matchedEntries = entries.filter {$0.contents?.string.contains(text) ?? false}
             searchTable.isHidden = false
             searchTable.reloadData()
