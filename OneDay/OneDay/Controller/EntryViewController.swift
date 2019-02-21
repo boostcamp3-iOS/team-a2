@@ -62,6 +62,7 @@ class EntryViewController: UIViewController {
         setUpPreview()
         setUpBottomView()
         setUpPreview()
+        registerForKeyboardNotifications()
     }
     
     // MARK: - Bind Data to View
@@ -130,6 +131,12 @@ class EntryViewController: UIViewController {
         )
         bottomContainerView.addGestureRecognizer(gesture)
         bottomContainerView.isUserInteractionEnabled = true
+    }
+    
+    func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasShown(_:)), name: UIResponder.keyboardDidShowNotification , object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillBeHidden(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     private func showAlert(title: String = "", message: String = "") {
@@ -427,11 +434,31 @@ extension EntryViewController: StateChangeDelegate {
 // MARK: Keyboard
 
 extension EntryViewController {
-        }
-        return true
+    
+    @objc private func hideKeyboard() {
+        textView.endEditing(false)
     }
     
-    @objc private func doBtnSubmit() {
-        textView.endEditing(false)
+    @objc private func keyboardWasShown(_ notification: Notification?) {
+        if let keyboardFrame: NSValue = notification?.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            
+            let contentInsets: UIEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardHeight + 5, right: 0.0)
+            textView.contentInset = contentInsets
+            textView.scrollIndicatorInsets = contentInsets
+            
+            var viewFrame: CGRect = view.frame
+            viewFrame.size.height -= keyboardHeight
+            if !viewFrame.contains(textView.frame.origin) {
+                textView.scrollRectToVisible(textView.frame, animated: true)
+            }
+        }
+    }
+    
+    @objc private func keyboardWillBeHidden(_ aNotification: Notification?) {
+        let contentInsets: UIEdgeInsets = .zero
+        textView.contentInset = contentInsets
+        textView.scrollIndicatorInsets = contentInsets
     }
 }
