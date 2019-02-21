@@ -56,6 +56,7 @@ class CalendarViewController: UIViewController, UITabBarControllerDelegate {
         setupCoreData()
         
         addCoreDataChangedNotificationObserver()
+        addEntriesFilterChangedNotificationObserver()
         
         tabBarController?.delegate = self
         tappingTabItemCount = 0
@@ -92,7 +93,7 @@ class CalendarViewController: UIViewController, UITabBarControllerDelegate {
         self.navigationItem.rightBarButtonItem = barButton
     }
     
-    @objc func presentDatePicker() {
+    @objc private func presentDatePicker() {
         view.addSubview(datePicker)
         datePicker.translatesAutoresizingMaskIntoConstraints = false
         datePicker.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -104,7 +105,7 @@ class CalendarViewController: UIViewController, UITabBarControllerDelegate {
         datePicker.addTarget(self, action: #selector(pickDate), for: .valueChanged)
     }
     
-    @objc func pickDate() {
+    @objc private func pickDate() {
         isPickingDate = true
         collectionView.reloadData()
     }
@@ -146,18 +147,31 @@ class CalendarViewController: UIViewController, UITabBarControllerDelegate {
     }
     
     // MARK: - Notification
-    
-    func addCoreDataChangedNotificationObserver() {
+    private func addCoreDataChangedNotificationObserver() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(didReceiveCoreDataChangedNotification(_:)),
-            name: CoreDataManager.DidChangedCoredDataNotification,
+            name: CoreDataManager.DidChangedCoreDataNotification,
             object: nil)
     }
     
-    @objc func didReceiveCoreDataChangedNotification(_: Notification) {
+    @objc private func didReceiveCoreDataChangedNotification(_: Notification) {
         DispatchQueue.main.async { [weak self] in
-            self?.setupCoreData()
+            self?.collectionView.reloadData()
+        }
+    }
+    
+    private func addEntriesFilterChangedNotificationObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didEntriesFilterChangedNotification(_:)),
+            name: CoreDataManager.DidChangedEntriesFilterNotification,
+            object: nil)
+    }
+    
+    @objc private func didEntriesFilterChangedNotification(_: Notification) {
+        setupCoreData()
+        DispatchQueue.main.async { [weak self] in
             self?.collectionView.reloadData()
         }
     }

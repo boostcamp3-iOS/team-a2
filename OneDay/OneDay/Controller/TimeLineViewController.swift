@@ -15,7 +15,7 @@ class TimelineViewController: UIViewController, UIGestureRecognizerDelegate {
     // MARK: - Properties
     @IBOutlet weak var timelineTableView: UITableView!
 
-    let fetchedResultsController: NSFetchedResultsController<Entry> =
+    private var fetchedResultsController: NSFetchedResultsController<Entry> =
         CoreDataManager.shared.timelineResultsController
     
     fileprivate var shouldShowDayLabelAtIndexPath = Set<IndexPath>()
@@ -30,6 +30,7 @@ class TimelineViewController: UIViewController, UIGestureRecognizerDelegate {
         registerTableviewCell()
         setupFetchedResultsController()
         addCoreDataChangedNotificationObserver()
+        addEntriesFilterChangedNotificationObserver()
     }
 
     // MARK: - Setup
@@ -66,6 +67,7 @@ class TimelineViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     fileprivate func setupFetchedResultsController() {
+        fetchedResultsController = CoreDataManager.shared.timelineResultsController
         do {
             fetchedResultsController.delegate = self
             try fetchedResultsController.performFetch()
@@ -82,16 +84,30 @@ class TimelineViewController: UIViewController, UIGestureRecognizerDelegate {
     }
   
     // MARK: - Notification
-
-    func addCoreDataChangedNotificationObserver() {
+    private func addCoreDataChangedNotificationObserver() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(didReceiveCoreDataChangedNotification(_:)),
-            name: CoreDataManager.DidChangedCoredDataNotification,
+            name: CoreDataManager.DidChangedCoreDataNotification,
             object: nil)
     }
     
-    @objc func didReceiveCoreDataChangedNotification(_: Notification) {
+    @objc private func didReceiveCoreDataChangedNotification(_: Notification) {
+        DispatchQueue.main.async { [weak self] in
+            self?.reloadData()
+        }
+    }
+    
+    private func addEntriesFilterChangedNotificationObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didEntriesFilterChangedNotification(_:)),
+            name: CoreDataManager.DidChangedEntriesFilterNotification,
+            object: nil)
+    }
+    
+    @objc private func didEntriesFilterChangedNotification(_: Notification) {
+        setupFetchedResultsController()
         DispatchQueue.main.async { [weak self] in
             self?.reloadData()
         }
