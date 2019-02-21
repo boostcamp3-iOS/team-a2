@@ -103,6 +103,7 @@ class EntryViewController: UIViewController {
     }
     
     private func setUpBottomView() {
+        bottomConstant = (UIScreen.main.bounds.height - topView.bounds.height) * 0.8
         bottomContainerView.translatesAutoresizingMaskIntoConstraints = false
         bottomContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         bottomContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
