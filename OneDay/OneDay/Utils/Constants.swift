@@ -19,5 +19,5 @@ struct Constants {
     static let sideWidth = UIScreen.main.bounds.width*0.75
     
     // Notification
-    static let tabBarItemTouchCountsNotification = "scrollToTodayCalendar"
+    static let tabBarItemTouchCountsNotification = NSNotification.Name("scrollToTodayCalendar")
 }

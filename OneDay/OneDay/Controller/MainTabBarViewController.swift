@@ -26,7 +26,7 @@ class MainTabBarViewController: UITabBarController {
         let scrollToTodayCalendar = Constants.tabBarItemTouchCountsNotification
         if tabBarController.selectedIndex == 4 {
             NotificationCenter.default.post(
-                name: NSNotification.Name(scrollToTodayCalendar),
+                name: scrollToTodayCalendar,
                 object: nil
             )
         }

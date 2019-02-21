@@ -165,7 +165,7 @@ class CalendarViewController: UIViewController {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(touchTabBarItem),
-            name: NSNotification.Name(rawValue: scrollToTodayCalendar),
+            name: scrollToTodayCalendar,
             object: nil)
     }
     
