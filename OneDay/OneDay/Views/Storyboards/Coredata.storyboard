@@ -37,6 +37,9 @@
                                                         <constraint firstAttribute="width" secondItem="FMw-1s-nCv" secondAttribute="height" id="cyn-mG-m82"/>
                                                     </constraints>
                                                     <state key="normal" image="timelineCamera"/>
+                                                    <connections>
+                                                        <action selector="cameraButton:" destination="bAA-nC-BcN" eventType="touchUpInside" id="1hv-Uz-vIe"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hrq-ji-RmT">
                                                     <rect key="frame" x="160" y="0.0" width="80" height="80"/>
@@ -62,20 +65,10 @@
                                     </constraints>
                                 </view>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="fSP-a6-1Vo">
-                                    <rect key="frame" x="0.0" y="310" width="375" height="1"/>
+                                    <rect key="frame" x="0.0" y="238" width="375" height="1"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="timelineCellId" id="TjK-1m-Jlj" customClass="TimelineTableViewCell" customModule="OneDay" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="266" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="TjK-1m-Jlj" id="gPk-0x-Rmc">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="bAA-nC-BcN" id="acj-VL-R0t"/>
                                     <outlet property="delegate" destination="bAA-nC-BcN" id="mXH-OX-jEg"/>
@@ -92,12 +85,11 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Uem-sK-ygE"/>
                     </view>
-                    <navigationItem key="navigationItem" title="일기장" largeTitleDisplayMode="never" id="9nm-xw-eAL">
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="HuU-2K-d2e">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="일기장" largeTitleDisplayMode="never" id="9nm-xw-eAL"/>
                     <connections>
+                        <outlet property="buttonBackgroundView" destination="MEL-XZ-niL" id="55N-1C-bYN"/>
+                        <outlet property="cameraButton" destination="FMw-1s-nCv" id="pSn-Gu-UXt"/>
+                        <outlet property="editorButton" destination="hrq-ji-RmT" id="skI-Rf-6Vv"/>
                         <outlet property="timelineTableView" destination="8rm-cg-MDR" id="srs-Hl-Ywx"/>
                     </connections>
                 </viewController>
@@ -286,11 +278,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ic_check" width="64" height="64"/>
-        <image name="picture-white" width="32" height="32"/>
-        <image name="setting_like" width="32" height="32"/>
-        <image name="timelineCamera" width="128" height="128"/>
-        <image name="timelineEdit" width="128" height="128"/>
+        <image name="ic_check" width="48" height="48"/>
+        <image name="picture-white" width="24" height="24"/>
+        <image name="setting_like" width="39.724136352539062" height="39.724136352539062"/>
+        <image name="timelineCamera" width="96" height="96"/>
+        <image name="timelineEdit" width="96" height="96"/>
         <namedColor name="doBlue">
             <color red="0.41176470588235292" green="0.74509803921568629" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
