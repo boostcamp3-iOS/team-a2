@@ -21,10 +21,12 @@ class WeatherService {
     func weather(
         latitude: Double,
         longitude: Double,
+        date: Date,
         success: @escaping (APIWeather) -> Void,
         errorHandler: @escaping () -> Void
-    ) {
-        let urlString  = "\(baseURL)/\(APIKey)/\(latitude),\(longitude)"
+        ) {
+        let unixTimeStamp = Int(date.timeIntervalSince1970)
+        let urlString  = "\(baseURL)/\(APIKey)/\(latitude),\(longitude),\(unixTimeStamp)"
         guard let url: URL = URL(string: urlString) else { return }
         NetworkProvider.request(url: url, success: success, errorHandler: errorHandler)
     }
