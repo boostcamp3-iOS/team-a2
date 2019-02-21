@@ -31,17 +31,17 @@ class EntryViewController: UIViewController {
     private let textPreview = UIView()
     private let previewLabel = UILabel()
     
-    lazy var isImageSelected = false
+    private var isImageSelected = false
     private var shouldSaveEntry = false
     
     ///하단 뷰 드래그시 사용되는 프로퍼티
-    var topConstant: CGFloat = 0            /// 하단 뷰 최상단
-    var bottomConstant: CGFloat = 520       /// 하단 뷰 최하단
-    var dragUpChangePoint: CGFloat = 400    ///하단 뷰 위로 드래그시 위로 붙는 기준
-    var isBottom = true                     ///하단 뷰가 아래에 있는지 여부
-    var willPositionChange = false          ///드래그 종료시 변경되야하는지 여부
+    private var topConstant: CGFloat = 0            /// 하단 뷰 최상단
+    private var bottomConstant: CGFloat = 520       /// 하단 뷰 최하단
+    private var dragUpChangePoint: CGFloat = 400    ///하단 뷰 위로 드래그시 위로 붙는 기준
+    private var isBottom = true                     ///하단 뷰가 아래에 있는지 여부
+    private var willPositionChange = false          ///드래그 종료시 변경되야하는지 여부
     
-    let generator = UIImpactFeedbackGenerator(style: UIImpactFeedbackGenerator.FeedbackStyle.heavy)
+    private let generator = UIImpactFeedbackGenerator(style: UIImpactFeedbackGenerator.FeedbackStyle.heavy)
     
     fileprivate var bottomViewTopConstraint: NSLayoutConstraint!
     fileprivate var bottomViewBottomConstraint: NSLayoutConstraint!
@@ -49,8 +49,7 @@ class EntryViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    var bottomViewController: EntryInformationViewController!
-    weak var statusChangeDelegate: StateChangeDelegate?
+    private weak var statusChangeDelegate: StateChangeDelegate?
     
     // MARK: - Life cycle
     override func viewDidLoad() {
@@ -70,12 +69,12 @@ class EntryViewController: UIViewController {
         textView.delegate = self
     }
     
-    func setUpDate() {
+    private func setUpDate() {
         let dateSet: DateStringSet = DateStringSet(date: entry.date)
         dateLabel.text = dateSet.full
     }
     
-    func setUpPreview() {
+    private func setUpPreview() {
         textPreview.backgroundColor = UIColor(white: 1, alpha: 0.7)
         textPreview.layer.cornerRadius = 20
         textPreview.translatesAutoresizingMaskIntoConstraints = false
@@ -106,7 +105,8 @@ class EntryViewController: UIViewController {
         ).isActive = true
     }
     
-    func setUpBottomView() {
+    private func setUpBottomView() {
+        bottomConstant = (UIScreen.main.bounds.height - topView.bounds.height) * 0.8
         bottomContainerView.translatesAutoresizingMaskIntoConstraints = false
         bottomContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         bottomContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
@@ -129,7 +129,7 @@ class EntryViewController: UIViewController {
         bottomContainerView.isUserInteractionEnabled = true
     }
     
-    func showAlert(title: String = "", message: String = "") {
+    private func showAlert(title: String = "", message: String = "") {
         let alertController = UIAlertController(
             title: title,
             message: message,
@@ -211,7 +211,7 @@ extension EntryViewController {
     
     // MARK: - Gesture
     
-    @objc func didDrag(gestureRecognizer: UIPanGestureRecognizer) {
+    @objc private func didDrag(gestureRecognizer: UIPanGestureRecognizer) {
         if gestureRecognizer.state == .changed {
             let translation = gestureRecognizer.translation(in: view)
             var distance = translation.y + bottomConstant
@@ -233,7 +233,7 @@ extension EntryViewController {
         }
     }
     
-    func changeBottomTableViewConstraints() {
+    private func changeBottomTableViewConstraints() {
         if isBottom, willPositionChange {
             isBottom = false
             statusChangeDelegate?.changeState()
@@ -264,7 +264,9 @@ extension EntryViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "bottomViewSegue" {
             if let bottomViewController = segue.destination as? EntryInformationViewController {
-                bottomViewController.entryViewController = self
+                bottomViewController.entry = entry
+                bottomViewController.topViewDateLabel = dateLabel
+                bottomViewController.topViewFavoriteImage = favoriteImage
                 statusChangeDelegate = bottomViewController
                 bottomViewController.statusChangeDelegate = self
             }

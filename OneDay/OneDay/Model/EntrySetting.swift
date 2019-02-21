@@ -13,12 +13,12 @@ class EntrySetting {
     var title: String?
     var detail: String?
     var image: UIImage?
-    var hasDisclouserIndicator: Bool
+    var accessoryType: UITableViewCell.AccessoryType
     
     init(title: String?, detail: String?, image: UIImage?) {
         self.title = title
         self.detail = detail
         self.image = image
-        hasDisclouserIndicator = false
+        accessoryType = .none
     }
 }

@@ -15,9 +15,7 @@ class EditorSettingTableViewCell: UITableViewCell {
             textLabel?.text = setting.title
             detailTextLabel?.text = setting.detail
             imageView?.image = setting.image
-            if setting.hasDisclouserIndicator {
-                self.accessoryType = .disclosureIndicator
-            }
+            self.accessoryType = setting.accessoryType
         }
     }
     

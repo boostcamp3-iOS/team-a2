@@ -14,37 +14,39 @@ class EntryInformationViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var mapView: MKMapView!
     
-    let settingIdentifier = "settingCellIdentifier"
-    var settingTableData: [[EntrySetting]] = [[],[],[]]  /// [section][row]
+    private let settingIdentifier = "settingCellIdentifier"
+    private var settingTableData: [[EntrySetting]] = [[],[],[]]  /// [section][row]
     
-    let regionRadius: CLLocationDegrees = 1000
+    private let regionRadius: CLLocationDegrees = 1000
     
-    let generator = UIImpactFeedbackGenerator(style: UIImpactFeedbackGenerator.FeedbackStyle.heavy)
+    private  let generator = UIImpactFeedbackGenerator(
+        style: UIImpactFeedbackGenerator.FeedbackStyle.heavy)
     
-    var dragDownChangePoint: CGFloat = 100  ///하단 뷰 아래로 드래그시 아래로 붙는 기준
-    var willPositionChange = false          ///드래그 종료시 변경되야하는지 여부
-    var canScroll = false
+    private var dragDownChangePoint: CGFloat = 100  ///하단 뷰 아래로 드래그시 아래로 붙는 기준
+    private var willPositionChange = false          ///드래그 종료시 변경되야하는지 여부
+    private var canScroll = false
     
-    var entryViewController: EntryViewController!
+    var entry: Entry!
+    var topViewDateLabel: UILabel!
+    var topViewFavoriteImage: UIImageView!
     weak var statusChangeDelegate: StateChangeDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setUpTable()
         setUpSettingTableBaseSectionData()
         setUpSettingTableDaySectionData()
         setUpSettingTableEctSectionData()
         setUpDate()
-        setUpWeather()
         setUpLocation()
+        setUpWeather()
         setUpDevice()
         setUpMap()
     }
     
     // MARK: - Set up
     
-    func setUpTable() {
+    private func setUpTable() {
         tableView.register(
             EditorSettingTableViewCell.self,
             forCellReuseIdentifier: settingIdentifier
@@ -52,13 +54,13 @@ class EntryInformationViewController: UIViewController {
         tableView.isScrollEnabled = false
     }
     
-    func setUpSettingTableBaseSectionData() {
+    private func setUpSettingTableBaseSectionData() {
         let location = EntrySetting(
             title: "위치",
             detail: "",
             image: UIImage(named: "setting_location")
         )
-        location.hasDisclouserIndicator = true
+        location.accessoryType = .disclosureIndicator
         settingTableData[0].append(location)
         
         let tag = EntrySetting(
@@ -66,15 +68,18 @@ class EntryInformationViewController: UIViewController {
             detail: "추가...",
             image: UIImage(named: "setting_tag")
         )
-        tag.hasDisclouserIndicator = true
+        tag.accessoryType = .disclosureIndicator
         settingTableData[0].append(tag)
         
         let journal = EntrySetting(
             title: "일기장",
-            detail: "일기장",
+            detail: "",
             image: UIImage(named: "setting_journal")
         )
-        journal.hasDisclouserIndicator = true
+        if let journalTitle = entry.journal?.title {
+            journal.detail = journalTitle
+        }
+        journal.accessoryType = .disclosureIndicator
         settingTableData[0].append(journal)
         
         let date = EntrySetting(
@@ -82,17 +87,17 @@ class EntryInformationViewController: UIViewController {
             detail: "",
             image: UIImage(named: "setting_date")
         )
-        date.hasDisclouserIndicator = true
+        date.accessoryType = .disclosureIndicator
         settingTableData[0].append(date)
         
-        if entryViewController.entry.favorite {
+        if entry.favorite {
             let favorite = EntrySetting(
                 title: "즐겨찾기",
                 detail: "즐겨찾기 해제",
                 image: UIImage(named: "setting_like")
             )
             settingTableData[0].append(favorite)
-            entryViewController.favoriteImage.isHidden = false
+            topViewFavoriteImage.isHidden = false
         } else {
             let favorite = EntrySetting(
                 title: "즐겨찾기",
@@ -100,28 +105,28 @@ class EntryInformationViewController: UIViewController {
                 image: UIImage(named: "setting_dislike")
             )
             settingTableData[0].append(favorite)
-            entryViewController.favoriteImage.isHidden = true
+            topViewFavoriteImage.isHidden = true
         }
     }
     
-    func setUpSettingTableDaySectionData() {
+    private func setUpSettingTableDaySectionData() {
         let thisDay = EntrySetting(
-            title: "이 날에",
-            detail: "thisday",
+            title: "이날에:",
+            detail: "",
             image: UIImage(named: "setting_thisday")
         )
-        thisDay.hasDisclouserIndicator = true
+        thisDay.accessoryType = .disclosureIndicator
         settingTableData[1].append(thisDay)
         let today = EntrySetting(
-            title: "이 날",
-            detail: "today",
+            title: "이 날:",
+            detail: "",
             image: UIImage(named: "setting_today")
         )
-        today.hasDisclouserIndicator = true
+        today.accessoryType = .disclosureIndicator
         settingTableData[1].append(today)
     }
     
-    func setUpSettingTableEctSectionData() {
+    private func setUpSettingTableEctSectionData() {
         let weather = EntrySetting(
             title: "날씨",
             detail: "",
@@ -136,16 +141,32 @@ class EntryInformationViewController: UIViewController {
         settingTableData[2].append(device)
     }
     
-    func setUpDate() {
+    private func setUpDate() {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko-KR")
         dateFormatter.dateFormat = "YYYY년 MM월 dd일, a h:mm"
-        let fullDate = dateFormatter.string(from: entryViewController.entry.date)
+        let fullDate = dateFormatter.string(from: entry.date)
         settingTableData[0][3].detail = fullDate
+        
+        let date = entry.date
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: date)
+        let month = calendar.component(.month, from: date)
+        let day = calendar.component(.day, from: date)
+        let entriesOnThisDay = CoreDataManager.shared.filter(
+            by: [.thisDay(month: month, day: day)])
+        let entriesAtDay = CoreDataManager.shared.filter(
+            by:[.thisYear(year: year),
+                .thisDay(month: month, day: day)])
+        
+        settingTableData[1][0].title = "이날에: \(month)월 \(day)일"
+        settingTableData[1][0].detail = "\(entriesOnThisDay.count) Entries"
+        settingTableData[1][1].title = "이 날: \(year)년 \(month)월 \(day)일"
+        settingTableData[1][1].detail = "\(entriesAtDay.count) Entries"
     }
     
-    func setUpWeather() {
-        if let weather = entryViewController.entry.weather {
+    private func setUpWeather() {
+        if let weather = entry.weather {
             guard let type = weather.type else { return }
             if let weatherType = WeatherType(rawValue: type) {
                 settingTableData[2][0].detail = "\(weather.tempature)℃ \(weatherType.summary)"
@@ -155,51 +176,27 @@ class EntryInformationViewController: UIViewController {
             }
         } else {
             let weather = CoreDataManager.shared.insertWeather()
-            entryViewController.entry.weather = weather
-            
-            WeatherService.service.weather(
-                latitude: LocationService.service.latitude,
-                longitude: LocationService.service.longitude,
-                success: {[weak self] data in
-                    let degree: Int = Int((data.currently.temperature - 32) * (5/9)) /// ℉를 ℃로 변경
-                    weather.tempature = Int16(degree)
-                    weather.type = data.currently.icon
-                    weather.weatherId = UUID.init()
-                    DispatchQueue.main.sync {
-                        guard let type = weather.type else { return }
-                        if let weatherType = WeatherType(rawValue: type) {
-                            self?.settingTableData[2][0].detail =
-                                "\(weather.tempature)℃ \(weatherType.summary)"
-                            self?.settingTableData[2][0].image =
-                                UIImage(named: "setting-\(weatherType.rawValue)")
-                        } else {
-                            self?.settingTableData[2][0].detail = "\(weather.tempature)℃"
-                        }
-                        self?.tableView.reloadData()
-                    }
-                },
-                errorHandler: { [weak self] in
-                    self?.entryViewController.showAlert(title: "Error", message: "날씨 정보를 불러올 수 없습니다.")
-            })
+            entry.weather = weather
+            updateWeather()
         }
     }
     
-    func setUpLocation() {
-        if let location = entryViewController.entry.location {
+    private func setUpLocation() {
+        if let location = entry.location {
             settingTableData[0][0].detail = location.address
         } else {
-             var location: Location!
-             if let findLocation: Location = CoreDataManager.shared.location(
+            var location: Location!
+            if let findLocation: Location = CoreDataManager.shared.location(
                 longitude: LocationService.service.latitude,
                 latitude: LocationService.service.longitude
                 ) {
                 location = findLocation
-             } else {
+            } else {
                 location = CoreDataManager.shared.insertLocation()
-                 location.latitude = LocationService.service.latitude
-                 location.longitude = LocationService.service.longitude
-             }
-             entryViewController.entry.location = location
+                location.latitude = LocationService.service.latitude
+                location.longitude = LocationService.service.longitude
+            }
+            entry.location = location
 
             LocationService.service.currentAddress(
                 success: {[weak self] data in
@@ -214,29 +211,29 @@ class EntryInformationViewController: UIViewController {
                     }
                 },
                 errorHandler: { [weak self] in
-                    self?.entryViewController.showAlert(title: "Error", message: "위치 정보를 불러올 수 없습니다.")
+                    self?.showAlert(title: "Error", message: "위치 정보를 불러올 수 없습니다.")
             })
         }
     }
     
-    func setUpDevice() {
-        if let entryDevice = entryViewController.entry.device {
+    private func setUpDevice() {
+        if let entryDevice = entry.device {
             if let entryDeviceName = entryDevice.name, let entryDeviceModel = entryDevice.model {
                 settingTableData[2][1].detail = "\(entryDeviceName), \(entryDeviceModel)"
             }
         } else {
             let device = CoreDataManager.shared.insertDevice()
-            entryViewController.entry.device = device
+            entry.device = device
             device.name = UIDevice.current.name
             device.model = UIDevice.current.model
             settingTableData[2][1].detail = "\(UIDevice.current.name), \(UIDevice.current.model)"
         }
     }
     
-    func setUpMap() {
+    private func setUpMap() {
         var initialLocation = CLLocation()
         let point = CustomPointAnnotation()
-        if let location = entryViewController.entry.location {
+        if let location = entry.location {
             initialLocation = CLLocation(
                 latitude: location.latitude,
                 longitude: location.longitude
@@ -263,14 +260,65 @@ class EntryInformationViewController: UIViewController {
         mapView.isUserInteractionEnabled = false
     }
     
+    private func updateWeather() {
+        guard let weather = entry.weather, let location = entry.location else { return }
+        WeatherService.service.weather(
+            latitude: location.latitude,
+            longitude: location.longitude,
+            date: entry.date,
+            success: {[weak self] data in
+                let degree: Int = Int((data.currently.temperature - 32) * (5/9)) /// ℉를 ℃로 변경
+                weather.tempature = Int16(degree)
+                weather.type = data.currently.icon
+                weather.weatherId = UUID.init()
+                DispatchQueue.main.sync {
+                    guard let type = weather.type else { return }
+                    if let weatherType = WeatherType(rawValue: type) {
+                        self?.settingTableData[2][0].detail =
+                        "\(weather.tempature)℃ \(weatherType.summary)"
+                        self?.settingTableData[2][0].image =
+                            UIImage(named: "setting-\(weatherType.rawValue)")
+                    } else {
+                        self?.settingTableData[2][0].detail = "\(weather.tempature)℃"
+                    }
+                    
+                    self?.tableView.reloadData()
+                }
+            },
+            errorHandler: { [weak self] in
+                self?.showAlert(title: "Error", message: "날씨 정보를 불러올 수 없습니다.")
+                DispatchQueue.main.sync {
+                    self?.entry.weather?.type = "unKnown"
+                    self?.settingTableData[2][0].image = UIImage(named: "setting_weather")
+                    self?.settingTableData[2][0].detail = ""
+                    self?.tableView.reloadData()
+                }
+        })
+    }
+    
     // MARK: - MAP
-    func centerMapOnLocation(location: CLLocation) {
+    private func centerMapOnLocation(location: CLLocation) {
         let coordinateRegion = MKCoordinateRegion(
             center: location.coordinate,
             latitudinalMeters: regionRadius,
             longitudinalMeters: regionRadius
         )
         mapView.setRegion(coordinateRegion, animated: true)
+    }
+    
+    // MARK: - Alert
+    
+    private func showAlert(title: String = "", message: String = "") {
+        let alertController = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(
+            title: "확인",
+            style: .default,
+            handler: nil))
+        
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 
@@ -309,8 +357,7 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: settingIdentifier,
-            for: indexPath
-            ) as? EditorSettingTableViewCell else {
+            for: indexPath ) as? EditorSettingTableViewCell else {
                 preconditionFailure("EditorSettingTableViewCell reuse error!")
         }
         cell.setting = settingTableData[indexPath.section][indexPath.row]
@@ -328,17 +375,24 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
             case 1:
                 ()
             case 2:
-                ()
+                changeJournal()
             case 3:
-                changeDate(indexPath: indexPath)
+                changeDate()
             case 4:
                 toggleFavorite()
-                tableView.reloadRows(at: [indexPath], with: .none)
+                tableView.reloadData()
             default:
                 return
             }
         case .day:
-            ()
+            switch indexPath.row {
+            case 0:
+                presentThisDayEntries()
+            case 1:
+                presentAtDayEntries()
+            default:
+                return
+            }
         case .etc:
             ()
         }
@@ -373,34 +427,87 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
 // MARK: - Cell select actions
 
 extension EntryInformationViewController {
-    func changeDate(indexPath: IndexPath) {
+    
+    private func changeJournal() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        let journalChangeViewController = JournalChangeViewController()
+        journalChangeViewController.alertController = alert
+        journalChangeViewController.journalChangeDelegate = self
+        alert.setValue(journalChangeViewController, forKey: "contentViewController")
+        self.present(alert, animated: false) {
+            alert.view.superview?.isUserInteractionEnabled = true
+            alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alertControllerBackgroundTapped)))
+        }
+    }
+    
+    private func changeDate() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
         let datePickerViewController = DatePickerViewController()
-        datePickerViewController.date = self.entryViewController.entry.date
-        let okAction = UIAlertAction(title: "확인", style: .cancel) { _ in
+        datePickerViewController.date = self.entry.date
+        let okAction = UIAlertAction(title: "확인", style: .cancel) { [weak self]_ in
             let date = datePickerViewController.datePicker.date
-            self.entryViewController.entry.date = datePickerViewController.datePicker.date
-            self.entryViewController.entry.updateDate(date: date)
-            self.setUpDate()
-            self.tableView.reloadRows(at: [indexPath], with: .none)
+            self?.entry.date = datePickerViewController.datePicker.date
+            self?.entry.updateDate(date: date)
+            let dateSet: DateStringSet = DateStringSet(date: self?.entry.date)
+            self?.topViewDateLabel.text = dateSet.full
+            self?.setUpDate()
+            self?.updateWeather()
+            self?.tableView.reloadData()
         }
         alert.addAction(okAction)
         alert.setValue(datePickerViewController, forKey: "contentViewController")
-        self.present(alert, animated: false)
+        self.present(alert, animated: false) {
+            alert.view.superview?.isUserInteractionEnabled = true
+            alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alertControllerBackgroundTapped)))
+        }
     }
     
-    func toggleFavorite() {
-        entryViewController.entry.favorite.toggle()
-        if entryViewController.entry.favorite {
+    private func toggleFavorite() {
+        entry.favorite.toggle()
+        if entry.favorite {
             settingTableData[0][4].detail = "즐겨찾기 해제"
             settingTableData[0][4].image = UIImage(named: "setting_like")
-            settingTableData[0][4].hasDisclouserIndicator = false
-            entryViewController.favoriteImage.isHidden = false
+            topViewFavoriteImage.isHidden = false
         } else {
             settingTableData[0][4].detail = "즐겨찾기 설정"
             settingTableData[0][4].image = UIImage(named: "setting_dislike")
-            entryViewController.favoriteImage.isHidden = true
+            topViewFavoriteImage.isHidden = true
         }
+    }
+    
+    private func presentThisDayEntries() {
+        let date = entry.date
+        let calendar = Calendar.current
+        let month = calendar.component(.month, from: date)
+        let day = calendar.component(.day, from: date)
+        
+        let entriesOnThisDay = CoreDataManager.shared.filter(
+            by: [.thisDay(month: month, day: day)])
+        
+        let collectedEntriesViewController = CollectedEntriesViewController()
+        collectedEntriesViewController.dateLabel.text = "\(month)월 \(day)일"
+        collectedEntriesViewController.entriesData = entriesOnThisDay
+        self.present(collectedEntriesViewController, animated: true, completion: nil)
+    }
+    
+    private func presentAtDayEntries() {
+        let date = entry.date
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: date)
+        let month = calendar.component(.month, from: date)
+        let day = calendar.component(.day, from: date)
+        let entriesAtDay = CoreDataManager.shared.filter(
+            by:[.thisYear(year: year),
+                .thisDay(month: month, day: day)])
+        
+        let collectedEntriesViewController = CollectedEntriesViewController()
+        collectedEntriesViewController.dateLabel.text = "\(month)월 \(day)일"
+        collectedEntriesViewController.entriesData = entriesAtDay
+        self.present(collectedEntriesViewController, animated: true, completion: nil)
+    }
+    
+    @objc func alertControllerBackgroundTapped() {
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -408,19 +515,16 @@ extension EntryInformationViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseIdentifier = "pin"
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
-        
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
             annotationView?.canShowCallout = true
         } else {
             annotationView?.annotation = annotation
         }
-        
         guard let customPointAnnotation = annotation as? CustomPointAnnotation else {
             return annotationView
         }
         annotationView?.image = UIImage(named: customPointAnnotation.imageName)
-        
         return annotationView
     }
 }
@@ -429,6 +533,16 @@ extension EntryInformationViewController: StateChangeDelegate {
     func changeState() {
         tableView.isScrollEnabled = true
         canScroll = true
+    }
+}
+
+extension EntryInformationViewController: JournalChangeDelegate {
+    func changeJournal(to journal: Journal) {
+        entry.journal = journal
+        if let title = journal.title {
+            settingTableData[0][2].detail = title
+            tableView.reloadData()
+        }
     }
 }
 
