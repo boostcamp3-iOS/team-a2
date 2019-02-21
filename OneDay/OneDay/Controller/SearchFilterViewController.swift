@@ -70,6 +70,10 @@ extension SearchFilterViewController: UISearchBarDelegate {
             searchTable.isHidden = true
         }
     }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        view.endEditing(true)
+    }
 }
 
 // MARK: 테이블뷰에 사용될 Section enum 정의
@@ -95,17 +99,6 @@ extension SearchFilterViewController {
             case .keywords: return "Keywords"
             case .entries: return "Entries"
             }
-        }
-        
-        var heightForSectionHeader: CGFloat {
-            switch self {
-            case .entries: return 70
-            default: return 50
-            }
-        }
-        
-        var heightForCell: CGFloat {
-            return 50
         }
     }
 }
@@ -149,20 +142,11 @@ extension SearchFilterViewController: UITableViewDataSource {
 
 // MARK: UITableViewDelegate
 extension SearchFilterViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        guard let sectionType = Section(rawValue: section) else { preconditionFailure() }
-        return sectionType.heightForSectionHeader
-    }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         guard let sectionType = Section(rawValue: section) else { preconditionFailure() }
         return sectionType.sectionTitle
     }
-    
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        guard let sectionType = Section(rawValue: indexPath.section) else { preconditionFailure() }
-//        return sectionType.heightForCell
-//    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)

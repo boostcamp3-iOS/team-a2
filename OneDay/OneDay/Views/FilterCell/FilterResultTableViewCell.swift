@@ -24,8 +24,10 @@ class FilterResultTableViewCell: UITableViewCell {
             guard let location = data as? Location else { return }
             titleLabel.text = location.address
         case .weather:
-            guard let weather = data as? Weather, let type = weather.type else { return }
-            titleLabel.text = type
+            guard let weather = data as? Weather,
+                let type = weather.type,
+                let weatherType = WeatherType(rawValue: type) else { return }
+            titleLabel.text = weatherType.summary
             iconImageView.image = UIImage(named: type)
         case .device:
             guard let device = data as? Device else { return }

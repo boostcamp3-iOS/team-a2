@@ -12,7 +12,7 @@ import UIKit
 class MatchingEntriesCell: UITableViewCell {
     // MARK: Properties
     // Layout Components
-    private let matchingTextLabel: UILabel = {
+    private let contentsLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 3
         label.backgroundColor = .white
@@ -21,25 +21,29 @@ class MatchingEntriesCell: UITableViewCell {
         return label
     }()
     
-    private let matchingWeatherLabel: UILabel = {
+    private let weatherLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.callout)
+        label.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.caption1)
         label.textColor = .gray
         return label
     }()
     
-    private let matchingImageView: UIImageView = {
+    private let thumbnailImageView: UIImageView = {
         var imageView = UIImageView()
         imageView.image = UIImage()
         imageView.contentMode = .scaleAspectFit
-        imageView.contentMode = .center
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    private lazy var imageWidthConstraint: NSLayoutConstraint =  matchingImageView.widthAnchor.constraint(equalToConstant: 36)
+    private lazy var contentLableTrailingConstaint: NSLayoutConstraint = contentsLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: minTrailingConstant)
+    
+    private let marginSize: UIEdgeInsets = UIEdgeInsets(top: 8, left: 16, bottom: -8, right: -16)
+    private let imageSize: CGSize = CGSize(width: 48, height: 48)
+    private lazy var maxTrailingConstant: CGFloat = (self.imageSize.width * -1) + (self.marginSize.right * 2)
+    private lazy var minTrailingConstant: CGFloat = self.marginSize.right
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -55,24 +59,47 @@ class MatchingEntriesCell: UITableViewCell {
         let range = (content as NSString).range(of: keyword)
         let attributedText = NSMutableAttributedString(string: content)
         attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.doBlue, range: range)
-        matchingTextLabel.attributedText = attributedText
-        matchingWeatherLabel.text = entry.weather?.type
+        contentsLabel.attributedText = attributedText
+        weatherLabel.text = entry.weather?.type
+        
+        if let fileName = entry.thumbnail {
+            guard let imageURL = fileName.urlForDataStorage else { preconditionFailure("No thumbnail image") }
+            
+            do {
+                let imageData = try Data(contentsOf: imageURL)
+                thumbnailImageView.image = UIImage(data: imageData)
+                contentLableTrailingConstaint.constant = maxTrailingConstant
+            } catch {
+                preconditionFailure("invalid ImageURL")
+            }
+        } else {
+            thumbnailImageView.image = nil
+            contentLableTrailingConstaint.constant = minTrailingConstant
+        }
     }
 }
 
 extension MatchingEntriesCell {
     private func setupCell() {
-        addSubview(matchingTextLabel)
-        addSubview(matchingWeatherLabel)
+        addSubview(contentsLabel)
+        addSubview(weatherLabel)
+        addSubview(thumbnailImageView)
         NSLayoutConstraint.activate([
-            matchingTextLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            matchingTextLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            matchingTextLabel.bottomAnchor.constraint(equalTo: matchingWeatherLabel.topAnchor, constant: -2),
-            matchingTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -28),
+            contentsLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: marginSize.left),
+            contentsLabel.topAnchor.constraint(equalTo: topAnchor, constant: marginSize.top),
+            contentsLabel.bottomAnchor.constraint(equalTo: weatherLabel.topAnchor, constant: -2),
+            contentLableTrailingConstaint,
             
-            matchingWeatherLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            matchingWeatherLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4),
-            matchingWeatherLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -28)
+            weatherLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: marginSize.left),
+            weatherLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: marginSize.bottom),
+            weatherLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: maxTrailingConstant),
+            
+            thumbnailImageView.widthAnchor.constraint(equalToConstant: imageSize.width),
+            thumbnailImageView.heightAnchor.constraint(equalToConstant: imageSize.height),
+            thumbnailImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: marginSize.right),
+            thumbnailImageView.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: marginSize.top),
+            thumbnailImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            thumbnailImageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: marginSize.bottom)
         ])
     }
 }

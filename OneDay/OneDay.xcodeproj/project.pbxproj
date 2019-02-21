@@ -245,7 +245,6 @@
 			isa = PBXGroup;
 			children = (
 				D512A78C221BBDF400EF43C6 /* APILocation.swift */,
-				D512A789221BBDF400EF43C6 /* EntriesMarker.swift */,
 				D512A78D221BBDF400EF43C6 /* EntrySetting.swift */,
 				D512A788221BBDF400EF43C6 /* ImageSource.swift */,
 				D512A78A221BBDF400EF43C6 /* Tag+CoreDataClass.swift */,
@@ -357,6 +356,7 @@
 		D512A7A0221BBECB00EF43C6 /* Annotation */ = {
 			isa = PBXGroup;
 			children = (
+				D512A789221BBDF400EF43C6 /* EntriesMarker.swift */,
 				D512A7A1221BBECB00EF43C6 /* CustomPointAnnotaion.swift */,
 			);
 			path = Annotation;
