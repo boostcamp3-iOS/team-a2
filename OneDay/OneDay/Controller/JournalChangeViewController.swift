@@ -49,6 +49,11 @@ class JournalChangeViewController: UIViewController {
         tableView.heightAnchor.constraint(equalToConstant: heightConstant).isActive = true
         //view의 크기를 alertview의 크기로 맞추는 방법?
         
+        tableView.register(
+            UITableViewCell.self,
+            forCellReuseIdentifier: "journalChangeTableViewCell"
+        )
+        
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -80,10 +85,7 @@ extension JournalChangeViewController: UITableViewDataSource, UITableViewDelegat
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell!
-        tableView.dequeueReusableCell(withIdentifier: "journalChangeTableViewCell")
-        if cell == nil {
-            cell = UITableViewCell(style: .default, reuseIdentifier: "journalChangeTableViewCell")
-        }
+        cell = tableView.dequeueReusableCell(withIdentifier: "journalChangeTableViewCell")
     
         cell.backgroundColor = journals[indexPath.row].color
         cell.textLabel?.text = journals[indexPath.row].title
