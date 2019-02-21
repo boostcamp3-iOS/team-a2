@@ -227,14 +227,16 @@ extension EditJournalViewController: UITableViewDelegate {
         if editingStyle == .delete {
             // 1개 이상의 저널은 유지되어야 합니다.
             if journals.count == 1 {
-                let alert = UIAlertController(title: "삭제 불가",
+                let alert = UIAlertController(
+                    title: "삭제 불가",
                     message: "일기를 저장할 1개 이상의 저널이 필요합니다.",
                     preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
                 present(alert, animated: true, completion: nil)
             } else {
                 let journal = journals[indexPath.row]
-                let alert = UIAlertController(title: "\(journal.title ?? "") 저널을 삭제하시겠습니까?",
+                let alert = UIAlertController(
+                    title: "\(journal.title ?? "") 저널을 삭제하시겠습니까?",
                     message: "\(journal.entries?.count ?? 0)개의 기록이 사라집니다!",
                     preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: {[weak self]_ in
