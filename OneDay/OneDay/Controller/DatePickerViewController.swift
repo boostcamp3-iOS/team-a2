@@ -10,6 +10,8 @@ import UIKit
 
 class DatePickerViewController: UIViewController {
     
+    // MARK: - Properties
+    
     var date: Date!
     let datePicker = UIDatePicker()
     private let dateLabel = UILabel()
@@ -33,6 +35,8 @@ class DatePickerViewController: UIViewController {
         setUpDatePicker()
         setUpCurrentDateButton()
     }
+    
+    // MARK: - Set up
     
     private func setUpDateLabel() {
         dateLabel.text = dateFormatter.string(from: date)
@@ -91,6 +95,8 @@ class DatePickerViewController: UIViewController {
         currentDateButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8).isActive = true
         currentDateButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8).isActive = true
     }
+    
+    // MARK: - Actions
     
     @objc private func changeDatePockerMode(sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {

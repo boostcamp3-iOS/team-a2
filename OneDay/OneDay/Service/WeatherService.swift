@@ -16,6 +16,15 @@ class WeatherService {
     private let APIKey = "9deaa3b4d2ba8a4a3772c6d6015dba6b"
     
     // MARK: - Methods
+    
+    /**
+     Darksky API를 활용하여 매개변수에 따른 날씨정보 요청
+     
+     - Parameters:
+        - latitude: 날씨를 가져오려는 위치의 위도
+        - longitude: 날씨를 가져오려는 위치의 경도
+        - date: 날씨를 가져오려는 날짜
+     */
     func weather(
         latitude: Double,
         longitude: Double,

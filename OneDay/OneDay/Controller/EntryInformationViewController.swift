@@ -11,19 +11,24 @@ import MapKit
 
 class EntryInformationViewController: UIViewController {
     
+    // MARK: - Properties
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var mapView: MKMapView!
     
     private let settingIdentifier = "settingCellIdentifier"
-    private var settingTableData: [[EntrySetting]] = [[],[],[]]  /// [section][row]
+    /// [section][row]
+    private var settingTableData: [[EntrySetting]] = [[],[],[]]
     
     private let regionRadius: CLLocationDegrees = 1000
     
     private  let generator = UIImpactFeedbackGenerator(
         style: UIImpactFeedbackGenerator.FeedbackStyle.heavy)
     
-    private var dragDownChangePoint: CGFloat = 100  ///하단 뷰 아래로 드래그시 아래로 붙는 기준
-    private var willPositionChange = false          ///드래그 종료시 변경되야하는지 여부
+    ///하단 뷰 아래로 드래그시 아래로 붙는 기준
+    private var dragDownChangePoint: CGFloat = 100
+    ///드래그 종료시 변경되야하는지 여부
+    private var willPositionChange = false
     private var canScroll = false
     
     var entry: Entry!
@@ -322,6 +327,8 @@ class EntryInformationViewController: UIViewController {
     }
 }
 
+// MARK: - Extention
+
 extension EntryInformationViewController: UITableViewDataSource, UITableViewDelegate {
     
     // MARK: TableView
@@ -420,7 +427,7 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
     }
 }
 
-// MARK: - Cell select actions
+// MARK: Cell select actions
 
 extension EntryInformationViewController {
     
@@ -507,6 +514,8 @@ extension EntryInformationViewController {
     }
 }
 
+// MARK: MapView
+
 extension EntryInformationViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseIdentifier = "pin"
@@ -525,12 +534,16 @@ extension EntryInformationViewController: MKMapViewDelegate {
     }
 }
 
+// MARK: StateChangeDelegate
+
 extension EntryInformationViewController: StateChangeDelegate {
     func changeState() {
         tableView.isScrollEnabled = true
         canScroll = true
     }
 }
+
+// MARK: JournalChangeDelegate
 
 extension EntryInformationViewController: JournalChangeDelegate {
     func changeJournal(to journal: Journal) {

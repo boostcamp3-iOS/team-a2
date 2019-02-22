@@ -37,6 +37,7 @@ class LocationService: NSObject {
         }
     }
 
+    /// Google Geocodeing API를 활용하여 현재 위치에 대한 주소 요청
     func currentAddress(success: @escaping (APILocation) -> Void, errorHandler: @escaping () -> Void ) {
         let urlString  = "\(baseURL)?latlng=\(_latitude),\(_longitude)&key=\(APIKey)"
         guard let url: URL = URL(string: urlString) else { return }
@@ -64,11 +65,11 @@ class LocationService: NSObject {
 }
 
 extension LocationService: CLLocationManagerDelegate {
-    ///위치 변경시마다 업데이트
     func locationManager(
         _ manager: CLLocationManager,
         didUpdateLocations locations: [CLLocation]
     ) {
+        /// 위치 변경시마다 업데이트
         guard let location: CLLocation = manager.location else { return }
         _location = location
         let coordinate: CLLocationCoordinate2D = location.coordinate
