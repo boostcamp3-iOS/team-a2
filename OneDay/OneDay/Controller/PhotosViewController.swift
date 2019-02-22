@@ -17,6 +17,7 @@ class PhotosViewController: UIViewController {
     // MARK: IBOutlet
     
     @IBOutlet weak var photoCollectionView: UICollectionView!
+    @IBOutlet weak var photosNavigationItem: UINavigationItem!
     
     private var entries: [Entry] = []
     private let reuseIdentifier = "photo_cell"
@@ -29,6 +30,7 @@ class PhotosViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        photosNavigationItem.title = CoreDataManager.shared.currentJournal.title
         configureCollectionViewLayout()
         addNotifications()
         loadData()
@@ -36,6 +38,7 @@ class PhotosViewController: UIViewController {
     
     /// CoreData에서 Filter 조건을 넘기고 데이터를 받아서 CollectionView Reload
     private func loadData() {
+        photosNavigationItem.title = CoreDataManager.shared.currentJournal.title
         entries = CoreDataManager.shared.filter(by: defaultFilters)
         photoCollectionView.reloadData()
     }
@@ -75,6 +78,7 @@ class PhotosViewController: UIViewController {
     /// Filter Condition이 변경되었다는 을 받았을 때: collectionView reload
     @objc func didReceiveEntriesFilterNotification(_: Notification) {
         DispatchQueue.main.async { [weak self] in
+            self?.photosNavigationItem.title = CoreDataManager.shared.currentJournal.title
             self?.loadData()
         }
     }

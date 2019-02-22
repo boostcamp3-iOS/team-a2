@@ -49,6 +49,9 @@
                         <viewLayoutGuide key="safeArea" id="6uQ-5w-1Wb"/>
                     </view>
                     <navigationItem key="navigationItem" title="Calendar" largeTitleDisplayMode="never" id="is1-pg-qhU"/>
+                    <connections>
+                        <outlet property="calendarNavigationItem" destination="is1-pg-qhU" id="wmR-BR-Eof"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K6o-rY-CBW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -219,11 +222,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="add" width="36.799999237060547" height="36.799999237060547"/>
-        <image name="ic_calendar" width="34.5" height="34.5"/>
-        <image name="map" width="36.799999237060547" height="36.799999237060547"/>
-        <image name="picture" width="27" height="27"/>
-        <image name="tabs" width="36.799999237060547" height="36.799999237060547"/>
+        <image name="add" width="23" height="23"/>
+        <image name="ic_calendar" width="23" height="23"/>
+        <image name="map" width="23" height="23"/>
+        <image name="picture" width="36" height="36"/>
+        <image name="tabs" width="23" height="23"/>
         <namedColor name="doBlue">
             <color red="0.41176470588235292" green="0.74509803921568629" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
