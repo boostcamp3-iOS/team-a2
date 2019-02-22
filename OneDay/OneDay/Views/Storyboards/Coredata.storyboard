@@ -205,7 +205,6 @@
                         </subviews>
                         <color key="backgroundColor" name="doBlue"/>
                         <constraints>
-                            <constraint firstItem="rRh-hW-4PN" firstAttribute="bottom" secondItem="JMn-5r-ZV0" secondAttribute="bottom" id="A7u-Rs-IxB"/>
                             <constraint firstItem="uUP-an-P7R" firstAttribute="leading" secondItem="rRh-hW-4PN" secondAttribute="leading" id="EhU-tV-rxg"/>
                             <constraint firstItem="JMn-5r-ZV0" firstAttribute="top" secondItem="uUP-an-P7R" secondAttribute="bottom" id="LXl-R8-taX"/>
                             <constraint firstItem="8Nl-4y-PUX" firstAttribute="centerY" secondItem="rRh-hW-4PN" secondAttribute="centerY" id="PcY-F8-YPO"/>
@@ -217,6 +216,7 @@
                             <constraint firstItem="Nkt-Pn-1es" firstAttribute="leading" secondItem="luO-4J-UVg" secondAttribute="leading" id="iRO-lc-9Vw"/>
                             <constraint firstItem="rRh-hW-4PN" firstAttribute="trailing" secondItem="JMn-5r-ZV0" secondAttribute="trailing" id="lzB-8H-JGC"/>
                             <constraint firstAttribute="bottom" secondItem="Nkt-Pn-1es" secondAttribute="bottom" id="m5Z-rR-f5a"/>
+                            <constraint firstItem="JMn-5r-ZV0" firstAttribute="bottom" secondItem="uUP-an-P7R" secondAttribute="bottom" constant="610" id="n16-bn-LlJ"/>
                             <constraint firstItem="Nkt-Pn-1es" firstAttribute="top" secondItem="luO-4J-UVg" secondAttribute="top" id="r5i-RF-1cd"/>
                             <constraint firstItem="JMn-5r-ZV0" firstAttribute="leading" secondItem="rRh-hW-4PN" secondAttribute="leading" id="t8o-8p-hAM"/>
                         </constraints>
@@ -230,6 +230,7 @@
                         <outlet property="dateLabel" destination="o3E-uk-gsi" id="Lo4-xf-Jdh"/>
                         <outlet property="favoriteImage" destination="Xe4-2M-DRX" id="k4Y-Jz-LvE"/>
                         <outlet property="textView" destination="JMn-5r-ZV0" id="EKQ-2r-FQO"/>
+                        <outlet property="textViewBottomConstraint" destination="n16-bn-LlJ" id="Res-db-rfa"/>
                         <outlet property="topView" destination="uUP-an-P7R" id="yJp-bB-mDD"/>
                     </connections>
                 </viewController>
