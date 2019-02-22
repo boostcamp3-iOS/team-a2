@@ -263,7 +263,7 @@ extension EntryViewController {
 
 extension EntryViewController {
     
-    /// 하단 뷰 드래그시에 제스처의 translation.y 만큼 top,bottom Constraint에 변화를 주어 이동시키는 함수
+    /// 하단 뷰 드래그시에 제스처의 translation.y 만큼 top,bottom Constraint에 변화를 주어 이동시키는 메서드
     @objc private func didDrag(gestureRecognizer: UIPanGestureRecognizer) {
         if gestureRecognizer.state == .changed {
             let translation = gestureRecognizer.translation(in: view)
@@ -286,7 +286,7 @@ extension EntryViewController {
         }
     }
     
-    /// 드래그 종료시 하단뷰의 위치를 올바른 위치로 이동시키는 함수
+    /// 드래그 종료시 하단뷰의 위치를 올바른 위치로 이동시키는 메서드
     private func changeBottomTableViewConstraints() {
         if isBottom, willPositionChange {
             isBottom = false
@@ -469,7 +469,7 @@ extension EntryViewController {
         textView.endEditing(false)
     }
     
-    /// Keyboard로 TextView가 가려지지 않도록하는 키보드가 올라올 때 처리하는 함수
+    /// Keyboard로 TextView가 가려지지 않도록하는 키보드가 올라올 때 처리하는 메서드
     @objc private func keyboardWasShown(_ notification: Notification?) {
         if let keyboardFrame: NSValue = notification?.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
@@ -487,7 +487,7 @@ extension EntryViewController {
         }
     }
     
-    /// 키보드가 내려갈 때 Keyboard로 TextView가 가려지지 않도록하는 처리한 것을 복구하는 함수
+    /// 키보드가 내려갈 때 Keyboard로 TextView가 가려지지 않도록하는 처리한 것을 복구하는 메서드
     @objc private func keyboardWillBeHidden(_ notification: Notification?) {
         let contentInsets: UIEdgeInsets = .zero
         textView.contentInset = contentInsets
