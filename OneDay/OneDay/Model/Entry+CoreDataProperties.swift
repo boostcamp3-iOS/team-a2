@@ -10,7 +10,6 @@
 import Foundation
 import CoreData
 
-
 extension Entry {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Entry> {
@@ -31,39 +30,12 @@ extension Entry {
     @NSManaged public var device: Device?
     @NSManaged public var journal: Journal?
     @NSManaged public var location: Location?
-    @NSManaged public var tags: NSSet?
     @NSManaged public var weather: Weather?
     
 }
 
-// MARK: Generated accessors for tags
 extension Entry {
     
-    func updateDate(date: Date) {
-        self.date = date
-        let dateComponents = Calendar.current.dateComponents(in: TimeZone.current, from: date)
-        if let month = dateComponents.month as NSNumber? {
-            self.month = month
-        }
-        if let day = dateComponents.day as NSNumber? {
-            self.day = day
-        }
-        if let year = dateComponents.year as NSNumber? {
-            self.year = year
-        }
-        self.monthAndYear = "\(year) \(month)"
-    }
-    
-    var thmbnailFileName: String {
-        return "entry_thumbnail_\(entryId.uuidString)"
-    }
-
-    @objc(addTagsObject:)
-    @NSManaged public func addToTags(_ value: Tag)
-
-    @objc(removeTagsObject:)
-    @NSManaged public func removeFromTags(_ value: Tag)
-
     @objc(addTags:)
     @NSManaged public func addToTags(_ values: NSSet)
 

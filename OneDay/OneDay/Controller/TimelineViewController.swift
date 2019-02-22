@@ -238,7 +238,7 @@ extension TimelineViewController: UITableViewDelegate, UITableViewDataSource {
         }
         let headerCellView = TimelineSectionHeaderView()
         
-        let formatter = DateFormatter.defualtInstance
+        let formatter = DateFormatter.defaultInstance
         formatter.dateFormat = "YYYY년 MM월"
         let sectionTitleHeader = formatter.string(from: fetchedEntryData.date)
         headerCellView.headerLabel.text = sectionTitleHeader

@@ -14,7 +14,7 @@ extension DateFormatter {
      
      TimeZone과 Locale이 설정되어 있다.
      */
-    static let defualtInstance: DateFormatter = {
+    static let defaultInstance: DateFormatter = {
         let dateFormatter: DateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone.current
         dateFormatter.locale = Locale.current

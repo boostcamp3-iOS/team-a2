@@ -152,7 +152,7 @@ extension CollectedEntriesViewController {
                 NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 12)]))
         }
         
-        let formatter = DateFormatter.defualtInstance
+        let formatter = DateFormatter.defaultInstance
         formatter.locale = Locale(identifier: "ko_KR")
         formatter.dateFormat = "YYYY년 MM월 dd일 EEEE a hh:mm"
         

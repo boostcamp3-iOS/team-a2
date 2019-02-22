@@ -29,7 +29,6 @@
 		D50276DA21FF09E100A0DB5E /* EntryServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276D921FF09E100A0DB5E /* EntryServiceTest.swift */; };
 		D50276EA2202C7EE00A0DB5E /* EntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276E92202C7EE00A0DB5E /* EntryViewController.swift */; };
 		D50276EC2202C82900A0DB5E /* DataStringSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276EB2202C82900A0DB5E /* DataStringSet.swift */; };
-		D50276EE2202D3C700A0DB5E /* SampleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276ED2202D3C700A0DB5E /* SampleTableViewCell.swift */; };
 		D50276F222041DB100A0DB5E /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276F122041DB100A0DB5E /* PhotosViewController.swift */; };
 		D50276F422041DBA00A0DB5E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276F322041DBA00A0DB5E /* MapViewController.swift */; };
 		D512A76B221BBD9600EF43C6 /* AddActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A764221BBD9600EF43C6 /* AddActionViewController.swift */; };
@@ -45,8 +44,6 @@
 		D512A77C221BBDBF00EF43C6 /* String+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A779221BBDBF00EF43C6 /* String+URL.swift */; };
 		D512A78E221BBDF400EF43C6 /* ImageSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A788221BBDF400EF43C6 /* ImageSource.swift */; };
 		D512A78F221BBDF400EF43C6 /* EntriesMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A789221BBDF400EF43C6 /* EntriesMarker.swift */; };
-		D512A790221BBDF400EF43C6 /* Tag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A78A221BBDF400EF43C6 /* Tag+CoreDataClass.swift */; };
-		D512A791221BBDF400EF43C6 /* Tag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A78B221BBDF400EF43C6 /* Tag+CoreDataProperties.swift */; };
 		D512A793221BBDF400EF43C6 /* EntrySetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A78D221BBDF400EF43C6 /* EntrySetting.swift */; };
 		D512A798221BBE0500EF43C6 /* TimelineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A796221BBE0400EF43C6 /* TimelineTableViewCell.swift */; };
 		D512A79A221BBE4700EF43C6 /* Map.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D512A799221BBE4700EF43C6 /* Map.storyboard */; };
@@ -140,7 +137,6 @@
 		D50276D921FF09E100A0DB5E /* EntryServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryServiceTest.swift; sourceTree = "<group>"; };
 		D50276E92202C7EE00A0DB5E /* EntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewController.swift; sourceTree = "<group>"; };
 		D50276EB2202C82900A0DB5E /* DataStringSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStringSet.swift; sourceTree = "<group>"; };
-		D50276ED2202D3C700A0DB5E /* SampleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTableViewCell.swift; sourceTree = "<group>"; };
 		D50276F122041DB100A0DB5E /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		D50276F322041DBA00A0DB5E /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		D50276F522041DC600A0DB5E /* CalendarTempViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTempViewController.swift; sourceTree = "<group>"; };
@@ -157,8 +153,6 @@
 		D512A779221BBDBF00EF43C6 /* String+URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+URL.swift"; sourceTree = "<group>"; };
 		D512A788221BBDF400EF43C6 /* ImageSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSource.swift; sourceTree = "<group>"; };
 		D512A789221BBDF400EF43C6 /* EntriesMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntriesMarker.swift; sourceTree = "<group>"; };
-		D512A78A221BBDF400EF43C6 /* Tag+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataClass.swift"; sourceTree = "<group>"; };
-		D512A78B221BBDF400EF43C6 /* Tag+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D512A78D221BBDF400EF43C6 /* EntrySetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntrySetting.swift; sourceTree = "<group>"; };
 		D512A796221BBE0400EF43C6 /* TimelineTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineTableViewCell.swift; sourceTree = "<group>"; };
 		D512A799221BBE4700EF43C6 /* Map.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Map.storyboard; sourceTree = "<group>"; };
@@ -250,21 +244,10 @@
 		D502763F21FB0B5E00A0DB5E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D53BED0D221FB1520083A3FE /* Driven Model */,
 				E9CFA29F221EBBAB005F0E3D /* APILocation.swift */,
 				D512A78D221BBDF400EF43C6 /* EntrySetting.swift */,
 				D512A788221BBDF400EF43C6 /* ImageSource.swift */,
-				D512A78A221BBDF400EF43C6 /* Tag+CoreDataClass.swift */,
-				D512A78B221BBDF400EF43C6 /* Tag+CoreDataProperties.swift */,
-				D502764221FB0B8400A0DB5E /* Journal+CoreDataClass.swift */,
-				D502764321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift */,
-				D502764421FB0B8400A0DB5E /* Weather+CoreDataClass.swift */,
-				D502764521FB0B8400A0DB5E /* Weather+CoreDataProperties.swift */,
-				D502764821FB0B8400A0DB5E /* Entry+CoreDataClass.swift */,
-				D502764921FB0B8400A0DB5E /* Entry+CoreDataProperties.swift */,
-				D502764A21FB0B8400A0DB5E /* Device+CoreDataClass.swift */,
-				D502764B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift */,
-				D502764C21FB0B8400A0DB5E /* Location+CoreDataClass.swift */,
-				D502764D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift */,
 				D502766121FB0D6000A0DB5E /* WeatherType.swift */,
 				D50276EB2202C82900A0DB5E /* DataStringSet.swift */,
 				EC0CFB0522030A53001293B1 /* APIWeather.swift */,
@@ -407,6 +390,23 @@
 			path = Photos;
 			sourceTree = "<group>";
 		};
+		D53BED0D221FB1520083A3FE /* Driven Model */ = {
+			isa = PBXGroup;
+			children = (
+				D502764221FB0B8400A0DB5E /* Journal+CoreDataClass.swift */,
+				D502764321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift */,
+				D502764421FB0B8400A0DB5E /* Weather+CoreDataClass.swift */,
+				D502764521FB0B8400A0DB5E /* Weather+CoreDataProperties.swift */,
+				D502764821FB0B8400A0DB5E /* Entry+CoreDataClass.swift */,
+				D502764921FB0B8400A0DB5E /* Entry+CoreDataProperties.swift */,
+				D502764A21FB0B8400A0DB5E /* Device+CoreDataClass.swift */,
+				D502764B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift */,
+				D502764C21FB0B8400A0DB5E /* Location+CoreDataClass.swift */,
+				D502764D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift */,
+			);
+			name = "Driven Model";
+			sourceTree = "<group>";
+		};
 		D561691621FAD07000E00FED = {
 			isa = PBXGroup;
 			children = (
@@ -458,7 +458,6 @@
 				E992EC5E21FAEDD100917116 /* FilterCell */,
 				E992EC5F21FAEDDA00917116 /* SideMenuCell */,
 				E96BE83B21FAD98500266F6D /* Storyboards */,
-				D50276ED2202D3C700A0DB5E /* SampleTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -748,7 +747,6 @@
 				E992EC7021FAEE5B00917116 /* SearchFilterViewController.swift in Sources */,
 				E992EC6321FAEDFD00917116 /* MatchingEntriesCell.swift in Sources */,
 				D512A7A3221BBECB00EF43C6 /* CollectedEntriesListCell.swift in Sources */,
-				D512A790221BBDF400EF43C6 /* Tag+CoreDataClass.swift in Sources */,
 				E992EC7C21FB1E5500917116 /* CalendarHeaderView.swift in Sources */,
 				D561692321FAD07000E00FED /* AppDelegate.swift in Sources */,
 				E992EC6821FAEE3300917116 /* SideMenuFilterCell.swift in Sources */,
@@ -761,7 +759,6 @@
 				D512A78E221BBDF400EF43C6 /* ImageSource.swift in Sources */,
 				D516C8C82213E70200A4BDAC /* CoreDataManager.swift in Sources */,
 				D50276F222041DB100A0DB5E /* PhotosViewController.swift in Sources */,
-				D50276EE2202D3C700A0DB5E /* SampleTableViewCell.swift in Sources */,
 				D512A7A2221BBECB00EF43C6 /* CollectedEntriesHeaderMapView.swift in Sources */,
 				EC0CFB0922030C1D001293B1 /* NetworkProvider.swift in Sources */,
 				D512A77C221BBDBF00EF43C6 /* String+URL.swift in Sources */,
@@ -786,7 +783,6 @@
 				E936659422110DF900DC660A /* BaseSlidingViewController.swift in Sources */,
 				D512A793221BBDF400EF43C6 /* EntrySetting.swift in Sources */,
 				D53782BD221113A100336646 /* PhotosCollectionViewCell.swift in Sources */,
-				D512A791221BBDF400EF43C6 /* Tag+CoreDataProperties.swift in Sources */,
 				D502765321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift in Sources */,
 				D516C88C2212A28100A4BDAC /* OneDayDefaults.swift in Sources */,
 				D502766721FB139300A0DB5E /* CoreDataJournalService.swift in Sources */,

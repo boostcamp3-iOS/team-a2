@@ -26,7 +26,6 @@
         <relationship name="device" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Device" inverseName="entries" inverseEntity="Device" syncable="YES"/>
         <relationship name="journal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Journal" inverseName="entries" inverseEntity="Journal" syncable="YES"/>
         <relationship name="location" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Location" inverseName="entry" inverseEntity="Location" syncable="YES"/>
-        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="entry" inverseEntity="Tag" syncable="YES"/>
         <relationship name="weather" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Weather" inverseName="entry" inverseEntity="Weather" syncable="YES"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -58,15 +57,6 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="Tag" representedClassName="Tag" syncable="YES">
-        <attribute name="title" attributeType="String" syncable="YES"/>
-        <relationship name="entry" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Entry" inverseName="tags" inverseEntity="Entry" syncable="YES"/>
-        <uniquenessConstraints>
-            <uniquenessConstraint>
-                <constraint value="title"/>
-            </uniquenessConstraint>
-        </uniquenessConstraints>
-    </entity>
     <entity name="Weather" representedClassName="Weather" syncable="YES">
         <attribute name="tempature" optional="YES" attributeType="Integer 16" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
@@ -80,10 +70,9 @@
     </entity>
     <elements>
         <element name="Device" positionX="-6946.73828125" positionY="-5085.91796875" width="128" height="105"/>
-        <element name="Entry" positionX="-7121.9765625" positionY="-4929.296875" width="128" height="285"/>
+        <element name="Entry" positionX="-7121.9765625" positionY="-4929.296875" width="128" height="270"/>
         <element name="Journal" positionX="-7125.07421875" positionY="-5096.95703125" width="128" height="120"/>
         <element name="Location" positionX="-6925.2578125" positionY="-4617.64453125" width="128" height="120"/>
-        <element name="Tag" positionX="-7029" positionY="-4941" width="128" height="75"/>
         <element name="Weather" positionX="-7112" positionY="-4612.26953125" width="128" height="105"/>
     </elements>
 </model>
