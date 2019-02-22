@@ -18,6 +18,14 @@ class WeatherService {
     
     // MARK: - Methods
     
+    /**
+     Darksky API를 활용하여 매개변수에 따른 날씨정보 요청
+     
+     - Parameters:
+        - latitude: 날씨를 가져오려는 위치의 위도
+        - longitude: 날씨를 가져오려는 위치의 경도
+        - date: 날씨를 가져오려는 날짜
+     */
     func weather(
         latitude: Double,
         longitude: Double,

@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// 저널의 변화를 요청하기 위한 Delegate
 protocol JournalChangeDelegate: class {
     func changeJournal(to journal: Journal)
 }
