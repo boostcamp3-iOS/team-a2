@@ -11,13 +11,11 @@ import Foundation
 class WeatherService {
     
     // MARK: - Properties
-    
     static let service = WeatherService()
     private let baseURL = "https://api.darksky.net/forecast"
     private let APIKey = "9deaa3b4d2ba8a4a3772c6d6015dba6b"
     
     // MARK: - Methods
-    
     func weather(
         latitude: Double,
         longitude: Double,

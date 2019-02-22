@@ -9,7 +9,11 @@
 import Foundation
 
 extension DateFormatter {
-    
+    /**
+     공통적으로 사용할 DateFormatter
+     
+     TimeZone과 Locale이 설정되어 있다.
+     */
     static let defualtInstance: DateFormatter = {
         let dateFormatter: DateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone.current
