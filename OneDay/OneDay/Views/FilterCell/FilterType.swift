@@ -9,12 +9,14 @@
 import UIKit
 import CoreData
 
+/// 필터할 수 있는 타입을 enum 추상화
 enum FilterType: Hashable, CaseIterable {
     case favorite
     case location
     case weather
     case device
     
+    /// 필터 타이틀
     var title: String {
         switch self {
         case .favorite:
@@ -28,7 +30,8 @@ enum FilterType: Hashable, CaseIterable {
         }
     }
     
-    var icon: UIImage? {
+    /// 왼쪽 아이콘 이미지
+    var iconImage: UIImage? {
         switch self {
         case .favorite:
             return UIImage(named: "filterHeart")
@@ -41,6 +44,7 @@ enum FilterType: Hashable, CaseIterable {
         }
     }
     
+    /// 클릭 시 결과화면으로 한번 더 들어가야 하는지, 바로 모아보기로 엔트리 목록을 보여줄지 여부
     var isOneDepth: Bool {
         switch self {
         case .favorite:
@@ -50,6 +54,7 @@ enum FilterType: Hashable, CaseIterable {
         }
     }
     
+    /// 필터링 됐을 때의 결과물. favorite은 바로 Entry Array가 넘어오고 나머지는 각각의 Model Array가 넘어온다.
     var data: [NSManagedObject] {
         switch self {
         case .favorite:

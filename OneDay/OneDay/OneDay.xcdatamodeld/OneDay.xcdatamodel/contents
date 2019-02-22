@@ -25,7 +25,7 @@
         <attribute name="year" attributeType="Transformable" customClassName="NSNumber" syncable="YES"/>
         <relationship name="device" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Device" inverseName="entries" inverseEntity="Device" syncable="YES"/>
         <relationship name="journal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Journal" inverseName="entries" inverseEntity="Journal" syncable="YES"/>
-        <relationship name="location" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Location" inverseName="entry" inverseEntity="Location" syncable="YES"/>
+        <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="entries" inverseEntity="Location" syncable="YES"/>
         <relationship name="weather" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Weather" inverseName="entry" inverseEntity="Weather" syncable="YES"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -50,7 +50,7 @@
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="locId" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="entry" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Entry" inverseName="location" inverseEntity="Entry" syncable="YES"/>
+        <relationship name="entries" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Entry" inverseName="location" inverseEntity="Entry" syncable="YES"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="locId"/>

@@ -370,10 +370,6 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
         switch section {
         case .base:
             switch indexPath.row {
-            case 0:
-                ()
-            case 1:
-                ()
             case 2:
                 changeJournal()
             case 3:

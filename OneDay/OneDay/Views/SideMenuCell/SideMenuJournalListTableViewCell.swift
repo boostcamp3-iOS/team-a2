@@ -1,5 +1,5 @@
 //
-//  SideMenuJournalListCell.swift
+//  SideMenuJournalListTableViewCell.swift
 //  OneDayProto
 //
 //  Created by 정화 on 23/01/2019.
@@ -8,7 +8,8 @@
 
 import UIKit
 
-class SideMenuJournalListCell: UITableViewCell {
+/// 사이드 메뉴에서 저널 목록을 보여주는 셀
+class SideMenuJournalListTableViewCell: UITableViewCell {
     // MARK: Properties
     // Layout Components
     private let roundBackgroundView: UIView = {
@@ -36,7 +37,7 @@ class SideMenuJournalListCell: UITableViewCell {
     // MARK: Methods
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupCellView()
+        setConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -60,22 +61,25 @@ class SideMenuJournalListCell: UITableViewCell {
     }
 }
 
-extension SideMenuJournalListCell {
-    private func setupCellView() {
+extension SideMenuJournalListTableViewCell {
+    private func setConstraints() {
         addSubview(roundBackgroundView)
-        roundBackgroundView.leftAnchor.constraint(equalTo: leftAnchor, constant: 8).isActive = true
-        roundBackgroundView.topAnchor.constraint(equalTo: topAnchor, constant: 4).isActive = true
-        roundBackgroundView.rightAnchor.constraint(equalTo: rightAnchor, constant: -8).isActive = true
-        roundBackgroundView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4).isActive = true
-        
         roundBackgroundView.addSubview(titleLabel)
-        titleLabel.leftAnchor.constraint(equalTo: roundBackgroundView.leftAnchor, constant: 16).isActive = true
-        titleLabel.rightAnchor.constraint(equalTo: roundBackgroundView.rightAnchor, constant: -40).isActive = true
-        titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        
         roundBackgroundView.addSubview(countLabel)
-        countLabel.leftAnchor.constraint(equalTo: titleLabel.rightAnchor, constant: 8).isActive = true
-        countLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        countLabel.widthAnchor.constraint(equalToConstant: 32).isActive = true
+        
+        NSLayoutConstraint.activate([
+            roundBackgroundView.leftAnchor.constraint(equalTo: leftAnchor, constant: 8),
+            roundBackgroundView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
+            roundBackgroundView.rightAnchor.constraint(equalTo: rightAnchor, constant: -8),
+            roundBackgroundView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -4),
+            
+            titleLabel.leftAnchor.constraint(equalTo: roundBackgroundView.leftAnchor, constant: 16),
+            titleLabel.rightAnchor.constraint(equalTo: roundBackgroundView.rightAnchor, constant: -40),
+            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
+            countLabel.leftAnchor.constraint(equalTo: titleLabel.rightAnchor, constant: 8),
+            countLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            countLabel.widthAnchor.constraint(equalToConstant: 32)
+            ])
     }
 }

@@ -29,8 +29,8 @@ class RecentAndFilterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        recentFilterTable.register(FilterCell.self, forCellReuseIdentifier: Section.filter.identifier)
-        recentFilterTable.register(SearchedKeywordCell.self, forCellReuseIdentifier: Section.recent.identifier)
+        recentFilterTable.register(FilterTableViewCell.self, forCellReuseIdentifier: Section.filter.identifier)
+        recentFilterTable.register(SearchingKeywordTableViewCell.self, forCellReuseIdentifier: Section.recent.identifier)
         addRecentKeywordsChangedNotificationObserver()
         loadRecentKeywordsData()
     }
@@ -121,13 +121,13 @@ extension RecentAndFilterViewController: UITableViewDataSource {
         guard let sectionType = Section(rawValue: indexPath.section) else { preconditionFailure() }
         switch sectionType {
         case .recent:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: sectionType.identifier, for: indexPath) as? SearchedKeywordCell else { preconditionFailure("Cell Error") }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: sectionType.identifier, for: indexPath) as? SearchingKeywordTableViewCell else { preconditionFailure("Cell Error") }
             let recentKeyword = recentKeywords[indexPath.row]
             cell.bind(keyword: recentKeyword.keyword, count: recentKeyword.entries.count)
             return cell
         case .filter:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: sectionType.identifier,
-                                                           for: indexPath) as? FilterCell
+                                                           for: indexPath) as? FilterTableViewCell
                 else { preconditionFailure("Cell Error") }
             let filterData = filtersArray[indexPath.row]
             cell.bind(filter: filterData.type, count: filterData.data.count)

@@ -133,20 +133,20 @@ extension SideMenuViewController: UITableViewDataSource {
         }
         switch menuSection {
         case .filters:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: menuSection.identifier, for: indexPath) as? SideMenuFilterCell,
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: menuSection.identifier, for: indexPath) as? SideMenuFilterTableViewCell,
                 let cellType = SideMenuFilterType(rawValue: indexPath.row) else {
                 preconditionFailure("Error")
             }
             cell.bind(type: cellType)
             return cell
         case .journals:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: menuSection.identifier, for: indexPath) as? SideMenuJournalListCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: menuSection.identifier, for: indexPath) as? SideMenuJournalListTableViewCell else {
                 preconditionFailure("Error")
             }
             cell.bind(journal: journals[indexPath.row])
             return cell
         case .addJournal:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: menuSection.identifier, for: indexPath) as? SideMenuJournalAddCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: menuSection.identifier, for: indexPath) as? SideMenuJournalAddTableViewCell else {
                 preconditionFailure("Error at : \(indexPath)")
             }
             return cell
@@ -237,10 +237,10 @@ extension SideMenuViewController {
         sideMenuTableView.delegate = self
         sideMenuTableView.dataSource = self
 
-        sideMenuTableView.register(SideMenuFilterCell.self, forCellReuseIdentifier: Section.filters.identifier)
-        sideMenuTableView.register(SideMenuJournalListCell.self, forCellReuseIdentifier: Section.journals.identifier)
-        sideMenuTableView.register(SideMenuJournalAddCell.self, forCellReuseIdentifier: Section.addJournal.identifier)
-        sideMenuTableView.register(SideMenuEditCell.self, forCellReuseIdentifier: Section.setting.identifier)
+        sideMenuTableView.register(SideMenuFilterTableViewCell.self, forCellReuseIdentifier: Section.filters.identifier)
+        sideMenuTableView.register(SideMenuJournalListTableViewCell.self, forCellReuseIdentifier: Section.journals.identifier)
+        sideMenuTableView.register(SideMenuJournalAddTableViewCell.self, forCellReuseIdentifier: Section.addJournal.identifier)
+        sideMenuTableView.register(SideMenuSettingTableViewCell.self, forCellReuseIdentifier: Section.setting.identifier)
     }
 }
 
