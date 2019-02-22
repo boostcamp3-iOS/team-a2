@@ -14,6 +14,7 @@ class MapViewController: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var currentLocationItem: UIBarButtonItem!
+    @IBOutlet weak var mapNavigationItem: UINavigationItem!
     let regionRadius: CLLocationDistance = 1000
     var isMyLocationMarkerVisible: Bool = false
     var entries: [Entry] = []
@@ -23,6 +24,7 @@ class MapViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapNavigationItem.title = CoreDataManager.shared.currentJournal.title
         mapView.register(EntryAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         mapView.register(EntryAnnotationClusterView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
         let defaultLocation = CLLocation(latitude: 37.497016, longitude: 127.028715)
@@ -88,6 +90,7 @@ class MapViewController: UIViewController {
     
     @objc func didReceiveEntriesFilterNotification(_: Notification) {
         DispatchQueue.main.async { [weak self] in
+            self?.mapNavigationItem.title = CoreDataManager.shared.currentJournal.title
             self?.loadData()
         }
     }

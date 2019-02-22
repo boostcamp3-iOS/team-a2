@@ -90,6 +90,7 @@
                         <outlet property="buttonBackgroundView" destination="MEL-XZ-niL" id="55N-1C-bYN"/>
                         <outlet property="cameraButton" destination="FMw-1s-nCv" id="pSn-Gu-UXt"/>
                         <outlet property="editorButton" destination="hrq-ji-RmT" id="skI-Rf-6Vv"/>
+                        <outlet property="timelineNavigationItem" destination="9nm-xw-eAL" id="6Io-Gp-XMM"/>
                         <outlet property="timelineTableView" destination="8rm-cg-MDR" id="srs-Hl-Ywx"/>
                     </connections>
                 </viewController>
@@ -279,11 +280,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ic_check" width="48" height="48"/>
-        <image name="picture-white" width="24" height="24"/>
-        <image name="setting_like" width="39.724136352539062" height="39.724136352539062"/>
-        <image name="timelineCamera" width="96" height="96"/>
-        <image name="timelineEdit" width="96" height="96"/>
+        <image name="ic_check" width="64" height="64"/>
+        <image name="picture-white" width="32" height="32"/>
+        <image name="setting_like" width="32" height="32"/>
+        <image name="timelineCamera" width="128" height="128"/>
+        <image name="timelineEdit" width="128" height="128"/>
         <namedColor name="doBlue">
             <color red="0.41176470588235292" green="0.74509803921568629" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

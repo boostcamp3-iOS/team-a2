@@ -18,6 +18,7 @@ class TimelineViewController: UIViewController {
     @IBOutlet weak var buttonBackgroundView: UIView!
     @IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var editorButton: UIButton!
+    @IBOutlet weak var timelineNavigationItem: UINavigationItem!
     
     fileprivate var fetchedResultsController: NSFetchedResultsController<Entry> =
         CoreDataManager.shared.timelineResultsController
@@ -27,7 +28,9 @@ class TimelineViewController: UIViewController {
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        timelineNavigationItem.title = CoreDataManager.shared.currentJournal.title
         removeNavigatinBarBorderLine()
+        setUpNavigationBarTitle()
         setupButtonsBehindArea()
         
         registerTableviewCell()
@@ -77,6 +80,7 @@ class TimelineViewController: UIViewController {
     @objc private func didEntriesFilterChangedNotification(_: Notification) {
         setupFetchedResultsController()
         DispatchQueue.main.async { [weak self] in
+            self?.timelineNavigationItem.title = CoreDataManager.shared.currentJournal.title
             self?.reloadData()
         }
     }
