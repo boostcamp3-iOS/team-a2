@@ -25,7 +25,6 @@ class BaseSlidingViewController: UIViewController, UIGestureRecognizerDelegate {
         return view
     }()
     
-    /// 메인 뷰가 트랜지션 될 때, 뷰에 이펙트를 추가하는 뷰입니다.
     private let blurCoverView: UIView = {
         let blur = UIVisualEffectView()
         blur.backgroundColor = UIColor(white: 0, alpha: 0.2)
@@ -67,7 +66,6 @@ class BaseSlidingViewController: UIViewController, UIGestureRecognizerDelegate {
         setupGesture()
     }
     
-    //FIXME: 머지 이후로 작동이 잘 안된다
     func gestureRecognizer(
         _ gestureRecognizer: UIGestureRecognizer,
         shouldReceive touch: UITouch
