@@ -12,7 +12,6 @@ import Foundation
 class LocationService: NSObject {
     
     // MARK: - Properties
-    
     static let service = LocationService()
     private let locationManager = CLLocationManager()
     private var _location: CLLocation? = nil

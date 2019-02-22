@@ -262,30 +262,6 @@ extension CoreDataManager: CoreDataEntryService {
             fatalError("Failed get EntryData")
         }
     }
-
-    func updateContents(entry: Entry, contents: NSAttributedString, completion: (() -> Void), error: ((Error) -> Void)?) {
-        DispatchQueue.global().async {
-            // 부하가 될 법한 부분 Background 에서 처리 : 이미지 파일 변환 및 파일로 저장, CoreData 저장
-            entry.contents = contents
-            entry.updatedDate = Date()
-            
-            // title로 사용할 string 추출
-            let stringContent = contents.string
-            if stringContent.count > 1 {
-                let start = stringContent.startIndex
-                let end = stringContent.index(start, offsetBy: min(stringContent.count - 1, Constants.maximumNumberOfEntryTitle))
-                entry.title = String(stringContent[start...end])
-            }
-            
-            // thumbnail image 추출
-            if let thumbnailImage = contents.firstImage {
-                entry.thumbnail = thumbnailImage.saveToFile(fileName: entry.thmbnailFileName)
-            } else {
-                entry.thumbnail = nil
-            }
-            CoreDataManager.shared.save()
-        }
-    }
     
     func remove(entry: Entry) {
         managedContext.delete(entry)
