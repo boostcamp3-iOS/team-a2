@@ -267,10 +267,10 @@
 		D502769121FEA16D00A0DB5E /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				D516C8C62213E70200A4BDAC /* CoreDataManager.swift */,
-				D516C8C72213E70200A4BDAC /* EntryFilter.swift */,
 				D516C87E22125E1900A4BDAC /* protocol */,
+				D516C8C62213E70200A4BDAC /* CoreDataManager.swift */,
 				D502769221FEA18000A0DB5E /* CoreDataStack.swift */,
+				D516C8C72213E70200A4BDAC /* EntryFilter.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -407,6 +407,29 @@
 			name = "Driven Model";
 			sourceTree = "<group>";
 		};
+		D53BED18221FD23A0083A3FE /* SideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				E992EC7121FAEE6700917116 /* SideMenuViewController.swift */,
+				E992EC6F21FAEE5B00917116 /* SearchFilterViewController.swift */,
+				D54A70C3221D35C300F37C5D /* RecentAndFilterViewController.swift */,
+				D54A70C5221D35DA00F37C5D /* FilterResultViewController.swift */,
+			);
+			name = SideMenu;
+			sourceTree = "<group>";
+		};
+		D53BED19221FD27F0083A3FE /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				D512A768221BBD9600EF43C6 /* Protocols */,
+				D50276E92202C7EE00A0DB5E /* EntryViewController.swift */,
+				D512A767221BBD9600EF43C6 /* EntryInformationViewController.swift */,
+				D512A766221BBD9600EF43C6 /* DatePickerViewController.swift */,
+				EC4D58DE221B90970051A4F8 /* JournalChangeViewController.swift */,
+			);
+			name = Editor;
+			sourceTree = "<group>";
+		};
 		D561691621FAD07000E00FED = {
 			isa = PBXGroup;
 			children = (
@@ -473,24 +496,17 @@
 		E96BE83721FAD90A00266F6D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				D52648FB221E865E009B5191 /* TimelineViewController.swift */,
-				D512A764221BBD9600EF43C6 /* AddActionViewController.swift */,
-				D512A765221BBD9600EF43C6 /* CollectedEntriesViewController.swift */,
-				D512A766221BBD9600EF43C6 /* DatePickerViewController.swift */,
-				D512A767221BBD9600EF43C6 /* EntryInformationViewController.swift */,
-				D512A768221BBD9600EF43C6 /* Protocols */,
-				D50276E92202C7EE00A0DB5E /* EntryViewController.swift */,
-				EC4D58DE221B90970051A4F8 /* JournalChangeViewController.swift */,
-				E992EC7721FAF4C200917116 /* CalendarViewController.swift */,
-				D561692421FAD07000E00FED /* MainTabBarViewController.swift */,
-				D50276F122041DB100A0DB5E /* PhotosViewController.swift */,
-				D50276F322041DBA00A0DB5E /* MapViewController.swift */,
-				D512A7A6221BCE2600EF43C6 /* EditJournalViewController.swift */,
+				D53BED18221FD23A0083A3FE /* SideMenu */,
+				D53BED19221FD27F0083A3FE /* Editor */,
 				E936659322110DF900DC660A /* BaseSlidingViewController.swift */,
-				E992EC7121FAEE6700917116 /* SideMenuViewController.swift */,
-				E992EC6F21FAEE5B00917116 /* SearchFilterViewController.swift */,
-				D54A70C3221D35C300F37C5D /* RecentAndFilterViewController.swift */,
-				D54A70C5221D35DA00F37C5D /* FilterResultViewController.swift */,
+				D561692421FAD07000E00FED /* MainTabBarViewController.swift */,
+				D52648FB221E865E009B5191 /* TimelineViewController.swift */,
+				D50276F122041DB100A0DB5E /* PhotosViewController.swift */,
+				D512A764221BBD9600EF43C6 /* AddActionViewController.swift */,
+				D50276F322041DBA00A0DB5E /* MapViewController.swift */,
+				E992EC7721FAF4C200917116 /* CalendarViewController.swift */,
+				D512A765221BBD9600EF43C6 /* CollectedEntriesViewController.swift */,
+				D512A7A6221BCE2600EF43C6 /* EditJournalViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

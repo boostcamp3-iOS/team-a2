@@ -10,7 +10,9 @@ import UIKit
 
 /// 검색어를 입력하면 검색어와 일치하는 엔트리 수를 보여주는 셀
 class SearchingKeywordTableViewCell: UITableViewCell {
+    
     // MARK: Properties
+    
     // Layout Components
     private let searchIcon: UIImageView = {
         var imageView = UIImageView()

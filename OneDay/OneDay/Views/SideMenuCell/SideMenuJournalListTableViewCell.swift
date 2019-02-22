@@ -10,7 +10,9 @@ import UIKit
 
 /// 사이드 메뉴에서 저널 목록을 보여주는 셀
 class SideMenuJournalListTableViewCell: UITableViewCell {
+    
     // MARK: Properties
+    
     // Layout Components
     private let roundBackgroundView: UIView = {
         let view = UIView()
@@ -35,6 +37,7 @@ class SideMenuJournalListTableViewCell: UITableViewCell {
     }()
     
     // MARK: Methods
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setConstraints()

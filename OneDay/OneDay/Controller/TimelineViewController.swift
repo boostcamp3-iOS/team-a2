@@ -28,16 +28,13 @@ class TimelineViewController: UIViewController {
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        timelineNavigationItem.title = CoreDataManager.shared.currentJournal.title
         removeNavigatinBarBorderLine()
-        setUpNavigationBarTitle()
         setupButtonsBehindArea()
         
         registerTableviewCell()
         setupFetchedResultsController()
+        addNotifications()
         dayLabelVisibilityCheck()
-        addCoreDataChangedNotificationObserver()
-        addEntriesFilterChangedNotificationObserver()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -55,11 +52,17 @@ class TimelineViewController: UIViewController {
     }
     
     // MARK: - Notification
-    private func addCoreDataChangedNotificationObserver() {
+    private func addNotifications() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(didReceiveCoreDataChangedNotification(_:)),
             name: CoreDataManager.DidChangedCoreDataNotification,
+            object: nil)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didEntriesFilterChangedNotification(_:)),
+            name: CoreDataManager.DidChangedEntriesFilterNotification,
             object: nil)
     }
     
@@ -69,24 +72,18 @@ class TimelineViewController: UIViewController {
         }
     }
     
-    private func addEntriesFilterChangedNotificationObserver() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(didEntriesFilterChangedNotification(_:)),
-            name: CoreDataManager.DidChangedEntriesFilterNotification,
-            object: nil)
-    }
-    
     @objc private func didEntriesFilterChangedNotification(_: Notification) {
         setupFetchedResultsController()
         DispatchQueue.main.async { [weak self] in
-            self?.timelineNavigationItem.title = CoreDataManager.shared.currentJournal.title
+//            self?.timelineNavigationItem.title = CoreDataManager.shared.currentJournal.title
+            self?.navigationController?.title =  CoreDataManager.shared.currentJournal.title
             self?.reloadData()
         }
     }
     
     // MARK: Set Up CoreData Fetched Results Controller
     fileprivate func setupFetchedResultsController() {
+        timelineNavigationItem.title = CoreDataManager.shared.currentJournal.title
         fetchedResultsController = CoreDataManager.shared.timelineResultsController
         do {
             fetchedResultsController.delegate = self
@@ -97,7 +94,7 @@ class TimelineViewController: UIViewController {
     }
     
     private func reloadData() {
-        dayLabelVisibilityCheck()
+//        dayLabelVisibilityCheck()
         timelineTableView.reloadData()
     }
     
@@ -258,6 +255,7 @@ extension TimelineViewController: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(
         _ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         timelineTableView.beginUpdates()
+        dayLabelVisibilityCheck()
     }
     
     func controller(

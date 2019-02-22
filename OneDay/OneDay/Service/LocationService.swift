@@ -14,7 +14,7 @@ class LocationService: NSObject {
     // MARK: - Properties
     static let service = LocationService()
     private let locationManager = CLLocationManager()
-    private var _location: CLLocation? = nil
+    private var _location: CLLocation?
     private var _latitude: CLLocationDegrees = 21.282778
     private var _longitude: CLLocationDegrees = -157.829444
     private var baseURL = "https://maps.googleapis.com/maps/api/geocode/json"

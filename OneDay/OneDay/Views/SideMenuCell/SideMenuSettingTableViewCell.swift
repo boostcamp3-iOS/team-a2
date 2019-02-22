@@ -10,7 +10,9 @@ import UIKit
 
 /// 사이드 메뉴에서 설정 셀
 class SideMenuSettingTableViewCell: UITableViewCell {
+    
     // MARK: Properties
+    
     // Layout Components
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -22,6 +24,7 @@ class SideMenuSettingTableViewCell: UITableViewCell {
     }()
     
     // MARK: Methods
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setConstraints()
