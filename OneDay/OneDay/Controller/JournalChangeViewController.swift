@@ -11,7 +11,6 @@ import UIKit
 class JournalChangeViewController: UIViewController {
     
     private var tableView: UITableView!
-    private var newJournalButton: UIButton!
     
     private let cellHeight: CGFloat = 40
     private var numberOfJournal: Int!
@@ -27,53 +26,37 @@ class JournalChangeViewController: UIViewController {
         
         loadJournals()
         setUpTableView()
-        setUpButton()
     }
     
     private func loadJournals() {
-        journals = CoreDataManager.shared.journals
+        journals = CoreDataManager.shared.journalsWithoutDefault
         numberOfJournal = journals.count
-        heightConstant = min(CGFloat(numberOfJournal) * cellHeight, 200)
+        if numberOfJournal == 1 {
+            heightConstant = 44
+        } else {
+            heightConstant = min(CGFloat(numberOfJournal) * cellHeight, 200)
+        }
+        
     }
     
     private func setUpTableView() {
         tableView = UITableView()
-        tableView.backgroundColor = UIColor.white
+        tableView.backgroundColor = UIColor.doBlue
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        tableView.widthAnchor.constraint(equalToConstant: 270).isActive = true
         tableView.heightAnchor.constraint(equalToConstant: heightConstant).isActive = true
-        //view의 크기를 alertview의 크기로 맞추는 방법?
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
         tableView.register(
             UITableViewCell.self,
             forCellReuseIdentifier: "journalChangeTableViewCell"
         )
-        
         tableView.delegate = self
         tableView.dataSource = self
-    }
-    
-    private func setUpButton() {
-        newJournalButton = UIButton(type: UIButton.ButtonType.system)
-        newJournalButton.setTitle("New Journal", for: UIControl.State.normal)
-        
-        newJournalButton.contentHorizontalAlignment = .left
-        newJournalButton.contentEdgeInsets = .init(top: 0, left: 16, bottom: 0, right: 0)
-        newJournalButton.setTitleColor(UIColor.doGray, for: UIControl.State.normal)
-        newJournalButton.backgroundColor = UIColor.white
-        view.addSubview(newJournalButton)
-        newJournalButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        newJournalButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        newJournalButton.topAnchor.constraint(equalTo: tableView.bottomAnchor).isActive = true
-        newJournalButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        newJournalButton.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        newJournalButton.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 }
 
