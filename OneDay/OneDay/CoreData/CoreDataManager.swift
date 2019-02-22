@@ -10,7 +10,9 @@ import UIKit
 import CoreData
 
 final class CoreDataManager {
+    
     // MARK: - Properties
+    
     static let shared = CoreDataManager()
     static let DidChangedEntriesFilterNotification: Notification.Name = Notification.Name("didChangedEntriesFilterNotification")
     static let DidChangedCoreDataNotification: Notification.Name = Notification.Name("didChangedCoreDataNotification")
@@ -25,7 +27,7 @@ final class CoreDataManager {
         }
     }
     
-    // 최근 저널인 애들만 불러오는 거
+    /// 최근 저널인 애들만 불러오는 NSPredicate
     var currentJournalPredicate: NSPredicate {
         if isDefaultJournal(uuid: currentJournal.journalId) {
             return NSPredicate(format: "journal != nil")
@@ -34,7 +36,13 @@ final class CoreDataManager {
         }
     }
     
-    // INITIAL
+    // MARK: - Methos
+    
+    /**
+     initialize Core Data Manager
+    
+     최초 실행 시 기본 폴더 2개(모든 항목, 저널)을 생성해줍니다.
+     */
     private init() {
         if OneDayDefaults.defaultJournalUUID == nil {
             let defaultJournal = insertJournal("모든 항목", index: 0)
@@ -48,11 +56,24 @@ final class CoreDataManager {
         }
     }
     
+    /**
+     최근 저널 값을 변경합니다.
+     
+     OneDayDefaults.currentJournalUUID을 변경하고 CoreDataManager.DidChangedEntriesFilterNotification을 push 합니다.
+     - Parameters:
+        - journal 새로 변경될 최근 저널
+     */
     func changeCurrentJournal(to journal: Journal) {
         OneDayDefaults.currentJournalUUID = journal.journalId.uuidString
         NotificationCenter.default.post(name: CoreDataManager.DidChangedEntriesFilterNotification, object: nil)
     }
     
+    /**
+     넘어온 저널 id가 '모든 항목'과 같은지 판단해줍니다.
+     
+     - Parameters:
+        - uuid: 비교할 저널의 uuid
+     */
     func isDefaultJournal(uuid: UUID) -> Bool {
         return uuid == defaultJournalUUID
     }
@@ -65,10 +86,10 @@ final class CoreDataManager {
             }
         }, errorHandler: errorHandler)
     }
-
 }
 
-// MARK: Journal
+// MARK: CoreDataJournalService
+
 extension CoreDataManager : CoreDataJournalService {
     
     // 저널의 수
