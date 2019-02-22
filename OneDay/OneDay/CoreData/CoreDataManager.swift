@@ -13,7 +13,7 @@ final class CoreDataManager {
     // MARK: - Properties
     static let shared = CoreDataManager()
     static let DidChangedEntriesFilterNotification: Notification.Name = Notification.Name("didChangedEntriesFilterNotification")
-    static let DidChangedCoredDataNotification: Notification.Name = Notification.Name("didChangedCoreDataNotification")
+    static let DidChangedCoreDataNotification: Notification.Name = Notification.Name("didChangedCoreDataNotification")
     
     private var defaultJournalUUID: UUID!
     private var coreDataStack: CoreDataStack = CoreDataStack(modelName: "OneDay")
@@ -59,7 +59,7 @@ final class CoreDataManager {
 
     func save(successHandler: (() -> Void)? = nil, errorHandler: ((NSError) -> Void)? = nil) {
         coreDataStack.saveContext(successHandler: {
-            NotificationCenter.default.post(name: CoreDataManager.DidChangedCoredDataNotification, object: nil)
+            NotificationCenter.default.post(name: CoreDataManager.DidChangedCoreDataNotification, object: nil)
             if let successHandler = successHandler {
                 successHandler()
             }

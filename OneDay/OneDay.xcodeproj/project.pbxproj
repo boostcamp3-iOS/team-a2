@@ -63,6 +63,7 @@
 		D516C8CB2213E87300A4BDAC /* NSAttributedString+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516C8CA2213E87300A4BDAC /* NSAttributedString+UIImage.swift */; };
 		D52648ED221DBD39009B5191 /* FilterTableViewCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52648EC221DBD39009B5191 /* FilterTableViewCellType.swift */; };
 		D52648FA221E8529009B5191 /* JournalChangeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52648F9221E8528009B5191 /* JournalChangeDelegate.swift */; };
+		D52648FC221E865E009B5191 /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52648FB221E865E009B5191 /* TimelineViewController.swift */; };
 		D53782B922110E6800336646 /* Photos.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D53782B822110E6800336646 /* Photos.storyboard */; };
 		D53782BD221113A100336646 /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53782BC221113A100336646 /* PhotosCollectionViewCell.swift */; };
 		D54A70C0221CE7A600F37C5D /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54A70BF221CE7A600F37C5D /* FilterCell.swift */; };
@@ -175,6 +176,7 @@
 		D516C8CA2213E87300A4BDAC /* NSAttributedString+UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+UIImage.swift"; sourceTree = "<group>"; };
 		D52648EC221DBD39009B5191 /* FilterTableViewCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTableViewCellType.swift; sourceTree = "<group>"; };
 		D52648F9221E8528009B5191 /* JournalChangeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JournalChangeDelegate.swift; sourceTree = "<group>"; };
+		D52648FB221E865E009B5191 /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
 		D53782B822110E6800336646 /* Photos.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Photos.storyboard; sourceTree = "<group>"; };
 		D53782BC221113A100336646 /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		D53782C52211447500336646 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -474,6 +476,7 @@
 		E96BE83721FAD90A00266F6D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				D52648FB221E865E009B5191 /* TimelineViewController.swift */,
 				E9CFA29D221EBB8C005F0E3D /* TimelineViewController.swift */,
 				D512A764221BBD9600EF43C6 /* AddActionViewController.swift */,
 				D512A765221BBD9600EF43C6 /* CollectedEntriesViewController.swift */,
@@ -794,6 +797,7 @@
 				EC5E21AB220425390073D90E /* LocationService.swift in Sources */,
 				E9CFA2A2221EBC1F005F0E3D /* TimelineSectionHeaderView.swift in Sources */,
 				D561692321FAD07000E00FED /* AppDelegate.swift in Sources */,
+				D52648FC221E865E009B5191 /* TimelineViewController.swift in Sources */,
 				D512A7A5221BBECB00EF43C6 /* CustomPointAnnotaion.swift in Sources */,
 				EC4D58DF221B90970051A4F8 /* JournalChangeViewController.swift in Sources */,
 				D502766221FB0D6000A0DB5E /* WeatherType.swift in Sources */,

@@ -19,13 +19,12 @@ class TimelineViewController: UIViewController {
     @IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var editorButton: UIButton!
     
-    fileprivate let fetchedResultsController: NSFetchedResultsController<Entry> =
+    fileprivate var fetchedResultsController: NSFetchedResultsController<Entry> =
         CoreDataManager.shared.timelineResultsController
     
     fileprivate var shouldShowDayLabelAtIndexPath = [String:IndexPath]()
     
     // MARK: - Life cycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         removeNavigatinBarBorderLine()
@@ -34,6 +33,8 @@ class TimelineViewController: UIViewController {
         registerTableviewCell()
         setupFetchedResultsController()
         dayLabelVisibilityCheck()
+        addCoreDataChangedNotificationObserver()
+        addEntriesFilterChangedNotificationObserver()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -43,20 +44,57 @@ class TimelineViewController: UIViewController {
     }
     
     // MARK: - Setup
-    
     fileprivate func registerTableviewCell() {
         timelineTableView.register(
             TimelineTableViewCell.self,
             forCellReuseIdentifier: "timelineCellId")
+        
     }
     
+    // MARK: - Notification
+    private func addCoreDataChangedNotificationObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didReceiveCoreDataChangedNotification(_:)),
+            name: CoreDataManager.DidChangedCoreDataNotification,
+            object: nil)
+    }
+    
+    @objc private func didReceiveCoreDataChangedNotification(_: Notification) {
+        DispatchQueue.main.async { [weak self] in
+            self?.reloadData()
+        }
+    }
+    
+    private func addEntriesFilterChangedNotificationObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didEntriesFilterChangedNotification(_:)),
+            name: CoreDataManager.DidChangedEntriesFilterNotification,
+            object: nil)
+    }
+    
+    @objc private func didEntriesFilterChangedNotification(_: Notification) {
+        setupFetchedResultsController()
+        DispatchQueue.main.async { [weak self] in
+            self?.reloadData()
+        }
+    }
+    
+    // MARK : Set Up CoreData Fetched Results Controller
     fileprivate func setupFetchedResultsController() {
+        fetchedResultsController = CoreDataManager.shared.timelineResultsController
         do {
             fetchedResultsController.delegate = self
             try fetchedResultsController.performFetch()
         } catch let error as NSError {
             print("Fetching error: \(error), \(error.userInfo)")
         }
+    }
+    
+    private func reloadData() {
+        shouldShowDayLabelAtIndexPath = [:]
+        timelineTableView.reloadData()
     }
     
     fileprivate func dayLabelVisibilityCheck() {
@@ -70,7 +108,6 @@ class TimelineViewController: UIViewController {
     }
     
     // MARK: - Layout
-
     fileprivate func removeNavigatinBarBorderLine() {
         if let navigationBar = self.navigationController?.navigationBar {
             navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
@@ -130,8 +167,8 @@ extension TimelineViewController: UIImagePickerControllerDelegate, UINavigationC
 extension TimelineViewController: UITableViewDelegate, UITableViewDataSource {
     func configure(cell: UITableViewCell, indexPath: IndexPath) {
         guard let cell = cell as? TimelineTableViewCell
-        else {
-            preconditionFailure("Error")
+            else {
+                preconditionFailure("Error")
         }
         let fetchedEntryData = fetchedResultsController.object(at: indexPath)
         let key = convertToDayKey(from: fetchedEntryData.date)
@@ -143,7 +180,7 @@ extension TimelineViewController: UITableViewDelegate, UITableViewDataSource {
         let components = Calendar.current.dateComponents([.month, .day, .year], from: date)
         guard let month = components.month, let day = components.day, let year = components.year
             else {
-            preconditionFailure()
+                preconditionFailure()
         }
         return "\(year) \(month) \(day)"
     }
@@ -154,8 +191,8 @@ extension TimelineViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let sectionInfo = fetchedResultsController.sections?[section]
-        else {
-            return 0
+            else {
+                return 0
         }
         return sectionInfo.numberOfObjects
     }
@@ -172,7 +209,7 @@ extension TimelineViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-
+    
     func tableView(
         _ tableView: UITableView,
         commit editingStyle: UITableViewCell.EditingStyle,
@@ -195,16 +232,15 @@ extension TimelineViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let fetchedEntryData = fetchedResultsController.sections?[section].objects?.first
             as? Entry
-        else {
-            return UIView()
+            else {
+                return UIView()
         }
         let headerCellView = TimelineSectionHeaderView()
-
+        
         let formatter = DateFormatter.defualtInstance
         formatter.dateFormat = "YYYY년 MM월"
         let sectionTitleHeader = formatter.string(from: fetchedEntryData.date)
         headerCellView.headerLabel.text = sectionTitleHeader
-
         return headerCellView
     }
     
@@ -235,8 +271,8 @@ extension TimelineViewController: NSFetchedResultsControllerDelegate {
         case .update:
             guard let cell = timelineTableView.cellForRow(at: indexPath!)
                 as? TimelineTableViewCell
-            else {
-                return
+                else {
+                    return
             }
             configure(cell: cell, indexPath: indexPath!)
         case .move:
@@ -263,7 +299,7 @@ extension TimelineViewController: NSFetchedResultsControllerDelegate {
     
     func controllerDidChangeContent(
         _ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        timelineTableView.reloadData()
         timelineTableView.endUpdates()
+        timelineTableView.reloadData()
     }
 }

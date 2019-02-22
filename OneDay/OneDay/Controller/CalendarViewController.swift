@@ -57,6 +57,10 @@ class CalendarViewController: UIViewController {
         setupCoreData()
         
         addCoreDataChangedNotificationObserver()
+        addEntriesFilterChangedNotificationObserver()
+        
+        tabBarController?.delegate = self
+        tappingTabItemCount = 0
         addTabBarItemTouchingNotificationObserver()
     }
     
@@ -93,7 +97,6 @@ class CalendarViewController: UIViewController {
     
     @objc private func presentDatePicker() {
         isDatePikcerPresented = true
-        
         view.addSubview(datePicker)
         datePicker.translatesAutoresizingMaskIntoConstraints = false
         datePicker.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -144,20 +147,30 @@ class CalendarViewController: UIViewController {
     }
     
     // MARK: - Notification
-    
     private func addCoreDataChangedNotificationObserver() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(didReceiveCoreDataChangedNotification(_:)),
-            name: CoreDataManager.DidChangedCoredDataNotification,
+            name: CoreDataManager.DidChangedCoreDataNotification,
             object: nil)
     }
     
     @objc private func didReceiveCoreDataChangedNotification(_: Notification) {
         DispatchQueue.main.async { [weak self] in
-            self?.setupCoreData()
             self?.collectionView.reloadData()
         }
+    }
+    
+    private func addEntriesFilterChangedNotificationObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didEntriesFilterChangedNotification(_:)),
+            name: CoreDataManager.DidChangedEntriesFilterNotification,
+            object: nil)
+    }
+    
+    @objc private func didEntriesFilterChangedNotification(_: Notification) {
+        setupCoreData()
     }
     
     private func addTabBarItemTouchingNotificationObserver() {

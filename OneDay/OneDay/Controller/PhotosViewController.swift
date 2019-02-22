@@ -50,7 +50,7 @@ class PhotosViewController: UIViewController {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(didReceiveCoreDataChangedNotification(_:)),
-            name: CoreDataManager.DidChangedCoredDataNotification,
+            name: CoreDataManager.DidChangedCoreDataNotification,
             object: nil)
     }
     func addEntriesFiltersChangeNotificationObserver() {
