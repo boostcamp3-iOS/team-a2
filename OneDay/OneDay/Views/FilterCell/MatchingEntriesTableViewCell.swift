@@ -10,7 +10,9 @@ import UIKit
 
 /// 검색한 문자열을 포함하는 엔트리를 보여주는 셀
 class MatchingEntriesTableViewCell: UITableViewCell {
+    
     // MARK: Properties
+    
     // Layout Components
     private let contentsLabel: UILabel = {
         let label = UILabel()

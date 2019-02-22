@@ -9,8 +9,11 @@
 import UIKit
 import CoreData
 
+/// SideMenu에서 필터 섹션의 셀을 누를 경우 나타나는 화면
 class SearchFilterViewController: UIViewController {
     // MARK: Properties
+    override var prefersStatusBarHidden: Bool { return true }
+    
     // IBOutlet
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchTable: UITableView!
@@ -20,7 +23,6 @@ class SearchFilterViewController: UIViewController {
     private var shouldSearchBarFocused: Bool = false
     
     // MARK: - Methods
-    override var prefersStatusBarHidden: Bool { return true }
     
     override func viewDidLoad() {
         setupFilterTableView()

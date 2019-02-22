@@ -10,7 +10,9 @@ import UIKit
 
 /// 사이드 메뉴에서 필터 섹션의 셀
 class SideMenuFilterTableViewCell: UITableViewCell {
+    
     // MARK: Properties
+    
     // Layout Components
     private let iconImageView: UIImageView = {
         var imageView = UIImageView()
@@ -33,6 +35,7 @@ class SideMenuFilterTableViewCell: UITableViewCell {
     private let insets = UIEdgeInsets(top: 2, left: 24, bottom: 2, right: -16)
     
     // MARK: Methods
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setConstraints()

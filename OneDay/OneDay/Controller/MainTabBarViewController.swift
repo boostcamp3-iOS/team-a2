@@ -38,7 +38,10 @@ class MainTabBarViewController: UITabBarController {
     }
 }
 
+// MARK: - Extension
+
 // MARK: UITabBarControllerDelegate
+
 extension MainTabBarViewController: UITabBarControllerDelegate, UIImagePickerControllerDelegate,
 UINavigationControllerDelegate {
     func tabBarController
@@ -46,6 +49,9 @@ UINavigationControllerDelegate {
          shouldSelect viewController: UIViewController
         ) -> Bool {
         
+        /**
+            AddActionViewController일 경우 ActionSheet를 띄워준다.
+         */
         if viewController.isKind(of: AddActionViewController.self) {
             let actionViewController = UIAlertController(
                 title: "일기작성",

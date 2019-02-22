@@ -10,7 +10,9 @@ import UIKit
 
 /// 사이드 메뉴에서 저널 추가 셀
 class SideMenuJournalAddTableViewCell: UITableViewCell {
+    
     // MARK: Properties
+    
     // Layout Components
     private let borderView: UIView = {
         let view = UIView()
@@ -32,6 +34,7 @@ class SideMenuJournalAddTableViewCell: UITableViewCell {
     }()
     
     // MARK: Methods
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setConstraints()

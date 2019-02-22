@@ -11,7 +11,9 @@ import CoreData
 
 /// 필터 아이콘과 이름, 매칭되는 결과 수를 보여주는 셀
 class FilterTableViewCell: UITableViewCell {
+    
     // MARK: Properties
+    
     // Layout Components
     private let filterIcon: UIImageView = {
         var imageView = UIImageView()
@@ -39,6 +41,7 @@ class FilterTableViewCell: UITableViewCell {
     }()
     
     // MARK: Methods
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setConstraints()
