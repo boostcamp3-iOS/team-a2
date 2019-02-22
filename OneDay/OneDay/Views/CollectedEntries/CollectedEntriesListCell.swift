@@ -9,7 +9,7 @@
 import UIKit
 
 class CollectedEntriesListCell: UITableViewCell {
-    let containerView: UIView = {
+    private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .collectedEntriesListBorder
         view.layer.cornerRadius = 3
@@ -41,7 +41,7 @@ class CollectedEntriesListCell: UITableViewCell {
 }
 
 extension CollectedEntriesListCell {
-    fileprivate func setupCellView() {
+    private func setupCellView() {
         addSubview(containerView)
         containerView.topAnchor.constraint(
             equalTo: topAnchor,
@@ -70,28 +70,4 @@ extension CollectedEntriesListCell {
             equalTo: containerView.rightAnchor,
             constant: -1).isActive = true
     }
-    
-}
-
-class AAAttachment : NSTextAttachment {
-
-    override func attachmentBounds(for textContainer: NSTextContainer?, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGRect {
-
-        guard let image = self.image else {
-            return CGRect.zero
-        }
-
-        let height = lineFrag.size.height
-
-        var scalingFactor = CGFloat(20)
-        print(lineFrag)
-        let imageSize = image.size
-        if height < imageSize.height {
-            scalingFactor *= height / imageSize.height
-        }
-        let rect = CGRect(x: 0, y: 0, width: imageSize.width * scalingFactor, height: imageSize.height * scalingFactor)
-
-        return rect
-    }
-
 }

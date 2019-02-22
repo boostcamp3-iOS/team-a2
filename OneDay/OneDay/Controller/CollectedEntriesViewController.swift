@@ -11,7 +11,7 @@ import MapKit
 import UIKit
 
 class CollectedEntriesViewController: UIViewController {
-    let topFloatingView: UIView = {
+    private let topFloatingView: UIView = {
         let view = UIView()
         view.backgroundColor = .doBlue
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -26,7 +26,7 @@ class CollectedEntriesViewController: UIViewController {
         return label
     }()
     
-    let doneButton: UIButton = {
+    private let doneButton: UIButton = {
         let button = UIButton()
         button.setTitle("완료", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -35,7 +35,7 @@ class CollectedEntriesViewController: UIViewController {
         return button
     }()
     
-    let tableView: UITableView = {
+    private let tableView: UITableView = {
         let tableView = UITableView.init(frame: CGRect.zero, style: .grouped)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 600
@@ -48,8 +48,8 @@ class CollectedEntriesViewController: UIViewController {
     }()
     
     var entriesData = [Entry]()
-    var shouldPresentMapView = false
-    let headerMapView = CollectedEntriesHeaderMapView()
+    private var shouldPresentMapView = false // 엔트리에 위치 정보가 없으면 맵 뷰를 보여주지 않는다
+    private let headerMapView = CollectedEntriesHeaderMapView()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -70,11 +70,11 @@ class CollectedEntriesViewController: UIViewController {
         dismiss(animated: false, completion: nil)
     }
     
-    var coordinates: [MapPinLocation] = []
-    var latitude = [CLLocationDegrees]()
-    var longitude = [CLLocationDegrees]()
+    private var coordinates: [MapPinLocation] = []
+    private var latitude = [CLLocationDegrees]()
+    private var longitude = [CLLocationDegrees]()
 
-    fileprivate func addLocationToMapView() {
+    private func addLocationToMapView() {
         entriesData.forEach { entry in
             if let location = entry.location {
                 shouldPresentMapView = true
@@ -108,7 +108,7 @@ extension CollectedEntriesViewController: UITableViewDelegate, UITableViewDataSo
         
         let data = entriesData[indexPath.row]
         let attributedText = NSMutableAttributedString()
-        setupAttributeText(data: data, text: attributedText)
+        setupAttributeText(entry: data, text: attributedText)
         resizeImageAttachment(in: attributedText)
 
         cell.contentsListTextView.attributedText = attributedText
@@ -139,14 +139,13 @@ extension CollectedEntriesViewController: UITableViewDelegate, UITableViewDataSo
 }
 
 extension CollectedEntriesViewController {
-    func setupAttributeText(data: Entry, text attributedText: NSMutableAttributedString) {
-        if let contents = data.contents {
+    private func setupAttributeText(entry: Entry, text attributedText: NSMutableAttributedString) {
+        if let contents = entry.contents {
             attributedText.append(NSMutableAttributedString(attributedString: contents))
+            attributedText.append(NSMutableAttributedString(string: "\n\n"))
         }
-        
-        attributedText.append(NSMutableAttributedString(string: "\n\n"))
 
-        if let title = data.journal?.title {
+        if let title = entry.journal?.title {
             attributedText.append(NSMutableAttributedString(string: title, attributes:[
                 NSAttributedString.Key.foregroundColor : UIColor.doBlue,
                 NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 12)]))
@@ -157,21 +156,23 @@ extension CollectedEntriesViewController {
         formatter.dateFormat = "YYYY년 MM월 dd일 EEEE a hh:mm"
         
         appendDot(at: attributedText)
-        attributedText.append(NSMutableAttributedString(string: formatter.string(from: data.date)))
+        attributedText.append(NSMutableAttributedString(string: formatter.string(from: entry.date)))
         
-        if let address = data.location?.address {
+        if let address = entry.location?.address {
             appendDot(at: attributedText)
             attributedText.append(NSMutableAttributedString(string: address))
         }
-        
-        if let temparature = data.weather?.tempature, let type = data.weather?.type {
+
+        if let temparature = entry.weather?.tempature, let type = entry.weather?.type {
             appendDot(at: attributedText)
             attributedText.append(NSMutableAttributedString(string: "\(temparature) °C  "))
-            attributedText.append(NSMutableAttributedString(string: type))
+        if let weatherType = WeatherType(rawValue: type) {
+            attributedText.append(NSMutableAttributedString(string: weatherType.summary))
         }
     }
+    }
     
-    func resizeImageAttachment(in attributedText: NSMutableAttributedString) {
+    private func resizeImageAttachment(in attributedText: NSMutableAttributedString) {
         attributedText.enumerateAttribute(
             NSAttributedString.Key.attachment,
             in: NSRange(location: 0, length: attributedText.length),
@@ -196,7 +197,7 @@ extension CollectedEntriesViewController {
         })
     }
     
-    func appendDot(at attributedString: NSMutableAttributedString) {
+    private func appendDot(at attributedString: NSMutableAttributedString) {
         attributedString.append(
             NSMutableAttributedString(
                 string: " · ",
@@ -204,7 +205,7 @@ extension CollectedEntriesViewController {
                     NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18)]))
     }
     
-    fileprivate func setupTableView() {
+    private func setupTableView() {
         view.addSubview(topFloatingView)
         topFloatingView.topAnchor.constraint(
             equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
@@ -265,21 +266,5 @@ extension CollectedEntriesViewController {
             preconditionFailure("Error")
         }
         return mapPresentingRange*scale
-    }
-}
-
-extension UIImage {
-    func resizeImageToFit(newWidth: CGFloat) -> UIImage {
-        let size = self.size
-        let ratio = size.height/size.width
-        let newHeight = newWidth*ratio
-        
-        let newSize = CGSize(width: newWidth, height: newHeight)
-        let rect = CGRect(x: 0, y: 0, width: newWidth, height: newHeight)
-        
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 1)
-        self.draw(in: rect)
-        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
-        return scaledImage!
     }
 }
