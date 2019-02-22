@@ -19,4 +19,7 @@ struct Constants {
     static let minimumRecentKeywordsCount: Int = 3
     static let automaticNextJournalIndex: Int = -1
     static let sideWidth = UIScreen.main.bounds.width*0.75
+    
+    // Notification
+    static let tabBarItemTouchCountsNotification = NSNotification.Name("scrollToTodayCalendar")
 }

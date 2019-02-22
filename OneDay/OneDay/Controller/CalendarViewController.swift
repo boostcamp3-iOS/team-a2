@@ -9,8 +9,8 @@
 import CoreData
 import UIKit
 
-class CalendarViewController: UIViewController, UITabBarControllerDelegate {
-    let collectionView: UICollectionView = {
+class CalendarViewController: UIViewController {
+    private let collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.sectionHeadersPinToVisibleBounds = true
         let screenWidth = UIScreen.main.bounds.width
@@ -26,13 +26,13 @@ class CalendarViewController: UIViewController, UITabBarControllerDelegate {
     }()
     
     //  네비게이션 바 아래의 |일 월 화 수 목 금 토| 를 그리는 뷰
-    let daysOfWeekTitleView: CalendarDaysOfWeek = {
+    private let daysOfWeekTitleView: CalendarDaysOfWeek = {
         let view = CalendarDaysOfWeek()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    let datePicker: UIDatePicker = {
+    private let datePicker: UIDatePicker = {
         let picker = UIDatePicker()
         picker.backgroundColor = .white
         picker.datePickerMode = .date
@@ -41,13 +41,14 @@ class CalendarViewController: UIViewController, UITabBarControllerDelegate {
         return picker
     }()
     
-    fileprivate var isTodayIndex = false
-    fileprivate var isPickingDate = false
-    fileprivate var computedWeekday = 6
-    lazy var tappingTabItemCount = 0
+    private var isTodayIndex = false
+    private var isPickingDate = false
+    private var computedWeekday = 6
+    private lazy var tabBarItemTouchCount = 0
+    private lazy var isDatePikcerPresented = false
 
-    var fetchedEntriesDate = Set<String>()
-
+    private var fetchedEntriesDate = Set<String>()
+    
     // MARK: - Life cycle
     
     override func viewDidLoad() {
@@ -56,14 +57,12 @@ class CalendarViewController: UIViewController, UITabBarControllerDelegate {
         setupCoreData()
         
         addCoreDataChangedNotificationObserver()
-        
-        tabBarController?.delegate = self
-        tappingTabItemCount = 0
+        addTabBarItemTouchingNotificationObserver()
     }
     
     // MARK: - CoreData
-
-    fileprivate func setupCoreData() {
+    
+    private func setupCoreData() {
         fetchedEntriesDate = []
         let entriesData = CoreDataManager.shared.currentJournalEntries
         entriesData.forEach { (entry) in
@@ -73,15 +72,15 @@ class CalendarViewController: UIViewController, UITabBarControllerDelegate {
             if let year = components.year,
                 let month = components.month,
                 let day = components.day {
-                    let date = "\(year)\(month)\(day)"
-                    fetchedEntriesDate.insert(date)
+                let date = "\(year)\(month)\(day)"
+                fetchedEntriesDate.insert(date)
             }
         }
     }
     
     // MARK: - NavigationItem: DatePicker
     
-    fileprivate func setupNavigationItem() {
+    private func setupNavigationItem() {
         let pickerButton = UIButton(type: .custom)
         let calendarImage = UIImage(named: "navCalendar")?.withRenderingMode(.alwaysTemplate)
         pickerButton.setImage(calendarImage, for: .normal)
@@ -92,7 +91,9 @@ class CalendarViewController: UIViewController, UITabBarControllerDelegate {
         self.navigationItem.rightBarButtonItem = barButton
     }
     
-    @objc func presentDatePicker() {
+    @objc private func presentDatePicker() {
+        isDatePikcerPresented = true
+        
         view.addSubview(datePicker)
         datePicker.translatesAutoresizingMaskIntoConstraints = false
         datePicker.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -104,14 +105,21 @@ class CalendarViewController: UIViewController, UITabBarControllerDelegate {
         datePicker.addTarget(self, action: #selector(pickDate), for: .valueChanged)
     }
     
-    @objc func pickDate() {
+    @objc private func pickDate() {
         isPickingDate = true
         collectionView.reloadData()
     }
     
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        if isDatePikcerPresented {
+            datePicker.removeFromSuperview()
+            isDatePikcerPresented = false
+        }
+    }
+    
     // MARK: - Calendar Function
     
-    fileprivate func lastDayInMonth(at section: Int) -> Int {
+    private func lastDayInMonth(at section: Int) -> Int {
         var numberOfDaysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
         let year = section/12+1
         let month = section%12+1
@@ -124,10 +132,10 @@ class CalendarViewController: UIViewController, UITabBarControllerDelegate {
         return section != 18981 ? numberOfDaysInMonth[month-1] : 21 // 1582년 10월 달력 문제
     }
     
-    fileprivate func firstWeekdayInMonth(at section: Int) -> Int {
+    private func firstWeekdayInMonth(at section: Int) -> Int {
         let components = DateComponents(year: section/12+1, month: section%12+1, day: 1)
         let date = Calendar.current.date(from: components)
-
+        
         if let date = date {
             return Calendar.current.component(.weekday, from: date)-1 // 0:일요일 ~ 6:토요일
         } else {
@@ -135,19 +143,9 @@ class CalendarViewController: UIViewController, UITabBarControllerDelegate {
         }
     }
     
-    func tabBarController(
-        _ tabBarController: UITabBarController,
-        didSelect viewController: UIViewController) {
-        tappingTabItemCount += 1
-        if tappingTabItemCount == 2 {
-            tappingTabItemCount = 0
-            scrollToDate(date: Date(), animated: false)
-        }
-    }
-    
     // MARK: - Notification
     
-    func addCoreDataChangedNotificationObserver() {
+    private func addCoreDataChangedNotificationObserver() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(didReceiveCoreDataChangedNotification(_:)),
@@ -155,11 +153,32 @@ class CalendarViewController: UIViewController, UITabBarControllerDelegate {
             object: nil)
     }
     
-    @objc func didReceiveCoreDataChangedNotification(_: Notification) {
+    @objc private func didReceiveCoreDataChangedNotification(_: Notification) {
         DispatchQueue.main.async { [weak self] in
             self?.setupCoreData()
             self?.collectionView.reloadData()
         }
+    }
+    
+    private func addTabBarItemTouchingNotificationObserver() {
+        let scrollToTodayCalendar = Constants.tabBarItemTouchCountsNotification
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(touchTabBarItem),
+            name: scrollToTodayCalendar,
+            object: nil)
+    }
+    
+    @objc private func touchTabBarItem() {
+        tabBarItemTouchCount += 1
+        if tabBarItemTouchCount == 2 {
+            tabBarItemTouchCount = 0
+            scrollToDate(date: Date(), animated: false)
+        }
+    }
+    
+    private func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        tabBarItemTouchCount = 0
     }
 }
 
@@ -177,7 +196,6 @@ UICollectionViewDelegate {
         
         let numberOfDaysOfMonth = computedWeekday+lastDayInMonth(at: section)
         computedWeekday = numberOfDaysOfMonth%7
-        
         switch numberOfDaysOfMonth {
         case 1...28:
             return 28 // 7*4
@@ -194,6 +212,7 @@ UICollectionViewDelegate {
         
         showActionSheet(indexPath.section, indexPath.item)
         datePicker.removeFromSuperview()
+        isDatePikcerPresented = false
         collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
     }
     
@@ -205,8 +224,8 @@ UICollectionViewDelegate {
             withReuseIdentifier: "cellId",
             for: indexPath
             ) as? CalendarCell
-        else {
-            preconditionFailure("Error")
+            else {
+                preconditionFailure("Error")
         }
         
         let sectionNumber = indexPath.section
@@ -241,11 +260,11 @@ UICollectionViewDelegate {
         
         if isPickingDate {     // 데이트피커에서 선택한 날로 이동
             isPickingDate = false
-             scrollToDate(date: datePicker.date, animated: true)
+            scrollToDate(date: datePicker.date, animated: true)
         }
     }
     
-    func scrollToDate(date: Date, animated: Bool) {
+    private func scrollToDate(date: Date, animated: Bool) {
         let components = Calendar.current.dateComponents([.year, .month, .day],
                                                          from: date)
         if let year = components.year,
@@ -284,8 +303,8 @@ UICollectionViewDelegate {
             withReuseIdentifier: "headerId",
             for: indexPath
             ) as? CalendarHeaderView
-        else {
-            preconditionFailure("Error")
+            else {
+                preconditionFailure("Error")
         }
         
         let year = indexPath.section/12+1
@@ -296,7 +315,7 @@ UICollectionViewDelegate {
 }
 
 extension CalendarViewController {
-    fileprivate func setupCalendar() {
+    private func setupCalendar() {
         view.backgroundColor = .white
         
         view.addSubview(daysOfWeekTitleView)
@@ -328,7 +347,7 @@ extension CalendarViewController {
 // MARK: 액션시트, ActionSheet
 
 extension CalendarViewController {
-    func showActionSheet(_ sectionNumber: Int, _ day: Int) {
+    private func showActionSheet(_ sectionNumber: Int, _ day: Int) {
         let date = convertSectionNumberToDateComponents(sectionNumber, item: day)
         let list = ["일", "월", "화", "수", "목", "금", "토"]
         let weekday = list[date.weekday!-1]
@@ -356,7 +375,7 @@ extension CalendarViewController {
         present(dayAlertController, animated: false)
     }
     
-    fileprivate func convertSectionNumberToDateComponents(_ section: Int, item: Int) -> DateComponents {
+    private func convertSectionNumberToDateComponents(_ section: Int, item: Int) -> DateComponents {
         let selectedDay = item+1-firstWeekdayInMonth(at: section)
         let components = DateComponents(year: section/12+1, month: section%12+1, day: selectedDay)
         let calendar = Calendar.current
@@ -370,7 +389,7 @@ extension CalendarViewController {
         }
     }
     
-    fileprivate func addNewEntryAction(
+    private func addNewEntryAction(
         date year: Int,
         _ month: Int,
         _ day: Int,
@@ -395,7 +414,7 @@ extension CalendarViewController {
         })
     }
     
-    fileprivate func addTodayEntryAction(
+    private func addTodayEntryAction(
         date year: Int,
         _ month: Int,
         _ day: Int,
@@ -415,7 +434,7 @@ extension CalendarViewController {
         dayAlertController.addAction(todayAlert)
     }
     
-    fileprivate func addYearEntryAction(
+    private func addYearEntryAction(
         date month: Int,
         _ day: Int,
         about entriesOnThisDay: [Entry],
