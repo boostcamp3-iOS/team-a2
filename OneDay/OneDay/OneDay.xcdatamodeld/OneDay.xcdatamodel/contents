@@ -24,8 +24,8 @@
         <attribute name="updatedDate" optional="YES" attributeType="Transformable" customClassName="Date" syncable="YES"/>
         <attribute name="year" attributeType="Transformable" customClassName="NSNumber" syncable="YES"/>
         <relationship name="device" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Device" inverseName="entries" inverseEntity="Device" syncable="YES"/>
-        <relationship name="journal" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="Journal" inverseName="entries" inverseEntity="Journal" syncable="YES"/>
-        <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="entry" inverseEntity="Location" syncable="YES"/>
+        <relationship name="journal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Journal" inverseName="entries" inverseEntity="Journal" syncable="YES"/>
+        <relationship name="location" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Location" inverseName="entry" inverseEntity="Location" syncable="YES"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="entry" inverseEntity="Tag" syncable="YES"/>
         <relationship name="weather" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Weather" inverseName="entry" inverseEntity="Weather" syncable="YES"/>
         <uniquenessConstraints>

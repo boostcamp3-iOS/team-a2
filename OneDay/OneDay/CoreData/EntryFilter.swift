@@ -52,8 +52,7 @@ enum EntryFilter {
         case .all:
             return []
         case .currentJournal:
-            let currentJournal = CoreDataManager.shared.currentJournal
-            predicateArray.append(NSPredicate(format: "journal == %@", currentJournal))
+            predicateArray.append(CoreDataManager.shared.currentJournalPredicate)
         case .photo:
             predicateArray.append(NSPredicate(format: "%K != nil", argumentArray: [#keyPath(Entry.thumbnail)]))
         case .location(let address):

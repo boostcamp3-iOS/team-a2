@@ -23,8 +23,13 @@ class EntryViewController: UIViewController {
     @IBOutlet weak var blockView: UIView!
     @IBOutlet weak var checkImageView: UIImageView!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+    @IBOutlet weak var textViewBottomConstraint: NSLayoutConstraint!
     
-    var entry: Entry!
+    var entry: Entry! {
+        didSet {
+            shouldSaveEntry = true
+        }
+    }
     
     ///드레그시 사용되는 미리보기 뷰
     private let imagePreview = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
@@ -51,6 +56,9 @@ class EntryViewController: UIViewController {
     }
     private weak var statusChangeDelegate: StateChangeDelegate?
     
+    private var keyboadrdToolbar: UIToolbar?
+    var viewHeightWithoutTopView: CGFloat = 0
+    
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +67,7 @@ class EntryViewController: UIViewController {
         setUpDate()
         setUpPreview()
         setUpBottomView()
-        setUpPreview()
+        registerForKeyboardNotifications()
     }
     
     // MARK: - Bind Data to View
@@ -67,6 +75,7 @@ class EntryViewController: UIViewController {
         textView.attributedText = entry.contents
         textView.textDragDelegate = self
         textView.delegate = self
+        textView.font = UIFont.preferredFont(forTextStyle: .body)
     }
     
     private func setUpDate() {
@@ -106,7 +115,9 @@ class EntryViewController: UIViewController {
     }
     
     private func setUpBottomView() {
-        bottomConstant = (UIScreen.main.bounds.height - topView.bounds.height) * 0.8
+        viewHeightWithoutTopView = view.bounds.height - topView.frame.maxY
+        bottomConstant = viewHeightWithoutTopView * 0.82
+        textViewBottomConstraint.constant = bottomConstant
         bottomContainerView.translatesAutoresizingMaskIntoConstraints = false
         bottomContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         bottomContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
@@ -127,6 +138,12 @@ class EntryViewController: UIViewController {
         )
         bottomContainerView.addGestureRecognizer(gesture)
         bottomContainerView.isUserInteractionEnabled = true
+    }
+    
+    func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasShown(_:)), name: UIResponder.keyboardDidShowNotification , object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillBeHidden(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     private func showAlert(title: String = "", message: String = "") {
@@ -155,6 +172,7 @@ extension EntryViewController {
     }
     
     @IBAction func didTapDone(_ sender: UIButton) {
+        textView.endEditing(false)
         if shouldSaveEntry {
             self.blockView.isHidden = false
             
@@ -169,7 +187,7 @@ extension EntryViewController {
                 // 이미지 파일 변환 및 파일로 저장, CoreData 저장
                 self.entry.contents = contents
                 self.entry.updatedDate = Date()
-                
+
                 // title로 사용할 string 추출
                 let stringContent = contents.string
                 if stringContent.count > 1 {
@@ -272,16 +290,31 @@ extension EntryViewController {
             }
         }
     }
-    
-    @IBAction func hideKeyboardDidTap(_ sender: UITapGestureRecognizer) {
-        view.endEditing(true)
-    }
 }
 
 // MARK: UITextViewDelegate
 extension EntryViewController: UITextViewDelegate {
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
         shouldSaveEntry = true
+    }
+    
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        if keyboadrdToolbar == nil {
+            keyboadrdToolbar = UIToolbar.init(frame:
+                CGRect.init(x: 0, y: 0, width: self.view.frame.size.width, height: 40))
+            let hideKeyboardButton = UIBarButtonItem.init(
+                title: "Submit",
+                style: .plain,
+                target: self,
+                action: #selector(hideKeyboard))
+            hideKeyboardButton.image = UIImage(named: "ic_down")
+            keyboadrdToolbar?.tintColor = UIColor.doGray
+            keyboadrdToolbar?.backgroundColor = UIColor.white
+            keyboadrdToolbar?.items = [hideKeyboardButton]
+            textView.inputAccessoryView = keyboadrdToolbar
+        }
+        return true
     }
 }
 
@@ -296,6 +329,7 @@ extension EntryViewController: UIImagePickerControllerDelegate, UINavigationCont
         _ picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]
     ) {
+        shouldSaveEntry = true
         var pickedImage: UIImage?
         if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
             pickedImage = editedImage
@@ -399,5 +433,37 @@ extension EntryViewController: StateChangeDelegate {
         )
         bottomContainerView.addGestureRecognizer(gesture)
         changeBottomTableViewConstraints()
+    }
+}
+
+// MARK: Keyboard
+
+extension EntryViewController {
+    
+    @objc private func hideKeyboard() {
+        textView.endEditing(false)
+    }
+    
+    @objc private func keyboardWasShown(_ notification: Notification?) {
+        if let keyboardFrame: NSValue = notification?.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            
+            let contentInsets: UIEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardHeight - (viewHeightWithoutTopView * 0.14), right: 0.0)
+            textView.contentInset = contentInsets
+            textView.scrollIndicatorInsets = contentInsets
+            
+            var viewFrame: CGRect = view.frame
+            viewFrame.size.height -= keyboardHeight - (viewHeightWithoutTopView * 0.14)
+            if !viewFrame.contains(textView.frame.origin) {
+                textView.scrollRectToVisible(textView.frame, animated: true)
+            }
+        }
+    }
+    
+    @objc private func keyboardWillBeHidden(_ aNotification: Notification?) {
+        let contentInsets: UIEdgeInsets = .zero
+        textView.contentInset = contentInsets
+        textView.scrollIndicatorInsets = contentInsets
     }
 }

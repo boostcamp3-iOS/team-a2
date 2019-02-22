@@ -47,8 +47,7 @@ class SearchFilterViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "filter_navi",
             let navigationViewController = segue.destination as? UINavigationController,
-            let filterContainerViewController = navigationViewController.topViewController as? RecentAndFilterViewController
-            {
+            let filterContainerViewController = navigationViewController.topViewController as? RecentAndFilterViewController {
             filterContainerViewController.bind(entries: entries, delegator: self)
         }
     }

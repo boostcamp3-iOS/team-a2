@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TimelineHeaderCell: UITableViewCell {
+class TimelineSectionHeaderView: UIView {
     
     let headerLabel: UILabel = {
         let label = UILabel()
@@ -21,13 +21,13 @@ class TimelineHeaderCell: UITableViewCell {
         return label
     }()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect = .zero) {
+        super.init(frame: frame)
         backgroundColor = UIColor(white: 0.9, alpha: 0.4)
-        setupCellView()
+        setupView()
     }
     
-    func setupCellView() {
+     fileprivate func setupView() {
         addSubview(headerLabel)
         headerLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 8).isActive = true
         headerLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true

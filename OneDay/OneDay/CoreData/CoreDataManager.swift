@@ -199,7 +199,14 @@ extension CoreDataManager: CoreDataEntryService {
         let entry = Entry(context: managedContext)
         entry.entryId = UUID()
         entry.title = "새로운 엔트리"
-        entry.journal = currentJournal
+        if isDefaultJournal(uuid: currentJournal.journalId) {
+            guard let journal = journalsWithoutDefault.first else {
+                preconditionFailure("최소 한 개 이상의 저널이 있어야 합니다.")
+            }
+            entry.journal = journal
+        } else {
+            entry.journal = currentJournal
+        }
         entry.updateDate(date: Date())
         save()
         return entry
