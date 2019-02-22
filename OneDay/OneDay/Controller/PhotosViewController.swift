@@ -46,14 +46,14 @@ class PhotosViewController: UIViewController {
         photoCollectionView.collectionViewLayout = layout
     }
     // Notification Observer를 추가
-    func addCoreDataChangedNotificationObserver() {
+    private func addCoreDataChangedNotificationObserver() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(didReceiveCoreDataChangedNotification(_:)),
             name: CoreDataManager.DidChangedCoreDataNotification,
             object: nil)
     }
-    func addEntriesFiltersChangeNotificationObserver() {
+    private func addEntriesFiltersChangeNotificationObserver() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(didReceiveEntriesFilterNotification(_:)),
@@ -61,7 +61,6 @@ class PhotosViewController: UIViewController {
             object: nil)
     }
     
-    // 두 function은 현재 동일합니다. 추후에 달라질 수 있을 것 같아서 2개로 나누었습니다.
     // Data가 변경되었다는 Notification 을 받았을 때: collectionView reload
     @objc func didReceiveCoreDataChangedNotification(_: Notification) {
         DispatchQueue.main.async { [weak self] in
