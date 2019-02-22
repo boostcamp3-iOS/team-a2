@@ -48,7 +48,7 @@ class CollectedEntriesViewController: UIViewController {
     }()
     
     var entriesData = [Entry]()
-    private var shouldPresentMapView = false // 엔트리에 위치 정보가 없으면 맵 뷰를 보여주지 않는다
+    private var shouldPresentMapView = false // 엔트리에 위치 정보가 있을 때만 맵 뷰를 보여줍니다.
     private let headerMapView = CollectedEntriesHeaderMapView()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -74,7 +74,7 @@ class CollectedEntriesViewController: UIViewController {
     private var latitude = [CLLocationDegrees]()
     private var longitude = [CLLocationDegrees]()
 
-    private func addLocationToMapView() {
+    private func addLocationToMapView() { // 맵 뷰 어노테이션에 사용하기 위해 좌표를 배열에 담는다
         entriesData.forEach { entry in
             if let location = entry.location {
                 shouldPresentMapView = true
@@ -106,9 +106,9 @@ extension CollectedEntriesViewController: UITableViewDelegate, UITableViewDataSo
             preconditionFailure("CollectedEntriesListCell Error")
         }
         
-        let data = entriesData[indexPath.row]
+        let entry = entriesData[indexPath.row]
         let attributedText = NSMutableAttributedString()
-        setupAttributeText(entry: data, text: attributedText)
+        setupAttributedText(about: entry, text: attributedText)
         resizeImageAttachment(in: attributedText)
 
         cell.contentsListTextView.attributedText = attributedText
@@ -139,39 +139,61 @@ extension CollectedEntriesViewController: UITableViewDelegate, UITableViewDataSo
 }
 
 extension CollectedEntriesViewController {
-    private func setupAttributeText(entry: Entry, text attributedText: NSMutableAttributedString) {
+    
+    private func setupAttributedText(
+        about entry: Entry,
+        text attributedText: NSMutableAttributedString) {
+        appendContents(entry, attributedText)
+        appendJournalTitle(entry, attributedText)
+        appendDate(attributedText, entry)
+        apptendAddress(entry, attributedText)
+        apptendTemperature(entry, attributedText)
+    }
+    
+    private func appendContents(_ entry: Entry, _ attributedText: NSMutableAttributedString) {
         if let contents = entry.contents {
             attributedText.append(NSMutableAttributedString(attributedString: contents))
             attributedText.append(NSMutableAttributedString(string: "\n\n"))
         }
-
+    }
+    
+    private func appendJournalTitle(_ entry: Entry, _ attributedText: NSMutableAttributedString) {
         if let title = entry.journal?.title {
             attributedText.append(NSMutableAttributedString(string: title, attributes:[
                 NSAttributedString.Key.foregroundColor : UIColor.doBlue,
                 NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 12)]))
         }
-        
+    }
+    
+    private func appendDate(_ attributedText: NSMutableAttributedString, _ entry: Entry) {
         let formatter = DateFormatter.defualtInstance
         formatter.locale = Locale(identifier: "ko_KR")
         formatter.dateFormat = "YYYY년 MM월 dd일 EEEE a hh:mm"
         
         appendDot(at: attributedText)
         attributedText.append(NSMutableAttributedString(string: formatter.string(from: entry.date)))
-        
+    }
+    
+    private func apptendAddress(_ entry: Entry, _ attributedText: NSMutableAttributedString) {
         if let address = entry.location?.address {
             appendDot(at: attributedText)
             attributedText.append(NSMutableAttributedString(string: address))
         }
-
+    }
+    
+    private func apptendTemperature(_ entry: Entry, _ attributedText: NSMutableAttributedString) {
         if let temparature = entry.weather?.tempature, let type = entry.weather?.type {
             appendDot(at: attributedText)
             attributedText.append(NSMutableAttributedString(string: "\(temparature) °C  "))
-        if let weatherType = WeatherType(rawValue: type) {
-            attributedText.append(NSMutableAttributedString(string: weatherType.summary))
+            if let weatherType = WeatherType(rawValue: type) {
+                attributedText.append(NSMutableAttributedString(string: weatherType.summary))
+            }
         }
     }
-    }
-    
+    /**
+    - 엔트리 콘텐츠 안에 있는 이미지를 리사이즈하여 다시 제 위치에 집어넣습니다.
+    - parameter attributedText: 
+     */
     private func resizeImageAttachment(in attributedText: NSMutableAttributedString) {
         attributedText.enumerateAttribute(
             NSAttributedString.Key.attachment,
@@ -180,11 +202,12 @@ extension CollectedEntriesViewController {
             using: { value, range, _ -> Void in
                 if value is NSTextAttachment {
                     guard let attachment: NSTextAttachment = value as? NSTextAttachment
-                        else {return}
+                    else { return }
                     
                     if let oldImage = attachment.image {
                         var newImage = UIImage()
                         newImage = oldImage
+                        // 124: textview left+right margin in view
                         let imageWidth = UIScreen.main.bounds.width - 124
                         
                         let newAttachment: NSTextAttachment = NSTextAttachment()
@@ -197,6 +220,7 @@ extension CollectedEntriesViewController {
         })
     }
     
+    // 엔트리 정보들을 구분하기 위해 텍스트에 · 을 추가합니다.
     private func appendDot(at attributedString: NSMutableAttributedString) {
         attributedString.append(
             NSMutableAttributedString(

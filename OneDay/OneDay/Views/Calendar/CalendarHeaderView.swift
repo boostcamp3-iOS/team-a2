@@ -12,23 +12,21 @@ class CalendarHeaderView: UICollectionViewCell {
     
     let headerLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .clear
-        label.text = "년 월"
         label.textAlignment = .center
-        label.font = label.font.withSize(12)
-        label.textColor = .calendarHeaderTextColor
+        label.backgroundColor = .clear
+        label.font = UIFont.preferredFont(forTextStyle: .caption1)
+        label.textColor = .calendarDarkColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .calendarHeader
-        
+        backgroundColor = UIColor(white: 1, alpha: 0.8)
         setupCellView()
     }
     
-    func setupCellView() {
+    private func setupCellView() {
         addSubview(headerLabel)
         headerLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 8).isActive = true
         headerLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true

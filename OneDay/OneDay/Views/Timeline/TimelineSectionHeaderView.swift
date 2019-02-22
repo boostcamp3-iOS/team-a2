@@ -13,10 +13,9 @@ class TimelineSectionHeaderView: UIView {
     let headerLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
-        label.text = "년 월"
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.textColor = .calendarHeaderTextColor
+        label.textColor = .calendarDarkColor
+        label.font = .preferredFont(forTextStyle: .footnote)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -27,7 +26,7 @@ class TimelineSectionHeaderView: UIView {
         setupView()
     }
     
-     fileprivate func setupView() {
+    fileprivate func setupView() {
         addSubview(headerLabel)
         headerLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 8).isActive = true
         headerLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
