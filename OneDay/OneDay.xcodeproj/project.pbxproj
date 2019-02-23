@@ -284,9 +284,9 @@
 		D502769121FEA16D00A0DB5E /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				D516C87E22125E1900A4BDAC /* protocol */,
 				D516C8C62213E70200A4BDAC /* CoreDataManager.swift */,
 				D516C8C72213E70200A4BDAC /* EntryFilter.swift */,
-				D516C87E22125E1900A4BDAC /* protocol */,
 				D502769221FEA18000A0DB5E /* CoreDataStack.swift */,
 			);
 			path = CoreData;

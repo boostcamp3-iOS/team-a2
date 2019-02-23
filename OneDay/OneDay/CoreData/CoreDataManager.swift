@@ -10,7 +10,9 @@ import UIKit
 import CoreData
 
 final class CoreDataManager {
+    
     // MARK: - Properties
+    
     static let shared = CoreDataManager()
     static let DidChangedEntriesFilterNotification: Notification.Name = Notification.Name("didChangedEntriesFilterNotification")
     static let DidChangedCoreDataNotification: Notification.Name = Notification.Name("didChangedCoreDataNotification")
@@ -25,7 +27,7 @@ final class CoreDataManager {
         }
     }
     
-    // 최근 저널인 애들만 불러오는 거
+    /// 최근 저널인 애들만 불러오는 Predicate
     var currentJournalPredicate: NSPredicate {
         if isDefaultJournal(uuid: currentJournal.journalId) {
             return NSPredicate(format: "journal != nil")
@@ -34,20 +36,38 @@ final class CoreDataManager {
         }
     }
     
-    // INITIAL
+    // MARK: - Methods
+    
+    
+    /**
+     CoreDataManger Insttance를 생성합니다.
+     
+     defaultJournalUUID가 nil인지 여부를 통해 최초 실행인지 아닌지를 판단합니다.
+     최초 실행일 경우 defaultJournal '모든 항목'을 생성합니다.
+     모든 항목은 모든 저널을 보여주게 하는 역할을 하며 실제로 Entry가 저장되는 역할을 하지 않습니다.
+     이후 추가로 '저널'을 생성합니다.
+     이때 만들어진 저널이 최근 저널로 지정됩니다. 사용자가 저널을 생성하지 않고 Entry를 작성할 경우 이 저널에 속하게 됩니다.
+     */
     private init() {
         if OneDayDefaults.defaultJournalUUID == nil {
             let defaultJournal = insertJournal("모든 항목", index: 0)
             OneDayDefaults.defaultJournalUUID = defaultJournal.journalId.uuidString
             
             let currentJournal = insertJournal("저널", index: 1)
-
             OneDayDefaults.currentJournalUUID = currentJournal.journalId.uuidString
         } else {
             defaultJournalUUID = UUID(uuidString: OneDayDefaults.defaultJournalUUID!)!
         }
     }
     
+    /**
+     사용자가 선택한 최근 저널을 변경합니다.
+     
+     UserDefaults에 저장된 최근 저널 id 값을 변경하고 DidChangedEntriesFilterNotification Noti를 push 합니다.
+     
+     - Parameters:
+        - journal: 변경 될 저널
+     */
     func changeCurrentJournal(to journal: Journal) {
         OneDayDefaults.currentJournalUUID = journal.journalId.uuidString
         NotificationCenter.default.post(name: CoreDataManager.DidChangedEntriesFilterNotification, object: nil)
@@ -57,6 +77,15 @@ final class CoreDataManager {
         return uuid == defaultJournalUUID
     }
 
+    /**
+     Core Data 변경사항을 저장합니다.
+     
+     저장에 성공했을 경우 DidChangedCoreDataNotification Noti를 push하고 successHandler 를 호출합니다.
+     
+     - Parameters:
+        - successHandler: 저장에 성공했을 때의 동작을 담은 클로저
+        - errorHandler: 저장에 실패했을 때의 동작을 담은 클로저
+     */
     func save(successHandler: (() -> Void)? = nil, errorHandler: ((NSError) -> Void)? = nil) {
         coreDataStack.saveContext(successHandler: {
             NotificationCenter.default.post(name: CoreDataManager.DidChangedCoreDataNotification, object: nil)
@@ -69,6 +98,7 @@ final class CoreDataManager {
 }
 
 // MARK: Journal
+
 extension CoreDataManager : CoreDataJournalService {
     
     // 저널의 수
@@ -153,11 +183,6 @@ extension CoreDataManager: CoreDataEntryService {
         return journals.reduce(0, { $0 + ($1.entries?.count ?? 0) })
     }
     
-    // 최근 저널에 포함된 Entries의 개수
-    var numberOfCurrentJournalEntries: Int {
-        return currentJournalEntries.count
-    }
-    
     var currentJournalEntries: [Entry] {
         do {
             return try coreDataStack.managedContext.fetch(currentJournalEntriesRequest)
@@ -167,7 +192,7 @@ extension CoreDataManager: CoreDataEntryService {
     }
     
     // 최신 저널의 Entry들을 불러오는 NSFetchRequest
-    var currentJournalEntriesRequest: NSFetchRequest<Entry> {
+    private var currentJournalEntriesRequest: NSFetchRequest<Entry> {
         let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
         fetchRequest.predicate = currentJournalPredicate
         // 데이트 최신인 순으로 정렬하기
@@ -175,16 +200,6 @@ extension CoreDataManager: CoreDataEntryService {
         fetchRequest.sortDescriptors = [dateSort]
         
         return fetchRequest
-    }
-    
-    // 최신 저널의 Entry들을 불러오는 NSFetchedResultsController : TableView 와 함께 사용하세영
-    // 날짜로 section이 구분됩니다.
-    var currentJournalEntriesResultsController: NSFetchedResultsController<Entry> {
-        return NSFetchedResultsController(
-            fetchRequest: currentJournalEntriesRequest,
-            managedObjectContext: coreDataStack.managedContext,
-            sectionNameKeyPath: #keyPath(Entry.date),
-            cacheName: "currentJournalEntriesResultsController")
     }
     
     var timelineResultsController: NSFetchedResultsController<Entry> {
@@ -246,65 +261,9 @@ extension CoreDataManager: CoreDataEntryService {
         }
     }
     
-    func groupByDate() -> [Any] {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Entry")
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Entry.date), ascending: false)]
-        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: EntryFilter.currentJournal.predicates)
-        fetchRequest.resultType = .dictionaryResultType
-        
-        fetchRequest.propertiesToFetch = ["year", "month", "day"]
-        fetchRequest.propertiesToGroupBy = ["month", "day", "year"]
-        
-        do {
-            let dateCount = try managedContext.fetch(fetchRequest)
-            return dateCount
-        } catch {
-            fatalError("Failed get EntryData")
-        }
-    }
-
-    func updateContents(entry: Entry, contents: NSAttributedString, completion: (() -> Void), error: ((Error) -> Void)?) {
-        DispatchQueue.global().async {
-            // 부하가 될 법한 부분 Background 에서 처리 : 이미지 파일 변환 및 파일로 저장, CoreData 저장
-            entry.contents = contents
-            entry.updatedDate = Date()
-            
-            // title로 사용할 string 추출
-            let stringContent = contents.string
-            if stringContent.count > 1 {
-                let start = stringContent.startIndex
-                let end = stringContent.index(start, offsetBy: min(stringContent.count - 1, Constants.maximumNumberOfEntryTitle))
-                entry.title = String(stringContent[start...end])
-            }
-            
-            // thumbnail image 추출
-            if let thumbnailImage = contents.firstImage {
-                entry.thumbnail = thumbnailImage.saveToFile(fileName: entry.thmbnailFileName)
-            } else {
-                entry.thumbnail = nil
-            }
-            CoreDataManager.shared.save()
-        }
-    }
-    
     func remove(entry: Entry) {
         managedContext.delete(entry)
         save()
-    }
-    
-    // filter type 별로 검색된 FetchedResultController
-    func filterdResultsController(type filter: EntryFilter, sectionNameKeyPath: String?) -> NSFetchedResultsController<Entry> {
-        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Entry.journal.index), ascending: true)]
-        var predicateArray: [NSPredicate] = filter.predicates
-        predicateArray.append(contentsOf: EntryFilter.currentJournal.predicates)
-        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicateArray)
-        
-        return NSFetchedResultsController (
-            fetchRequest: fetchRequest,
-            managedObjectContext: coreDataStack.managedContext,
-            sectionNameKeyPath: sectionNameKeyPath,
-            cacheName: filter.cacheName)
     }
     
 }

@@ -13,3 +13,4 @@ protocol CoreDataWeatherService {
     var weathers: [Weather] { get }
     func insertWeather() -> Weather
 }
+
