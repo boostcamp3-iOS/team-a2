@@ -96,11 +96,12 @@ class TimelineViewController: UIViewController {
     }
     
     private func reloadData() {
-        shouldShowDayLabelAtIndexPath = [:]
+        dayLabelVisibilityCheck()
         timelineTableView.reloadData()
     }
     
     private func dayLabelVisibilityCheck() {
+        shouldShowDayLabelAtIndexPath = [:]
         fetchedResultsController.fetchedObjects?.forEach({ entry in
             let indexPath = fetchedResultsController.indexPath(forObject: entry)
             let key = convertToDayKey(from: entry.date)
@@ -273,7 +274,6 @@ extension TimelineViewController: UITableViewDataSource {
 extension TimelineViewController: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(
         _ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        shouldShowDayLabelAtIndexPath = [:]
         timelineTableView.beginUpdates()
     }
     
@@ -320,7 +320,7 @@ extension TimelineViewController: NSFetchedResultsControllerDelegate {
     
     func controllerDidChangeContent(
         _ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        timelineTableView.endUpdates()
         timelineTableView.reloadData()
+        timelineTableView.endUpdates()
     }
 }
