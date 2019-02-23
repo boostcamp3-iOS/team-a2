@@ -38,7 +38,7 @@ class SideMenuFilterTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setConstraints()
+        setUpConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -52,7 +52,7 @@ class SideMenuFilterTableViewCell: UITableViewCell {
 }
 
 extension SideMenuFilterTableViewCell {
-    private func setConstraints() {
+    private func setUpConstraints() {
         addSubview(iconImageView)
         addSubview(titleLabel)
     

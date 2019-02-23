@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreData
 
-/// 4번째 탭인 Mpa. location이 있는 일기들만 보여준다.
+/// 4번째 탭인 Map. location이 있는 일기들만 보여준다.
 class MapViewController: UIViewController {
     
     // MARK: - Properties

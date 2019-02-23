@@ -41,7 +41,7 @@ class SearchingKeywordTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setConstraints()
+        setUpConstraints()
     }
     
     func bind(keyword: String?, count: Int) {
@@ -57,7 +57,7 @@ class SearchingKeywordTableViewCell: UITableViewCell {
 }
 
 extension SearchingKeywordTableViewCell {
-    private func setConstraints() {
+    private func setUpConstraints() {
         addSubview(searchIcon)
         addSubview(titleLabel)
         addSubview(countLabel)

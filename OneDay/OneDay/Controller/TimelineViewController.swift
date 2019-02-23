@@ -68,16 +68,15 @@ class TimelineViewController: UIViewController {
     
     @objc private func didReceiveCoreDataChangedNotification(_: Notification) {
         DispatchQueue.main.async { [weak self] in
-            self?.reloadData()
+            self?.timelineTableView.reloadData()
         }
     }
     
     @objc private func didEntriesFilterChangedNotification(_: Notification) {
         setupFetchedResultsController()
         DispatchQueue.main.async { [weak self] in
-//            self?.timelineNavigationItem.title = CoreDataManager.shared.currentJournal.title
             self?.navigationController?.title =  CoreDataManager.shared.currentJournal.title
-            self?.reloadData()
+            self?.timelineTableView.reloadData()
         }
     }
     
@@ -93,18 +92,14 @@ class TimelineViewController: UIViewController {
         }
     }
     
-    private func reloadData() {
-//        dayLabelVisibilityCheck()
-        timelineTableView.reloadData()
-    }
-    
     fileprivate func dayLabelVisibilityCheck() {
         shouldShowDayLabelAtIndexPath = [:]
         fetchedResultsController.fetchedObjects?.forEach({ entry in
-            let indexPath = fetchedResultsController.indexPath(forObject: entry)
-            let key = convertToDayKey(from: entry.date)
-            if shouldShowDayLabelAtIndexPath[key] == nil {
-                shouldShowDayLabelAtIndexPath[key] = indexPath!
+            if let indexPath = fetchedResultsController.indexPath(forObject: entry) {
+                let key = convertToDayKey(from: entry.date)
+                if shouldShowDayLabelAtIndexPath[key] == nil {
+                    shouldShowDayLabelAtIndexPath[key] = indexPath
+                }
             }
         })
     }

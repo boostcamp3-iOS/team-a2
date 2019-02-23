@@ -44,7 +44,7 @@ class FilterTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setConstraints()
+        setUpConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -60,7 +60,7 @@ class FilterTableViewCell: UITableViewCell {
 }
 
 extension FilterTableViewCell {
-    private func setConstraints() {
+    private func setUpConstraints() {
         addSubview(filterIcon)
         addSubview(filterLabel)
         addSubview(contentsCountLabel)

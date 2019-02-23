@@ -9,7 +9,7 @@
 import Foundation
 
 /**
- Date에서 사용할 day, weekday 등을 저장하는 구조ㅊ
+ Date를 사용하여 day, weekday 등을 저장하는 구조체
  */
 struct DateStringSet {
     let weekDay: String

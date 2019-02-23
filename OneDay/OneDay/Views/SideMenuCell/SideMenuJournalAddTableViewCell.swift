@@ -37,7 +37,7 @@ class SideMenuJournalAddTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setConstraints()
+        setUpConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -46,7 +46,7 @@ class SideMenuJournalAddTableViewCell: UITableViewCell {
 }
 
 extension SideMenuJournalAddTableViewCell {
-    private func setConstraints() {
+    private func setUpConstraints() {
         addSubview(borderView)
         addSubview(addLabel)
         

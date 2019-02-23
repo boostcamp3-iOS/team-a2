@@ -27,7 +27,7 @@ class SideMenuSettingTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setConstraints()
+        setUpConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -40,7 +40,7 @@ class SideMenuSettingTableViewCell: UITableViewCell {
 }
 
 extension SideMenuSettingTableViewCell {
-    private func setConstraints() {
+    private func setUpConstraints() {
         addSubview(titleLabel)
         titleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
         titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
