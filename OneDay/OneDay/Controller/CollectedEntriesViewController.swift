@@ -7,8 +7,6 @@
 //
 
 import CoreData
-import CoreLocation
-import GLKit
 import MapKit
 import UIKit
 
