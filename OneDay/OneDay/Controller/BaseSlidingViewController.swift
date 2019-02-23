@@ -15,12 +15,14 @@ class BaseSlidingViewController: UIViewController, UIGestureRecognizerDelegate {
     
     private let baseMainView: UIView = {
         let view = UIView()
+        view.backgroundColor = .doBlue
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     private let baseSideView: UIView = {
         let view = UIView()
+        view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -60,30 +62,36 @@ class BaseSlidingViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .doBlue
+        view.backgroundColor = .white
         setupViews()
         setupViewControllers()
         setupGesture()
     }
     
+    // MARK: GestureRecognizer
+
     func gestureRecognizer(
         _ gestureRecognizer: UIGestureRecognizer,
         shouldReceive touch: UITouch
         ) -> Bool {
-        if touch.view?.superview is UITableViewCell {
-            return false
-        }
         if touch.view?.superview?.superview is UITableViewCell {
             return false
         }
         return true
     }
+
+    func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
+        ) -> Bool {
+        return true
+    }
     
     private func setupGesture() {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        panGesture.delegate = self
         view.addGestureRecognizer(panGesture)
         
-        panGesture.delegate = self
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapDismiss))
         blurCoverView.addGestureRecognizer(tapGesture)
     }
@@ -95,6 +103,7 @@ class BaseSlidingViewController: UIViewController, UIGestureRecognizerDelegate {
     // MARK: Pan Gesture
     
     /**
+     팬 제스쳐 이벤트에 대한 메소드입니다.
      - 팬 제스쳐의 진행률에 따라 baseMainViewLeftConstraint와 baseMainViewRightConstraint의 값이 변합니다.
      - 두 컨스트레인트가 변하면서 뷰 컨트롤러가 좌에서 우로 트랜지션됩니다.
      */
@@ -268,14 +277,13 @@ class BaseSlidingViewController: UIViewController, UIGestureRecognizerDelegate {
         baseMainViewLeftConstraint.isActive = true
         
         view.addSubview(baseSideView)
-        baseSideView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        baseSideView.topAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         baseSideView.rightAnchor.constraint(
             equalTo: baseMainView.safeAreaLayoutGuide.leftAnchor).isActive = true
         baseSideView.bottomAnchor.constraint(equalTo: baseMainView.bottomAnchor).isActive = true
         baseSideView.widthAnchor.constraint(equalToConstant: sideViewWidth).isActive = true
     }
-    
-    //MARK: Add Child View Controller
     
     private func setupViewControllers() {
         guard let mainViewController: MainTabBarViewController =
@@ -289,8 +297,6 @@ class BaseSlidingViewController: UIViewController, UIGestureRecognizerDelegate {
         
         let mainView = mainViewController.view!
         let sideView = sideViewController.view!
-        
-        mainView.backgroundColor = .doBlue
         
         mainView.translatesAutoresizingMaskIntoConstraints = false
         sideView.translatesAutoresizingMaskIntoConstraints = false
