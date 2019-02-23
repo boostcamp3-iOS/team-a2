@@ -63,7 +63,7 @@ class CollectedEntriesHeaderMapView: MKMapView, MKMapViewDelegate {
     }
     
     /**
-     경도의 중앙값이 맞는지 확인하는 함수입니다. 본 함수는 충분히 검증되지 않았습니다. 예외 사항이 발생할 수 있음에 유의하십시오.
+     경도의 중앙값이 맞는지 확인하는 메소드입니다. 본 메소드는 충분히 검증되지 않았습니다. 예외 사항이 발생할 수 있음에 유의하십시오.
      */
     private func validateLogitude(
         _ maxLongitude: CLLocationDegrees,
