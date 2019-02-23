@@ -29,7 +29,7 @@ class CollectedEntriesHeaderMapView: MKMapView, MKMapViewDelegate {
      맵뷰의 중앙 좌표와 범위를 설정합니다.
      - Parameter locations: 엔트리 정보에 포함된 지도의 좌표 배열입니다.
      - 중앙 좌표를 알기 위해서 위도와 경도의 최댓값과 최솟값을 구해 각각의 중앙 값을 구합니다.
-     지도의 좌표 체계는 일반적으로 사용하는 카타시안 좌표계나, 극 좌표계와 다르기 때문에 위와 같은 방법으로 계산할 경우
+     지도의 좌표 체계는 일반적으로 사용하는 카테시안 좌표계와 다르기 때문에 위와 같은 방법으로 계산할 경우
      중앙 값이 올바른지 확인하는 과정이 필요합니다. validateLogitude(_:,and:,for:) 메소드를 사용하여 확인하십시오.
      */
     private func setCenter(of locations: [MapPinLocation]) {

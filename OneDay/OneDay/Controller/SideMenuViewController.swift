@@ -219,7 +219,7 @@ extension SideMenuViewController {
         view.addSubview(searchBar)
         view.backgroundColor = .white
         searchBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        searchBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         searchBar.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         searchBar.isUserInteractionEnabled = true
         searchBar.delegate = self
