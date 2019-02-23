@@ -11,7 +11,6 @@ import UIKit
 class CalendarCell: UICollectionViewCell {
     let dayLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
         label.layer.cornerRadius = 3
         label.textAlignment = .center
         label.backgroundColor = .doLight
@@ -33,8 +32,7 @@ class CalendarCell: UICollectionViewCell {
             if isSelected {
                 dayLabel.backgroundColor = .calendarDarkColor
                 dayLabel.textColor = .white
-            } else {
-                if cellWithEntry {
+            } else if cellWithEntry {
                     dayLabel.backgroundColor = .doBlue
                 } else {
                     dayLabel.backgroundColor = .doLight
@@ -42,8 +40,7 @@ class CalendarCell: UICollectionViewCell {
                 }
             }
         }
-    }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .calendarBackgroundColor

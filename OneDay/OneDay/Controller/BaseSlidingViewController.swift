@@ -295,8 +295,11 @@ class BaseSlidingViewController: UIViewController, UIGestureRecognizerDelegate {
         
         let sideViewController = SideMenuViewController()
         
-        let mainView = mainViewController.view!
-        let sideView = sideViewController.view!
+        guard let mainView = mainViewController.view
+        else { return }
+        
+        guard let sideView = sideViewController.view
+        else { return }
         
         mainView.translatesAutoresizingMaskIntoConstraints = false
         sideView.translatesAutoresizingMaskIntoConstraints = false

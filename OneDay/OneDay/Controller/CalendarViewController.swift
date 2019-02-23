@@ -251,9 +251,7 @@ extension CalendarViewController: UICollectionViewDelegate {
         if !isTodayIndex {     // 오늘의 인덱스에 해당하는 캘린더로 이동
             isTodayIndex = true
             scrollToDate(date: Date(), animated: false)
-        }
-        
-        if isPickingDate {     // 데이트피커에서 선택한 날로 이동
+        } else if isPickingDate {     // 데이트피커에서 선택한 날로 이동
             isPickingDate = false
             scrollToDate(date: datePicker.date, animated: true)
         }

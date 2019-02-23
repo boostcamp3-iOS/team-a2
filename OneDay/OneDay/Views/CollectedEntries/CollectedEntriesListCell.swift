@@ -106,15 +106,12 @@ class CollectedEntriesListCell: UITableViewCell {
                 if value is NSTextAttachment {
                     guard let attachment: NSTextAttachment = value as? NSTextAttachment
                         else { return }
-                    
-                    if let oldImage = attachment.image {
-                        var newImage = UIImage()
-                        newImage = oldImage
-                        // 124: textview left+right margin in view
+
+                    if let image = attachment.image {
                         let imageWidth = UIScreen.main.bounds.width - 124
                         
                         let newAttachment: NSTextAttachment = NSTextAttachment()
-                        newAttachment.image = newImage.resizeImageToFit(newWidth: imageWidth)
+                        newAttachment.image = image.resizeImageToFit(newWidth: imageWidth)
                         attributedText.replaceCharacters(
                             in: range,
                             with: NSAttributedString(attachment: newAttachment))

@@ -38,7 +38,7 @@ class CollectedEntriesHeaderMapView: MKMapView, MKMapViewDelegate {
         var maxLongitude: CLLocationDegrees = -180.0
         var minLongitude: CLLocationDegrees = 180.0
         
-        locations.forEach { (entry) in
+        locations.forEach { entry in
             let latitude = entry.coordinate.latitude
             let longitude = entry.coordinate.longitude
             
@@ -63,7 +63,7 @@ class CollectedEntriesHeaderMapView: MKMapView, MKMapViewDelegate {
     }
     
     /**
-     경도의 중앙값이 맞는지 확인하는 메소드입니다. 본 메소드는 충분히 검증되지 않았습니다. 예외 사항이 발생할 수 있음에 유의하십시오.
+     경도의 중앙값이 올바른지 확인하는 메소드입니다. 본 메소드는 충분히 검증되지 않았습니다. 예외 사항이 발생할 수 있음에 유의하십시오.
      */
     private func validateLogitude(
         _ maxLongitude: CLLocationDegrees,
@@ -77,7 +77,7 @@ class CollectedEntriesHeaderMapView: MKMapView, MKMapViewDelegate {
     /**
      longitudeSpan의 값에 따라 지도 뷰를 최적화합니다.
      - case 0:
-        엔트리 목록에 좌표가 하나만 있는 경우 latitudeSpan = 0, longitudeSpan = 0.15으로 바꿉니다.
+        엔트리 목록에 좌표가 하나만 있는 경우 latitudeSpan = 0, longitudeSpan = 0.015으로 바꿉니다.
         경도 1도는 약 111km이므로 너비를 기준으로 약 1.7km에 해당하는 거리의 지도가 맵뷰에 표시됩니다.
      - case 180:
         longitudeSpan의 최댓값은 180으로 제한되어 있습니다. 이 값을 초과하는 경우 맵 뷰가 어노테이션이 있는 범위를
