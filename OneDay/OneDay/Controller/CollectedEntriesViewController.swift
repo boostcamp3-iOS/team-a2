@@ -164,7 +164,7 @@ extension CollectedEntriesViewController {
             attributedText.append(NSMutableAttributedString(string: address))
         }
         
-        if let temparature = data.weather?.tempature, let type = data.weather?.type {
+        if let temparature = data.weather?.temperature, let type = data.weather?.type {
             appendDot(at: attributedText)
             attributedText.append(NSMutableAttributedString(string: "\(temparature) °C  "))
             attributedText.append(NSMutableAttributedString(string: type))

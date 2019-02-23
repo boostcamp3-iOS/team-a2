@@ -179,7 +179,7 @@ class TimelineTableViewCell: UITableViewCell {
                 named: weatherType.rawValue)?
                 .withRenderingMode(.alwaysTemplate)
             
-            weatherLabel.text = "\(weather.tempature)℃ \(weatherType.summary)"
+            weatherLabel.text = "\(weather.temperature)℃ \(weatherType.summary)"
         }
     }
     

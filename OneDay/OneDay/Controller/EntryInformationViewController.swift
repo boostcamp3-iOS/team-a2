@@ -174,10 +174,10 @@ class EntryInformationViewController: UIViewController {
         if let weather = entry.weather {
             guard let type = weather.type else { return }
             if let weatherType = WeatherType(rawValue: type) {
-                settingTableData[2][0].detail = "\(weather.tempature)℃ \(weatherType.summary)"
+                settingTableData[2][0].detail = "\(weather.temperature)℃ \(weatherType.summary)"
                 settingTableData[2][0].image = UIImage(named: "setting-\(weatherType.rawValue)")
             } else {
-                settingTableData[2][0].detail = "\(weather.tempature)℃"
+                settingTableData[2][0].detail = "\(weather.temperature)℃"
             }
         } else {
             let weather = CoreDataManager.shared.insertWeather()
@@ -273,18 +273,18 @@ class EntryInformationViewController: UIViewController {
             date: entry.date,
             success: {[weak self] data in
                 let degree: Int = Int((data.currently.temperature - 32) * (5/9)) /// ℉를 ℃로 변경
-                weather.tempature = Int16(degree)
+                weather.temperature = Int16(degree)
                 weather.type = data.currently.icon
                 weather.weatherId = UUID.init()
                 DispatchQueue.main.sync {
                     guard let type = weather.type else { return }
                     if let weatherType = WeatherType(rawValue: type) {
                         self?.settingTableData[2][0].detail =
-                        "\(weather.tempature)℃ \(weatherType.summary)"
+                        "\(weather.temperature)℃ \(weatherType.summary)"
                         self?.settingTableData[2][0].image =
                             UIImage(named: "setting-\(weatherType.rawValue)")
                     } else {
-                        self?.settingTableData[2][0].detail = "\(weather.tempature)℃"
+                        self?.settingTableData[2][0].detail = "\(weather.temperature)℃"
                     }
                     
                     self?.tableView.reloadData()
