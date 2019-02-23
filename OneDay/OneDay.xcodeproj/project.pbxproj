@@ -94,7 +94,6 @@
 		E992EC7A21FAFBC500917116 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7921FAFBC500917116 /* CalendarCell.swift */; };
 		E992EC7C21FB1E5500917116 /* CalendarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7B21FB1E5500917116 /* CalendarHeaderView.swift */; };
 		E992EC7F21FB2CCE00917116 /* CalendarDaysOfWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992EC7E21FB2CCE00917116 /* CalendarDaysOfWeek.swift */; };
-		E9CFA29E221EBB8C005F0E3D /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CFA29D221EBB8C005F0E3D /* TimelineViewController.swift */; };
 		E9CFA2A0221EBBAC005F0E3D /* APILocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CFA29F221EBBAB005F0E3D /* APILocation.swift */; };
 		E9CFA2A2221EBC1F005F0E3D /* TimelineSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CFA2A1221EBC1F005F0E3D /* TimelineSectionHeaderView.swift */; };
 		EC0CFB0422030A29001293B1 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC0CFB0322030A29001293B1 /* WeatherService.swift */; };
@@ -211,7 +210,6 @@
 		E992EC7921FAFBC500917116 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		E992EC7B21FB1E5500917116 /* CalendarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHeaderView.swift; sourceTree = "<group>"; };
 		E992EC7E21FB2CCE00917116 /* CalendarDaysOfWeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDaysOfWeek.swift; sourceTree = "<group>"; };
-		E9CFA29D221EBB8C005F0E3D /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
 		E9CFA29F221EBBAB005F0E3D /* APILocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APILocation.swift; sourceTree = "<group>"; };
 		E9CFA2A1221EBC1F005F0E3D /* TimelineSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineSectionHeaderView.swift; sourceTree = "<group>"; };
 		EC0CFB0322030A29001293B1 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
@@ -477,7 +475,6 @@
 			isa = PBXGroup;
 			children = (
 				D52648FB221E865E009B5191 /* TimelineViewController.swift */,
-				E9CFA29D221EBB8C005F0E3D /* TimelineViewController.swift */,
 				D512A764221BBD9600EF43C6 /* AddActionViewController.swift */,
 				D512A765221BBD9600EF43C6 /* CollectedEntriesViewController.swift */,
 				D512A766221BBD9600EF43C6 /* DatePickerViewController.swift */,
@@ -754,7 +751,6 @@
 				D512A790221BBDF400EF43C6 /* Tag+CoreDataClass.swift in Sources */,
 				E992EC7C21FB1E5500917116 /* CalendarHeaderView.swift in Sources */,
 				D561692321FAD07000E00FED /* AppDelegate.swift in Sources */,
-				E9CFA29E221EBB8C005F0E3D /* TimelineViewController.swift in Sources */,
 				E992EC6821FAEE3300917116 /* SideMenuFilterCell.swift in Sources */,
 				D512A773221BBDA600EF43C6 /* CoreDataDeviceService.swift in Sources */,
 				E992EC6C21FAEE4500917116 /* SideMenuJournalAddCell.swift in Sources */,
@@ -1020,16 +1016,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DJFQKX9L7C;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 5BKN5926VM;
 				INFOPLIST_FILE = "$(SRCROOT)/OneDay/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = cjhjjkom.boostcamp3.OneDay;
+				PRODUCT_BUNDLE_IDENTIFIER = com.boostcamp3.OneDay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = OneDay;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1041,14 +1037,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DJFQKX9L7C;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/OneDay/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = cjhjjkom.boostcamp3.OneDay;
+				PRODUCT_BUNDLE_IDENTIFIER = com.boostcamp3.OneDay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;

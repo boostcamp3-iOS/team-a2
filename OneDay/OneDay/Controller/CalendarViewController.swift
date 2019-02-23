@@ -71,7 +71,6 @@ class CalendarViewController: UIViewController {
         
         addCoreDataChangedNotificationObserver()
         addEntriesFilterChangedNotificationObserver()
-        
         addTabBarItemTouchingNotificationObserver()
     }
     
