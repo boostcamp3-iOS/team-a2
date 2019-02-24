@@ -69,7 +69,7 @@ class CollectedEntriesListCell: UITableViewCell {
     }
     
     private func appendDate(_ attributedText: NSMutableAttributedString, _ entry: Entry) {
-        let formatter = DateFormatter.defualtInstance
+        let formatter = DateFormatter.defaultInstance
         formatter.locale = Locale(identifier: "ko_KR")
         formatter.dateFormat = "YYYY년 MM월 dd일 EEEE a hh:mm"
         
@@ -85,7 +85,7 @@ class CollectedEntriesListCell: UITableViewCell {
     }
     
     private func appendTemperature(_ entry: Entry, _ attributedText: NSMutableAttributedString) {
-        if let temparature = entry.weather?.tempature, let type = entry.weather?.type {
+        if let temparature = entry.weather?.temperature, let type = entry.weather?.type {
             appendDot(at: attributedText)
             attributedText.append(NSMutableAttributedString(string: "\(temparature) °C  "))
             if let weatherType = WeatherType(rawValue: type) {
