@@ -70,7 +70,11 @@ class CollectedEntriesHeaderMapView: MKMapView, MKMapViewDelegate {
         and minLongitude: CLLocationDegrees,
         for centerLongitude: inout Double) {
         if maxLongitude*minLongitude < 0 && abs(maxLongitude)+abs(minLongitude) > 180 {
-            centerLongitude = min(centerLongitude-180, centerLongitude)
+            if centerLongitude >= 0 {
+                centerLongitude -= 180
+            } else {
+                centerLongitude += 180
+            }
         }
     }
 
