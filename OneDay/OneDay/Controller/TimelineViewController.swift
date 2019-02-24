@@ -191,13 +191,13 @@ extension TimelineViewController: UITableViewDelegate {
             else {
                 return UIView()
         }
-        let headerCellView = TimelineSectionHeaderView()
+        let headerView = TimelineSectionHeaderView()
         
         let formatter = DateFormatter.defualtInstance
         formatter.dateFormat = "YYYY년 MM월"
         let sectionTitleHeader = formatter.string(from: fetchedEntryData.date)
-        headerCellView.headerLabel.text = sectionTitleHeader
-        return headerCellView
+        headerView.headerLabel.text = sectionTitleHeader
+        return headerView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

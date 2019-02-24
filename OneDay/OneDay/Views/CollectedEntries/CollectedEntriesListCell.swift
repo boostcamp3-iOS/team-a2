@@ -49,8 +49,8 @@ class CollectedEntriesListCell: UITableViewCell {
         appendContents(entry, attributedText)
         appendJournalTitle(entry, attributedText)
         appendDate(attributedText, entry)
-        apptendAddress(entry, attributedText)
-        apptendTemperature(entry, attributedText)
+        appendAddress(entry, attributedText)
+        appendTemperature(entry, attributedText)
     }
     
     private func appendContents(_ entry: Entry, _ attributedText: NSMutableAttributedString) {
@@ -77,14 +77,14 @@ class CollectedEntriesListCell: UITableViewCell {
         attributedText.append(NSMutableAttributedString(string: formatter.string(from: entry.date)))
     }
     
-    private func apptendAddress(_ entry: Entry, _ attributedText: NSMutableAttributedString) {
+    private func appendAddress(_ entry: Entry, _ attributedText: NSMutableAttributedString) {
         if let address = entry.location?.address {
             appendDot(at: attributedText)
             attributedText.append(NSMutableAttributedString(string: address))
         }
     }
     
-    private func apptendTemperature(_ entry: Entry, _ attributedText: NSMutableAttributedString) {
+    private func appendTemperature(_ entry: Entry, _ attributedText: NSMutableAttributedString) {
         if let temparature = entry.weather?.tempature, let type = entry.weather?.type {
             appendDot(at: attributedText)
             attributedText.append(NSMutableAttributedString(string: "\(temparature) °C  "))
