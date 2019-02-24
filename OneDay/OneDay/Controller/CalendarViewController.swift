@@ -487,7 +487,7 @@ extension CalendarViewController {
                     .instantiateViewController(withIdentifier: "entry_detail")
                     as? EntryViewController
                     else { return }
-                entryViewController.entry = CoreDataManager.shared.insertEntry()
+                entryViewController.entry = CoreDataManager.shared.insert(type: Entry.self)
                 entryViewController.entry.date = components.date ?? Date()
                 entryViewController.entry.updateDate(date: components.date ?? Date())
                 self.present(entryViewController, animated: true)
