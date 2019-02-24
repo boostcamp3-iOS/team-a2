@@ -8,18 +8,13 @@
 
 import CoreData
 
-protocol UsesCoreDataObjects: class {
-    var managedObjectContext: NSManagedObjectContext? { get set }
-}
-
-// MARK: - Core Data stack
 class CoreDataStack {
     private let modelName: String
     
-    // .xcdatamodel identifier
+    /// .xcdatamodel identifier
     lazy var managedContext: NSManagedObjectContext = self.storeContainer.viewContext
     
-    // 저장할 file URL
+    /// 저장할 file URL
     var storeURL : URL {
         let storePaths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
         let storePath = storePaths[0] as NSString
@@ -38,7 +33,7 @@ class CoreDataStack {
         return URL(fileURLWithPath: sqliteFilePath)
     }
     
-    // 저장할 file URL
+    /// 저장할 file URL
     lazy var storeDescription: NSPersistentStoreDescription = {
         let description = NSPersistentStoreDescription(url: self.storeURL)
         description.shouldMigrateStoreAutomatically = true
@@ -46,7 +41,7 @@ class CoreDataStack {
         return description
     }()
     
-    // 파일에 읽고/쓰기 담당하는 Container
+    /// 파일에 읽고/쓰기 담당하는 Container
     lazy var storeContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: self.modelName)
         container.persistentStoreDescriptions = [self.storeDescription]
@@ -59,11 +54,12 @@ class CoreDataStack {
     }()
     
     // MARK: - Initializer
+    
     init(modelName: String = "OneDay") {
         self.modelName = modelName
     }
     
-    // 변경사항 저장
+    /// 변경사항 저장
     func saveContext(successHandler: (() -> Void)? = nil, errorHandler: ((NSError) -> Void)? = nil) {
         if managedContext.hasChanges {
             do {

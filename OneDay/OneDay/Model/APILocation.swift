@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Google Geocoding API를 통해 불러온 주소정보를 저장하는 모델
 struct APILocation: Codable {
     let results: [Results]
 }

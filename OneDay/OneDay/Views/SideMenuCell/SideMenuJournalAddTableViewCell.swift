@@ -1,5 +1,5 @@
 //
-//  SideMenuJournalAddCell.swift
+//  SideMenuJournalAddTableViewCell.swift
 //  OneDay
 //
 //  Created by 정화 on 23/01/2019.
@@ -8,8 +8,11 @@
 
 import UIKit
 
-class SideMenuJournalAddCell: UITableViewCell {
+/// 사이드 메뉴에서 저널 추가 셀
+class SideMenuJournalAddTableViewCell: UITableViewCell {
+    
     // MARK: Properties
+    
     // Layout Components
     private let borderView: UIView = {
         let view = UIView()
@@ -31,24 +34,29 @@ class SideMenuJournalAddCell: UITableViewCell {
     }()
     
     // MARK: Methods
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupCellView()
-    }
-    
-    private func setupCellView() {
-        addSubview(borderView)
-        borderView.leftAnchor.constraint(equalTo: leftAnchor, constant: 8).isActive = true
-        borderView.topAnchor.constraint(equalTo: topAnchor, constant: 8).isActive = true
-        borderView.rightAnchor.constraint(equalTo: rightAnchor, constant: -8).isActive = true
-        borderView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8).isActive = true
-        
-        addSubview(addLabel)
-        addLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        addLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        setUpConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+    }
+}
+
+extension SideMenuJournalAddTableViewCell {
+    private func setUpConstraints() {
+        addSubview(borderView)
+        addSubview(addLabel)
+        
+        NSLayoutConstraint.activate([
+            borderView.leftAnchor.constraint(equalTo: leftAnchor, constant: 8),
+            borderView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            borderView.rightAnchor.constraint(equalTo: rightAnchor, constant: -8),
+            borderView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            addLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            addLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
+            ])
     }
 }

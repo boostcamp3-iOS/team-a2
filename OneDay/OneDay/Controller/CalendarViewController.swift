@@ -10,6 +10,11 @@ import CoreData
 import UIKit
 
 class CalendarViewController: UIViewController {
+    
+    // MARK: - Properties
+    
+    @IBOutlet weak var calendarNavigationItem: UINavigationItem!
+    
     private let collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.sectionHeadersPinToVisibleBounds = true
@@ -52,6 +57,7 @@ class CalendarViewController: UIViewController {
     // MARK: - Life cycle
     
     override func viewDidLoad() {
+        calendarNavigationItem.title = CoreDataManager.shared.currentJournal.title
         setupCalendar()
         setupNavigationItem()
         setupCoreData()
@@ -167,6 +173,7 @@ class CalendarViewController: UIViewController {
     }
     
     @objc private func didEntriesFilterChangedNotification(_: Notification) {
+        calendarNavigationItem.title = CoreDataManager.shared.currentJournal.title
         setupCoreData()
     }
     

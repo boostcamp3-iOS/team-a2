@@ -8,22 +8,24 @@
 
 import UIKit
 
-//Keywords - 돋보기 + "문자열" + 일치하는 엔트리 수를 보여주는 셀
-class SearchedKeywordCell: UITableViewCell {
+/// 검색어를 입력하면 검색어와 일치하는 엔트리 수를 보여주는 셀
+class SearchingKeywordTableViewCell: UITableViewCell {
+    
     // MARK: Properties
+    
     // Layout Components
     private let searchIcon: UIImageView = {
         var imageView = UIImageView()
-        imageView.image = UIImage(named: "ic_search") ?? UIImage()
+        imageView.image = UIImage(named: "ic_search")
         imageView.contentMode = .scaleAspectFit
         imageView.contentMode = .center
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.tintColor = .doBlue
         return imageView
     }()
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
         label.textColor = .doBlue
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -39,7 +41,7 @@ class SearchedKeywordCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupCell()
+        setUpConstraints()
     }
     
     func bind(keyword: String?, count: Int) {
@@ -54,20 +56,23 @@ class SearchedKeywordCell: UITableViewCell {
     }
 }
 
-extension SearchedKeywordCell {
-    private func setupCell() {
+extension SearchingKeywordTableViewCell {
+    private func setUpConstraints() {
         addSubview(searchIcon)
-        searchIcon.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
-        searchIcon.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        searchIcon.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        
         addSubview(titleLabel)
-        titleLabel.leftAnchor.constraint(equalTo: searchIcon.rightAnchor, constant: 16).isActive = true
-        titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        
         addSubview(countLabel)
-        countLabel.leftAnchor.constraint(equalTo: titleLabel.rightAnchor, constant: 16).isActive = true
-        countLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        countLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -24).isActive = true
+        
+        NSLayoutConstraint.activate([
+            searchIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            searchIcon.centerYAnchor.constraint(equalTo: centerYAnchor),
+            searchIcon.widthAnchor.constraint(equalToConstant: 30),
+            
+            titleLabel.leadingAnchor.constraint(equalTo: searchIcon.trailingAnchor, constant: 16),
+            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
+            countLabel.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 16),
+            countLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            countLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24)
+            ])
     }
 }

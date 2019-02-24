@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// 뷰의 상태 변화를 요청하기 위한 Delegate
 protocol StateChangeDelegate: class {
     func changeState()
 }
