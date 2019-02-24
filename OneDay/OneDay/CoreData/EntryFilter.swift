@@ -80,7 +80,7 @@ enum EntryFilter {
                 predicateArray.append(NSPredicate(format: "year == %@", year))
             }
         case .weather(let weatherType):
-            predicateArray.append(NSPredicate(format: "weather.type contains %@", weatherType))
+            predicateArray.append(NSPredicate(format: "weather.type like %@", weatherType))
         case .device(let deviceId):
             predicateArray.append(NSPredicate(format: "device.deviceId == %@", deviceId as CVarArg))
         }

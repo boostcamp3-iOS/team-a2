@@ -21,8 +21,8 @@ class RecentAndFilterViewController: UIViewController {
     
     private var entries: [Entry]!
     private var recentKeywords: [(keyword: String, entries: [Entry])] = []
-    private var filtersArray: [(type: FilterType, data: [NSManagedObject])] = {
-        var array: [(type: FilterType, data: [NSManagedObject])] = []
+    private var filtersArray: [(type: FilterType, data: [Any])] = {
+        var array: [(type: FilterType, data: [Any])] = []
         FilterType.allCases.forEach { cellType in
             array.append((type: cellType, data: cellType.data))
         }

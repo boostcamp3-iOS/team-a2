@@ -16,7 +16,7 @@ class FilterResultTableViewCell: UITableViewCell {
     @IBOutlet weak var countLabel: UILabel!
     @IBOutlet weak var iconImageView: UIImageView!
     
-    func bind(type: FilterType, data: NSManagedObject, count: Int) {
+    func bind(type: FilterType, data: Any, count: Int) {
         countLabel.text = "\(count)"
         iconImageView.image = type.iconImage
         
@@ -25,11 +25,10 @@ class FilterResultTableViewCell: UITableViewCell {
             guard let location = data as? Location else { return }
             titleLabel.text = location.address
         case .weather:
-            guard let weather = data as? Weather,
-                let type = weather.type,
-                let weatherType = WeatherType(rawValue: type) else { return }
+            guard let weather = data as? GroupedWeather,
+                let weatherType = WeatherType(rawValue: weather.type) else { return }
             titleLabel.text = weatherType.summary
-            iconImageView.image = UIImage(named: type)
+            iconImageView.image = UIImage(named: weather.type)
         case .device:
             guard let device = data as? Device else { return }
             titleLabel.text = device.name

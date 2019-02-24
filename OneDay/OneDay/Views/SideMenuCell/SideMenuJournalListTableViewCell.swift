@@ -57,7 +57,7 @@ class SideMenuJournalListTableViewCell: UITableViewCell {
         }
         // 모든 항목 저널인지 확인하여 모든 항목일 경우 모든 entries의 count 를 계산해준다.
         if CoreDataManager.shared.isDefaultJournal(uuid: journal.journalId) {
-            countLabel.text = "\(CoreDataManager.shared.numberOfEntries)"
+            countLabel.text = "\(CoreDataManager.shared.numbersOfItems(type: Entry.self))"
         } else {
             countLabel.text = "\(journal.entries?.count ?? 0)"
         }
