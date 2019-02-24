@@ -9,7 +9,7 @@
 import CoreData
 
 /**
-    Entry 필터링 용 NSPredicate 를 담고 있는 enum
+    Entry 필터링 용 NSPredicate 를 담고 있는 enum 입니다.
  */
 enum EntryFilter {
     case all
