@@ -230,6 +230,7 @@ extension EntryViewController {
                 // thumbnail image 추출
                 if let thumbnailImage = contents.firstImage {
                     _ = thumbnailImage.saveToFile(fileName: self.entry.thmbnailFileName)
+                    self.entry.thumbnail = self.entry.thmbnailFileName
                 } else {
                     self.entry.thumbnail = nil
                 }
