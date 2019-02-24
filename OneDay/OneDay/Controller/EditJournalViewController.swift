@@ -8,13 +8,20 @@
 
 import UIKit
 
+/// 저널을 추가하고 편집(순서 변경, 이름 변경, 삭제)하는 UIViewController
 class EditJournalViewController: UIViewController {
-
+    
+    // MARK: - Properties
+    
+    // MARK: IBOutlet
+    
     @IBOutlet var journalsTableView: UITableView!
     
     private var journals: [Journal] = CoreDataManager.shared.journalsWithoutDefault
     private var cellSnapshot: UIView!
     private var initialIndexPath: IndexPath!
+    
+    // MARK: - Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,7 +116,9 @@ class EditJournalViewController: UIViewController {
 }
 
 // MARK: - Extensions
+
 // MARK: UITableView Section Enum
+
 extension EditJournalViewController {
     enum Section: Int {
         case journalList = 0
@@ -132,6 +141,7 @@ extension EditJournalViewController {
 }
 
 // MARK: UITableView Data Source
+
 extension EditJournalViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -164,6 +174,7 @@ extension EditJournalViewController: UITableViewDataSource {
 }
 
 // MARK: UITableView Delegate
+
 extension EditJournalViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)

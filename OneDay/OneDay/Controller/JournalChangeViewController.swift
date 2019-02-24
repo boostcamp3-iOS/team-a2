@@ -10,6 +10,8 @@ import UIKit
 
 class JournalChangeViewController: UIViewController {
     
+    // MARK: - Properties
+    
     private var tableView: UITableView!
     
     private let cellHeight: CGFloat = 40
@@ -21,6 +23,8 @@ class JournalChangeViewController: UIViewController {
     var alertController: UIAlertController!
     weak var journalChangeDelegate: JournalChangeDelegate?
 
+    // MARK: - Life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

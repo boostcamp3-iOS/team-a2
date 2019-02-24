@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// 사이드 메뉴에서 필터 섹션에 들어가는 필터 타입
 enum SideMenuFilterType: Int, CaseIterable {
     
     case filter = 0

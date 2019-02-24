@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-
 extension Device {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Device> {

@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 
+/// 필터링된 결과 엔트리를 보여주는 셀
 class FilterResultTableViewCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
@@ -17,7 +18,7 @@ class FilterResultTableViewCell: UITableViewCell {
     
     func bind(type: FilterType, data: NSManagedObject, count: Int) {
         countLabel.text = "\(count)"
-        iconImageView.image = type.icon
+        iconImageView.image = type.iconImage
         
         switch type {
         case .location:
@@ -36,5 +37,4 @@ class FilterResultTableViewCell: UITableViewCell {
             ()
         }
     }
-
 }

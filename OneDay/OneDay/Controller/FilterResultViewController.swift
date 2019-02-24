@@ -9,8 +9,11 @@
 import UIKit
 import CoreData
 
+///  FilterResultViewController 필터 선택 후 결과 화면
 class FilterResultViewController: UIViewController {
+    
     // MARK: Properties
+    
     // delegate Properties
     private weak var delegate: FilterViewControllerDelegate?
     
