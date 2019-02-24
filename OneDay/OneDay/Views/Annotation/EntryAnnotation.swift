@@ -1,5 +1,5 @@
 //
-//  MyLocationMarker.swift
+//  EntryAnnotation.swift
 //  OneDay
 //
 //  Created by juhee on 17/02/2019.
@@ -8,9 +8,12 @@
 
 import MapKit
 
+/**
+ Map Tap에서 사용될 Annotation
+ */
 class EntryAnnotation: NSObject, MKAnnotation {
     let title: String?
-    let locationName: String
+    let locationName: String?
     let coordinate: CLLocationCoordinate2D
     var entry: Entry
     
@@ -18,7 +21,7 @@ class EntryAnnotation: NSObject, MKAnnotation {
         self.entry = entry
         self.title = entry.title
         guard let location = entry.location else { preconditionFailure() }
-        self.locationName = location.address ?? ""
+        self.locationName = location.address
         self.coordinate = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
         super.init()
     }
@@ -40,9 +43,16 @@ private extension EntryAnnotationView {
     }
 }
 
-// MARK: Battle Rapper Cluster View
+/**
+ Map Tap에서 사용될 Cluster Annotation
+ */
 internal final class EntryAnnotationClusterView: MKAnnotationView {
-    internal override var annotation: MKAnnotation? { willSet { newValue.flatMap(configure(with:)) } }
+    internal override var annotation: MKAnnotation? {
+        willSet {
+            newValue.flatMap(configure(with:))
+        }
+    }
+    private let annotationRect: CGRect = CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0)
     
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
@@ -52,18 +62,18 @@ internal final class EntryAnnotationClusterView: MKAnnotationView {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("\(#function) not implemented.")
+        super.init(coder: aDecoder)
     }
 }
 
 private extension EntryAnnotationClusterView {
     func configure(with annotation: MKAnnotation) {
         guard let annotation = annotation as? MKClusterAnnotation else { return }
-        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 40.0, height: 40.0))
+        let renderer = UIGraphicsImageRenderer(size: annotationRect.size)
         let count = annotation.memberAnnotations.count
         image = renderer.image { _ in
             UIColor.doBlue.setFill()
-            UIBezierPath(ovalIn: CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0)).fill()
+            UIBezierPath(ovalIn: annotationRect).fill()
             let attributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20.0)]
             let text = "\(count)"
             let size = text.size(withAttributes: attributes)

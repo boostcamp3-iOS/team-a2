@@ -8,6 +8,9 @@
 
 import CoreData
 
+/**
+    Entry 필터링 용 NSPredicate 를 담고 있는 enum
+ */
 enum EntryFilter {
     case all
     case currentJournal

@@ -11,19 +11,24 @@ import MapKit
 
 class EntryInformationViewController: UIViewController {
     
+    // MARK: - Properties
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var mapView: MKMapView!
     
     private let settingIdentifier = "settingCellIdentifier"
-    private var settingTableData: [[EntrySetting]] = [[],[],[]]  /// [section][row]
+    /// [section][row]
+    private var settingTableData: [[EntrySetting]] = [[],[],[]]
     
     private let regionRadius: CLLocationDegrees = 1000
     
     private  let generator = UIImpactFeedbackGenerator(
         style: UIImpactFeedbackGenerator.FeedbackStyle.heavy)
     
-    private var dragDownChangePoint: CGFloat = 100  ///하단 뷰 아래로 드래그시 아래로 붙는 기준
-    private var willPositionChange = false          ///드래그 종료시 변경되야하는지 여부
+    ///하단 뷰 아래로 드래그시 아래로 붙는 기준
+    private var dragDownChangePoint: CGFloat = 100
+    ///드래그 종료시 변경되야하는지 여부
+    private var willPositionChange = false
     private var canScroll = false
     
     var entry: Entry!
@@ -169,10 +174,10 @@ class EntryInformationViewController: UIViewController {
         if let weather = entry.weather {
             guard let type = weather.type else { return }
             if let weatherType = WeatherType(rawValue: type) {
-                settingTableData[2][0].detail = "\(weather.tempature)℃ \(weatherType.summary)"
+                settingTableData[2][0].detail = "\(weather.temperature)℃ \(weatherType.summary)"
                 settingTableData[2][0].image = UIImage(named: "setting-\(weatherType.rawValue)")
             } else {
-                settingTableData[2][0].detail = "\(weather.tempature)℃"
+                settingTableData[2][0].detail = "\(weather.temperature)℃"
             }
         } else {
             entry.weather = CoreDataManager.shared.insert(type: Weather.self)
@@ -274,18 +279,18 @@ class EntryInformationViewController: UIViewController {
             date: entry.date,
             success: {[weak self] data in
                 let degree: Int = Int((data.currently.temperature - 32) * (5/9)) /// ℉를 ℃로 변경
-                weather.tempature = Int16(degree)
+                weather.temperature = Int16(degree)
                 weather.type = data.currently.icon
                 weather.weatherId = UUID.init()
                 DispatchQueue.main.sync {
                     guard let type = weather.type else { return }
                     if let weatherType = WeatherType(rawValue: type) {
                         self?.settingTableData[2][0].detail =
-                        "\(weather.tempature)℃ \(weatherType.summary)"
+                        "\(weather.temperature)℃ \(weatherType.summary)"
                         self?.settingTableData[2][0].image =
                             UIImage(named: "setting-\(weatherType.rawValue)")
                     } else {
-                        self?.settingTableData[2][0].detail = "\(weather.tempature)℃"
+                        self?.settingTableData[2][0].detail = "\(weather.temperature)℃"
                     }
                     
                     self?.tableView.reloadData()
@@ -327,6 +332,8 @@ class EntryInformationViewController: UIViewController {
         self.present(alertController, animated: true, completion: nil)
     }
 }
+
+// MARK: - Extention
 
 extension EntryInformationViewController: UITableViewDataSource, UITableViewDelegate {
     
@@ -376,10 +383,6 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
         switch section {
         case .base:
             switch indexPath.row {
-            case 0:
-                ()
-            case 1:
-                ()
             case 2:
                 changeJournal()
             case 3:
@@ -430,7 +433,7 @@ extension EntryInformationViewController: UITableViewDataSource, UITableViewDele
     }
 }
 
-// MARK: - Cell select actions
+// MARK: Cell select actions
 
 extension EntryInformationViewController {
     
@@ -517,6 +520,8 @@ extension EntryInformationViewController {
     }
 }
 
+// MARK: MapView
+
 extension EntryInformationViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseIdentifier = "pin"
@@ -535,12 +540,16 @@ extension EntryInformationViewController: MKMapViewDelegate {
     }
 }
 
+// MARK: StateChangeDelegate
+
 extension EntryInformationViewController: StateChangeDelegate {
     func changeState() {
         tableView.isScrollEnabled = true
         canScroll = true
     }
 }
+
+// MARK: JournalChangeDelegate
 
 extension EntryInformationViewController: JournalChangeDelegate {
     func changeJournal(to journal: Journal) {

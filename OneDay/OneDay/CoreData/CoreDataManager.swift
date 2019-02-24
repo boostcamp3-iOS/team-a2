@@ -21,16 +21,10 @@ final class CoreDataManager {
     private var coreDataStack: CoreDataStack = CoreDataStack(modelName: "OneDay")
     private lazy var managedContext: NSManagedObjectContext = coreDataStack.managedContext
     
-    private var entryPredicates: [NSPredicate] = [] {
-        didSet {
-            NotificationCenter.default.post(name: CoreDataManager.DidChangedEntriesFilterNotification, object: nil)
-        }
-    }
-    
     // MARK: - Methods
     
     /**
-     CoreDataManger Insttance를 생성합니다.
+     CoreDataManger Instance를 생성합니다.
      
      defaultJournalUUID가 nil인지 여부를 통해 최초 실행인지 아닌지를 판단합니다.
      최초 실행일 경우 defaultJournal '모든 항목'을 생성합니다.
@@ -56,8 +50,8 @@ final class CoreDataManager {
      저장에 성공했을 경우 DidChangedCoreDataNotification Noti를 push하고 successHandler 를 호출합니다.
      
      - Parameters:
-        - successHandler: 저장에 성공했을 때의 동작을 담은 클로저
-        - errorHandler: 저장에 실패했을 때의 동작을 담은 클로저
+     - successHandler: 저장에 성공했을 때의 동작을 담은 클로저
+     - errorHandler: 저장에 실패했을 때의 동작을 담은 클로저
      */
     func save(successHandler: (() -> Void)? = nil, errorHandler: ((NSError) -> Void)? = nil) {
         coreDataStack.saveContext(successHandler: {
@@ -67,7 +61,7 @@ final class CoreDataManager {
             }
         }, errorHandler: errorHandler)
     }
-
+    
     /**
      주어진 journalId값이 '모든 항목'에 해당하는 값인지 판단합니다.
      
@@ -75,7 +69,7 @@ final class CoreDataManager {
      사용자는 '모든 항목'을 선택함으로써 모든 Entry들을 한 번에 확인할 수 있습니다.
      
      - Parameters:
-        - uuid: 비교할 uuid값
+     - uuid: 비교할 uuid값
      */
     func isDefaultJournal(uuid: UUID) -> Bool {
         return uuid == defaultJournalUUID
@@ -254,6 +248,12 @@ extension CoreDataManager {
 }
 
 extension CoreDataManager {
+    /// 앱 전체에서 entry에 대한 필터링을 주고자 할 때 필터용 NSPredicate를 저장하는 property
+    private var entryPredicates: [NSPredicate] = [] {
+        didSet {
+            NotificationCenter.default.post(name: CoreDataManager.DidChangedEntriesFilterNotification, object: nil)
+        }
+    }
     
     /// 최근 저널의 엔티티들을 불러온다.
     var currentJournalEntries: [Entry] {
@@ -279,10 +279,10 @@ extension CoreDataManager {
      NSFetchRequest로 만들고 그 결과를 리턴합니다.
      
      - Parameters:
-        - filters: EntryFilter enum 객체 Array
+     - filters: EntryFilter enum 객체 Array
      
      - Returns:
-        - 필터링 된 결과 Entry Array
+     - 필터링 된 결과 Entry Array
      */
     func filter(by filters: [EntryFilter]) -> [Entry] {
         let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
@@ -328,7 +328,7 @@ extension CoreDataManager {
      GroupedWeather는 weather type과 count로 이루어져 있습니다. dictionary로 받아온 그룹화된 결과를 GroupedWeather array로 변환하여 넘겨줍니다.
      
      - Returns:
-        Type 별로 그룹화된 날씨의 type과 그 수(count)를 담은 GroupedWeather Array
+     Type 별로 그룹화된 날씨의 type과 그 수(count)를 담은 GroupedWeather Array
      */
     func weathersGroupByType() -> [GroupedWeather] {
         let fetchRequest: NSFetchRequest<NSDictionary> = NSFetchRequest(entityName: "Weather")
@@ -378,9 +378,9 @@ extension CoreDataManager {
      주어진 위경도에 맞는 loation 객체가 있는지 검색합니다.
      
      - Parameters:
-         - longitude: 경도
-         - latitude: 위도
-         - epsilon: 위*경도 계산에 사용될 오차 범위잆니다. 기본값은 0.000009 입니다.
+     - longitude: 경도
+     - latitude: 위도
+     - epsilon: 위*경도 계산에 사용될 오차 범위잆니다. 기본값은 0.000009 입니다.
      */
     func location(longitude: Double, latitude: Double, epsilon: Double = 0.000009) -> Location? {
         let fetchRequest: NSFetchRequest<Location> = Location.fetchRequest()
@@ -406,7 +406,7 @@ extension CoreDataManager {
         let locationPredicate = NSPredicate(format: "location != nil")
         let journalPredicate = NSPredicate(format: "%K == %@", argumentArray: [#keyPath(Entry.journal), currentJournal])
         fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [locationPredicate, journalPredicate])
-
+        
         return NSFetchedResultsController(
             fetchRequest: currentJournalEntriesRequest,
             managedObjectContext: coreDataStack.managedContext,

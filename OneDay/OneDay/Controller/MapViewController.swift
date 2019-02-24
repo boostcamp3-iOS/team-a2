@@ -10,29 +10,39 @@ import UIKit
 import MapKit
 import CoreData
 
+/// 4번째 탭인 Map. location이 있는 일기들만 보여준다.
 class MapViewController: UIViewController {
+    
+    // MARK: - Properties
+    
+    // MARK: IBOutlet
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var currentLocationItem: UIBarButtonItem!
-    let regionRadius: CLLocationDistance = 1000
-    var isMyLocationMarkerVisible: Bool = false
-    var entries: [Entry] = []
-    var locations: [[String:Any]] = [[:]]
-    var defaultFilters: [EntryFilter] = [.currentJournal]
-    var fetchResultController: NSFetchedResultsController<Entry>!
+    @IBOutlet weak var mapNavigationItem: UINavigationItem!
+    
+    private let regionRadius: CLLocationDistance = 1000
+    private var isMyLocationMarkerVisible: Bool = false
+    private var entries: [Entry] = []
+    private var locations: [[String:Any]] = [[:]]
+    private var defaultFilters: [EntryFilter] = [.currentJournal]
+    private var fetchResultController: NSFetchedResultsController<Entry>!
 
+    // MARK: - Methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapNavigationItem.title = CoreDataManager.shared.currentJournal.title
         mapView.register(EntryAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
         mapView.register(EntryAnnotationClusterView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
         let defaultLocation = CLLocation(latitude: 37.497016, longitude: 127.028715)
         centerMapOnLocation(location: LocationService.service.location ?? defaultLocation)
         loadData()
-        addCoreDataChangedNotificationObserver()
-        addEntriesFiltersChangeNotificationObserver()
+        addNotifications()
     }
     
     private func loadData() {
+        mapView.removeAnnotations(mapView.annotations)
         fetchResultController = CoreDataManager.shared.locationResultController()
         do {
             try fetchResultController.performFetch()
@@ -49,30 +59,20 @@ class MapViewController: UIViewController {
         }
     }
     
-    func edgePoints() -> (northEastCoord: CLLocationCoordinate2D, southWestCoord: CLLocationCoordinate2D) {
-        let northEastPoint = CGPoint(x: (mapView.bounds.origin.x + mapView.bounds.size.width), y: mapView.bounds.origin.y)
-        let southWestPoint = CGPoint(x: mapView.bounds.origin.x, y: (mapView.bounds.origin.y + mapView.bounds.size.height))
-        
-        let northEastCoord: CLLocationCoordinate2D = mapView.convert(northEastPoint, toCoordinateFrom: mapView)
-        let southWestCoord: CLLocationCoordinate2D = mapView.convert(southWestPoint, toCoordinateFrom: mapView)
-        return (northEastCoord, southWestCoord)
-    }
-    
-    func centerMapOnLocation(location: CLLocation) {
+    /// 맵뷰의 중심을 주어진 location으로 이동한다.
+    private func centerMapOnLocation(location: CLLocation) {
         let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
         mapView.setRegion(coordinateRegion, animated: true)
     }
     
-    // Notification Observer를 추가
-    func addCoreDataChangedNotificationObserver() {
+    /// Notification Observer를 추가
+    private func addNotifications() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(didReceiveCoreDataChangedNotification(_:)),
             name: CoreDataManager.DidChangedCoreDataNotification,
             object: nil)
-    }
-    
-    func addEntriesFiltersChangeNotificationObserver() {
+        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(didReceiveEntriesFilterNotification(_:)),
@@ -88,10 +88,18 @@ class MapViewController: UIViewController {
     
     @objc func didReceiveEntriesFilterNotification(_: Notification) {
         DispatchQueue.main.async { [weak self] in
+            self?.mapNavigationItem.title = CoreDataManager.shared.currentJournal.title
             self?.loadData()
         }
     }
     
+}
+
+// MARK: - Extension
+
+// MARK: IBActions
+
+extension MapViewController {
     @IBAction func didTaplocationItem(_ sender: UIBarButtonItem) {
         if isMyLocationMarkerVisible {
             // 현재 위치를 표시하고 있고, 내 위치가 맵에서 보인다면 더 이상 내 위치를 보여주지 않습니다.
@@ -130,16 +138,10 @@ class MapViewController: UIViewController {
         let entries: [Entry] = mapView.annotations.reduce(into: [], { array, annotation in
             guard let data = annotation as? EntryAnnotation else { return }
             return array.append(data.entry)
-            })
-        print(entries.count)
+        })
         let nextViewController = CollectedEntriesViewController()
         nextViewController.entriesData = entries
         present(nextViewController, animated: true, completion: nil)
     }
+    
 }
-
-//extension MapViewController: MKMapViewDelegate {
-//    func mapView(_ mapView: MKMapView, clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]) -> MKClusterAnnotation {
-//        
-//    }
-//}

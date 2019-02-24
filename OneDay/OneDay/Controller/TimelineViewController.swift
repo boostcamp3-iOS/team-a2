@@ -18,6 +18,7 @@ class TimelineViewController: UIViewController {
     @IBOutlet weak var buttonBackgroundView: UIView!
     @IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var editorButton: UIButton!
+    @IBOutlet weak var timelineNavigationItem: UINavigationItem!
     
     fileprivate var fetchedResultsController: NSFetchedResultsController<Entry> =
         CoreDataManager.shared.timelineResultsController
@@ -32,9 +33,8 @@ class TimelineViewController: UIViewController {
         
         registerTableviewCell()
         setupFetchedResultsController()
+        addNotifications()
         dayLabelVisibilityCheck()
-        addCoreDataChangedNotificationObserver()
-        addEntriesFilterChangedNotificationObserver()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -52,21 +52,13 @@ class TimelineViewController: UIViewController {
     }
     
     // MARK: - Notification
-    private func addCoreDataChangedNotificationObserver() {
+    private func addNotifications() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(didReceiveCoreDataChangedNotification(_:)),
             name: CoreDataManager.DidChangedCoreDataNotification,
             object: nil)
-    }
-    
-    @objc private func didReceiveCoreDataChangedNotification(_: Notification) {
-        DispatchQueue.main.async { [weak self] in
-            self?.reloadData()
-        }
-    }
-    
-    private func addEntriesFilterChangedNotificationObserver() {
+        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(didEntriesFilterChangedNotification(_:)),
@@ -74,15 +66,23 @@ class TimelineViewController: UIViewController {
             object: nil)
     }
     
+    @objc private func didReceiveCoreDataChangedNotification(_: Notification) {
+        DispatchQueue.main.async { [weak self] in
+            self?.timelineTableView.reloadData()
+        }
+    }
+    
     @objc private func didEntriesFilterChangedNotification(_: Notification) {
         setupFetchedResultsController()
         DispatchQueue.main.async { [weak self] in
-            self?.reloadData()
+            self?.navigationController?.title =  CoreDataManager.shared.currentJournal.title
+            self?.timelineTableView.reloadData()
         }
     }
     
     // MARK: Set Up CoreData Fetched Results Controller
     fileprivate func setupFetchedResultsController() {
+        timelineNavigationItem.title = CoreDataManager.shared.currentJournal.title
         fetchedResultsController = CoreDataManager.shared.timelineResultsController
         do {
             fetchedResultsController.delegate = self
@@ -92,18 +92,14 @@ class TimelineViewController: UIViewController {
         }
     }
     
-    private func reloadData() {
-        dayLabelVisibilityCheck()
-        timelineTableView.reloadData()
-    }
-    
     fileprivate func dayLabelVisibilityCheck() {
         shouldShowDayLabelAtIndexPath = [:]
         fetchedResultsController.fetchedObjects?.forEach({ entry in
-            let indexPath = fetchedResultsController.indexPath(forObject: entry)
-            let key = convertToDayKey(from: entry.date)
-            if shouldShowDayLabelAtIndexPath[key] == nil {
-                shouldShowDayLabelAtIndexPath[key] = indexPath!
+            if let indexPath = fetchedResultsController.indexPath(forObject: entry) {
+                let key = convertToDayKey(from: entry.date)
+                if shouldShowDayLabelAtIndexPath[key] == nil {
+                    shouldShowDayLabelAtIndexPath[key] = indexPath
+                }
             }
         })
     }
@@ -238,7 +234,7 @@ extension TimelineViewController: UITableViewDelegate, UITableViewDataSource {
         }
         let headerCellView = TimelineSectionHeaderView()
         
-        let formatter = DateFormatter.defualtInstance
+        let formatter = DateFormatter.defaultInstance
         formatter.dateFormat = "YYYY년 MM월"
         let sectionTitleHeader = formatter.string(from: fetchedEntryData.date)
         headerCellView.headerLabel.text = sectionTitleHeader
@@ -254,6 +250,7 @@ extension TimelineViewController: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(
         _ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         timelineTableView.beginUpdates()
+        dayLabelVisibilityCheck()
     }
     
     func controller(

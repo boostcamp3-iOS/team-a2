@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Darksky API를 통해 불러온 날씨정보를 저장하는 모델
 struct APIWeather: Codable {
     
     struct Currently: Codable {

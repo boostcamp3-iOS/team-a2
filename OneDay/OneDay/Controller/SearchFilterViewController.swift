@@ -9,8 +9,11 @@
 import UIKit
 import CoreData
 
+/// SideMenu에서 필터 섹션의 셀을 누를 경우 나타나는 화면
 class SearchFilterViewController: UIViewController {
     // MARK: Properties
+    override var prefersStatusBarHidden: Bool { return true }
+    
     // IBOutlet
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchTable: UITableView!
@@ -20,7 +23,6 @@ class SearchFilterViewController: UIViewController {
     private var shouldSearchBarFocused: Bool = false
     
     // MARK: - Methods
-    override var prefersStatusBarHidden: Bool { return true }
     
     override func viewDidLoad() {
         setupFilterTableView()
@@ -34,8 +36,8 @@ class SearchFilterViewController: UIViewController {
     }
     
     private func setupFilterTableView() {
-        searchTable.register(SearchedKeywordCell.self, forCellReuseIdentifier: Section.keywords.identifier)
-        searchTable.register(MatchingEntriesCell.self, forCellReuseIdentifier: Section.entries.identifier)
+        searchTable.register(SearchingKeywordTableViewCell.self, forCellReuseIdentifier: Section.keywords.identifier)
+        searchTable.register(MatchingEntriesTableViewCell.self, forCellReuseIdentifier: Section.entries.identifier)
     }
     
     private func addRecentKeyword() {
@@ -125,13 +127,13 @@ extension SearchFilterViewController: UITableViewDataSource {
         switch sectionType {
         case .keywords:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: sectionType.identifier,
-                                                           for: indexPath) as? SearchedKeywordCell
+                                                           for: indexPath) as? SearchingKeywordTableViewCell
                 else { preconditionFailure("Cell Error") }
             cell.bind(keyword: searchBar.text, count: matchedEntries.count)
             return cell
         case .entries:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: sectionType.identifier,
-                                                           for: indexPath) as? MatchingEntriesCell
+                                                           for: indexPath) as? MatchingEntriesTableViewCell
                 else { preconditionFailure("Cell Error") }
             // 검색 키워드와 일치하는 단어 색상 변경
             guard let keyword =  searchBar.text else { preconditionFailure() }

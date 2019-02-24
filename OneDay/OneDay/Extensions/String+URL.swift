@@ -9,7 +9,11 @@
 import Foundation
 
 extension String {
-    
+    /**
+     String으로 파일 시스템의 Document Directory URL을 반환
+     
+     파일 경로나 폴더가 없다면 만든다.
+     */
     var urlForDataStorage: URL? {
         let fileManager = FileManager.default
         guard let folder = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else { return nil }
@@ -25,5 +29,4 @@ extension String {
         }
         return appFolder.appendingPathComponent(self).appendingPathExtension("jpeg")
     }
-
 }

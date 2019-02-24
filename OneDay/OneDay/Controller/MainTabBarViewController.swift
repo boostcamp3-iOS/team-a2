@@ -8,6 +8,11 @@
 
 import UIKit
 
+/**
+ 메인 화면이 되는 TabBarController
+ 
+ 총 5개의 탭을 가지고 있으며 세번째 탭을 눌렀을 때는 AddViewController를 띄우지 않고 actionsheet를 연다.
+ */
 class MainTabBarViewController: UITabBarController {
     
     override func viewDidLoad() {
@@ -33,7 +38,10 @@ class MainTabBarViewController: UITabBarController {
     }
 }
 
+// MARK: - Extension
+
 // MARK: UITabBarControllerDelegate
+
 extension MainTabBarViewController: UITabBarControllerDelegate, UIImagePickerControllerDelegate,
 UINavigationControllerDelegate {
     func tabBarController
@@ -41,6 +49,9 @@ UINavigationControllerDelegate {
          shouldSelect viewController: UIViewController
         ) -> Bool {
         
+        /**
+            AddActionViewController일 경우 ActionSheet를 띄워준다.
+         */
         if viewController.isKind(of: AddActionViewController.self) {
             let actionViewController = UIAlertController(
                 title: "일기작성",
@@ -84,6 +95,10 @@ UINavigationControllerDelegate {
         return true
     }
     
+    /**
+     이미지 피커에서 이미지 선택이 완료되었을 때 호출된다.
+     picker를 내려주고 선택된 이미지를 받아서 Entry Contents에 담아서 EntryViewController로 이동하는 createEntryWithImage()를 호출한다.
+     */
     func imagePickerController(
         _ picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]

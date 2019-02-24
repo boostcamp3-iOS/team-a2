@@ -9,7 +9,12 @@
 import UIKit
 
 extension UIViewController {
-    
+    /**
+     UIViewController의 뷰에 fade Transition을 추가한다.
+     
+     - Parameters:
+        - duration : fade duration. 기본값은 0.2
+     */
     func addFadeTransition(duration: CFTimeInterval = 0.2) {
         let transition = CATransition()
         transition.duration = duration

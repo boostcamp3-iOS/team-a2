@@ -152,7 +152,7 @@ extension CollectedEntriesViewController {
                 NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 12)]))
         }
         
-        let formatter = DateFormatter.defualtInstance
+        let formatter = DateFormatter.defaultInstance
         formatter.locale = Locale(identifier: "ko_KR")
         formatter.dateFormat = "YYYY년 MM월 dd일 EEEE a hh:mm"
         
@@ -164,7 +164,7 @@ extension CollectedEntriesViewController {
             attributedText.append(NSMutableAttributedString(string: address))
         }
         
-        if let temparature = data.weather?.tempature, let type = data.weather?.type {
+        if let temparature = data.weather?.temperature, let type = data.weather?.type {
             appendDot(at: attributedText)
             attributedText.append(NSMutableAttributedString(string: "\(temparature) °C  "))
             attributedText.append(NSMutableAttributedString(string: type))
