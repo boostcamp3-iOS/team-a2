@@ -21,6 +21,13 @@ final class CoreDataManager {
     private var coreDataStack: CoreDataStack = CoreDataStack(modelName: "OneDay")
     private lazy var managedContext: NSManagedObjectContext = coreDataStack.managedContext
     
+    /// 앱 전체에서 entry에 대한 필터링을 주고자 할 때 필터용 NSPredicate를 저장하는 property
+    private var entryPredicates: [NSPredicate] = [] {
+        didSet {
+            NotificationCenter.default.post(name: CoreDataManager.DidChangedEntriesFilterNotification, object: nil)
+        }
+    }
+    
     // MARK: - Methods
     
     /**
@@ -248,12 +255,6 @@ extension CoreDataManager {
 }
 
 extension CoreDataManager {
-    /// 앱 전체에서 entry에 대한 필터링을 주고자 할 때 필터용 NSPredicate를 저장하는 property
-    private var entryPredicates: [NSPredicate] = [] {
-        didSet {
-            NotificationCenter.default.post(name: CoreDataManager.DidChangedEntriesFilterNotification, object: nil)
-        }
-    }
     
     /// 최근 저널의 엔티티들을 불러온다.
     var currentJournalEntries: [Entry] {

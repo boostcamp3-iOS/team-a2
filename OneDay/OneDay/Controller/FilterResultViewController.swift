@@ -19,7 +19,7 @@ class FilterResultViewController: UIViewController {
     
     private let reusableIdentifier: String = "filter_result_cell"
     private var filterType: FilterType!
-    private var filtersArray: [(filter: Any, entries: [Entry])] = []
+    private var filtersArray: [(filter: Filterable, entries: [Entry])] = []
     
     private func filterDataTitle(data: Any) -> String {
         guard let filterType = filterType else { preconditionFailure() }
@@ -43,7 +43,7 @@ class FilterResultViewController: UIViewController {
         return title ?? filterType.title
     }
 
-    func bind(type: FilterType, data: [Any], delegator: FilterViewControllerDelegate?) {
+    func bind(type: FilterType, data: [Filterable], delegator: FilterViewControllerDelegate?) {
         self.filterType = type
         self.delegate = delegator
         

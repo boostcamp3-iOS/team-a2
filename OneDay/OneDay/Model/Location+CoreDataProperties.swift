@@ -58,3 +58,5 @@ extension Location {
     @NSManaged public func removeFromEntries(_ values: NSOrderedSet)
 
 }
+
+extension Location: Filterable {}

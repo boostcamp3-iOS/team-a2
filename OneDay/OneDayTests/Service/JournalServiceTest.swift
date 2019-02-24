@@ -10,6 +10,7 @@ import XCTest
 @testable import OneDay
 
 class JournalServiceTest: XCTestCase {
+    /*
     // MARK: Properties
     var journalService: CoreDataJournalService!
     var coreDataStack: TestCoreDataStack!
@@ -62,4 +63,5 @@ class JournalServiceTest: XCTestCase {
         XCTAssertTrue(journals[0].title == "모든 항목")
         XCTAssertTrue(journals.count == 2)
     }
+    */
 }

@@ -38,3 +38,5 @@ extension Device {
     @NSManaged public func removeFromEntries(_ values: NSSet)
 
 }
+
+extension Device: Filterable {}

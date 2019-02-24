@@ -22,3 +22,5 @@ extension Weather {
     @NSManaged public var entry: Entry?
 
 }
+
+extension Weather: Filterable {}

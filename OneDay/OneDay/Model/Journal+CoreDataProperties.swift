@@ -40,3 +40,5 @@ extension Journal {
     @NSManaged public func removeFromEntries(_ values: NSSet)
 
 }
+
+extension Journal: Filterable {}

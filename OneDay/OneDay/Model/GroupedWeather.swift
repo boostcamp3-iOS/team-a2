@@ -8,8 +8,10 @@
 
 import Foundation
 
-struct GroupedWeather {
+struct GroupedWeather: Filterable {
     
     var type: String
     var count: Int
 }
+
+protocol Filterable { }

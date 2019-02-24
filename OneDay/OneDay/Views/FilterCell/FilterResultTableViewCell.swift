@@ -16,7 +16,7 @@ class FilterResultTableViewCell: UITableViewCell {
     @IBOutlet weak var countLabel: UILabel!
     @IBOutlet weak var iconImageView: UIImageView!
     
-    func bind(type: FilterType, data: Any, count: Int) {
+    func bind(type: FilterType, data: Filterable, count: Int) {
         countLabel.text = "\(count)"
         iconImageView.image = type.iconImage
         

@@ -43,3 +43,5 @@ extension Entry {
     @NSManaged public func removeFromTags(_ values: NSSet)
 
 }
+
+extension Entry: Filterable {}
