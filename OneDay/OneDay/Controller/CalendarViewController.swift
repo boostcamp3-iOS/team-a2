@@ -211,6 +211,7 @@ class CalendarViewController: UIViewController {
     @objc private func didEntriesFilterChangedNotification(_: Notification) {
         calendarNavigationItem.title = CoreDataManager.shared.currentJournal.title
         setupCoreData()
+        collectionView.reloadData()
     }
     
     private func addTabBarItemTouchingNotificationObserver() {
@@ -434,10 +435,12 @@ extension CalendarViewController {
         guard let year = date.year, let month = date.month, let day = date.day else { return }
         
         let entriesAtDay = CoreDataManager.shared.filter(
-            by:[.thisYear(year: year),
+            by:[.currentJournal,
+                .thisYear(year: year),
                 .thisDay(month: month, day: day)])
         let entriesOnThisDay = CoreDataManager.shared.filter(
-            by: [.thisDay(month: month, day: day)])
+            by: [.currentJournal,
+                .thisDay(month: month, day: day)])
         
         let alertTitle = "\(year)년 \(month)월 \(day)일 \(weekday)요일"
         let dayAlertController = UIAlertController(
@@ -490,6 +493,8 @@ extension CalendarViewController {
                 entryViewController.entry = CoreDataManager.shared.insert(type: Entry.self)
                 entryViewController.entry.date = components.date ?? Date()
                 entryViewController.entry.updateDate(date: components.date ?? Date())
+                let date = "\(year)\(month)\(day)"
+                self.fetchedEntriesDate.insert(date)
                 self.present(entryViewController, animated: true)
         })
     }
