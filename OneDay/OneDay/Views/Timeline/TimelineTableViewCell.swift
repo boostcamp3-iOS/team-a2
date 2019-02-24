@@ -9,7 +9,7 @@
 import UIKit
 
 class TimelineTableViewCell: UITableViewCell {
-    let dayLabel: UILabel = {
+    private let dayLabel: UILabel = {
         let label = UILabel()
         label.isHidden = true
         label.textAlignment = .right
@@ -18,7 +18,7 @@ class TimelineTableViewCell: UITableViewCell {
         return label
     }()
     
-    let weekDayLabel: UILabel = {
+    private let weekDayLabel: UILabel = {
         let label = UILabel()
         label.isHidden = true
         label.textColor = .lightGray
@@ -28,7 +28,7 @@ class TimelineTableViewCell: UITableViewCell {
         return label
     }()
     
-    let thumbnailImageView: UIImageView = {
+    private let thumbnailImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
@@ -36,7 +36,7 @@ class TimelineTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    let contentTextView: UITextView = {
+    private let contentTextView: UITextView = {
         let textView = UITextView()
         textView.isEditable = false
         textView.isSelectable = false
@@ -48,14 +48,14 @@ class TimelineTableViewCell: UITableViewCell {
         return textView
     }()
     
-    let favoriteImageView: UIImageView = {
+    private let favoriteImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    let timeLabel: UILabel = {
+    private let timeLabel: UILabel = {
         let label = UILabel()
         label.textColor = .doDark
         label.font = UIFont.preferredFont(forTextStyle: .caption2)
@@ -63,7 +63,7 @@ class TimelineTableViewCell: UITableViewCell {
         return label
     }()
     
-    let addressLabel: UILabel = {
+    private let addressLabel: UILabel = {
         let label = UILabel()
         label.textColor = .doDark
         label.font = UIFont.preferredFont(forTextStyle: .caption2)
@@ -71,7 +71,7 @@ class TimelineTableViewCell: UITableViewCell {
         return label
     }()
     
-    let weatherIconImageView: UIImageView = {
+    private let weatherIconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFit
@@ -79,7 +79,7 @@ class TimelineTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    let weatherLabel: UILabel = {
+    private let weatherLabel: UILabel = {
         let label = UILabel()
         label.textColor = .doDark
         label.font = UIFont.preferredFont(forTextStyle: .caption2)
@@ -87,14 +87,14 @@ class TimelineTableViewCell: UITableViewCell {
         return label
     }()
     
-    fileprivate var contentTextViewLeftAnchorConstraint: NSLayoutConstraint!
-    fileprivate var timeLabelLeftAnchorConstraint: NSLayoutConstraint!
-    fileprivate var cellHeightAnchorConstraint: NSLayoutConstraint!
-    fileprivate var imageCellHeightAnchorConstraint: NSLayoutConstraint!
+    private var contentTextViewLeftAnchorConstraint: NSLayoutConstraint!
+    private var timeLabelLeftAnchorConstraint: NSLayoutConstraint!
+    private var cellHeightAnchorConstraint: NSLayoutConstraint!
+    private var imageCellHeightAnchorConstraint: NSLayoutConstraint!
 
-    fileprivate let imageCellConstant = Constants.timelineThumbnailImageCellHeight //96
-    fileprivate let nonImageCellConstant = Constants.timelineThumbnailImageCellHeight-16 //80
-    fileprivate let infoLabelImageViewConstant = Constants.timelineInfoImageLabelViewsHeight //12
+    private let imageCellConstant = Constants.timelineThumbnailImageCellHeight //96
+    private let nonImageCellConstant = Constants.timelineThumbnailImageCellHeight-16 //80
+    private let infoLabelImageViewConstant = Constants.timelineInfoImageLabelViewsHeight //12
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -128,13 +128,15 @@ class TimelineTableViewCell: UITableViewCell {
         weekDayLabel.isHidden = true
     }
     
-    fileprivate func setupAnchorConstraint() {
-        cellHeightAnchorConstraint = heightAnchor.constraint(
+    private func setupAnchorConstraint() {
+        cellHeightAnchorConstraint =
+            heightAnchor.constraint(
             greaterThanOrEqualToConstant: nonImageCellConstant
         )
         cellHeightAnchorConstraint.isActive = true
         
-        imageCellHeightAnchorConstraint = heightAnchor.constraint(
+        imageCellHeightAnchorConstraint =
+            heightAnchor.constraint(
             equalToConstant: imageCellConstant
         )
     }
@@ -148,7 +150,7 @@ class TimelineTableViewCell: UITableViewCell {
         bindThumbnailImage(from: entry)
     }
     
-    fileprivate func bindDate(from date: Date, hideDayLabel: Bool) {
+    private func bindDate(from date: Date, hideDayLabel: Bool) {
         let dateSet = DateStringSet(date: date)
         dayLabel.text = dateSet.day
         weekDayLabel.text = dateSet.weekDay
@@ -158,7 +160,7 @@ class TimelineTableViewCell: UITableViewCell {
         weekDayLabel.isHidden = hideDayLabel
     }
     
-    fileprivate func bindFavorite(from entry: Entry) {
+    private func bindFavorite(from entry: Entry) {
         if entry.favorite {
             favoriteImageView.image = UIImage(named: "filterHeart")
             timeLabelLeftAnchorConstraint.constant = infoLabelImageViewConstant+4
@@ -167,7 +169,7 @@ class TimelineTableViewCell: UITableViewCell {
         }
     }
     
-    fileprivate func bindWeather(from entry: Entry) {
+    private func bindWeather(from entry: Entry) {
         guard let weather = entry.weather, let type = weather.type
         else {
             return
@@ -183,19 +185,18 @@ class TimelineTableViewCell: UITableViewCell {
         }
     }
     
-    fileprivate func bindAddress(from entry: Entry) {
+    private func bindAddress(from entry: Entry) {
         if let address = entry.location?.address {
             addressLabel.text = address
         }
     }
     
-    fileprivate func bindThumbnailImage(from entry: Entry) {
+    private func bindThumbnailImage(from entry: Entry) {
         if let thumbImage = entry.thumbnail {
             guard let imageURL = thumbImage.urlForDataStorage
             else {
                 preconditionFailure("No thumbnail image")
             }
-            
             do {
                 let imageData = try Data(contentsOf: imageURL)
                 thumbnailImageView.image = UIImage(data: imageData)
@@ -222,7 +223,7 @@ class TimelineTableViewCell: UITableViewCell {
 }
 
 extension TimelineTableViewCell {
-    fileprivate func setupDayLabels() {
+    private func setupDayLabels() {
         addSubview(dayLabel)
         dayLabel.rightAnchor.constraint(
             equalTo: rightAnchor
@@ -246,7 +247,7 @@ extension TimelineTableViewCell {
             .isActive = true
     }
     
-    fileprivate func setupThumbnailImageView() {
+    private func setupThumbnailImageView() {
         addSubview(thumbnailImageView)
         let imageHeight = imageCellConstant-8
         thumbnailImageView.leftAnchor.constraint(
@@ -264,7 +265,7 @@ extension TimelineTableViewCell {
             .isActive = true
     }
     
-    fileprivate func setupContentTextView() {
+    private func setupContentTextView() {
         addSubview(contentTextView)
         contentTextViewLeftAnchorConstraint =
             contentTextView.leftAnchor.constraint(
@@ -284,8 +285,8 @@ extension TimelineTableViewCell {
             lessThanOrEqualToConstant: 90)
             .isActive = true
     }
-    
-    fileprivate func setupEntryInfoViews() {
+
+    private func setupEntryInfoViews() {
         timeLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         addressLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         weatherLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
@@ -297,7 +298,7 @@ extension TimelineTableViewCell {
         setupWeatherIconImageView()
     }
     
-    fileprivate func setupTimeLabel() {
+    private func setupTimeLabel() {
         addSubview(timeLabel)
         timeLabelLeftAnchorConstraint =
             timeLabel.leftAnchor.constraint(
@@ -313,7 +314,7 @@ extension TimelineTableViewCell {
             .isActive = true
     }
     
-    fileprivate func setupFavoriteImageView() {
+    private func setupFavoriteImageView() {
         addSubview(favoriteImageView)
         favoriteImageView.rightAnchor.constraint(
             equalTo: timeLabel.leftAnchor,
@@ -330,7 +331,7 @@ extension TimelineTableViewCell {
             .isActive = true
     }
     
-    fileprivate func setupAddressLabel() {
+    private func setupAddressLabel() {
         addSubview(addressLabel)
         addressLabel.leftAnchor.constraint(
             equalTo: timeLabel.rightAnchor,
@@ -344,7 +345,7 @@ extension TimelineTableViewCell {
             .isActive = true
     }
     
-    fileprivate func setupWeatherLabel() {
+    private func setupWeatherLabel() {
         addSubview(weatherLabel)
         weatherLabel.leftAnchor.constraint(
             equalTo: addressLabel.rightAnchor,
@@ -362,7 +363,7 @@ extension TimelineTableViewCell {
             .isActive = true
     }
     
-    fileprivate func setupWeatherIconImageView() {
+    private func setupWeatherIconImageView() {
         weatherLabel.addSubview(weatherIconImageView)
         weatherIconImageView.rightAnchor.constraint(
             equalTo: weatherLabel.leftAnchor,

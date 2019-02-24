@@ -9,9 +9,8 @@
 import UIKit
 
 class CalendarDaysOfWeek: UIView {
-    // 캘린더 탭 상단의 |일 월 화 수 목 금 토| 를 그리는 뷰
-    let daysOfWeekView: UIStackView = {
-        let stackView=UIStackView()
+    private let daysOfWeekView: UIStackView = {
+        let stackView = UIStackView()
         stackView.distribution = .fillEqually
         stackView.translatesAutoresizingMaskIntoConstraints=false
         return stackView
@@ -22,14 +21,15 @@ class CalendarDaysOfWeek: UIView {
         setupView()
     }
     
-    func setupView() {
+    private func setupView() {
         let daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"]
         for index in 0..<7 {
             let label = UILabel()
-            label.text = daysOfWeek[index]
+            label.alpha = 0.7
             label.textAlignment = .center
-            label.font = label.font.withSize(12)
-            label.textColor = .black
+            label.text = daysOfWeek[index]
+            label.textColor = .calendarDarkColor
+            label.font = .preferredFont(forTextStyle: .caption2)
             daysOfWeekView.addArrangedSubview(label)
         }
         

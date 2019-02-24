@@ -20,12 +20,13 @@ class TimelineViewController: UIViewController {
     @IBOutlet weak var editorButton: UIButton!
     @IBOutlet weak var timelineNavigationItem: UINavigationItem!
     
-    fileprivate var fetchedResultsController: NSFetchedResultsController<Entry> =
+    private var fetchedResultsController: NSFetchedResultsController<Entry> =
         CoreDataManager.shared.timelineResultsController
     
-    fileprivate var shouldShowDayLabelAtIndexPath = [String:IndexPath]()
+    private var shouldShowDayLabelAtIndexPath = [String:IndexPath]()
     
     // MARK: - Life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         removeNavigatinBarBorderLine()
@@ -44,7 +45,8 @@ class TimelineViewController: UIViewController {
     }
     
     // MARK: - Setup
-    fileprivate func registerTableviewCell() {
+    
+    private func registerTableviewCell() {
         timelineTableView.register(
             TimelineTableViewCell.self,
             forCellReuseIdentifier: "timelineCellId")
@@ -52,6 +54,7 @@ class TimelineViewController: UIViewController {
     }
     
     // MARK: - Notification
+
     private func addNotifications() {
         NotificationCenter.default.addObserver(
             self,
@@ -81,7 +84,7 @@ class TimelineViewController: UIViewController {
     }
     
     // MARK: Set Up CoreData Fetched Results Controller
-    fileprivate func setupFetchedResultsController() {
+    private func setupFetchedResultsController() {
         timelineNavigationItem.title = CoreDataManager.shared.currentJournal.title
         fetchedResultsController = CoreDataManager.shared.timelineResultsController
         do {
@@ -92,7 +95,7 @@ class TimelineViewController: UIViewController {
         }
     }
     
-    fileprivate func dayLabelVisibilityCheck() {
+    private func dayLabelVisibilityCheck() {
         shouldShowDayLabelAtIndexPath = [:]
         fetchedResultsController.fetchedObjects?.forEach({ entry in
             if let indexPath = fetchedResultsController.indexPath(forObject: entry) {
@@ -105,14 +108,15 @@ class TimelineViewController: UIViewController {
     }
     
     // MARK: - Layout
-    fileprivate func removeNavigatinBarBorderLine() {
+    
+    private func removeNavigatinBarBorderLine() {
         if let navigationBar = self.navigationController?.navigationBar {
             navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
             navigationBar.shadowImage = UIImage()
         }
     }
     
-    fileprivate func setupButtonsBehindArea() {
+    private func setupButtonsBehindArea() {
         let blueColorViewForTableViewTopBounceArea: UIView = {
             let view = UIView()
             view.backgroundColor = .doBlue
@@ -131,11 +135,11 @@ class TimelineViewController: UIViewController {
             equalTo: view.topAnchor).isActive = true
     }
     
-    fileprivate func  scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         transparentizeButtons()
     }
     
-    fileprivate func transparentizeButtons() {
+    private func transparentizeButtons() {
         let scrollingProgress = 1 - (
             timelineTableView.contentOffset.y / buttonBackgroundView.frame.size.height
         )
@@ -143,6 +147,8 @@ class TimelineViewController: UIViewController {
         editorButton.alpha = scrollingProgress
     }
 }
+
+// MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
 
 extension TimelineViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBAction func cameraButton(_ sender: UIButton) {
@@ -153,7 +159,7 @@ extension TimelineViewController: UIImagePickerControllerDelegate, UINavigationC
         selectImage(from: .camera)
     }
     
-    fileprivate func imagePickerController(
+    private func imagePickerController(
         _ picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
@@ -161,8 +167,44 @@ extension TimelineViewController: UIImagePickerControllerDelegate, UINavigationC
     }
 }
 
-extension TimelineViewController: UITableViewDelegate, UITableViewDataSource {
-    func configure(cell: UITableViewCell, indexPath: IndexPath) {
+// MARK: - UITableViewDelegate
+
+extension TimelineViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        
+        guard let entryViewController = UIStoryboard(name: "Coredata", bundle: nil)
+            .instantiateViewController(withIdentifier: "entry_detail")
+            as? EntryViewController
+            else { return }
+        entryViewController.entry = fetchedResultsController.object(at: indexPath)
+        self.present(entryViewController, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let fetchedEntryData = fetchedResultsController.sections?[section].objects?.first
+            as? Entry
+            else {
+                return UIView()
+        }
+        let headerView = TimelineSectionHeaderView()
+        
+        let formatter = DateFormatter.defualtInstance
+        formatter.dateFormat = "YYYY년 MM월"
+        let sectionTitleHeader = formatter.string(from: fetchedEntryData.date)
+        headerView.headerLabel.text = sectionTitleHeader
+        return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
+    }
+}
+
+// MARK: - UITableViewDataSource
+
+extension TimelineViewController: UITableViewDataSource {
+    private func configure(cell: UITableViewCell, indexPath: IndexPath) {
         guard let cell = cell as? TimelineTableViewCell
             else {
                 preconditionFailure("Error")
@@ -173,7 +215,14 @@ extension TimelineViewController: UITableViewDelegate, UITableViewDataSource {
         cell.bind(entry: fetchedEntryData, indexPath: indexPath, hideDayLabel: hideDayLabel)
     }
     
-    func convertToDayKey(from date: Date) -> String {
+    /**
+     DayLabel은 저널에서 연, 월, 일마다 하나씩 표시되며, 가장 최신 엔트리의 라벨만 표시됩니다.
+     표시 해야 할 날짜를 구하기 위해 날짜를 스트링으로 반환합니다. 반환 된 스트링은 키로 사용되어, 해당하는 날짜에 하나의 값 만을
+     가지게 될 것입니다.
+     - parameter date: 반환 할 날짜
+     - returns: 스트링으로 변환 된 날짜
+     */
+    private func convertToDayKey(from date: Date) -> String {
         let components = Calendar.current.dateComponents([.month, .day, .year], from: date)
         guard let month = components.month, let day = components.day, let year = components.year
             else {
@@ -214,37 +263,9 @@ extension TimelineViewController: UITableViewDelegate, UITableViewDataSource {
         guard case(.delete) = editingStyle else { return }
         CoreDataManager.shared.remove(entry: fetchedResultsController.object(at: indexPath))
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: false)
-        
-        guard let entryViewController = UIStoryboard(name: "Coredata", bundle: nil)
-            .instantiateViewController(withIdentifier: "entry_detail")
-            as? EntryViewController
-            else { return }
-        entryViewController.entry = fetchedResultsController.object(at: indexPath)
-        self.present(entryViewController, animated: true)
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let fetchedEntryData = fetchedResultsController.sections?[section].objects?.first
-            as? Entry
-            else {
-                return UIView()
-        }
-        let headerCellView = TimelineSectionHeaderView()
-        
-        let formatter = DateFormatter.defaultInstance
-        formatter.dateFormat = "YYYY년 MM월"
-        let sectionTitleHeader = formatter.string(from: fetchedEntryData.date)
-        headerCellView.headerLabel.text = sectionTitleHeader
-        return headerCellView
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30
-    }
 }
+
+// MARK: - NSFetchedResultsControllerDelegate
 
 extension TimelineViewController: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(

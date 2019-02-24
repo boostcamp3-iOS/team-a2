@@ -236,8 +236,7 @@ extension SideMenuViewController: UITableViewDelegate {
 
 // MARK: set up view component constraints
 extension SideMenuViewController {
-    private func configSubViews() {
-        
+    private func configSubViews() {   
         searchBar.isUserInteractionEnabled = true
         searchBar.delegate = self
         

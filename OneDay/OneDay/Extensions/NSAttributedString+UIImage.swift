@@ -75,4 +75,18 @@ extension UIImage {
             return false
         }
     }
+    
+    func resizeImageToFit(newWidth: CGFloat) -> UIImage {
+        let size = self.size
+        let ratio = size.height/size.width
+        let newHeight = newWidth*ratio
+        
+        let newSize = CGSize(width: newWidth, height: newHeight)
+        let rect = CGRect(x: 0, y: 0, width: newWidth, height: newHeight)
+        
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1)
+        self.draw(in: rect)
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        return scaledImage!
+    }
 }

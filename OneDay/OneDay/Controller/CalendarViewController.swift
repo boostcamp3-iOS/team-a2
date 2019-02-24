@@ -9,6 +9,11 @@
 import CoreData
 import UIKit
 
+/**
+ CalendarViewController의 달력은 서기 1년 1월 1일부터 시작합니다.
+ 콜렉션 뷰이 섹션 하나가 하나의 연, 월에 해당하며, 서기 1년 1월은 섹션 0번, 2년 1월은 섹션 12번에 해당합니다.
+ 따라서, year = indexPath.section/12+1, month = indexPath.section%12+1로 표기 하였습니다.
+ */
 class CalendarViewController: UIViewController {
     
     // MARK: - Properties
@@ -30,7 +35,7 @@ class CalendarViewController: UIViewController {
         return collectionView
     }()
     
-    //  네비게이션 바 아래의 |일 월 화 수 목 금 토| 를 그리는 뷰
+    /// 네비게이션 바 아래의 |일 월 화 수 목 금 토| 를 그리는 뷰 입니다.
     private let daysOfWeekTitleView: CalendarDaysOfWeek = {
         let view = CalendarDaysOfWeek()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -46,9 +51,16 @@ class CalendarViewController: UIViewController {
         return picker
     }()
     
+    // MARK: Variables
+
     private var isTodayIndex = false
     private var isPickingDate = false
+    /**
+     섹션 0번의 1년 1월 1일의 요일은 토요일입니다.
+     본 달력에서는 각 요일(일~토)이 0~6의 숫자와 치환됩니다.
+     */
     private var computedWeekday = 6
+    
     private lazy var tabBarItemTouchCount = 0
     private lazy var isDatePikcerPresented = false
 
@@ -69,6 +81,11 @@ class CalendarViewController: UIViewController {
     
     // MARK: - CoreData
     
+    /**
+     캘린더에는 해당하는 날에 작성된 엔트리가 있는지를 색상 변화(파란색)를 통해 사용자에게 알려줍니다.
+     캘린더에 표시하기 위해서 년, 월, 일별로 고유한 하나의 값만 필요하므로 현재 저널에 해당하는 엔트리의 날짜들을
+     fetchedEntriesDate에 추가합니다.
+     */
     private func setupCoreData() {
         fetchedEntriesDate = []
         let entriesData = CoreDataManager.shared.currentJournalEntries
@@ -125,6 +142,16 @@ class CalendarViewController: UIViewController {
     
     // MARK: - Calendar Function
     
+    /**
+    뷰에 표시되고 있는 섹션에 해당하는 연, 월의 마지막 날이 며칠인지를 계산하고 반환합니다.
+     - 1600년 이전의 윤년 계산식이 현재와 다름에 유의하십시오.
+     - 18981은 1582년 10월에 해당하는 섹션입니다. 이 달은 예외적으로 한 달이 21일입니다.
+     자세한 사항은 인터넷 검색을 참조하십시오.
+     
+     - parameter section: 콜렉션 뷰의 섹션 번호
+     - returns: 섹션에 해당하는 연, 월의 마지막 날
+
+    */
     private func lastDayInMonth(at section: Int) -> Int {
         var numberOfDaysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
         let year = section/12+1
@@ -135,21 +162,30 @@ class CalendarViewController: UIViewController {
                 year%100 == 0 && year<1600) {
             numberOfDaysInMonth[1] = 29 // 윤년
         }
-        return section != 18981 ? numberOfDaysInMonth[month-1] : 21 // 1582년 10월 달력 문제
+        return section != 18981 ? numberOfDaysInMonth[month-1] : 21
     }
     
+    /**
+     뷰에 표시되고 있는 섹션에 해당하는 요일이 무엇인지를 계산하고 반환합니다.
+     - 캘린더 컴포넌트의 .weekday는 1~7의 범위로 반환되지만,
+     콜렉션 뷰의 아이템 인덱스에서 사용하기 위해 -1을 해준 것에 유의하십시오.
+     
+     - parameter section: 콜렉션 뷰의 섹션 번호
+     - returns: 섹션에 해당하는 연, 월의 첫 날의 요일
+     */
     private func firstWeekdayInMonth(at section: Int) -> Int {
         let components = DateComponents(year: section/12+1, month: section%12+1, day: 1)
         let date = Calendar.current.date(from: components)
         
         if let date = date {
-            return Calendar.current.component(.weekday, from: date)-1 // 0:일요일 ~ 6:토요일
+            return Calendar.current.component(.weekday, from: date)-1
         } else {
             preconditionFailure("Error")
         }
     }
     
     // MARK: - Notification
+    
     private func addCoreDataChangedNotificationObserver() {
         NotificationCenter.default.addObserver(
             self,
@@ -199,30 +235,9 @@ class CalendarViewController: UIViewController {
     }
 }
 
-// MARK: - 콜렉션뷰, CollectionView
+// MARK: - UICollectionViewDelegate
 
-extension CalendarViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource,
-UICollectionViewDelegate {
-    func collectionView(
-        _ collectionView: UICollectionView,
-        numberOfItemsInSection section: Int
-        ) -> Int {
-        if section == 0 {
-            computedWeekday = 6
-        }
-        
-        let numberOfDaysOfMonth = computedWeekday+lastDayInMonth(at: section)
-        computedWeekday = numberOfDaysOfMonth%7
-        switch numberOfDaysOfMonth {
-        case 1...28:
-            return 28 // 7*4
-        case 29...35:
-            return 35 // 7*5
-        default:
-            return 42 // 7*6
-        }
-    }
-    
+extension CalendarViewController: UICollectionViewDelegate {
     func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath) {
@@ -231,6 +246,69 @@ UICollectionViewDelegate {
         datePicker.removeFromSuperview()
         isDatePikcerPresented = false
         collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        willDisplay cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath) {
+        
+        if !isTodayIndex {     // 오늘의 인덱스에 해당하는 캘린더로 이동
+            isTodayIndex = true
+            scrollToDate(date: Date(), animated: false)
+        } else if isPickingDate {     // 데이트피커에서 선택한 날로 이동
+            isPickingDate = false
+            scrollToDate(date: datePicker.date, animated: true)
+        }
+    }
+    
+    private func scrollToDate(date: Date, animated: Bool) {
+        let components = Calendar.current.dateComponents(
+            [.year, .month, .day],
+            from: date)
+        if let year = components.year,
+            let month = components.month,
+            let day = components.day {
+            
+            let index = 12*(year-1)+(month-1)
+            let day = day
+            collectionView.scrollToItem(
+                at: [index, day],
+                at: .centeredVertically,
+                animated: animated)
+        }
+    }
+}
+
+// MARK: - UICollectionViewDataSource
+
+extension CalendarViewController: UICollectionViewDataSource {
+    /*
+     섹션에 해당하는 연, 월의 첫 날에 해당하는 요일과,
+     마지막 날을 합하여 달력을 몇 줄로 표현할 지 계산합니다.
+     본 달력에서는 일주일을 일~토요일으로 표현하고 있기 때문에 콜렉션의 한 줄은 7개의 셀입니다.
+     따라서 반환값 28은 4줄, 35는 5줄, 42는 6줄로 달력이 그려지게 됩니다.
+     - parameter section: 콜렉션 뷰의 섹션 넘버
+     - returns: 섹션에 그려야 하는 셀의 갯수
+     */
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+        ) -> Int {
+        if section == 0 {
+            computedWeekday = 6
+        }
+        
+        let numberOfCellsInMonth = computedWeekday+lastDayInMonth(at: section)
+        computedWeekday = numberOfCellsInMonth%7
+        switch numberOfCellsInMonth {
+        case 1...28:
+            return 28
+        case 29...35:
+            return 35
+        default:
+            return 42
+        }
     }
     
     func collectionView(
@@ -246,6 +324,18 @@ UICollectionViewDelegate {
         }
         
         let sectionNumber = indexPath.section
+        
+        /*
+         달력의 첫 날을 요일에 따라 위치시키기 위해 dayNumber를 계산합니다.
+         섹션에 해당하는 연, 월의 첫 날이 화요일(firstWeekdayInMonth == 2)이면 dayNumber는
+         indexPath.item == 0:
+         0+1-2= -1
+         indexPath.item == 1:
+         1+1-2= 0
+         indexPath.item == 2:
+         2+1-2= 1
+         과 같이 계산되므로, indexPath.item이 2인 세 번째 셀에서 숫자 1을 표시합니다.
+         */
         let dayNumber = indexPath.item+1-firstWeekdayInMonth(at: sectionNumber)
         
         let numberOfDaysOfMonth = lastDayInMonth(at: sectionNumber)
@@ -265,49 +355,8 @@ UICollectionViewDelegate {
         return cell
     }
     
-    func collectionView(
-        _ collectionView: UICollectionView,
-        willDisplay cell: UICollectionViewCell,
-        forItemAt indexPath: IndexPath) {
-        
-        if !isTodayIndex {     // 오늘의 인덱스에 해당하는 캘린더로 이동
-            isTodayIndex = true
-            scrollToDate(date: Date(), animated: false)
-        }
-        
-        if isPickingDate {     // 데이트피커에서 선택한 날로 이동
-            isPickingDate = false
-            scrollToDate(date: datePicker.date, animated: true)
-        }
-    }
-    
-    private func scrollToDate(date: Date, animated: Bool) {
-        let components = Calendar.current.dateComponents([.year, .month, .day],
-                                                         from: date)
-        if let year = components.year,
-            let month = components.month,
-            let day = components.day {
-            
-            let index = 12*(year-1)+(month-1)
-            let day = day
-            collectionView.scrollToItem(at: [index, day],
-                                        at: .centeredVertically,
-                                        animated: animated)
-        }
-    }
-    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 12*3000
-    }
-    
-    // MARK: - Supplementary View
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        referenceSizeForHeaderInSection section: Int
-        ) -> CGSize {
-        return CGSize(width: view.frame.width, height: 30)
     }
     
     func collectionView(
@@ -330,6 +379,20 @@ UICollectionViewDelegate {
         return header
     }
 }
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension CalendarViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForHeaderInSection section: Int
+        ) -> CGSize {
+        return CGSize(width: view.frame.width, height: 30)
+    }
+}
+
+// MARK: - Layout
 
 extension CalendarViewController {
     private func setupCalendar() {
@@ -361,7 +424,7 @@ extension CalendarViewController {
     }
 }
 
-// MARK: 액션시트, ActionSheet
+// MARK: ActionSheet
 
 extension CalendarViewController {
     private func showActionSheet(_ sectionNumber: Int, _ day: Int) {

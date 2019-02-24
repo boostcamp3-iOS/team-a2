@@ -11,38 +11,35 @@ import UIKit
 class CalendarCell: UICollectionViewCell {
     let dayLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .doLight
-        label.text = ""
-        label.font = UIFont.systemFont(ofSize: 20)
-        label.textAlignment = .center
         label.layer.cornerRadius = 3
+        label.textAlignment = .center
+        label.backgroundColor = .doLight
         label.layer.masksToBounds = true
+        label.textColor = .calendarDarkColor
+        label.font = .preferredFont(forTextStyle: .title2)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    lazy var shouldBeDoBlue: Bool = false
+    private lazy var cellWithEntry: Bool = false
     
     override var isSelected: Bool {
         didSet {
             if dayLabel.backgroundColor == .doBlue {
-                shouldBeDoBlue = true
+                cellWithEntry = true
             }
             
             if isSelected {
-                dayLabel.backgroundColor = .black
+                dayLabel.backgroundColor = .calendarDarkColor
                 dayLabel.textColor = .white
-            } else {
-                if shouldBeDoBlue {
+            } else if cellWithEntry {
                     dayLabel.backgroundColor = .doBlue
                 } else {
                     dayLabel.backgroundColor = .doLight
-                    dayLabel.textColor = .black
+                    dayLabel.textColor = .calendarDarkColor
                 }
-                
             }
         }
-    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -52,11 +49,11 @@ class CalendarCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         dayLabel.text = ""
-        dayLabel.textColor = .black
+        dayLabel.textColor = .calendarDarkColor
         dayLabel.backgroundColor = .doLight
     }
     
-    func setupCellView() {
+    private func setupCellView() {
         addSubview(dayLabel)
         dayLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 1).isActive = true
         dayLabel.topAnchor.constraint(equalTo: topAnchor, constant: 1).isActive = true

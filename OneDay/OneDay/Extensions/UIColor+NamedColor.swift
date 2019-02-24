@@ -39,7 +39,7 @@ extension UIColor {
                        blue: CGFloat(249/255.0),
                        alpha: CGFloat(1.0))
     }
-    static var calendarHeaderTextColor: UIColor {
+    static var calendarDarkColor: UIColor {
         return UIColor(red: CGFloat(52/255.0),
                        green: CGFloat(59/255.0),
                        blue: CGFloat(64/255.0),
