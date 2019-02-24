@@ -39,7 +39,7 @@ class TimelineViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? EntryViewController {
-            destination.entry = CoreDataManager.shared.insertEntry()
+            destination.entry = CoreDataManager.shared.insert(type: Entry.self)
         }
     }
     
@@ -216,7 +216,7 @@ extension TimelineViewController: UITableViewDelegate, UITableViewDataSource {
         commit editingStyle: UITableViewCell.EditingStyle,
         forRowAt indexPath: IndexPath) {
         guard case(.delete) = editingStyle else { return }
-        CoreDataManager.shared.remove(entry: fetchedResultsController.object(at: indexPath))
+        CoreDataManager.shared.remove(item: fetchedResultsController.object(at: indexPath))
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

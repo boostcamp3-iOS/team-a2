@@ -175,8 +175,7 @@ class EntryInformationViewController: UIViewController {
                 settingTableData[2][0].detail = "\(weather.tempature)℃"
             }
         } else {
-            let weather = CoreDataManager.shared.insertWeather()
-            entry.weather = weather
+            entry.weather = CoreDataManager.shared.insert(type: Weather.self)
             updateWeather()
         }
     }
@@ -187,12 +186,12 @@ class EntryInformationViewController: UIViewController {
         } else {
             var location: Location!
             if let findLocation: Location = CoreDataManager.shared.location(
-                longitude: LocationService.service.latitude,
-                latitude: LocationService.service.longitude
+                longitude: LocationService.service.longitude,
+                latitude: LocationService.service.latitude
                 ) {
                 location = findLocation
             } else {
-                location = CoreDataManager.shared.insertLocation()
+                location = CoreDataManager.shared.insert(type: Location.self)
                 location.latitude = LocationService.service.latitude
                 location.longitude = LocationService.service.longitude
             }
@@ -217,16 +216,23 @@ class EntryInformationViewController: UIViewController {
     }
     
     private func setUpDevice() {
+        var device: Device!
         if let entryDevice = entry.device {
-            if let entryDeviceName = entryDevice.name, let entryDeviceModel = entryDevice.model {
-                settingTableData[2][1].detail = "\(entryDeviceName), \(entryDeviceModel)"
-            }
+            device = entryDevice
+        } else if let find = CoreDataManager.shared.device(identifier: UIDevice.current.identifierForVendor!) {
+            entry.device = find
+            device = find
         } else {
-            let device = CoreDataManager.shared.insertDevice()
-            entry.device = device
-            device.name = UIDevice.current.name
-            device.model = UIDevice.current.model
-            settingTableData[2][1].detail = "\(UIDevice.current.name), \(UIDevice.current.model)"
+            let newDevice = CoreDataManager.shared.insert(type: Device.self)
+            newDevice.deviceId = UIDevice.current.identifierForVendor
+            newDevice.name = UIDevice.current.name
+            newDevice.model = UIDevice.current.model
+            entry.device = newDevice
+            device = newDevice
+        }
+        
+        if let entryDeviceName = device.name, let entryDeviceModel = device.model {
+            settingTableData[2][1].detail = "\(entryDeviceName), \(entryDeviceModel)"
         }
     }
     

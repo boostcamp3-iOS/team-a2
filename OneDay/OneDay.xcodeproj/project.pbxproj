@@ -18,7 +18,6 @@
 		D502765C21FB0B8400A0DB5E /* Location+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764C21FB0B8400A0DB5E /* Location+CoreDataClass.swift */; };
 		D502765D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502764D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift */; };
 		D502766221FB0D6000A0DB5E /* WeatherType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502766121FB0D6000A0DB5E /* WeatherType.swift */; };
-		D502766721FB139300A0DB5E /* CoreDataJournalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502766621FB139300A0DB5E /* CoreDataJournalService.swift */; };
 		D502769321FEA18000A0DB5E /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502769221FEA18000A0DB5E /* CoreDataStack.swift */; };
 		D502769621FEA1CE00A0DB5E /* UIColor+NamedColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502769521FEA1CD00A0DB5E /* UIColor+NamedColor.swift */; };
 		D50276B921FED1D200A0DB5E /* OneDay.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D561692921FAD07000E00FED /* OneDay.xcdatamodeld */; };
@@ -37,8 +36,6 @@
 		D512A76D221BBD9600EF43C6 /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A766221BBD9600EF43C6 /* DatePickerViewController.swift */; };
 		D512A76E221BBD9600EF43C6 /* EntryInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A767221BBD9600EF43C6 /* EntryInformationViewController.swift */; };
 		D512A76F221BBD9600EF43C6 /* StateChangeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A769221BBD9600EF43C6 /* StateChangeProtocol.swift */; };
-		D512A773221BBDA600EF43C6 /* CoreDataDeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A771221BBDA600EF43C6 /* CoreDataDeviceService.swift */; };
-		D512A774221BBDA600EF43C6 /* CoreDataLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A772221BBDA600EF43C6 /* CoreDataLocationService.swift */; };
 		D512A776221BBDAD00EF43C6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A775221BBDAD00EF43C6 /* Constants.swift */; };
 		D512A77A221BBDBF00EF43C6 /* DateFormatter+Datet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A777221BBDBF00EF43C6 /* DateFormatter+Datet.swift */; };
 		D512A77B221BBDBF00EF43C6 /* UIViewController+UIImagePickerControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A778221BBDBF00EF43C6 /* UIViewController+UIImagePickerControllerDelegate.swift */; };
@@ -56,8 +53,6 @@
 		D512A7A5221BBECB00EF43C6 /* CustomPointAnnotaion.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A7A1221BBECB00EF43C6 /* CustomPointAnnotaion.swift */; };
 		D512A7A7221BCE2600EF43C6 /* EditJournalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512A7A6221BCE2600EF43C6 /* EditJournalViewController.swift */; };
 		D516C88C2212A28100A4BDAC /* OneDayDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516C88B2212A28100A4BDAC /* OneDayDefaults.swift */; };
-		D516C88F2212CB1700A4BDAC /* CoreDataWeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516C88E2212CB1700A4BDAC /* CoreDataWeatherService.swift */; };
-		D516C8912212CB3000A4BDAC /* CoreDataEntryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516C8902212CB3000A4BDAC /* CoreDataEntryService.swift */; };
 		D516C8C82213E70200A4BDAC /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516C8C62213E70200A4BDAC /* CoreDataManager.swift */; };
 		D516C8C92213E70200A4BDAC /* EntryFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516C8C72213E70200A4BDAC /* EntryFilter.swift */; };
 		D516C8CB2213E87300A4BDAC /* NSAttributedString+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516C8CA2213E87300A4BDAC /* NSAttributedString+UIImage.swift */; };
@@ -76,6 +71,7 @@
 		D561692821FAD07000E00FED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D561692621FAD07000E00FED /* Main.storyboard */; };
 		D561692D21FAD07200E00FED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D561692C21FAD07200E00FED /* Assets.xcassets */; };
 		D561693021FAD07200E00FED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D561692E21FAD07200E00FED /* LaunchScreen.storyboard */; };
+		D588B4D822222E82004A419E /* GroupedWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = D588B4D722222E82004A419E /* GroupedWeather.swift */; };
 		D5EBF00E221C23EF008AF801 /* SideMenuFilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EBF00D221C23EF008AF801 /* SideMenuFilterType.swift */; };
 		E936659422110DF900DC660A /* BaseSlidingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E936659322110DF900DC660A /* BaseSlidingViewController.swift */; };
 		E96BE83A21FAD96700266F6D /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E96BE83921FAD96700266F6D /* Colors.xcassets */; };
@@ -128,7 +124,6 @@
 		D502764C21FB0B8400A0DB5E /* Location+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D502764D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D502766121FB0D6000A0DB5E /* WeatherType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherType.swift; sourceTree = "<group>"; };
-		D502766621FB139300A0DB5E /* CoreDataJournalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataJournalService.swift; sourceTree = "<group>"; };
 		D502769221FEA18000A0DB5E /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		D502769521FEA1CD00A0DB5E /* UIColor+NamedColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+NamedColor.swift"; sourceTree = "<group>"; };
 		D50276BC21FEF0DC00A0DB5E /* Coredata.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Coredata.storyboard; sourceTree = "<group>"; };
@@ -149,8 +144,6 @@
 		D512A766221BBD9600EF43C6 /* DatePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerViewController.swift; sourceTree = "<group>"; };
 		D512A767221BBD9600EF43C6 /* EntryInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryInformationViewController.swift; sourceTree = "<group>"; };
 		D512A769221BBD9600EF43C6 /* StateChangeProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateChangeProtocol.swift; sourceTree = "<group>"; };
-		D512A771221BBDA600EF43C6 /* CoreDataDeviceService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataDeviceService.swift; sourceTree = "<group>"; };
-		D512A772221BBDA600EF43C6 /* CoreDataLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataLocationService.swift; sourceTree = "<group>"; };
 		D512A775221BBDAD00EF43C6 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D512A777221BBDBF00EF43C6 /* DateFormatter+Datet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Datet.swift"; sourceTree = "<group>"; };
 		D512A778221BBDBF00EF43C6 /* UIViewController+UIImagePickerControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+UIImagePickerControllerDelegate.swift"; sourceTree = "<group>"; };
@@ -168,8 +161,6 @@
 		D512A7A1221BBECB00EF43C6 /* CustomPointAnnotaion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPointAnnotaion.swift; sourceTree = "<group>"; };
 		D512A7A6221BCE2600EF43C6 /* EditJournalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditJournalViewController.swift; sourceTree = "<group>"; };
 		D516C88B2212A28100A4BDAC /* OneDayDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneDayDefaults.swift; sourceTree = "<group>"; };
-		D516C88E2212CB1700A4BDAC /* CoreDataWeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataWeatherService.swift; sourceTree = "<group>"; };
-		D516C8902212CB3000A4BDAC /* CoreDataEntryService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataEntryService.swift; sourceTree = "<group>"; };
 		D516C8C62213E70200A4BDAC /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		D516C8C72213E70200A4BDAC /* EntryFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryFilter.swift; sourceTree = "<group>"; };
 		D516C8CA2213E87300A4BDAC /* NSAttributedString+UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+UIImage.swift"; sourceTree = "<group>"; };
@@ -192,6 +183,7 @@
 		D561692C21FAD07200E00FED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D561692F21FAD07200E00FED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D561693121FAD07200E00FED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D588B4D722222E82004A419E /* GroupedWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupedWeather.swift; sourceTree = "<group>"; };
 		D5EBF00D221C23EF008AF801 /* SideMenuFilterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuFilterType.swift; sourceTree = "<group>"; };
 		E936659322110DF900DC660A /* BaseSlidingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSlidingViewController.swift; sourceTree = "<group>"; };
 		E96BE83921FAD96700266F6D /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
@@ -268,6 +260,7 @@
 				D502766121FB0D6000A0DB5E /* WeatherType.swift */,
 				D50276EB2202C82900A0DB5E /* DataStringSet.swift */,
 				EC0CFB0522030A53001293B1 /* APIWeather.swift */,
+				D588B4D722222E82004A419E /* GroupedWeather.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -284,10 +277,9 @@
 		D502769121FEA16D00A0DB5E /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				D516C87E22125E1900A4BDAC /* protocol */,
 				D516C8C62213E70200A4BDAC /* CoreDataManager.swift */,
-				D516C8C72213E70200A4BDAC /* EntryFilter.swift */,
 				D502769221FEA18000A0DB5E /* CoreDataStack.swift */,
+				D516C8C72213E70200A4BDAC /* EntryFilter.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -367,18 +359,6 @@
 				D512A7A1221BBECB00EF43C6 /* CustomPointAnnotaion.swift */,
 			);
 			path = Annotation;
-			sourceTree = "<group>";
-		};
-		D516C87E22125E1900A4BDAC /* protocol */ = {
-			isa = PBXGroup;
-			children = (
-				D512A771221BBDA600EF43C6 /* CoreDataDeviceService.swift */,
-				D512A772221BBDA600EF43C6 /* CoreDataLocationService.swift */,
-				D516C8902212CB3000A4BDAC /* CoreDataEntryService.swift */,
-				D502766621FB139300A0DB5E /* CoreDataJournalService.swift */,
-				D516C88E2212CB1700A4BDAC /* CoreDataWeatherService.swift */,
-			);
-			path = protocol;
 			sourceTree = "<group>";
 		};
 		D516C88A2212A27500A4BDAC /* Utils */ = {
@@ -745,14 +725,12 @@
 				E992EC7221FAEE6700917116 /* SideMenuViewController.swift in Sources */,
 				E992EC7821FAF4C200917116 /* CalendarViewController.swift in Sources */,
 				E992EC7021FAEE5B00917116 /* SearchFilterViewController.swift in Sources */,
-				E992EC7021FAEE5B00917116 /* SearchFilterViewController.swift in Sources */,
 				E992EC6321FAEDFD00917116 /* MatchingEntriesCell.swift in Sources */,
 				D512A7A3221BBECB00EF43C6 /* CollectedEntriesListCell.swift in Sources */,
 				D512A790221BBDF400EF43C6 /* Tag+CoreDataClass.swift in Sources */,
 				E992EC7C21FB1E5500917116 /* CalendarHeaderView.swift in Sources */,
 				D561692321FAD07000E00FED /* AppDelegate.swift in Sources */,
 				E992EC6821FAEE3300917116 /* SideMenuFilterCell.swift in Sources */,
-				D512A773221BBDA600EF43C6 /* CoreDataDeviceService.swift in Sources */,
 				E992EC6C21FAEE4500917116 /* SideMenuJournalAddCell.swift in Sources */,
 				E992EC7F21FB2CCE00917116 /* CalendarDaysOfWeek.swift in Sources */,
 				D54A70C4221D35C300F37C5D /* RecentAndFilterViewController.swift in Sources */,
@@ -766,18 +744,14 @@
 				EC0CFB0922030C1D001293B1 /* NetworkProvider.swift in Sources */,
 				D512A77C221BBDBF00EF43C6 /* String+URL.swift in Sources */,
 				D502769321FEA18000A0DB5E /* CoreDataStack.swift in Sources */,
-				D512A774221BBDA600EF43C6 /* CoreDataLocationService.swift in Sources */,
 				D512A78F221BBDF400EF43C6 /* EntriesMarker.swift in Sources */,
 				D502765421FB0B8400A0DB5E /* Weather+CoreDataClass.swift in Sources */,
 				D561692521FAD07000E00FED /* MainTabBarViewController.swift in Sources */,
 				D512A7A7221BCE2600EF43C6 /* EditJournalViewController.swift in Sources */,
 				D54A70C6221D35DA00F37C5D /* FilterResultViewController.swift in Sources */,
 				D502765521FB0B8400A0DB5E /* Weather+CoreDataProperties.swift in Sources */,
-				D516C88F2212CB1700A4BDAC /* CoreDataWeatherService.swift in Sources */,
 				D512A7A4221BBECB00EF43C6 /* EditorSettingTableViewCell.swift in Sources */,
 				D502769621FEA1CE00A0DB5E /* UIColor+NamedColor.swift in Sources */,
-				D502765C21FB0B8400A0DB5E /* Location+CoreDataClass.swift in Sources */,
-				D502765B21FB0B8400A0DB5E /* Device+CoreDataProperties.swift in Sources */,
 				EC0CFB0622030A53001293B1 /* APIWeather.swift in Sources */,
 				D54A70C2221D10B700F37C5D /* UIViewController+CATransition.swift in Sources */,
 				D502765C21FB0B8400A0DB5E /* Location+CoreDataClass.swift in Sources */,
@@ -785,14 +759,13 @@
 				D54A70C8221D74C400F37C5D /* FilterResultTableViewCell.swift in Sources */,
 				E936659422110DF900DC660A /* BaseSlidingViewController.swift in Sources */,
 				D512A793221BBDF400EF43C6 /* EntrySetting.swift in Sources */,
+				D588B4D822222E82004A419E /* GroupedWeather.swift in Sources */,
 				D53782BD221113A100336646 /* PhotosCollectionViewCell.swift in Sources */,
 				D512A791221BBDF400EF43C6 /* Tag+CoreDataProperties.swift in Sources */,
 				D502765321FB0B8400A0DB5E /* Journal+CoreDataProperties.swift in Sources */,
 				D516C88C2212A28100A4BDAC /* OneDayDefaults.swift in Sources */,
-				D502766721FB139300A0DB5E /* CoreDataJournalService.swift in Sources */,
 				EC5E21AB220425390073D90E /* LocationService.swift in Sources */,
 				E9CFA2A2221EBC1F005F0E3D /* TimelineSectionHeaderView.swift in Sources */,
-				D561692321FAD07000E00FED /* AppDelegate.swift in Sources */,
 				D52648FC221E865E009B5191 /* TimelineViewController.swift in Sources */,
 				D512A7A5221BBECB00EF43C6 /* CustomPointAnnotaion.swift in Sources */,
 				EC4D58DF221B90970051A4F8 /* JournalChangeViewController.swift in Sources */,
@@ -810,7 +783,6 @@
 				D50276EC2202C82900A0DB5E /* DataStringSet.swift in Sources */,
 				D512A76F221BBD9600EF43C6 /* StateChangeProtocol.swift in Sources */,
 				EC0CFB0422030A29001293B1 /* WeatherService.swift in Sources */,
-				D516C8912212CB3000A4BDAC /* CoreDataEntryService.swift in Sources */,
 				D5EBF00E221C23EF008AF801 /* SideMenuFilterType.swift in Sources */,
 				D50276F422041DBA00A0DB5E /* MapViewController.swift in Sources */,
 				D502765D21FB0B8400A0DB5E /* Location+CoreDataProperties.swift in Sources */,

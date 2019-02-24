@@ -242,7 +242,13 @@ extension EditJournalViewController: UITableViewDelegate {
                 alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: {[weak self]_ in
                     self?.journals.remove(at: indexPath.row)
                     tableView.deleteRows(at: [indexPath], with: .automatic)
-                    CoreDataManager.shared.remove(journal: journal)
+                    // 삭제한 저널이 최근 저널인지 확인한다. 최근 저널이라면 남아있는 저널의 첫번째 걸로 최근 저널을 변경해준다.
+                    if journal == CoreDataManager.shared.currentJournal {
+                        guard let firstJournal = self?.journals.first else { preconditionFailure("No remain journal")}
+                        CoreDataManager.shared.changeCurrentJournal(to: firstJournal)
+                        CoreDataManager.shared.remove(item: journal)
+                    }
+                    
                 }))
                 alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
                 present(alert, animated: true, completion: nil)

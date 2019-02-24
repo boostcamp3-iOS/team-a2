@@ -23,7 +23,7 @@ class SideMenuViewController: UIViewController {
         return bar
     }()
     private var journals: [Journal] {
-        return CoreDataManager.shared.journals
+        return CoreDataManager.shared.items(type: Journal.self)
     }
     private var currentJournal: Journal {
         return CoreDataManager.shared.currentJournal

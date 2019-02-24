@@ -74,7 +74,7 @@ UINavigationControllerDelegate {
                         else {
                             return
                     }
-                    nextViewController.entry = CoreDataManager.shared.insertEntry()
+                    nextViewController.entry = CoreDataManager.shared.insert(type: Entry.self)
                     self?.present(nextViewController, animated: true)
             }))
             actionViewController.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
