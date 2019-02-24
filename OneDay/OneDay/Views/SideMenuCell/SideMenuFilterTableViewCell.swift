@@ -1,5 +1,5 @@
 //
-//  SideMenuMainCell.swift
+//  SideMenuFilterTableViewCell.swift
 //  OneDay
 //
 //  Created by 정화 on 23/01/2019.
@@ -8,8 +8,11 @@
 
 import UIKit
 
-class SideMenuFilterCell: UITableViewCell {
+/// 사이드 메뉴에서 필터 섹션의 셀
+class SideMenuFilterTableViewCell: UITableViewCell {
+    
     // MARK: Properties
+    
     // Layout Components
     private let iconImageView: UIImageView = {
         var imageView = UIImageView()
@@ -32,9 +35,10 @@ class SideMenuFilterCell: UITableViewCell {
     private let insets = UIEdgeInsets(top: 2, left: 24, bottom: 2, right: -16)
     
     // MARK: Methods
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupCellView()
+        setUpConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -47,17 +51,20 @@ class SideMenuFilterCell: UITableViewCell {
     }
 }
 
-extension SideMenuFilterCell {
-    private func setupCellView() {
+extension SideMenuFilterTableViewCell {
+    private func setUpConstraints() {
         addSubview(iconImageView)
-        iconImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: insets.left).isActive = true
-        iconImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        iconImageView.widthAnchor.constraint(equalToConstant: imageSize.width).isActive = true
-        iconImageView.heightAnchor.constraint(equalToConstant: imageSize.height).isActive = true
-        
         addSubview(titleLabel)
-        titleLabel.leftAnchor.constraint(equalTo: iconImageView.rightAnchor, constant: insets.left).isActive = true
-        titleLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: insets.right).isActive = true
-        titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+    
+        NSLayoutConstraint.activate([
+            iconImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: insets.left),
+            iconImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            iconImageView.widthAnchor.constraint(equalToConstant: imageSize.width),
+            iconImageView.heightAnchor.constraint(equalToConstant: imageSize.height),
+            
+            titleLabel.leftAnchor.constraint(equalTo: iconImageView.rightAnchor, constant: insets.left),
+            titleLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: insets.right),
+            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
+            ])
     }
 }

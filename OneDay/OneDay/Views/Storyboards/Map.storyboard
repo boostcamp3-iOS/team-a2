@@ -62,6 +62,7 @@
                     <navigationItem key="navigationItem" title="Map" id="6DY-ds-dSv"/>
                     <connections>
                         <outlet property="currentLocationItem" destination="RyP-Rq-879" id="idD-u1-6fs"/>
+                        <outlet property="mapNavigationItem" destination="6DY-ds-dSv" id="Mcl-hF-Kpg"/>
                         <outlet property="mapView" destination="QUB-S2-7BM" id="oiF-g1-Wt2"/>
                     </connections>
                 </viewController>
@@ -71,7 +72,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ic_info" width="24" height="24"/>
-        <image name="ic_navigation" width="24" height="24"/>
+        <image name="ic_info" width="15" height="15"/>
+        <image name="ic_navigation" width="16" height="16"/>
     </resources>
 </document>

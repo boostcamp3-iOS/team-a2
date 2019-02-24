@@ -8,6 +8,12 @@
 
 import Foundation
 
+/**
+ UserDefatuls로 저장할 내역
+ 
+ - current_journal : 최근 선택된 journal 의 journalId 를 uuidString 저장
+ - current_keywords : 사용자가 검색한 검색어를 저장하는 string array
+ */
 class OneDayDefaults {
 
     private static let defaults = UserDefaults.standard

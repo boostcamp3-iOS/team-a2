@@ -9,8 +9,11 @@
 import UIKit
 import CoreData
 
-class FilterCell: UITableViewCell {
+/// 필터 아이콘과 이름, 매칭되는 결과 수를 보여주는 셀
+class FilterTableViewCell: UITableViewCell {
+    
     // MARK: Properties
+    
     // Layout Components
     private let filterIcon: UIImageView = {
         var imageView = UIImageView()
@@ -38,9 +41,10 @@ class FilterCell: UITableViewCell {
     }()
     
     // MARK: Methods
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupCell()
+        setUpConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -49,25 +53,28 @@ class FilterCell: UITableViewCell {
     
     func bind(filter type: FilterType, count: Int) {
         selectionStyle = .none
-        filterIcon.image = type.icon
+        filterIcon.image = type.iconImage
         filterLabel.text = type.title
         contentsCountLabel.text = "\(count)"
     }
 }
 
-extension FilterCell {
-    private func setupCell() {
+extension FilterTableViewCell {
+    private func setUpConstraints() {
         addSubview(filterIcon)
-        filterIcon.leftAnchor.constraint(equalTo: leftAnchor, constant: 24).isActive = true
-        filterIcon.widthAnchor.constraint(equalToConstant: 24)
-        filterIcon.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        
         addSubview(filterLabel)
-        filterLabel.leftAnchor.constraint(equalTo: filterIcon.rightAnchor, constant: 24).isActive = true
-        filterLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        
         addSubview(contentsCountLabel)
-        contentsCountLabel.leftAnchor.constraint(equalTo: rightAnchor, constant: -40).isActive = true
-        contentsCountLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        
+        NSLayoutConstraint.activate([
+            filterIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            filterIcon.widthAnchor.constraint(equalToConstant: 24),
+            filterIcon.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
+            filterLabel.leadingAnchor.constraint(equalTo: filterIcon.trailingAnchor, constant: 24),
+            filterLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
+            contentsCountLabel.leadingAnchor.constraint(equalTo: trailingAnchor, constant: -40),
+            contentsCountLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
     }
 }

@@ -2,11 +2,12 @@
 //  Location+CoreDataProperties.swift
 //  OneDay
 //
-//  Created by juhee on 28/01/2019.
+//  Created by juhee on 22/02/2019.
 //  Copyright © 2019 teamA2. All rights reserved.
 //
 //
 
+import Foundation
 import CoreData
 
 extension Location {
@@ -19,41 +20,41 @@ extension Location {
     @NSManaged public var latitude: Double
     @NSManaged public var locId: UUID?
     @NSManaged public var longitude: Double
-    @NSManaged public var entry: NSOrderedSet?
+    @NSManaged public var entries: NSOrderedSet?
 
 }
 
-// MARK: Generated accessors for entry
+// MARK: Generated accessors for entries
 extension Location {
 
-    @objc(insertObject:inEntryAtIndex:)
-    @NSManaged public func insertIntoEntry(_ value: Entry, at idx: Int)
+    @objc(insertObject:inEntriesAtIndex:)
+    @NSManaged public func insertIntoEntries(_ value: Entry, at idx: Int)
 
-    @objc(removeObjectFromEntryAtIndex:)
-    @NSManaged public func removeFromEntry(at idx: Int)
+    @objc(removeObjectFromEntriesAtIndex:)
+    @NSManaged public func removeFromEntries(at idx: Int)
 
-    @objc(insertEntry:atIndexes:)
-    @NSManaged public func insertIntoEntry(_ values: [Entry], at indexes: NSIndexSet)
+    @objc(insertEntries:atIndexes:)
+    @NSManaged public func insertIntoEntries(_ values: [Entry], at indexes: NSIndexSet)
 
-    @objc(removeEntryAtIndexes:)
-    @NSManaged public func removeFromEntry(at indexes: NSIndexSet)
+    @objc(removeEntriesAtIndexes:)
+    @NSManaged public func removeFromEntries(at indexes: NSIndexSet)
 
-    @objc(replaceObjectInEntryAtIndex:withObject:)
-    @NSManaged public func replaceEntry(at idx: Int, with value: Entry)
+    @objc(replaceObjectInEntriesAtIndex:withObject:)
+    @NSManaged public func replaceEntries(at idx: Int, with value: Entry)
 
-    @objc(replaceEntryAtIndexes:withEntry:)
-    @NSManaged public func replaceEntry(at indexes: NSIndexSet, with values: [Entry])
+    @objc(replaceEntriesAtIndexes:withEntries:)
+    @NSManaged public func replaceEntries(at indexes: NSIndexSet, with values: [Entry])
 
-    @objc(addEntryObject:)
-    @NSManaged public func addToEntry(_ value: Entry)
+    @objc(addEntriesObject:)
+    @NSManaged public func addToEntries(_ value: Entry)
 
-    @objc(removeEntryObject:)
-    @NSManaged public func removeFromEntry(_ value: Entry)
+    @objc(removeEntriesObject:)
+    @NSManaged public func removeFromEntries(_ value: Entry)
 
-    @objc(addEntry:)
-    @NSManaged public func addToEntry(_ values: NSOrderedSet)
+    @objc(addEntries:)
+    @NSManaged public func addToEntries(_ values: NSOrderedSet)
 
-    @objc(removeEntry:)
-    @NSManaged public func removeFromEntry(_ values: NSOrderedSet)
+    @objc(removeEntries:)
+    @NSManaged public func removeFromEntries(_ values: NSOrderedSet)
 
 }

@@ -8,9 +8,11 @@
 
 import UIKit
 
-//Matching Entries - SearchBar.text와 일치하는 문자열이 있는 엔트리를 보여주는 셀
-class MatchingEntriesCell: UITableViewCell {
+/// 검색한 문자열을 포함하는 엔트리를 보여주는 셀
+class MatchingEntriesTableViewCell: UITableViewCell {
+    
     // MARK: Properties
+    
     // Layout Components
     private let contentsLabel: UILabel = {
         let label = UILabel()
@@ -47,7 +49,7 @@ class MatchingEntriesCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupCell()
+        setUpConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -83,8 +85,8 @@ class MatchingEntriesCell: UITableViewCell {
     }
 }
 
-extension MatchingEntriesCell {
-    private func setupCell() {
+extension MatchingEntriesTableViewCell {
+    private func setUpConstraints() {
         addSubview(contentsLabel)
         addSubview(weatherLabel)
         addSubview(thumbnailImageView)
