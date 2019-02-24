@@ -55,16 +55,16 @@ enum FilterType: Hashable, CaseIterable {
     }
     
     /// 필터링 됐을 때의 결과물. favorite은 바로 Entry Array가 넘어오고 나머지는 각각의 Model Array가 넘어온다.
-    var data: [NSManagedObject] {
+    var data: [Any] {
         switch self {
         case .favorite:
             return CoreDataManager.shared.filter(by: [.currentJournal, .favorite])
         case .location:
-            return CoreDataManager.shared.locations
+            return CoreDataManager.shared.items(type: Location.self)
         case .weather:
-            return CoreDataManager.shared.weathers
+            return CoreDataManager.shared.weathersGroupByType()
         case .device:
-            return CoreDataManager.shared.devices
+            return CoreDataManager.shared.items(type: Device.self)
         }
     }
 }

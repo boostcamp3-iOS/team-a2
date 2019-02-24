@@ -19,9 +19,9 @@ class FilterResultViewController: UIViewController {
     
     private let reusableIdentifier: String = "filter_result_cell"
     private var filterType: FilterType!
-    private var filtersArray: [(filter: NSManagedObject, entries: [Entry])] = []
+    private var filtersArray: [(filter: Any, entries: [Entry])] = []
     
-    private func filterDataTitle(data: NSManagedObject) -> String {
+    private func filterDataTitle(data: Any) -> String {
         guard let filterType = filterType else { preconditionFailure() }
         var title: String?
         switch filterType {
@@ -32,7 +32,7 @@ class FilterResultViewController: UIViewController {
                 title = data.address
             }
         case .weather:
-            if let data = data as? Weather {
+            if let data = data as? GroupedWeather {
                 title = data.type
             }
         case .device:
@@ -43,7 +43,7 @@ class FilterResultViewController: UIViewController {
         return title ?? filterType.title
     }
 
-    func bind(type: FilterType, data: [NSManagedObject], delegator: FilterViewControllerDelegate?) {
+    func bind(type: FilterType, data: [Any], delegator: FilterViewControllerDelegate?) {
         self.filterType = type
         self.delegate = delegator
         
@@ -58,10 +58,9 @@ class FilterResultViewController: UIViewController {
                 filtersArray.append((filter: location, entries: data))
             }
         case .weather:
-            guard let data = data as? [Weather] else { return }
+            guard let data = data as? [GroupedWeather] else { return }
             data.forEach { weather in
-                guard let type = weather.type else { return }
-                let data = CoreDataManager.shared.filter(by: [.currentJournal, .weather(weatherType: type)])
+                let data = CoreDataManager.shared.filter(by: [.currentJournal, .weather(weatherType: weather.type)])
                 filtersArray.append((filter: weather, entries: data))
             }
         case .device:
