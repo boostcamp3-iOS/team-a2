@@ -32,7 +32,7 @@ class SideMenuViewController: UIViewController {
         return bar
     }()
     private var journals: [Journal] {
-        return CoreDataManager.shared.journals
+        return CoreDataManager.shared.items(type: Journal.self)
     }
     
     // MARK: Methods
@@ -236,8 +236,7 @@ extension SideMenuViewController: UITableViewDelegate {
 
 // MARK: set up view component constraints
 extension SideMenuViewController {
-    private func configSubViews() {
-        
+    private func configSubViews() {   
         searchBar.isUserInteractionEnabled = true
         searchBar.delegate = self
         
