@@ -58,7 +58,7 @@ A2 Members
   - 저널 단위로 일기 관리
   - UI Transition Animation Enhancement
 - Week 3
-  - 모아보기
+  - [모아보기](https://www.notion.so/29c24998bbf046f886bd7c3eed1ac765) 
   - 지도
   - 다양한 모드로 일기 보여주기 (화면 구성)
     - 타임라인
