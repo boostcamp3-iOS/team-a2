@@ -7,9 +7,9 @@ BoostCamp 2019 iOS A2
 Mentor : [Yagom](https://github.com/yagom)
 
 A2 Members
+* [Coco : 김주희](https://github.com/caution-dev)
 * [Trevi : 서정화](https://github.com/mohok)
 * [Hybree : 송원근](https://github.com/yk1028)
-* [Coco : 김주희](https://github.com/caution-dev)
 
 ## Screen Shot
 |TimeLine|Photos|Add New Entry| Editor|
@@ -56,7 +56,7 @@ A2 Members
   - 사이드 메뉴 화면 구성
   - 일기 에디터 : 사진, 글
   - 저널 단위로 일기 관리
-  - UI Transition Animation Enhancement
+  - [UI Transition Animation Enhancement](https://www.notion.so/add39db43b8045828cb6b812ed1573b3)
 - Week 3
   - [모아보기](https://www.notion.so/29c24998bbf046f886bd7c3eed1ac765) 
   - 지도
