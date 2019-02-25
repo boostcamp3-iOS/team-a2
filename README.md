@@ -3,8 +3,9 @@ BoostCamp 2019 iOS A2
 
 넘사벽 저널링 서비스로 알려져 있는 **[DayOne](https://dayone.me/)** 모방 프로젝트
 
-시연동영상
-<iframe width="560" height="315" src="https://www.youtube.com/embed/qcK940kT400" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  
+[![Video Label](http://img.youtube.com/vi/qcK940kT400/0.jpg)](https://youtu.be/qcK940kT400?t=0s)
+
 
 ## 함께한 사람
 Mentor : [Yagom](https://github.com/yagom)
