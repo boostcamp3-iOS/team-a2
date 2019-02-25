@@ -51,7 +51,7 @@ A2 Members
   - CoreData 적용
     - CoreData Model 생성
     - Test Case 생성
-  - 캘린더
+  - [캘린더](https://www.notion.so/cbaa44b5997548369c48a95c1f545ef2)
   - 일기 데이터 추가 : 시간, 날씨, 장소
   - 사이드 메뉴 화면 구성
   - 일기 에디터 : 사진, 글
