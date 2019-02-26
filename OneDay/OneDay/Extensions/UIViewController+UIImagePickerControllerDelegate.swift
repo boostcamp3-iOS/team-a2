@@ -9,7 +9,14 @@
 import UIKit
 
 extension UIImagePickerControllerDelegate where Self: UIViewController, Self: UINavigationControllerDelegate {
-    
+    /**
+     UIImagePickerController에서 image가 넘어오면 EntryViewController 로 이동시키는 함수
+     
+     - Parameters:
+     - source: Instance of ImageSource Enum. camera or album
+     
+     - Returns: editedImage 혹은 originImage를 찾을 수 없을 경우 return
+     */
     func selectImage(from source: ImageSource) {
         let imagePicker =  UIImagePickerController()
         imagePicker.delegate = self
@@ -18,8 +25,15 @@ extension UIImagePickerControllerDelegate where Self: UIViewController, Self: UI
         present(imagePicker, animated: true, completion: nil)
     }
     
+    /**
+     UIImagePickerController에서 image가 넘어오면 EntryViewController 로 이동시키는 함수
+     
+     - Parameters:
+        - pickingMediaWithInfo: UIImagePickerController에서 넘겨주는 MediaInfo
+     
+     - Returns: editedImage 혹은 originImage를 찾을 수 없을 경우 return
+     */
     func createEntryWithImage(pickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
         var pickedImage: UIImage!
         if let editedImage = info[.editedImage] as? UIImage {
             pickedImage = editedImage
@@ -36,7 +50,7 @@ extension UIImagePickerControllerDelegate where Self: UIViewController, Self: UI
         
         guard let nextVC = UIStoryboard(name: "Coredata", bundle: nil)
             .instantiateViewController(withIdentifier: "entry_detail") as? EntryViewController else { return }
-        let newEntry: Entry = CoreDataManager.shared.insertEntry()
+        let newEntry: Entry = CoreDataManager.shared.insert(type: Entry.self)
         newEntry.contents = scaledImage.attributedString
         nextVC.entry = newEntry
         present(nextVC, animated: true)

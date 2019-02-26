@@ -14,6 +14,4 @@ class PhotosCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var monthAndYearLabel: UILabel!
     
-    
-    
 }

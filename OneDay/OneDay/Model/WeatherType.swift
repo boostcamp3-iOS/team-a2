@@ -19,6 +19,7 @@ public enum WeatherType: String {
     case cloudy = "cloudy"
     case partlyCloudyDay = "partly-cloudy-day"
     case partlyCloudyNight = "partly-cloudy-night"
+    case unknown = ""
     
     var summary: String {
         switch self {
@@ -32,6 +33,7 @@ public enum WeatherType: String {
         case .cloudy: return "흐림"
         case .partlyCloudyDay: return "약간 흐림"
         case .partlyCloudyNight: return "흐린 저녁"
+        case .unknown: return ""
         }
     }
 }

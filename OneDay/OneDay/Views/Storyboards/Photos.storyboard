@@ -96,13 +96,13 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Photo" id="dbV-rg-QL9">
                         <rightBarButtonItems>
-                            <barButtonItem title="camera" id="yr2-X1-jbM">
+                            <barButtonItem title="camera" image="ic_camera_plus" id="yr2-X1-jbM">
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <action selector="showCreateEntryModalViewController:" destination="lpW-5x-ilg" id="mNH-EW-ETV"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="album" id="F9T-Lu-bHw">
+                            <barButtonItem title="album" image="ic_gallery_plus" id="F9T-Lu-bHw">
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <action selector="showCreateEntryModalViewController:" destination="lpW-5x-ilg" id="zMk-l2-tMS"/>
@@ -113,6 +113,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="photoCollectionView" destination="Sxp-rh-amh" id="Uvt-8S-ZKK"/>
+                        <outlet property="photosNavigationItem" destination="dbV-rg-QL9" id="YIw-0Q-fw4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jnB-d5-cay" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -129,6 +130,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Image" width="276" height="183"/>
+        <image name="Image" width="138" height="91"/>
+        <image name="ic_camera_plus" width="24" height="24"/>
+        <image name="ic_gallery_plus" width="24" height="24"/>
     </resources>
 </document>

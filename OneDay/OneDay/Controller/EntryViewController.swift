@@ -23,56 +23,79 @@ class EntryViewController: UIViewController {
     @IBOutlet weak var blockView: UIView!
     @IBOutlet weak var checkImageView: UIImageView!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+    @IBOutlet weak var textViewBottomConstraint: NSLayoutConstraint!
     
-    var entry: Entry!
+    var entry: Entry! {
+        didSet {
+            shouldSaveEntry = true
+        }
+    }
     
     ///드레그시 사용되는 미리보기 뷰
     private let imagePreview = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
     private let textPreview = UIView()
     private let previewLabel = UILabel()
     
-    lazy var isImageSelected = false
+    private var isImageSelected = false
     private var shouldSaveEntry = false
     
-    ///하단 뷰 드래그시 사용되는 프로퍼티
-    var topConstant: CGFloat = 0            /// 하단 뷰 최상단
-    var bottomConstant: CGFloat = 520       /// 하단 뷰 최하단
-    var dragUpChangePoint: CGFloat = 400    ///하단 뷰 위로 드래그시 위로 붙는 기준
-    var isBottom = true                     ///하단 뷰가 아래에 있는지 여부
-    var willPositionChange = false          ///드래그 종료시 변경되야하는지 여부
+    /// 하단 뷰 최상단
+    private var topConstant: CGFloat = 0
+    /// 하단 뷰 최하단
+    private var bottomConstant: CGFloat = 520
+    ///하단 뷰 위로 드래그시 위로 붙는 기준
+    private var dragUpChangePoint: CGFloat = 400
+    ///하단 뷰가 아래에 있는지 여부
+    private var isBottom = true
+    ///드래그 종료시 변경되야하는지 여부
+    private var willPositionChange = false
     
-    let generator = UIImpactFeedbackGenerator(style: UIImpactFeedbackGenerator.FeedbackStyle.heavy)
+    private let generator = UIImpactFeedbackGenerator(style: UIImpactFeedbackGenerator.FeedbackStyle.heavy)
     
     fileprivate var bottomViewTopConstraint: NSLayoutConstraint!
     fileprivate var bottomViewBottomConstraint: NSLayoutConstraint!
     
-    var bottomViewController: EntryInformationViewController!
-    weak var statusChangeDelegate: StateChangeDelegate?
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    private weak var statusChangeDelegate: StateChangeDelegate?
+    
+    private var keyboadrdToolbar: UIToolbar?
+    var viewHeightWithoutTopView: CGFloat = 0
     
     // MARK: - Life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         bind()
+        setUpTableView()
         setUpDate()
         setUpPreview()
         setUpBottomView()
-        setUpPreview()
+        registerForKeyboardNotifications()
     }
     
     // MARK: - Bind Data to View
+    
     private func bind() {
         textView.attributedText = entry.contents
-        textView.textDragDelegate = self
-        textView.delegate = self
     }
     
-    func setUpDate() {
+    // MARK: - Set up
+    
+    private func setUpTableView() {
+        textView.textDragDelegate = self
+        textView.delegate = self
+        textView.font = UIFont.preferredFont(forTextStyle: .body)
+    }
+    
+    private func setUpDate() {
         let dateSet: DateStringSet = DateStringSet(date: entry.date)
         dateLabel.text = dateSet.full
     }
     
-    func setUpPreview() {
+    private func setUpPreview() {
         textPreview.backgroundColor = UIColor(white: 1, alpha: 0.7)
         textPreview.layer.cornerRadius = 20
         textPreview.translatesAutoresizingMaskIntoConstraints = false
@@ -103,7 +126,10 @@ class EntryViewController: UIViewController {
         ).isActive = true
     }
     
-    func setUpBottomView() {
+    private func setUpBottomView() {
+        viewHeightWithoutTopView = view.bounds.height - topView.frame.maxY
+        bottomConstant = viewHeightWithoutTopView * 0.82
+        textViewBottomConstraint.constant = bottomConstant
         bottomContainerView.translatesAutoresizingMaskIntoConstraints = false
         bottomContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         bottomContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
@@ -126,7 +152,15 @@ class EntryViewController: UIViewController {
         bottomContainerView.isUserInteractionEnabled = true
     }
     
-    func showAlert(title: String = "", message: String = "") {
+    private func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasShown(_:)), name: UIResponder.keyboardDidShowNotification , object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillBeHidden(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    // MARK: - Alert
+    
+    private func showAlert(title: String = "", message: String = "") {
         let alertController = UIAlertController(
             title: title,
             message: message,
@@ -138,11 +172,28 @@ class EntryViewController: UIViewController {
         
         self.present(alertController, animated: true, completion: nil)
     }
+    
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "bottomViewSegue" {
+            if let bottomViewController = segue.destination as? EntryInformationViewController {
+                bottomViewController.entry = entry
+                bottomViewController.topViewDateLabel = dateLabel
+                bottomViewController.topViewFavoriteImage = favoriteImage
+                statusChangeDelegate = bottomViewController
+                bottomViewController.statusChangeDelegate = self
+            }
+        }
+    }
 }
 
 // MARK: - Extention
+
 // MARK: IBActions
+
 extension EntryViewController {
+    
     @IBAction func showPhoto(_ sender: UIButton) {
         let pickerViewController = UIImagePickerController()
         pickerViewController.delegate = self
@@ -152,6 +203,7 @@ extension EntryViewController {
     }
     
     @IBAction func didTapDone(_ sender: UIButton) {
+        textView.endEditing(false)
         if shouldSaveEntry {
             self.blockView.isHidden = false
             
@@ -166,7 +218,7 @@ extension EntryViewController {
                 // 이미지 파일 변환 및 파일로 저장, CoreData 저장
                 self.entry.contents = contents
                 self.entry.updatedDate = Date()
-                
+
                 // title로 사용할 string 추출
                 let stringContent = contents.string
                 if stringContent.count > 1 {
@@ -177,7 +229,8 @@ extension EntryViewController {
                 
                 // thumbnail image 추출
                 if let thumbnailImage = contents.firstImage {
-                    self.entry.thumbnail = thumbnailImage.saveToFile(fileName: self.entry.thmbnailFileName)
+                    _ = thumbnailImage.saveToFile(fileName: self.entry.thmbnailFileName)
+                    self.entry.thumbnail = self.entry.thmbnailFileName
                 } else {
                     self.entry.thumbnail = nil
                 }
@@ -205,16 +258,20 @@ extension EntryViewController {
         CoreDataManager.shared.save()
         self.dismiss(animated: true, completion: nil)
     }
+}
+
+// MARK: Gesture
+
+extension EntryViewController {
     
-    // MARK: - Gesture
-    
-    @objc func didDrag(gestureRecognizer: UIPanGestureRecognizer) {
+    /// 하단 뷰 드래그시에 제스처의 translation.y 만큼 top,bottom Constraint에 변화를 주어 이동시키는 메서드
+    @objc private func didDrag(gestureRecognizer: UIPanGestureRecognizer) {
         if gestureRecognizer.state == .changed {
             let translation = gestureRecognizer.translation(in: view)
             var distance = translation.y + bottomConstant
             distance = min(bottomConstant, distance)
             distance = max(topConstant, distance)
-        
+            
             bottomViewTopConstraint.constant = distance
             bottomViewBottomConstraint.constant = distance
             
@@ -230,7 +287,8 @@ extension EntryViewController {
         }
     }
     
-    func changeBottomTableViewConstraints() {
+    /// 드래그 종료시 하단뷰의 위치를 올바른 위치로 이동시키는 메서드
+    private func changeBottomTableViewConstraints() {
         if isBottom, willPositionChange {
             isBottom = false
             statusChangeDelegate?.changeState()
@@ -255,32 +313,37 @@ extension EntryViewController {
         )
         willPositionChange = false
     }
-    
-    // MARK: - Navigation
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "bottomViewSegue" {
-            if let bottomViewController = segue.destination as? EntryInformationViewController {
-                bottomViewController.entryViewController = self
-                statusChangeDelegate = bottomViewController
-                bottomViewController.statusChangeDelegate = self
-            }
-        }
-    }
-    
-    @IBAction func hideKeyboardDidTap(_ sender: UITapGestureRecognizer) {
-        view.endEditing(true)
-    }
 }
 
 // MARK: UITextViewDelegate
+
 extension EntryViewController: UITextViewDelegate {
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
         shouldSaveEntry = true
+    }
+    
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        if keyboadrdToolbar == nil {
+            keyboadrdToolbar = UIToolbar.init(frame:
+                CGRect.init(x: 0, y: 0, width: self.view.frame.size.width, height: 40))
+            let hideKeyboardButton = UIBarButtonItem.init(
+                title: "Submit",
+                style: .plain,
+                target: self,
+                action: #selector(hideKeyboard))
+            hideKeyboardButton.image = UIImage(named: "ic_down")
+            keyboadrdToolbar?.tintColor = UIColor.doGray
+            keyboadrdToolbar?.backgroundColor = UIColor.white
+            keyboadrdToolbar?.items = [hideKeyboardButton]
+            textView.inputAccessoryView = keyboadrdToolbar
+        }
+        return true
     }
 }
 
 // MARK: UIImagePickerControllerDelegate, UINavigationControllerDelegate
+
 extension EntryViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -291,6 +354,7 @@ extension EntryViewController: UIImagePickerControllerDelegate, UINavigationCont
         _ picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]
     ) {
+        shouldSaveEntry = true
         var pickedImage: UIImage?
         if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
             pickedImage = editedImage
@@ -309,7 +373,7 @@ extension EntryViewController: UIImagePickerControllerDelegate, UINavigationCont
     
     private func insertAtTextViewCursor(attributedString: NSAttributedString) {
         guard let selectedRange = textView.selectedTextRange else { return }
-        /// attributedString을 cursor위치에 넣는다.
+        // attributedString을 cursor위치에 넣는다.
         let cursorIndex = textView.offset(
             from: textView.beginningOfDocument,
             to: selectedRange.start
@@ -321,6 +385,7 @@ extension EntryViewController: UIImagePickerControllerDelegate, UINavigationCont
 }
 
 // MARK: UITextDragDelegate
+
 extension EntryViewController: UITextDragDelegate {
     
     func textDraggableView(
@@ -329,7 +394,7 @@ extension EntryViewController: UITextDragDelegate {
         session: UIDragSession
     ) -> UITargetedDragPreview? {
         
-        /// 드래그 프리뷰가 시작될 위치
+        // 드래그 프리뷰가 시작될 위치
         let target = UIDragPreviewTarget(
             container: textView,
             center: session.location(in: textDraggableView)
@@ -354,7 +419,7 @@ extension EntryViewController: UITextDragDelegate {
     func textDraggableView(_ textDraggableView: UIView & UITextDraggable, itemsForDrag dragRequest: UITextDragRequest) -> [UIDragItem] {
         
         if let selectedText = textView.text(in: dragRequest.dragRange) {
-            /// UITextRange를 NSRange로 변경
+            // UITextRange를 NSRange로 변경
             let startOffset: Int = textView.offset(
                 from: textView.beginningOfDocument,
                 to: dragRequest.dragRange.start
@@ -370,11 +435,11 @@ extension EntryViewController: UITextDragDelegate {
                 at: 0,
                 effectiveRange: nil
             )[NSAttributedString.Key.attachment] as? NSTextAttachment {
-                ///선택된 것이 이미지인 경우
+                //선택된 것이 이미지인 경우
                 imagePreview.image = attachment.image
                 isImageSelected = true
             } else {
-                ///선택된 것이 텍스트인 경우
+                //선택된 것이 텍스트인 경우
                 previewLabel.text = selectedText
             }
             
@@ -394,5 +459,39 @@ extension EntryViewController: StateChangeDelegate {
         )
         bottomContainerView.addGestureRecognizer(gesture)
         changeBottomTableViewConstraints()
+    }
+}
+
+// MARK: Keyboard
+
+extension EntryViewController {
+    
+    @objc private func hideKeyboard() {
+        textView.endEditing(false)
+    }
+    
+    /// Keyboard로 TextView가 가려지지 않도록하는 키보드가 올라올 때 처리하는 메서드
+    @objc private func keyboardWasShown(_ notification: Notification?) {
+        if let keyboardFrame: NSValue = notification?.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            
+            let contentInsets: UIEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardHeight - (viewHeightWithoutTopView * 0.14), right: 0.0)
+            textView.contentInset = contentInsets
+            textView.scrollIndicatorInsets = contentInsets
+            
+            var viewFrame: CGRect = view.frame
+            viewFrame.size.height -= keyboardHeight - (viewHeightWithoutTopView * 0.14)
+            if !viewFrame.contains(textView.frame.origin) {
+                textView.scrollRectToVisible(textView.frame, animated: true)
+            }
+        }
+    }
+    
+    /// 키보드가 내려갈 때 Keyboard로 TextView가 가려지지 않도록하는 처리한 것을 복구하는 메서드
+    @objc private func keyboardWillBeHidden(_ notification: Notification?) {
+        let contentInsets: UIEdgeInsets = .zero
+        textView.contentInset = contentInsets
+        textView.scrollIndicatorInsets = contentInsets
     }
 }
