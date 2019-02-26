@@ -49,7 +49,7 @@ A2 Members
     - [날씨 API 정리](https://github.com/boostcamp3-iOS/team-a2/wiki/날씨-API-정리)  
     - [키 컬러](https://github.com/boostcamp3-iOS/team-a2/wiki/키-컬러)
   - **프로토타이핑** : 앱 개발에 필요한 요소들 사전 조사 및 프로토타입 개발
-    - [CloudKit 적용](https://github.com/boostcamp3-iOS/team-a2/wiki/iCloud-%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95)
+    - [CloudKit 사전조사](https://github.com/boostcamp3-iOS/team-a2/wiki/iCloud-%EC%82%AC%EC%9A%A9%EB%B0%A9%EB%B2%95)
     - [프로토타입](https://github.com/boostcamp3-iOS/team-a2/tree/develop/OneDay) 프로젝트
 - Week 2
   - CoreData 적용
@@ -68,8 +68,7 @@ A2 Members
     - 타임라인
     - 캘린더
     - 사진
-  - iCloud 동기화 : 전체 데이터 저장
-  - iCloud 동기화 : 저장할 데이터 선택
+  - 에디터 하단 뷰 
 - Week 4
   - 에디터 마크다운 적용
   - 알리미
