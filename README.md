@@ -18,9 +18,9 @@ A2 Members
 ## Screen Shot
 |TimeLine|Photos|Add New Entry| Editor|
 | :--: | :--: | :--: | :--: |
-| ![image](https://github.com/caution-dev/team-a2/raw/master/resources/screenshot_1.png) | ![image](https://github.com/caution-dev/team-a2/raw/master/resources/screenshot_2.png) | ![image](https://github.com/caution-dev/team-a2/raw/master/resources/screenshot_3.png) | ![image](https://github.com/caution-dev/team-a2/raw/master/resources/screenshot_4.png)| 
-|Calendar|Add New Entry| 모아보기 |  |
- | ![image](https://github.com/caution-dev/team-a2/raw/master/resources/screenshot_5.png) | ![image](https://github.com/caution-dev/team-a2/raw/master/resources/screenshot_6.png) | ![image](https://github.com/caution-dev/team-a2/raw/master/resources/screenshot_7.png) | |
+| ![simulator screen shot - iphone xr - 2019-02-26 at 12 21 38](https://user-images.githubusercontent.com/35840155/53389572-31544600-39d3-11e9-84f9-40e618ef5725.png)| ![simulator screen shot - iphone xr - 2019-02-26 at 12 22 00](https://user-images.githubusercontent.com/35840155/53389578-36b19080-39d3-11e9-80f1-688665c30000.png) | ![simulator screen shot - iphone xr - 2019-02-26 at 12 22 52](https://user-images.githubusercontent.com/35840155/53389581-3ca77180-39d3-11e9-82db-ea604c066140.png) | ![simulator screen shot - iphone xr - 2019-02-26 at 12 25 55](https://user-images.githubusercontent.com/35840155/53389591-3f09cb80-39d3-11e9-81ab-f1485e4e8482.png)| 
+|Editor detail|Map| Calendar | Collection |
+ | ![simulator screen shot - iphone xr - 2019-02-26 at 12 25 58](https://user-images.githubusercontent.com/35840155/53389595-4335e900-39d3-11e9-9519-d131245cb996.png) |![simulator screen shot - iphone xr - 2019-02-26 at 12 27 17](https://user-images.githubusercontent.com/35840155/53389606-4a5cf700-39d3-11e9-8c22-62a5b521597f.png)| ![simulator screen shot - iphone xr - 2019-02-26 at 12 26 11](https://user-images.githubusercontent.com/35840155/53389599-4630d980-39d3-11e9-9d77-0befeac26243.png) | ![simulator screen shot - iphone xr - 2019-02-26 at 12 26 18](https://user-images.githubusercontent.com/35840155/53389604-48933380-39d3-11e9-98cc-74f4dc32a679.png) | 
 ## 핵심 기능
 - 일기 작성
 - 일기 검색 및 필터
