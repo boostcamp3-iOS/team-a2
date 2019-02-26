@@ -68,7 +68,7 @@ A2 Members
     - 타임라인
     - 캘린더
     - 사진
-  - 에디터 하단 뷰 
+  - [에디터 하단 뷰](https://github.com/boostcamp3-iOS/team-a2/wiki/%EC%97%90%EB%94%94%ED%84%B0-%ED%95%98%EB%8B%A8-%EB%B7%B0-%EA%B5%AC%ED%98%84%EC%8B%9C-%EA%B3%A0%EB%A0%A4%EC%82%AC%ED%95%AD) 
 - Week 4
   - 에디터 마크다운 적용
   - 알리미
