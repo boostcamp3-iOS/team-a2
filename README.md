@@ -12,7 +12,7 @@ Mentor : [Yagom](https://github.com/yagom)
 
 A2 Members
 * [Coco : 김주희](https://github.com/caution-dev)
-* [Trevi : 서정화](https://github.com/mohok)
+* [Trevi : 서정화](https://www.notion.so/Hello-there-0a3078d4cff843878f742725cab6e531)
 * [Hybree : 송원근](https://github.com/yk1028)
 
 ## Screen Shot
@@ -21,6 +21,9 @@ A2 Members
 | ![simulator screen shot - iphone xr - 2019-02-26 at 12 21 38](https://user-images.githubusercontent.com/35840155/53389572-31544600-39d3-11e9-84f9-40e618ef5725.png)| ![simulator screen shot - iphone xr - 2019-02-26 at 12 22 00](https://user-images.githubusercontent.com/35840155/53389578-36b19080-39d3-11e9-80f1-688665c30000.png) | ![simulator screen shot - iphone xr - 2019-02-26 at 12 22 52](https://user-images.githubusercontent.com/35840155/53389581-3ca77180-39d3-11e9-82db-ea604c066140.png) | ![simulator screen shot - iphone xr - 2019-02-26 at 12 25 55](https://user-images.githubusercontent.com/35840155/53389591-3f09cb80-39d3-11e9-81ab-f1485e4e8482.png)| 
 |Editor detail|Map| Calendar | Collection |
  | ![simulator screen shot - iphone xr - 2019-02-26 at 12 25 58](https://user-images.githubusercontent.com/35840155/53389595-4335e900-39d3-11e9-9519-d131245cb996.png) |![simulator screen shot - iphone xr - 2019-02-26 at 12 27 17](https://user-images.githubusercontent.com/35840155/53389606-4a5cf700-39d3-11e9-8c22-62a5b521597f.png)| ![simulator screen shot - iphone xr - 2019-02-26 at 12 26 11](https://user-images.githubusercontent.com/35840155/53389599-4630d980-39d3-11e9-9d77-0befeac26243.png) | ![simulator screen shot - iphone xr - 2019-02-26 at 12 26 18](https://user-images.githubusercontent.com/35840155/53389604-48933380-39d3-11e9-98cc-74f4dc32a679.png) | 
+ |Side menu|filter|search||
+| ![simulator screen shot - iphone x - 2019-02-26 at 16 02 17](https://user-images.githubusercontent.com/35840155/53393527-f6a4da80-39df-11e9-9777-9fba9779592a.png)|![simulator screen shot - iphone x - 2019-02-26 at 16 02 22](https://user-images.githubusercontent.com/35840155/53393531-fb698e80-39df-11e9-8cea-e2e4c83de035.png)|![simulator screen shot - iphone x - 2019-02-26 at 16 02 25](https://user-images.githubusercontent.com/35840155/53393535-fdcbe880-39df-11e9-99e0-d062bfdf8d23.png)|
+
 ## 핵심 기능
 - 일기 작성
 - 일기 검색 및 필터
