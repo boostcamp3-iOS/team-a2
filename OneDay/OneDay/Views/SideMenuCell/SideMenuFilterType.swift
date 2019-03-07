@@ -46,10 +46,12 @@ enum SideMenuFilterType: Int, CaseIterable {
             }
         case .onThisDay:
             return { controller in
-                let collectedEntiresViewController = CollectedEntriesViewController()
+                let collectedEntriesViewController = CollectedEntriesViewController()
                 let dateComponent = Calendar.current.dateComponents(in: TimeZone.current, from: Date())
-                collectedEntiresViewController.entriesData = CoreDataManager.shared.filter(by: [.currentJournal, .thisDay(month: dateComponent.month, day: dateComponent.day)])
-                controller.present(collectedEntiresViewController, animated: true, completion: nil)
+                guard let month = dateComponent.month, let day = dateComponent.day else { return }
+                let entries = CoreDataManager.shared.filter(by: [.currentJournal, .thisDay(month: month, day: day)])
+                collectedEntriesViewController.bind(title: "\(month)월 \(day)일", data: entries)
+                controller.present(collectedEntriesViewController, animated: true, completion: nil)
             }
         }
     }

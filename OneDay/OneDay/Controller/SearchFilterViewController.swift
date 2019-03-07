@@ -174,9 +174,8 @@ extension SearchFilterViewController: UITableViewDelegate {
 extension SearchFilterViewController: FilterViewControllerDelegate {
     func presentCollectedEntries(for entries: [Entry], title: String = "모아보기") {
         guard !entries.isEmpty else { return }
-        let collectedEntiresViewController = CollectedEntriesViewController()
-        collectedEntiresViewController.entriesData = entries
-        collectedEntiresViewController.dateLabel.text = title
-        present(collectedEntiresViewController, animated: true, completion: nil)
+        let collectedEntriesViewController = CollectedEntriesViewController()
+        collectedEntriesViewController.bind(title: title, data: entries)
+        present(collectedEntriesViewController, animated: true, completion: nil)
     }
 }

@@ -460,21 +460,20 @@ extension CalendarViewController {
             actionSheet.addAction(UIAlertAction(
                 title: "\(year). \(month). \(day). (\(entriesAtDay.count) entries)",
                 style: .default,
-                handler: actionHandlerPresentingCollectedEntriesViewController(labelText: "\(year)년 \(month)월 \(day)일 \(weekday)요일", entries: entriesAtDay)))
+                handler: actionHandlerPresentingCollectedEntriesViewController(title: "\(year)년 \(month)월 \(day)일 \(weekday)요일", entries: entriesAtDay)))
             actionSheet.addAction(UIAlertAction(
                 title: "\(month)월 \(day)일 (\(entriesOnThisDay.count) entries)",
                 style: .default,
-                handler: actionHandlerPresentingCollectedEntriesViewController(labelText: "\(month)월 \(day)일", entries: entriesOnThisDay)))
+                handler: actionHandlerPresentingCollectedEntriesViewController(title: "\(month)월 \(day)일", entries: entriesOnThisDay)))
         }
         actionSheet.addAction(UIAlertAction(title: "취소", style: .cancel))
         present(actionSheet, animated: false)
     }
     
-    private func actionHandlerPresentingCollectedEntriesViewController(labelText: String, entries: [Entry]) -> ((UIAlertAction) -> Void)? {
+    private func actionHandlerPresentingCollectedEntriesViewController(title: String, entries: [Entry]) -> ((UIAlertAction) -> Void)? {
         return { _ in
             let collectedEntriesViewController = CollectedEntriesViewController()
-            collectedEntriesViewController.dateLabel.text = labelText
-            collectedEntriesViewController.entriesData = entries
+            collectedEntriesViewController.bind(title: title, data: entries)
             self.present(collectedEntriesViewController, animated: true, completion: nil)
         }
     }

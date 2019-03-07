@@ -18,7 +18,7 @@ class CollectedEntriesViewController: UIViewController {
         return view
     }()
     
-    let dateLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.backgroundColor = .clear
@@ -47,7 +47,7 @@ class CollectedEntriesViewController: UIViewController {
         return tableView
     }()
     
-    var entriesData = [Entry]()
+    private var entriesData = [Entry]()
     /// 엔트리에 위치 정보가 있을 때만 맵 뷰를 보여줍니다.
     private var shouldPresentMapView = false
     private let headerMapView = CollectedEntriesHeaderMapView()
@@ -84,6 +84,11 @@ class CollectedEntriesViewController: UIViewController {
                             longitude: location.longitude)))
             }
         }
+    }
+    
+    func bind(title: String, data: [Entry]) {
+        titleLabel.text = title
+        entriesData = data
     }
 }
 
@@ -136,10 +141,10 @@ extension CollectedEntriesViewController {
         topFloatingView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         topFloatingView.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
-        topFloatingView.addSubview(dateLabel)
-        dateLabel.leftAnchor.constraint(equalTo: topFloatingView.leftAnchor,
+        topFloatingView.addSubview(titleLabel)
+        titleLabel.leftAnchor.constraint(equalTo: topFloatingView.leftAnchor,
                                         constant: 24).isActive = true
-        dateLabel.centerYAnchor.constraint(equalTo: topFloatingView.centerYAnchor).isActive = true
+        titleLabel.centerYAnchor.constraint(equalTo: topFloatingView.centerYAnchor).isActive = true
         
         topFloatingView.addSubview(doneButton)
         doneButton.rightAnchor.constraint(equalTo: topFloatingView.rightAnchor,
