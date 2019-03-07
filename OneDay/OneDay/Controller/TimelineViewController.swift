@@ -171,7 +171,7 @@ extension TimelineViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         
-        guard let entryViewController = UIStoryboard(name: "Coredata", bundle: nil)
+        guard let entryViewController = UIStoryboard(name: "Timeline", bundle: nil)
             .instantiateViewController(withIdentifier: "entry_detail")
             as? EntryViewController
             else { return }

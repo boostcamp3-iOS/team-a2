@@ -79,7 +79,7 @@ UINavigationControllerDelegate {
                 title: "일기 쓰기",
                 style: .default,
                 handler: { [weak self] _ in
-                    guard let nextViewController = UIStoryboard(name: "Coredata", bundle: nil)
+                    guard let nextViewController = UIStoryboard(name: "Timeline", bundle: nil)
                         .instantiateViewController(withIdentifier: "entry_detail")
                         as? EntryViewController
                         else {
