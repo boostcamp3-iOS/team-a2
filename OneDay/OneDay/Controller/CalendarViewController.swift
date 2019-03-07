@@ -50,8 +50,6 @@ class CalendarViewController: UIViewController {
         picker.maximumDate = Calendar.current.date(byAdding: .year, value: 900, to: Date())
         return picker
     }()
-    
-    // MARK: Variables
 
     private var isTodayIndex = false
     private var isPickingDate = false
@@ -408,13 +406,10 @@ extension CalendarViewController {
         view.addSubview(collectionView)
         collectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         collectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        collectionView.topAnchor.constraint(
-            equalTo: daysOfWeekTitleView.bottomAnchor).isActive = true
+        collectionView.topAnchor.constraint(equalTo: daysOfWeekTitleView.bottomAnchor).isActive = true
         collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
-        collectionView.register(
-            CalendarCell.self,
-            forCellWithReuseIdentifier: "cellId")
+        collectionView.register(CalendarCell.self, forCellWithReuseIdentifier: "cellId")
         collectionView.register(
             CalendarHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
@@ -429,10 +424,11 @@ extension CalendarViewController {
 
 extension CalendarViewController {
     private func showActionSheet(_ sectionNumber: Int, _ day: Int) {
-        let date = convertSectionNumberToDateComponents(sectionNumber, item: day)
+        let dateComponents = convertSectionNumberToDateComponents(sectionNumber, item: day)
+        guard let year = dateComponents.year, let month = dateComponents.month, let day = dateComponents.day else { return }
+        guard let date = dateComponents.date else { return }
         let list = ["일", "월", "화", "수", "목", "금", "토"]
-        let weekday = list[date.weekday!-1]
-        guard let year = date.year, let month = date.month, let day = date.day else { return }
+        let weekday = list[dateComponents.weekday!-1]
         
         let entriesAtDay = CoreDataManager.shared.filter(
             by:[.currentJournal,
@@ -443,19 +439,43 @@ extension CalendarViewController {
                 .thisDay(month: month, day: day)])
         
         let alertTitle = "\(year)년 \(month)월 \(day)일 \(weekday)요일"
-        let dayAlertController = UIAlertController(
-            title: alertTitle,
-            message: nil,
-            preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: alertTitle, message: nil, preferredStyle: .actionSheet)
         
-        addNewEntryAction(date: year, month, day, to: dayAlertController)
+        // 새 엔트리 만드는 action
+        actionSheet.addAction(UIAlertAction(
+            title: "새 엔트리 만들기",
+            style: .default) { (_) in
+                guard let entryViewController = UIStoryboard(name: "Timeline", bundle: nil)
+                    .instantiateViewController(withIdentifier: "entry_detail")
+                    as? EntryViewController
+                    else { return }
+                entryViewController.entry = CoreDataManager.shared.insert(type: Entry.self)
+                entryViewController.entry.date = date
+                entryViewController.entry.updateDate(date: date)
+                self.fetchedEntriesDate.insert("\(year)\(month)\(day)")
+                self.present(entryViewController, animated: true)
+        })
         
         if !entriesAtDay.isEmpty {
-            addTodayEntryAction(date: year, month, day, weekday, about: entriesAtDay, to: dayAlertController)
-            addYearEntryAction(date: month, day, about: entriesOnThisDay, to: dayAlertController)
+            actionSheet.addAction(UIAlertAction(
+                title: "\(year). \(month). \(day). (\(entriesAtDay.count) entries)",
+                style: .default,
+                handler: actionHandlerPresentingCollectedEntriesViewController(title: "\(year)년 \(month)월 \(day)일 \(weekday)요일", entries: entriesAtDay)))
+            actionSheet.addAction(UIAlertAction(
+                title: "\(month)월 \(day)일 (\(entriesOnThisDay.count) entries)",
+                style: .default,
+                handler: actionHandlerPresentingCollectedEntriesViewController(title: "\(month)월 \(day)일", entries: entriesOnThisDay)))
         }
-        dayAlertController.addAction(UIAlertAction(title: "취소", style: .cancel))
-        present(dayAlertController, animated: false)
+        actionSheet.addAction(UIAlertAction(title: "취소", style: .cancel))
+        present(actionSheet, animated: false)
+    }
+    
+    private func actionHandlerPresentingCollectedEntriesViewController(title: String, entries: [Entry]) -> ((UIAlertAction) -> Void)? {
+        return { _ in
+            let collectedEntriesViewController = CollectedEntriesViewController()
+            collectedEntriesViewController.bind(title: title, data: entries)
+            self.present(collectedEntriesViewController, animated: true, completion: nil)
+        }
     }
     
     private func convertSectionNumberToDateComponents(_ section: Int, item: Int) -> DateComponents {
@@ -470,69 +490,5 @@ extension CalendarViewController {
         } else {
             preconditionFailure("Error")
         }
-    }
-    
-    private func addNewEntryAction(
-        date year: Int,
-        _ month: Int,
-        _ day: Int,
-        to calendarCellAlertController: UIAlertController) {
-        calendarCellAlertController.addAction(UIAlertAction(
-            title: "새 엔트리 만들기",
-            style: .default) { (_) in
-                let components = DateComponents(
-                    calendar: Calendar.current,
-                    year: year,
-                    month: month,
-                    day: day)
-                
-                guard let entryViewController = UIStoryboard(name: "Coredata", bundle: nil)
-                    .instantiateViewController(withIdentifier: "entry_detail")
-                    as? EntryViewController
-                    else { return }
-                entryViewController.entry = CoreDataManager.shared.insert(type: Entry.self)
-                entryViewController.entry.date = components.date ?? Date()
-                entryViewController.entry.updateDate(date: components.date ?? Date())
-                let date = "\(year)\(month)\(day)"
-                self.fetchedEntriesDate.insert(date)
-                self.present(entryViewController, animated: true)
-        })
-    }
-    
-    private func addTodayEntryAction(
-        date year: Int,
-        _ month: Int,
-        _ day: Int,
-        _ weekday: String,
-        about entriesAtDay: [Entry],
-        to dayAlertController: UIAlertController) {
-        let todayAlertTitle = "\(year). \(month). \(day). (\(entriesAtDay.count) entries)"
-        let todayAlert = UIAlertAction(
-            title: todayAlertTitle,
-            style: .default) { (_) in
-                let collectedEntriesViewController = CollectedEntriesViewController()
-                collectedEntriesViewController.dateLabel.text =
-                "\(year)년 \(month)월 \(day)일 \(weekday)요일"
-                collectedEntriesViewController.entriesData = entriesAtDay
-                self.present(collectedEntriesViewController, animated: true, completion: nil)
-        }
-        dayAlertController.addAction(todayAlert)
-    }
-    
-    private func addYearEntryAction(
-        date month: Int,
-        _ day: Int,
-        about entriesOnThisDay: [Entry],
-        to dayAlertController: UIAlertController) {
-        let yearAlertTitle = "\(month)월 \(day)일 (\(entriesOnThisDay.count) entries)"
-        let yearAlert = UIAlertAction(
-            title: yearAlertTitle,
-            style: .default) { (_) in
-                let collectedEntriesViewController = CollectedEntriesViewController()
-                collectedEntriesViewController.dateLabel.text = "\(month)월 \(day)일"
-                collectedEntriesViewController.entriesData = entriesOnThisDay
-                self.present(collectedEntriesViewController, animated: true, completion: nil)
-        }
-        dayAlertController.addAction(yearAlert)
     }
 }

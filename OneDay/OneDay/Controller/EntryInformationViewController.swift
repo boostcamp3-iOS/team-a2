@@ -52,10 +52,7 @@ class EntryInformationViewController: UIViewController {
     // MARK: - Set up
     
     private func setUpTable() {
-        tableView.register(
-            EditorSettingTableViewCell.self,
-            forCellReuseIdentifier: settingIdentifier
-        )
+        tableView.register(EditorSettingTableViewCell.self, forCellReuseIdentifier: settingIdentifier)
         tableView.isScrollEnabled = false
     }
     
@@ -65,16 +62,8 @@ class EntryInformationViewController: UIViewController {
             detail: "",
             image: UIImage(named: "setting_location")
         )
-        location.accessoryType = .disclosureIndicator
+        location.accessoryType = .none
         settingTableData[0].append(location)
-        
-        let tag = EntrySetting(
-            title: "태그",
-            detail: "추가...",
-            image: UIImage(named: "setting_tag")
-        )
-        tag.accessoryType = .disclosureIndicator
-        settingTableData[0].append(tag)
         
         let journal = EntrySetting(
             title: "일기장",
@@ -151,7 +140,7 @@ class EntryInformationViewController: UIViewController {
         dateFormatter.locale = Locale(identifier: "ko-KR")
         dateFormatter.dateFormat = "YYYY년 MM월 dd일, a h:mm"
         let fullDate = dateFormatter.string(from: entry.date)
-        settingTableData[0][3].detail = fullDate
+        settingTableData[0][2].detail = fullDate
         
         let date = entry.date
         let calendar = Calendar.current
@@ -324,11 +313,7 @@ class EntryInformationViewController: UIViewController {
             title: title,
             message: message,
             preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(
-            title: "확인",
-            style: .default,
-            handler: nil))
-        
+        alertController.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
 }
@@ -489,13 +474,10 @@ extension EntryInformationViewController {
         let calendar = Calendar.current
         let month = calendar.component(.month, from: date)
         let day = calendar.component(.day, from: date)
-        
-        let entriesOnThisDay = CoreDataManager.shared.filter(
-            by: [.thisDay(month: month, day: day)])
+        let entriesOnThisDay = CoreDataManager.shared.filter(by: [.thisDay(month: month, day: day)])
         
         let collectedEntriesViewController = CollectedEntriesViewController()
-        collectedEntriesViewController.dateLabel.text = "\(month)월 \(day)일"
-        collectedEntriesViewController.entriesData = entriesOnThisDay
+        collectedEntriesViewController.bind(title: "\(month)월 \(day)일", data: entriesOnThisDay)
         self.present(collectedEntriesViewController, animated: true, completion: nil)
     }
     
@@ -510,8 +492,7 @@ extension EntryInformationViewController {
                 .thisDay(month: month, day: day)])
         
         let collectedEntriesViewController = CollectedEntriesViewController()
-        collectedEntriesViewController.dateLabel.text = "\(month)월 \(day)일"
-        collectedEntriesViewController.entriesData = entriesAtDay
+        collectedEntriesViewController.bind(title: "\(month)월 \(day)일", data: entriesAtDay)
         self.present(collectedEntriesViewController, animated: true, completion: nil)
     }
     

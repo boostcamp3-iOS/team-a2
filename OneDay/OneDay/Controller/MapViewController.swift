@@ -139,9 +139,9 @@ extension MapViewController {
             guard let data = annotation as? EntryAnnotation else { return }
             return array.append(data.entry)
         })
-        let nextViewController = CollectedEntriesViewController()
-        nextViewController.entriesData = entries
-        present(nextViewController, animated: true, completion: nil)
+        let collectedEntriesViewController = CollectedEntriesViewController()
+        collectedEntriesViewController.bind(title: "", data: entries)
+        present(collectedEntriesViewController, animated: true, completion: nil)
     }
     
 }
