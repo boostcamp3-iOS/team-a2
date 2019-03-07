@@ -70,7 +70,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MxW-4v-TE6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1770" y="-277"/>
+            <point key="canvasLocation" x="-2474" y="-310"/>
         </scene>
         <!--Main Tab Bar View Controller-->
         <scene sceneID="61Q-p0-foG">
@@ -125,7 +125,7 @@
         <!--Timeline-->
         <scene sceneID="QCM-ao-CzI">
             <objects>
-                <viewControllerPlaceholder storyboardName="Coredata" referencedIdentifier="Timeline" id="ANb-qG-GGe" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="Timeline" referencedIdentifier="Timeline" id="ANb-qG-GGe" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="GEL-rB-B5v"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yUk-IM-uSZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -222,11 +222,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="add" width="23" height="23"/>
-        <image name="ic_calendar" width="23" height="23"/>
-        <image name="map" width="23" height="23"/>
-        <image name="picture" width="36" height="36"/>
-        <image name="tabs" width="23" height="23"/>
+        <image name="add" width="36.799999237060547" height="36.799999237060547"/>
+        <image name="ic_calendar" width="34.5" height="34.5"/>
+        <image name="map" width="36.799999237060547" height="36.799999237060547"/>
+        <image name="picture" width="27" height="27"/>
+        <image name="tabs" width="36.799999237060547" height="36.799999237060547"/>
         <namedColor name="doBlue">
             <color red="0.41176470588235292" green="0.74509803921568629" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

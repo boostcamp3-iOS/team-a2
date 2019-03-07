@@ -20,8 +20,17 @@ class TimelineViewController: UIViewController {
     @IBOutlet weak var editorButton: UIButton!
     @IBOutlet weak var timelineNavigationItem: UINavigationItem!
     
-    private var fetchedResultsController: NSFetchedResultsController<Entry> =
-        CoreDataManager.shared.timelineResultsController
+    private var fetchedResultsController: NSFetchedResultsController<Entry>! {
+        didSet {
+            timelineNavigationItem.title = CoreDataManager.shared.currentJournal.title
+            do {
+                fetchedResultsController.delegate = self
+                try fetchedResultsController.performFetch()
+            } catch let error as NSError {
+                print("Fetching error: \(error), \(error.userInfo)")
+            }
+        }
+    }
     
     private var shouldShowDayLabelAtIndexPath = [String:IndexPath]()
     
@@ -33,8 +42,8 @@ class TimelineViewController: UIViewController {
         setupButtonsBehindArea()
         
         registerTableviewCell()
-        setupFetchedResultsController()
         addNotifications()
+        setupFetchedResultsController()
         dayLabelVisibilityCheck()
     }
     
@@ -47,10 +56,7 @@ class TimelineViewController: UIViewController {
     // MARK: - Setup
     
     private func registerTableviewCell() {
-        timelineTableView.register(
-            TimelineTableViewCell.self,
-            forCellReuseIdentifier: "timelineCellId")
-        
+        timelineTableView.register(TimelineTableViewCell.self, forCellReuseIdentifier: "timelineCellId")
     }
     
     // MARK: - Notification
@@ -78,21 +84,13 @@ class TimelineViewController: UIViewController {
     @objc private func didEntriesFilterChangedNotification(_: Notification) {
         setupFetchedResultsController()
         DispatchQueue.main.async { [weak self] in
-            self?.navigationController?.title =  CoreDataManager.shared.currentJournal.title
             self?.timelineTableView.reloadData()
         }
     }
     
     // MARK: Set Up CoreData Fetched Results Controller
     private func setupFetchedResultsController() {
-        timelineNavigationItem.title = CoreDataManager.shared.currentJournal.title
         fetchedResultsController = CoreDataManager.shared.timelineResultsController
-        do {
-            fetchedResultsController.delegate = self
-            try fetchedResultsController.performFetch()
-        } catch let error as NSError {
-            print("Fetching error: \(error), \(error.userInfo)")
-        }
     }
     
     private func dayLabelVisibilityCheck() {
@@ -159,7 +157,7 @@ extension TimelineViewController: UIImagePickerControllerDelegate, UINavigationC
         selectImage(from: .camera)
     }
     
-    private func imagePickerController(
+    func imagePickerController(
         _ picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)

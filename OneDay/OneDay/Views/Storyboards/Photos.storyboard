@@ -123,15 +123,15 @@
         <!--entry_detail-->
         <scene sceneID="n7Z-1z-a78">
             <objects>
-                <viewControllerPlaceholder storyboardName="Coredata" referencedIdentifier="entry_detail" id="tSC-Lh-YCe" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Timeline" referencedIdentifier="entry_detail" id="tSC-Lh-YCe" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fHf-bd-90L" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2666" y="-1073"/>
         </scene>
     </scenes>
     <resources>
-        <image name="Image" width="138" height="91"/>
-        <image name="ic_camera_plus" width="24" height="24"/>
-        <image name="ic_gallery_plus" width="24" height="24"/>
+        <image name="Image" width="276" height="183"/>
+        <image name="ic_camera_plus" width="18" height="18"/>
+        <image name="ic_gallery_plus" width="18" height="18"/>
     </resources>
 </document>

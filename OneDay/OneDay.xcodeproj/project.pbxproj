@@ -21,7 +21,7 @@
 		D502769321FEA18000A0DB5E /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502769221FEA18000A0DB5E /* CoreDataStack.swift */; };
 		D502769621FEA1CE00A0DB5E /* UIColor+NamedColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D502769521FEA1CD00A0DB5E /* UIColor+NamedColor.swift */; };
 		D50276B921FED1D200A0DB5E /* OneDay.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D561692921FAD07000E00FED /* OneDay.xcdatamodeld */; };
-		D50276BD21FEF0DC00A0DB5E /* Coredata.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D50276BC21FEF0DC00A0DB5E /* Coredata.storyboard */; };
+		D50276BD21FEF0DC00A0DB5E /* Timeline.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D50276BC21FEF0DC00A0DB5E /* Timeline.storyboard */; };
 		D50276CA21FEFC8400A0DB5E /* OneDayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276C921FEFC8400A0DB5E /* OneDayTests.swift */; };
 		D50276D221FEFCE900A0DB5E /* JournalServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276D121FEFCE900A0DB5E /* JournalServiceTest.swift */; };
 		D50276D521FEFD4500A0DB5E /* TestCoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D50276D421FEFD4500A0DB5E /* TestCoreDataStack.swift */; };
@@ -70,6 +70,7 @@
 		D561693021FAD07200E00FED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D561692E21FAD07200E00FED /* LaunchScreen.storyboard */; };
 		D561C1F72222A17400D1A491 /* GroupedWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = D561C1F62222A17400D1A491 /* GroupedWeather.swift */; };
 		D5EBF00E221C23EF008AF801 /* SideMenuFilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EBF00D221C23EF008AF801 /* SideMenuFilterType.swift */; };
+		E3C7F1F6B94C5B955F4DAD3F /* Pods_OneDay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2F23636A5909B46DE93DFD2 /* Pods_OneDay.framework */; };
 		E936659422110DF900DC660A /* BaseSlidingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E936659322110DF900DC660A /* BaseSlidingViewController.swift */; };
 		E96BE83A21FAD96700266F6D /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E96BE83921FAD96700266F6D /* Colors.xcassets */; };
 		E96BE83F21FADA9600266F6D /* SideMenu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E96BE83E21FADA9600266F6D /* SideMenu.storyboard */; };
@@ -123,7 +124,7 @@
 		D502766121FB0D6000A0DB5E /* WeatherType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherType.swift; sourceTree = "<group>"; };
 		D502769221FEA18000A0DB5E /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		D502769521FEA1CD00A0DB5E /* UIColor+NamedColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+NamedColor.swift"; sourceTree = "<group>"; };
-		D50276BC21FEF0DC00A0DB5E /* Coredata.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Coredata.storyboard; sourceTree = "<group>"; };
+		D50276BC21FEF0DC00A0DB5E /* Timeline.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Timeline.storyboard; sourceTree = "<group>"; };
 		D50276C721FEFC8400A0DB5E /* OneDayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OneDayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D50276C921FEFC8400A0DB5E /* OneDayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneDayTests.swift; sourceTree = "<group>"; };
 		D50276CB21FEFC8400A0DB5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -218,6 +219,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E97BB828221DAC280026FD10 /* Foundation.framework in Frameworks */,
+				E3C7F1F6B94C5B955F4DAD3F /* Pods_OneDay.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,7 +510,7 @@
 				D561692E21FAD07200E00FED /* LaunchScreen.storyboard */,
 				D561692621FAD07000E00FED /* Main.storyboard */,
 				E96BE84021FADAAA00266F6D /* Setting.storyboard */,
-				D50276BC21FEF0DC00A0DB5E /* Coredata.storyboard */,
+				D50276BC21FEF0DC00A0DB5E /* Timeline.storyboard */,
 				E96BE83E21FADA9600266F6D /* SideMenu.storyboard */,
 				D53782B822110E6800336646 /* Photos.storyboard */,
 			);
@@ -660,7 +662,7 @@
 				D561693021FAD07200E00FED /* LaunchScreen.storyboard in Resources */,
 				D512A79A221BBE4700EF43C6 /* Map.storyboard in Resources */,
 				E96BE84121FADAAA00266F6D /* Setting.storyboard in Resources */,
-				D50276BD21FEF0DC00A0DB5E /* Coredata.storyboard in Resources */,
+				D50276BD21FEF0DC00A0DB5E /* Timeline.storyboard in Resources */,
 				D561692D21FAD07200E00FED /* Assets.xcassets in Resources */,
 				D53782B922110E6800336646 /* Photos.storyboard in Resources */,
 				E96BE83A21FAD96700266F6D /* Colors.xcassets in Resources */,

@@ -41,8 +41,8 @@ class BaseSlidingViewController: UIViewController, UIGestureRecognizerDelegate {
     private var isMenuOpened = false
     private var isStatusBarHidden = false
     
-    private var baseMainViewLeftConstraint: NSLayoutConstraint!
-    private var baseMainViewRightConstraint: NSLayoutConstraint!
+    private var baseMainViewLeadingConstraint: NSLayoutConstraint!
+    private var baseMainViewTrailingConstraint: NSLayoutConstraint!
    
     private let sideViewWidth = Constants.sideWidth
     
@@ -84,8 +84,10 @@ class BaseSlidingViewController: UIViewController, UIGestureRecognizerDelegate {
         _ gestureRecognizer: UIGestureRecognizer,
         shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
         ) -> Bool {
-        return true
+        return false
     }
+    
+    var startPoint: CGPoint = CGPoint.zero
     
     private func setupGesture() {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
@@ -116,8 +118,8 @@ class BaseSlidingViewController: UIViewController, UIGestureRecognizerDelegate {
         distance = max(0, distance)
         
         let progress = distance/sideViewWidth // 0.0 ~ 1
-        baseMainViewLeftConstraint.constant = distance
-        baseMainViewRightConstraint.constant = distance
+        baseMainViewLeadingConstraint.constant = distance
+        baseMainViewTrailingConstraint.constant = distance
         blurCoverView.alpha = progress
         
         panGestureState(progress, of: gesture)
@@ -164,28 +166,26 @@ class BaseSlidingViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     private func addMainViewSnapshotView() {
-        guard let snapshotView = baseMainView.snapshotView(afterScreenUpdates: false)
-            else { return }
+        guard let snapshotView = baseMainView.snapshotView(afterScreenUpdates: false) else { return }
         snapshotView.tag = ViewTag.snapshot
         
         baseMainView.addSubview(snapshotView)
         snapshotView.topAnchor.constraint(equalTo: baseMainView.topAnchor).isActive = true
-        snapshotView.leftAnchor.constraint(equalTo: baseMainView.leftAnchor).isActive = true
-        snapshotView.rightAnchor.constraint(equalTo: baseMainView.rightAnchor).isActive = true
+        snapshotView.leadingAnchor.constraint(equalTo: baseMainView.leadingAnchor).isActive = true
+        snapshotView.trailingAnchor.constraint(equalTo: baseMainView.trailingAnchor).isActive = true
         snapshotView.bottomAnchor.constraint(equalTo: baseMainView.bottomAnchor).isActive = true
         
         snapshotView.addSubview(blurCoverView)
-        blurCoverView.leftAnchor.constraint(equalTo: baseMainView.leftAnchor).isActive = true
         blurCoverView.topAnchor.constraint(equalTo: baseMainView.topAnchor).isActive = true
-        blurCoverView.rightAnchor.constraint(equalTo: baseMainView.rightAnchor).isActive = true
+        blurCoverView.leadingAnchor.constraint(equalTo: baseMainView.leadingAnchor).isActive = true
+        blurCoverView.trailingAnchor.constraint(equalTo: baseMainView.trailingAnchor).isActive = true
         blurCoverView.bottomAnchor.constraint(equalTo: baseMainView.bottomAnchor).isActive = true
         
         let height = UIScreen.main.bounds.height
-        let shadowPath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 6, height: height))
         blurCoverView.layer.shadowColor = UIColor.black.cgColor
         blurCoverView.layer.shadowOpacity = 1
         blurCoverView.layer.shadowOffset = CGSize.zero
-        blurCoverView.layer.shadowPath = shadowPath.cgPath
+        blurCoverView.layer.shadowPath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 6, height: height)).cgPath
         blurCoverView.layer.masksToBounds = true
     }
     
@@ -221,11 +221,10 @@ class BaseSlidingViewController: UIViewController, UIGestureRecognizerDelegate {
         self.setNeedsStatusBarAppearanceUpdate()
         isStatusBarHidden = true
         self.setNeedsStatusBarAppearanceUpdate()
-        
         isMenuOpened = true
         
-        baseMainViewLeftConstraint.constant = sideViewWidth
-        baseMainViewRightConstraint.constant = sideViewWidth
+        baseMainViewLeadingConstraint.constant = sideViewWidth
+        baseMainViewTrailingConstraint.constant = sideViewWidth
         performTransitionAnimation()
     }
     
@@ -234,10 +233,10 @@ class BaseSlidingViewController: UIViewController, UIGestureRecognizerDelegate {
         self.setNeedsStatusBarAppearanceUpdate()
         isStatusBarHidden = false
         self.setNeedsStatusBarAppearanceUpdate()
-        
+
         isMenuOpened = false
-        baseMainViewLeftConstraint.constant = 0
-        baseMainViewRightConstraint.constant = 0
+        baseMainViewLeadingConstraint.constant = 0
+        baseMainViewTrailingConstraint.constant = 0
 
         removeSnapShotView()
         performTransitionAnimation()
@@ -268,19 +267,14 @@ class BaseSlidingViewController: UIViewController, UIGestureRecognizerDelegate {
         baseMainView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         baseMainView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
-        baseMainViewRightConstraint = baseMainView.rightAnchor.constraint(
-            equalTo: view.rightAnchor)
-        baseMainViewRightConstraint.isActive = true
-        
-        baseMainViewLeftConstraint = baseMainView.leftAnchor.constraint(
-            equalTo: view.leftAnchor)
-        baseMainViewLeftConstraint.isActive = true
+        baseMainViewTrailingConstraint = baseMainView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        baseMainViewTrailingConstraint.isActive = true
+        baseMainViewLeadingConstraint = baseMainView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
+        baseMainViewLeadingConstraint.isActive = true
         
         view.addSubview(baseSideView)
-        baseSideView.topAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        baseSideView.rightAnchor.constraint(
-            equalTo: baseMainView.safeAreaLayoutGuide.leftAnchor).isActive = true
+        baseSideView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        baseSideView.trailingAnchor.constraint(equalTo: baseMainView.safeAreaLayoutGuide.leadingAnchor).isActive = true
         baseSideView.bottomAnchor.constraint(equalTo: baseMainView.bottomAnchor).isActive = true
         baseSideView.widthAnchor.constraint(equalToConstant: sideViewWidth).isActive = true
     }
@@ -295,25 +289,22 @@ class BaseSlidingViewController: UIViewController, UIGestureRecognizerDelegate {
         
         let sideViewController = SideMenuViewController()
         
-        guard let mainView = mainViewController.view
-        else { return }
-        
-        guard let sideView = sideViewController.view
-        else { return }
+        guard let mainView = mainViewController.view else { return }
+        guard let sideView = sideViewController.view else { return }
         
         mainView.translatesAutoresizingMaskIntoConstraints = false
         sideView.translatesAutoresizingMaskIntoConstraints = false
         
         baseMainView.addSubview(mainView)
-        mainView.leftAnchor.constraint(equalTo: baseMainView.leftAnchor).isActive = true
-        mainView.rightAnchor.constraint(equalTo: baseMainView.rightAnchor).isActive = true
+        mainView.leadingAnchor.constraint(equalTo: baseMainView.leadingAnchor).isActive = true
+        mainView.trailingAnchor.constraint(equalTo: baseMainView.trailingAnchor).isActive = true
         mainView.bottomAnchor.constraint(equalTo: baseMainView.bottomAnchor).isActive = true
         mainView.topAnchor.constraint(equalTo: baseMainView.topAnchor).isActive = true
         
         baseSideView.addSubview(sideView)
-        sideView.leftAnchor.constraint(equalTo: baseSideView.leftAnchor).isActive = true
+        sideView.leadingAnchor.constraint(equalTo: baseSideView.leadingAnchor).isActive = true
+        sideView.trailingAnchor.constraint(equalTo: baseSideView.trailingAnchor).isActive = true
         sideView.topAnchor.constraint(equalTo: baseSideView.topAnchor).isActive = true
-        sideView.rightAnchor.constraint(equalTo: baseSideView.rightAnchor).isActive = true
         sideView.bottomAnchor.constraint(equalTo: baseSideView.bottomAnchor).isActive = true
         
         addChild(mainViewController)

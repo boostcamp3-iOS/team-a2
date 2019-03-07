@@ -256,7 +256,6 @@ extension CoreDataManager {
 
 extension CoreDataManager {
 
-    
     /// 최근 저널의 엔티티들을 불러온다.
     var currentJournalEntries: [Entry] {
         guard let entries = currentJournal.entries,
@@ -270,7 +269,7 @@ extension CoreDataManager {
             fetchRequest: currentJournalEntriesRequest,
             managedObjectContext: coreDataStack.managedContext,
             sectionNameKeyPath: #keyPath(Entry.monthAndYear),
-            cacheName: "timelineResultsController")
+            cacheName: "timelineResultsController_\(currentJournal.journalId)")
     }
     
     /**
